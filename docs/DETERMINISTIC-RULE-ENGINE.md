@@ -33,3 +33,12 @@ print(result["ipa"], result["status"])
 The Python adapter now enforces the status column in data/burmese/ipa_onsets.csv and ipa_vowels.csv at the canonical IPA boundary. Previously, several analysis-dependent registry entries (for example onset စ /s/, ဓ /dʰ/ and vowels ီ /iː/, ဲ /ɛ/, ူ /uː/, ါ /a/) were present in hard-coded maps and could be emitted as canonical IPA despite their registry status. They remain available as structural or research hypotheses, but canonical IPA is now limited to registry entries marked established.
 
 The change deliberately does not expand phonological coverage. It reduces unsupported output. Regression tests check both negative examples and positive established controls, and assert that the runtime allowlists exactly match the source registries. Browser parity has not yet been established by this Python-side fix; its separate derivation requires a corresponding audit before claiming cross-runtime equivalence.
+
+
+## Cross-runtime canonical IPA evidence gate — 2026-11-14
+
+Extended the evidence-status correction to the browser G2P path. The browser now checks generated ONSETS and VOWELS registry statuses before deriving canonical IPA. This is important because orthographic vowel-sign recognition in vowel_signs.csv is not itself proof that the phonetic value in ipa_vowels.csv is established. If the onset or any vowel value is analysis-dependent, browser IPA is withheld and the syllable status remains ANALYSIS_DEPENDENT rather than being flattened to a generic not-established state. Onset-only provisional hints remain separate from canonical IPA.
+
+Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
+
+Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI has been triggered by the PR update; record exact-head outcomes before promoting this task to DONE_VERIFIED.
