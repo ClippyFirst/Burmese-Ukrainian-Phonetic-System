@@ -150,3 +150,11 @@ The upstream README explicitly states CC BY-NC-SA 4.0 and documents a five-field
 - Commercial deployment or commercial distribution: **not covered** by this grant; obtain separate permission or exclude the material.
 - The user has confirmed this is a research project; no additional project-owner permission gate is required for the non-commercial research activity.
 - OpenSLR SLR80 has a published CC BY-SA 4.0 license and a public 528 KiB transcript index, but this execution environment could not retrieve the TSV bytes. Per project instruction, no rows/audio are imported or used unless the actual resource can be accessed. It remains metadata-only and inactive.
+
+
+## Latest evidence verification — 2026-11-14
+
+- myG2P CC BY-NC-SA 4.0 is permitted for the project's non-commercial research use with attribution and ShareAlike; commercial deployment/distribution remains outside the grant.
+- The BSD Burmese wordlist (41,343 rows) was used only for orthographic candidate discovery; it supplied no IPA or syllabification, and no collision status was promoted.
+- Required CI 43622250968 SUCCESS: 273 Python + 68 subtests, 20 Node, 58 Playwright; npm audit 0 vulnerabilities; production build and generated-data freshness passed.
+- Optional diagnostics 43622250978 SUCCESS: Google WFST 6/6 outputs, 0 runtime errors, no gold (accuracy null); CRF 100 outputs, 84 source-concordant, no gold, possible training overlap. No accuracy claim.
