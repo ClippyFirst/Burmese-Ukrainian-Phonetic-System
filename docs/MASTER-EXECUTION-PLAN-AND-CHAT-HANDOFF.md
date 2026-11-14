@@ -2623,3 +2623,13 @@ Extended the evidence-status correction to the browser G2P path. The browser now
 Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
 
 Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI has been triggered by the PR update; record exact-head outcomes before promoting this task to DONE_VERIFIED.
+
+## Engine continuation — browser evidence status and stale end-to-end assertions (2026-11-14)
+
+- Starting tested head for this continuation: `821cfbe945db8529c5765dfc9c1e673653a544f5` (PR #147 branch; earlier run exposed one stale Node assertion). Current code/test head: `9333bdfec405f9fafb36bab42d90965e11f5e155` on `research/burmese-medials-g2p-evidence-2026-11-13`.
+- Repaired the Node test to match the actual two-stage fail-closed onset check. Corrected a browser aggregate-status bug: `ANALYSIS_DEPENDENT` and `UNCERTAIN` are now preserved in `ipaStatus` rather than collapsed to `NOT_ESTABLISHED`.
+- The first full Playwright run then surfaced four old assertions expecting canonical outputs for analysis-dependent onset/vowel entries. Updated those tests to require withheld IPA/Ukrainian output and explicit `IPA: ANALYSIS_DEPENDENT`. No new pronunciation value, phonological rule, IPA gold label or Ukrainian mapping was introduced.
+- **Exact PR-head required CI:** run `43630941796` SUCCESS — 277 Python tests + 68 subtests; package install and gold corpus structural validator PASS; npm audit gate PASS; production build PASS; generated web data freshness PASS; 21 Node tests PASS; 58 Playwright tests PASS.
+- Push-triggered required run `43630938330` was still running at the time this note was written; do not infer its result from the PR run. Optional CRF and Epitran raw-output jobs succeeded on run `43630941801`; Google Thrax/OpenFst build was still in progress. These are diagnostic raw outputs, not accuracy results.
+- PR #147 remains OPEN / DRAFT; main remains unchanged. PR #129 remains OPEN / DRAFT / non-mergeable and untouched. PR #147 remains far ahead of main (950 commits, 0 behind at this checkpoint); no merge or release performed.
+- Readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready: independent expert-adjudicated IPA gold 0, empirical accuracy null, and full Python/browser parity not established.
