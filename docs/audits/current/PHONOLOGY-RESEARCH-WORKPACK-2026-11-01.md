@@ -34,7 +34,7 @@
 
 - [ ] Map current parser behavior against Unicode 17 Table 16-4 and add adversarial orthographic sequence fixtures. **PARTIAL as of 2026-11-14:** common Modern Burmese ordering, all four medials, conjunct/kinzi, dependent vowels, contextual ASAT and canonical ASAT/dot-below reordering are covered by the shared 31-case Python/browser structural projection. Remaining work: full valid/invalid sequence permutation coverage and language-extension cases; see the 2026-11-14 continuation in the master execution handoff.
 - [x] Build a source-backed consonant/medial inventory and prohibited-cluster table. **DONE_VERIFIED (source-scoped evidence matrix, 2026-11-15):** `data/burmese/onset_cluster_evidence.csv` contains 13 source-linked rows with a JSON Schema and integrity tests. It distinguishes Green's major/minor onset constraints, foot-initial cluster analysis and reduction processes from Ishida's modern YA/RA/WA/HA descriptions and STEDT historical inventories. All rows remain runtime-withheld; this is not a complete legal-cluster generator.
-- [ ] Reconcile Green (1995), Mooney & Repetti-Ludlow (2021), Watkins and current phonetic studies in a terminology matrix.
+- [x] Reconcile Green (1995), Mooney & Repetti-Ludlow (2021), Watkins and current phonetic studies in a terminology matrix. **DONE_VERIFIED (2026-11-15):** added §10 to the vowel × medial × prosody evidence matrix, separating tone, checked/killed, creaky voice, vowel length/duration, consonant spread-glottis, nasal /N/, glides/medials and transcription conventions. Four- vs eight-tone accounts remain separate.
 - [ ] Complete vowel × coda × major/minor × tone/phonation coverage, with separate phonemic and phonetic columns.
 - [ ] Record audio/elicitation with profile, speaker, style and rights metadata; independently annotate IPA and acoustic cues.
 - [ ] Adjudicate the relationship between checked coda, glottalization, creaky phonation and tone before changing the runtime.
@@ -63,7 +63,7 @@ Mooney & Repetti-Ludlow (2021), [open CC BY 4.0 article](https://doi.org/10.3765
 
 ### Newer register/tone proposal — unresolved
 
-Duan & Zhu (2025), [publisher record and abstract](https://doi.org/10.1075/lali.00203.dua), propose eight tones divided across modal and lower/breathy registers, splitting the traditional four categories into eight. The publisher abstract confirms this is a peer-reviewed competing analysis, but the full article and its underlying acoustic data have not been independently inspected in this checkpoint. Treat it as a live research hypothesis, not an implemented model or a reason to replace Green's four-way account.
+Duan & Zhu (2025), [publisher record](https://doi.org/10.1075/lali.00203.dua), full text inspected: proposes eight yin/yang tone categories across modal and lower/breathy registers. The reported sample is five mixed-region speakers (two Yangon, two Taunggyi, one Mandalay region), 89 words and 694 valid tokens; T1/T3 show speaker variation. No audio was accessed. Treat it as a competing author analysis, not an implemented model or a reason to replace Green's four-way account.
 
 ### Phonation of sonorant consonants is not vowel register
 
@@ -175,3 +175,10 @@ The new `data/burmese/onset_cluster_evidence.csv` records 13 source-linked const
 - The matrix uses existing source and claim IDs, a dedicated JSON Schema, and regression tests. Every row has `runtime_status=WITHHELD`; no new IPA or Ukrainian output was enabled.
 
 **Acceptance boundary:** DONE_VERIFIED for the source-linked evidence matrix and its integrity tests; PARTIAL for exhaustive segmental cluster legality, lexical distribution and profile-specific runtime rules. No source inspected in this pass supplies a complete modern onset × medial × rime legality table.
+
+
+### Cross-source phonology terminology reconciliation — 2026-11-15
+
+The evidence matrix now has a dedicated terminology table covering tone, checked/killed, creaky phonation, phonemic vowel length vs measured duration, consonantal spread-glottis, nasal /N/, glides/medials and transcription conventions across Green, Watkins, Mooney & Repetti-Ludlow, Duan & Zhu and Repetti-Ludlow. Key guardrails: (1) checked/killed labels do not collapse the segmental /ʔ/ coda and tone category; (2) Green's non-phonemic predictable vowel length is not the same measure as experimental duration cues; (3) voiceless sonorant spread-glottis is consonantal, not lower/breathy vowel register; (4) /N/, orthographic ASAT and surface nasalization remain distinct; (5) four- and eight-tone analyses are not averaged.
+
+Duan & Zhu's full text is now inspected and the previous abstract-only wording is superseded. Its five-speaker sample is mixed-region (Yangon, Taunggyi, Mandalay region), 89 words / 694 valid tokens; no audio was accessed. The article remains a competing analysis, not project consensus.
