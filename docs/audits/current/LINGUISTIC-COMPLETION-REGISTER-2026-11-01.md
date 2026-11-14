@@ -2203,3 +2203,12 @@ Exact implementation/test head `9333bdfec405f9fafb36bab42d90965e11f5e155`; requi
 | Browser status preservation for unimplemented medial/conjunct/kinzi structures | DONE_VERIFIED (narrow status contract) | `src/web/app.js` now retains `ANALYSIS_DEPENDENT` instead of flattening recognized unsupported structures to `NOT_ESTABLISHED`; canonical IPA and Ukrainian output remain withheld. |
 | Shared Python/browser structural-status fixtures | PARTIAL | Shared cases `ကြွေ`, `က္ကာ`, `င်္ကာ` are asserted in `tests/test_shared_unicode_contract.py` and `tests/browser/converter.spec.js`; exact-head run [43638222569](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638222569) SUCCESS: 278 Python + 68 subtests, 21 Node, 59 Playwright. Full parsed-object/boundary/coda/tone/adapter parity remains unimplemented. |
 | Independent IPA adjudication / accuracy | BLOCKED | Zero independent expert-adjudicated Yangon-profile IPA records; accuracy remains null. Structural fixtures are not phonetic gold. |
+
+
+## Canonical IPA cross-runtime guard — coda, asat and prosody — 2026-11-14
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Browser coda/asat/anusvara/prosody fail-closed parity | DONE_VERIFIED (narrow canonical IPA boundary) | Browser now withholds IPA for coda, asat, anusvara and prosodic marks, preserving `ANALYSIS_DEPENDENT`; matches Python `_ipa` behavior. No browser-only coda/rime IPA is exposed as canonical output. |
+| Shared unresolved-structure fixtures | PARTIAL | Seven shared cases across medials, conjunct, kinzi, nasal/checked codas, asat and anusvara are exercised in Python and Playwright. Exact-head CI [43638560797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638560797) SUCCESS: 278 Python + 68 subtests, 21 Node, 59 Playwright. This verifies status/withholding only, not IPA accuracy or complete parse-object equality. |
+| Full Python/browser phonological parity | PARTIAL | Full vowel combinations, segmentation edge cases, prosody trace and Ukrainian adapter traces remain to be compared; no expert-adjudicated IPA gold exists. |
