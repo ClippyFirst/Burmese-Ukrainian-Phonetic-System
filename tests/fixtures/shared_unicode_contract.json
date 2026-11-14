@@ -421,5 +421,29 @@
         "first_note": "Знак asat після medial ya збережено як контекстну фіналь."
       }
     }
+  ],
+  "bare_consonant_boundary_cases": [
+    {
+      "id": "bare-consonant-after-del-control",
+      "input": "က",
+      "python": {
+        "bare_consonant_index": 1,
+        "ipa": null
+      },
+      "browser": {
+        "ipa": "??"
+      }
+    },
+    {
+      "id": "bare-consonant-before-c1-control",
+      "input": "က",
+      "python": {
+        "bare_consonant_index": 0,
+        "ipa": null
+      },
+      "browser": {
+        "ipa": "??"
+      }
+    }
   ]
 }
