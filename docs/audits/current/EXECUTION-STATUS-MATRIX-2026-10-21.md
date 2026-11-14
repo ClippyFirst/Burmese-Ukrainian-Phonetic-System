@@ -2348,3 +2348,11 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Python and Playwright suites consume the same cases. These are Unicode/orthographic structural probes only; no medial phonetic realization or Ukrainian candidate was added.
 - Exact PR-head required CI on code/test SHA `702568dcf2214787938b6964708cb6e7d4d52e92`, run [43639262508](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43639262508), SUCCESS: 280 Python tests + 68 subtests; 21 Node tests; 60 Playwright tests; npm audit 0 vulnerabilities; build, generated-data freshness and Chromium install passed.
 - **Status: DONE_VERIFIED for structural coverage of the listed medial inventory and its fail-closed browser behavior.** Complete syllable parsing and phonetic realization remain PARTIAL/BLOCKED by source-profile evidence and expert adjudication.
+
+## Unknown Myanmar extension cluster boundary — 2026-11-14
+
+- Finding: Python grouped an unknown Myanmar extension character after a valid Burmese syllable into that orthographic cluster and marked the tail unparsed; browser segmentation split the extension character into a separate unsupported token. Root cause: browser segmentation used PHONETIC_INPUT_CHARS as a segmentation boundary, while Python segments by Myanmar script-block membership and recognized following base consonants.
+- Implementation: Removed inventory-membership splitting from browser Myanmar segmentation. All Myanmar-block code points remain in the current structural unit until a recognized new Burmese base consonant boundary; parser inventory validation remains downstream and fail-closed.
+- Regression coverage: Added two Playwright cases: ကာ + U+AA60 stays one uncertain cluster; U+AA60 + ကာ stays two units and preserves the valid second onset. Existing Python regression covers the first source sequence.
+- Commits: code 003e4db004361b90531990a692980ffb2a4a43c1; tests b01667abc786b11de455c5f4eb276083d43e64dd.
+- Status: PARTIAL pending exact-head CI. Do not infer verification from earlier CI. No phonological mapping was introduced; IPA gold remains 0. Full parser parity remains PARTIAL pending shared projection fixtures for the full structural schema/status taxonomy and a broader source-annotated orthographic corpus.
