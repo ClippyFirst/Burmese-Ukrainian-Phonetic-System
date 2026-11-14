@@ -142,3 +142,21 @@ Medials, conjuncts and kinzi remain structurally parsed but are withheld by the 
 The current branch's optional comparator workflow **43582075278 SUCCESS**: pinned Google grammar built with Bazel 7.4.1, symbol-table invariants passed, and 6/6 structural-only probes emitted output. The artifact was downloaded and inspected; report SHA-256 `88372233d85df73593b030ee0f91aa678fe86fd1c6d5cdc18e7c609b8eefd2c6`, zero gold, accuracy null. Epitran 1.35.3 produced six raw structural-only outputs; CRF produced 100/100 outputs with 84 source-concordant but possible train/test overlap; both artifacts inspected, no accuracy claim. The required CI on the same test-bearing SHA passed 267 Python tests + 68 subtests, 20 Node tests, and 58 Playwright tests.
 
 Source registry closeout: **80 sources / 164 claims**. Rime ledger: **0 unadjudicated / 9 secondary equivalence / 1 conflict / 3 distinctions / 11 one-side-only / 1 special non-rime**. Independent adjudicated IPA gold remains 0. One high-severity npm vulnerability remains. PR #147 remains open/draft; PR #129 was selectively ported but left open and untouched.
+
+## Source-scoped onset, medial and coda constraints — 2026-11-15
+
+The project now keeps a 13-row, source-linked evidence matrix in data/burmese/onset_cluster_evidence.csv, validated by schemas/onset_cluster_evidence.schema.json and tests/test_onset_cluster_evidence.py.
+
+| Finding | Evidence scope | Consequence |
+|---|---|---|
+| Obligatory onset; placeless /N/ excluded from onset; only placeless /ʔ, N/ in coda | Green 2005, pp.4-5; one source analysis | Do not infer an onset or coda phonetic value from script signs alone |
+| C(G) permitted in major syllables | Green 2005, pp.1-2 | A broad C+glide template is not a complete legal cluster inventory |
+| Complex onset excluded in minor syllables | Green 2005, pp.2-3 | Scoped prohibition only; never generalize to all Burmese syllables |
+| Cluster tolerance at foot edge and simplification under reduction | Green 2005, pp.19-20 | Requires prosodic/morphological context; not an orthographic parser rule |
+| /mj/ examples | Green 2002, §1.1 p.2 | Attests a glide-bearing analysis, not a Unicode YA/RA mapping |
+| YA/RA, WA and HA correspondences | Ishida 2026, relevant medial sections | Keep palatalization, glide/rime alternatives and aspiration/fusion contextual |
+| Multiple medial signs | Hlaing 2014, Table 5 p.26 | Orthographic combinations are not a sequence of independent IPA segments |
+| Written Burmese and historical Rangoon inventories | STEDT Monograph 3, pp.61-66 | Keep historical and profile-specific inventories separate from modern standard Yangon |
+
+The matrix explicitly does not assert a complete prohibited consonant-pair list. In particular, the sequences ကျ and ကြ are not marked globally prohibited: Ishida documents velar-conditioned palatalized outcomes. Every row remains WITHHELD from runtime pending profile-matched lexical/phonetic evidence. See the workpack for locators and acceptance boundaries.
+
