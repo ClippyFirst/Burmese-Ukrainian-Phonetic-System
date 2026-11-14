@@ -616,7 +616,7 @@ def test_bsd_burmese_wordlist_candidate_scan_does_not_promote_unverified_lexemes
     respelling_source = sources["WIKTIONARY_HTAUNG_ENTRY_2026"]
     respelling_claim = claims["CLM-WIKTIONARY-HTAUNG-DAUNG-RESP-001"]
     assert "phonetic respelling ဒေါင့်" in respelling_source["scope"]
-    assert "not an independent lexical lemma" in respelling_source["scope"]
+    assert "not an independent lemma" in respelling_source["scope"]
     assert respelling_claim["source_id"] == "WIKTIONARY_HTAUNG_ENTRY_2026"
     assert respelling_claim["status"] == "DOCUMENTARY"
     assert "not an independent lexical lemma" in respelling_claim["claim"]
