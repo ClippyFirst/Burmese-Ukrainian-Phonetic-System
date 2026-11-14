@@ -121,5 +121,29 @@
       "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
       "reason": "anusvara realization remains contextual and unresolved"
     }
+  ],
+  "structural_cases": [
+    {
+      "id": "kinzi-coda-syllable-boundary",
+      "input": "မင်္ဂလာ",
+      "python": {
+        "graphemes": [
+          "မင်္",
+          "ဂ",
+          "လာ"
+        ],
+        "syllable_count": 3,
+        "first_kinzi_position": "coda",
+        "first_coda_character": "င"
+      },
+      "browser": {
+        "syllables": [
+          "မင်္",
+          "ဂ",
+          "လာ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    }
   ]
 }
