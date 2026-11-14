@@ -64,4 +64,4 @@ def test_shared_bare_consonant_control_boundaries_withhold_ipa():
         result = to_ipa(case["input"])
         index = case["python"]["bare_consonant_index"]
         assert result["syllables"][index]["raw"] == "က", case["id"]
-        assert result["syllables"][index]["ipa"] is case["python"]["ipa"], case["id"]
+        assert result["syllables"][index]["ipa"] == case["python"]["ipa"], case["id"]
