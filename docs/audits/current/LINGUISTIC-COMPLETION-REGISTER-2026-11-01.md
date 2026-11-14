@@ -2212,3 +2212,11 @@ Exact implementation/test head `9333bdfec405f9fafb36bab42d90965e11f5e155`; requi
 | Browser coda/asat/anusvara/prosody fail-closed parity | DONE_VERIFIED (narrow canonical IPA boundary) | Browser now withholds IPA for coda, asat, anusvara and prosodic marks, preserving `ANALYSIS_DEPENDENT`; matches Python `_ipa` behavior. No browser-only coda/rime IPA is exposed as canonical output. |
 | Shared unresolved-structure fixtures | PARTIAL | Seven shared cases across medials, conjunct, kinzi, nasal/checked codas, asat and anusvara are exercised in Python and Playwright. Exact-head CI [43638560797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638560797) SUCCESS: 278 Python + 68 subtests, 21 Node, 59 Playwright. This verifies status/withholding only, not IPA accuracy or complete parse-object equality. |
 | Full Python/browser phonological parity | PARTIAL | Full vowel combinations, segmentation edge cases, prosody trace and Ukrainian adapter traces remain to be compared; no expert-adjudicated IPA gold exists. |
+
+
+## Kinzi coda syllable-boundary parity — 2026-11-14
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Internal kinzi closes preceding Python syllable | DONE_VERIFIED (structural only) | Python now segments `မင်္ဂလာ` as `မင်္` + `ဂ` + `လာ`, records the first unit's kinzi/final nasal structurally, and withholds IPA. Prefix kinzi remains attached to its onset. Shared Python/Playwright fixture and exact-head CI [43638895912](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638895912) SUCCESS (280 Python + 68 subtests, 21 Node, 60 Playwright). |
+| Full Burmese syllable-boundary parity | PARTIAL | Only the kinzi boundary case is newly shared; broader source-annotated boundary corpus and all parser states remain outstanding. |
