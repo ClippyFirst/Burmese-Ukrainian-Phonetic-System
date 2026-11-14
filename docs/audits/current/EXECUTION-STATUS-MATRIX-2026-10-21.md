@@ -2217,4 +2217,4 @@ The latest code/data/test head for this batch is 0b061ef23132cbfa65e94e6c4307375
 - Independent IPA-gold structural validation passed.
 - npm ci, high-severity npm audit (0 vulnerabilities), production build and generated-data freshness check passed.
 
-Optional diagnostic run 43622250978: CRF baseline and Epitran raw-output jobs completed SUCCESS; Google WFST raw-output job was still IN_PROGRESS at last check. Do not infer a new accuracy result from these diagnostics. Previous completed run 43620353669 had Google WFST 6/6 structural outputs, 0 runtime errors, 0 independent gold (accuracy null), and CRF 100 predictions / 84 source-concordant / 0 gold (NOT_SCORED_POSSIBLE_TRAINING_OVERLAP).
+Optional diagnostic run 43622250978 completed SUCCESS across Epitran, CRF and Google WFST raw-output jobs. Google WFST: 6/6 outputs, 0 runtime errors, independent_gold_count=0, accuracy=null; report SHA-256 0df0f24dd97c0537bcf882c4460ab1f4a3e315b6ece485ef0c6ae9ed22f42c34. CRF: 100/100 predictions, 84 source-concordant rows, gold_count=0, accuracy=null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. These are raw-output diagnostics only, not accuracy benchmarks.
