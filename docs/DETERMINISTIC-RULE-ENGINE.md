@@ -42,3 +42,11 @@ Extended the evidence-status correction to the browser G2P path. The browser now
 Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
 
 Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI has been triggered by the PR update; record exact-head outcomes before promoting this task to DONE_VERIFIED.
+
+## Browser evidence-status propagation correction — 2026-11-14
+
+A follow-up audit found that `parseCluster` correctly retained `ANALYSIS_DEPENDENT` for an onset or vowel rejected by the source registry, but `convert()` flattened every non-`UNSUPPORTED` IPA-less segment to `NOT_ESTABLISHED` in the aggregate `ipaStatus`. The aggregation now preserves `ANALYSIS_DEPENDENT` and `UNCERTAIN` alongside `UNSUPPORTED`. The overall UI status can still be more cautious because Ukrainian output is withheld; the separate IPA status now retains the actual reason.
+
+The first full browser run exposed four legacy end-to-end assertions that expected IPA for `စိတ်`, `ဆာ`, `သာ` and `ယူ`. Those expectations conflicted with the current source registries (`analysis_dependent` onset/vowel entries), so the tests were corrected to require withheld IPA/Ukrainian output and the explicit `IPA: ANALYSIS_DEPENDENT` status. No phonological mapping was added or promoted.
+
+Exact code/test head: `9333bdfec405f9fafb36bab42d90965e11f5e155`. Required PR CI run `43630941796` SUCCESS: 277 Python tests + 68 subtests, npm build, generated-data freshness, 21 Node tests, and 58 Playwright tests. Push workflow `43630938330` was still running at the documentation checkpoint. Full Python/browser phonological parity remains PARTIAL; independent expert-adjudicated IPA gold remains 0.
