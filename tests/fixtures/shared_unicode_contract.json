@@ -144,6 +144,224 @@
         ],
         "first_ipa_status": "ANALYSIS_DEPENDENT"
       }
+    },
+    {
+      "id": "mlc-medials-medial_ya",
+      "input": "ကျ",
+      "python": {
+        "graphemes": [
+          "ကျ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra",
+      "input": "ကြ",
+      "python": {
+        "graphemes": [
+          "ကြ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_wa",
+      "input": "ကွ",
+      "python": {
+        "graphemes": [
+          "ကွ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_wa"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကွ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ha",
+      "input": "ကှ",
+      "python": {
+        "graphemes": [
+          "ကှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ya-medial_wa",
+      "input": "ကျွ",
+      "python": {
+        "graphemes": [
+          "ကျွ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya",
+          "medial_wa"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျွ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra-medial_wa",
+      "input": "ကြွ",
+      "python": {
+        "graphemes": [
+          "ကြွ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra",
+          "medial_wa"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြွ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ya-medial_ha",
+      "input": "ကျှ",
+      "python": {
+        "graphemes": [
+          "ကျှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra-medial_ha",
+      "input": "ကြှ",
+      "python": {
+        "graphemes": [
+          "ကြှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_wa-medial_ha",
+      "input": "ကွှ",
+      "python": {
+        "graphemes": [
+          "ကွှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_wa",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကွှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ya-medial_wa-medial_ha",
+      "input": "ကျွှ",
+      "python": {
+        "graphemes": [
+          "ကျွှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya",
+          "medial_wa",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျွှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra-medial_wa-medial_ha",
+      "input": "ကြွှ",
+      "python": {
+        "graphemes": [
+          "ကြွှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra",
+          "medial_wa",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြွှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
     }
   ]
 }
