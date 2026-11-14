@@ -2796,3 +2796,11 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Optional diagnostics [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671628): CRF and Epitran jobs passed; Google FST job was still running at note time. These remain raw-output diagnostics, not accuracy measurements.
 - **Task ledger:** source-backed onset/medial evidence matrix + schema/tests — DONE_VERIFIED; cross-source terminology matrix — DONE_VERIFIED; exhaustive modern Yangon cluster legality and lexical distribution — PARTIAL; profile-matched phonological runtime rules and IPA → Ukrainian mapping — PARTIAL/BLOCKED by incomplete evidence and zero independent IPA gold.
 - No phonological runtime mapping, Ukrainian mapping, corpus import or license change was made. Repository remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+## Terminal optional G2P diagnostic closeout — 2026-11-15
+
+Optional workflow [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671628) completed SUCCESS on code/data/test head 424e27120d51c7d256b1d43b30b6897ea3761f42. All three jobs passed: Epitran raw-output, CRF baseline, pinned Google Thrax/OpenFst build + symbol-table invariants + raw-output.
+- Google FST: 6/6 outputs, 0 runtime errors, independent gold 0, accuracy null; report SHA-256 7fec8ba8845c5fe8758155708eb8d32cfa1fa684b46eeaabc7fc8455abae0606.
+- CRF: 100/100 predictions, 84/100 source-concordant, gold 0, accuracy null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP.
+- Artifacts: Google ID 14134846400, digest ac5cd0b7b00a746d67116fc32831369e555e316d554bedfc34bf6b18378b0949 (expires 2027-02-12); Epitran ID 14134308008, digest 13ae2b78ac2a9b961e1e10231a58f787fb5b11142640997b7a1bf6ff327dc797 (expires 2027-02-12); CRF ID 14135275454, digest dcd9667213ea2c611795a8b3851c7809ea26b853755e6b36291d373e9466ccc0 (expires 2026-12-14).
+- These are raw-output diagnostics only. They do not supply independent IPA gold, accuracy estimates or grounds to promote a backend. This terminal result supersedes the prior in-progress note.
