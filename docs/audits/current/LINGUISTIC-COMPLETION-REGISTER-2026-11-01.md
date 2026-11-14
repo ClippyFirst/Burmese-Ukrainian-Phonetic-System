@@ -2335,3 +2335,10 @@ Independent expert-adjudicated IPA gold remains 0; empirical accuracy remains nu
 - Source-scoped prohibition — Green's complex-onset restriction applies to minor syllables, not globally; major syllables permit C(G) in his analysis.
 - Modern medial descriptions — YA/RA palatalization, WA glide/rime ambiguity and HA aspiration/fusion remain contextual candidates; Hlaing multi-medial sequences are orthographic-only; STEDT inventories remain profile/historical-specific.
 - Remaining acceptance: exact-head CI success; expand only where a source provides exact cluster/lexical evidence; do not infer a complete legality table from the current sources.
+
+## 2026-11-15 completion register — onset/medial evidence and terminology
+
+- Source-backed onset/medial inventory, scoped cluster constraints, schema and integrity tests — **DONE_VERIFIED** (286 Python tests + 68 subtests; 21 Node; 64 Playwright; exact-head CI 43647671663 SUCCESS).
+- Cross-source terminology matrix for tone, checked/killed, creaky phonation, vowel quantity/duration, consonant spread-glottis, nasal /N/, medials and transcription conventions — **DONE_VERIFIED** as a source-reconciliation artifact; no runtime rule promoted.
+- Duan & Zhu (2025) full text now inspected; reported sample is mixed-region, no audio accessed. This supersedes abstract-only wording in earlier notes.
+- Exhaustive modern Yangon cluster legality, lexical distributions and speaker-level acoustic adjudication remain **PARTIAL/BLOCKED** by incomplete source coverage and no independent project IPA gold. All new evidence rows remain runtime WITHHELD.
