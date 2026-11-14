@@ -73,5 +73,6 @@ test("browser G2P source registries distinguish orthographic signs from establis
   assert.equal(VOWELS.uu.status, "analysis_dependent");
   assert.ok(browserEngineSource.includes('if(!onset||onset.status!=="established")return null'));
   assert.ok(browserEngineSource.includes('VOWELS[id]?.status!=="established"'));
+  assert.ok(browserEngineSource.includes('sy.status="ANALYSIS_DEPENDENT";return null'));
   assert.ok(browserEngineSource.includes('VOWELS, SIGNS'));
 });
