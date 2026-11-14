@@ -48,6 +48,9 @@ def test_shared_kinzi_coda_boundary_fixture():
         if "medials" in expected:
             assert [item["id"] for item in first["medials"]] == expected["medials"], case["id"]
             assert first["ipa"] is None, case["id"]
+            if "coda_marker" in expected:
+                assert first["coda"]["marker"] == expected["coda_marker"], case["id"]
+                assert first["coda"]["orthographic_function"] == expected["coda_orthographic_function"], case["id"]
         else:
             assert first["kinzi"]["position"] == expected["first_kinzi_position"], case["id"]
             assert first["coda"]["character"] == expected["first_coda_character"], case["id"]
