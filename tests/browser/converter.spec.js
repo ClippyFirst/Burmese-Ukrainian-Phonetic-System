@@ -18,10 +18,12 @@ test("closed ော rime with an unsupported medial remains withheld",async({pag
 test("kinzi belongs to the preceding linguistic syllable",async({page})=>{await page.goto("/");await page.locator("#source").fill("မင်္ဂလာ");await expect(page.locator("#syllables")).toContainText("မင်္");await expect(page.locator("#syllables")).toContainText("ဂ");});
 test("ha-to with unsupported medial context is not guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("ရှ");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ရှ⟧");});
 
-test("nasal closed i remains short ɪ, not an overgeneralized eɪ",async({page})=>{
+test("nasal coda remains withheld until surface realization is adjudicated",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ပင်");
-  await expect(page.locator("#ipa")).toContainText("pɪɴ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ပင်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("analysis-dependent onset withholds checked-i IPA rather than guessing its rime",async({page})=>{
@@ -32,18 +34,22 @@ test("analysis-dependent onset withholds checked-i IPA rather than guessing its 
   await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
-test("closed u with a nasal coda becomes oʊɴ",async({page})=>{
+test("closed u with a nasal coda remains withheld pending profile adjudication",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကုန်");
-  await expect(page.locator("#ipa")).toContainText("koʊɴ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ကုန်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("medial wa rimes remain withheld until contextual rules are verified",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကွက် ကွန်");await expect(page.locator("#ipa")).toHaveText("? ?");await expect(page.locator("#uk")).toContainText("⟦ကွက်⟧");await expect(page.locator("#uk")).toContainText("⟦ကွန်⟧");});
 
-test("i+u closed rime becomes aɪ with a glottal coda",async({page})=>{
+test("i+u checked rime remains withheld pending profile adjudication",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကိုက်");
-  await expect(page.locator("#ipa")).toContainText("kaɪʔ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ကိုက်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("medial wa with a sonorant coda remains withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("ဆွမ်း");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ဆွမ်း⟧");});
@@ -130,12 +136,12 @@ test("open E vowel sign is analyzed and rendered as a provisional Ukrainian cand
   await expect(page.locator("#uk-status")).toContainText("PROPOSED");
 });
 
-test("the conventional ော် rime does not become an unsupported checked coda",async({page})=>{
+test("the conventional ော် rime remains withheld pending asat-conditioned adjudication",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကော်");
-  await expect(page.locator("#ipa")).toContainText("kɔ");
-  await expect(page.locator("#uk")).toContainText("ко");
-  await expect(page.locator("#ipa")).not.toContainText("?");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ကော်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("the ည် rime after an unsupported ya/ra medial remains withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကြည်");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ကြည်⟧");});
@@ -225,7 +231,7 @@ test("unresolved anusvara is not silently deleted from browser IPA",async({page}
   await page.locator("#source").fill("ကံ");
   await expect(page.locator("#ipa")).toHaveText("?");
   await expect(page.locator("#uk")).toHaveText("⟦ကံ⟧");
-  await expect(page.locator("#uk-status")).toContainText("NOT_ESTABLISHED");
+  await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");
   await expect(page.locator("#syllables")).toContainText("IPA не встановлено");
 });
 
