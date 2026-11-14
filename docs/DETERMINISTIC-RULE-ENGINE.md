@@ -50,3 +50,30 @@ A follow-up audit found that `parseCluster` correctly retained `ANALYSIS_DEPENDE
 The first full browser run exposed four legacy end-to-end assertions that expected IPA for `စိတ်`, `ဆာ`, `သာ` and `ယူ`. Those expectations conflicted with the current source registries (`analysis_dependent` onset/vowel entries), so the tests were corrected to require withheld IPA/Ukrainian output and the explicit `IPA: ANALYSIS_DEPENDENT` status. No phonological mapping was added or promoted.
 
 Exact code/test head: `9333bdfec405f9fafb36bab42d90965e11f5e155`. Required PR CI run `43630941796` SUCCESS: 277 Python tests + 68 subtests, npm build, generated-data freshness, 21 Node tests, and 58 Playwright tests. Push workflow `43630938330` was still running at the documentation checkpoint. Full Python/browser phonological parity remains PARTIAL; independent expert-adjudicated IPA gold remains 0.
+
+
+## Continuation — shared structural projection and Unicode 17 ordering audit — 2026-11-14
+
+### Implementation
+
+- Added `project_syllable_structure()` to the Python parser and a matching browser `projectStructure()` projection. The browser exposes the projection on each rendered Burmese syllable as a JSON data attribute for inspectable regression tests. This projection is explicitly orthographic/structural; it excludes IPA, Ukrainian candidates and phonetic accuracy claims.
+- Shared fixture `tests/fixtures/shared_unicode_contract.json` now contains **28 structural projection cases**: inherent vowel, all four medials and observed combinations, conjunct, kinzi-final nasal, all nine dependent-vowel signs, contextual ASAT, canonical reordering, unknown Myanmar Extended-A tails and unsupported Myanmar inventory entries.
+- The Unicode 17.0 Table 16-4 audit exposed a Python/browser mismatch: trailing ASAT after a dependent vowel was represented as a contextual coda by Python but only as a boolean flag by the browser. Browser parsing now retains the same contextual coda record. Fixtures cover `ကာ်`, `ကော်`, and the decomposed input `ကာ့်`, which NFC-normalizes to `ကာ့်` (U+1037 dot below before U+103A ASAT).
+- Corrected the source-registry classification of U+AA60 as Myanmar Extended-A, not Extended-B. The Extended-B block is U+A9E0..U+A9FF; Extended-A is U+AA60..U+AA7F.
+
+### Verification
+
+- Code/test head: `3fc08b3384c8aa25212d61f8738a771d27aa41d5`.
+- Push CI [43644035177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644035177) SUCCESS and PR CI [43644039707](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644039707) SUCCESS on the same code/test head.
+- Results: **282 Python tests + 68 subtests**, **21 Node tests**, **64 Playwright Chromium tests**; npm audit reports **0 vulnerabilities**; production build, generated-data freshness and independent IPA-gold structural validator pass.
+- The shared projection is verified for the explicit 28-case contract. It does not establish complete parser-object parity for every possible Myanmar sequence or all language extensions.
+
+### Task ledger and evidence limits
+
+- Shared Python/browser structural projection v1 for 28 explicit cases — **DONE_VERIFIED**.
+- Contextual ASAT coda parity, including Unicode canonical reordering — **DONE_VERIFIED** for the covered forms.
+- Unicode 17 Table 16-4 parser coverage — **PARTIAL**: common Modern Burmese ordering is mapped and adversarially tested; full sequence permutation coverage and other Myanmar-script languages/extensions remain outside the implemented Burmese inventory.
+- Complete Python/browser structural and phonological parity — **PARTIAL**: the projection is a shared selected-field contract, not a proof that all parser internals or G2P rules are identical.
+- Independent IPA annotation/adjudication — **DEFERRED** per project-owner direction on 2026-11-14. Continue with existing published evidence and source registries only. This does not convert proposed rules into gold labels and does not permit an accuracy claim; independent adjudicated IPA gold remains 0 and empirical accuracy remains null.
+- No new phonological realization, IPA mapping or Ukrainian mapping was introduced by this continuation.
+- Repository readiness remains **PARTIAL PROTOTYPE**, not release-ready.
