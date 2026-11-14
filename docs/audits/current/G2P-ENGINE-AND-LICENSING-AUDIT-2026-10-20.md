@@ -158,3 +158,16 @@ The upstream README explicitly states CC BY-NC-SA 4.0 and documents a five-field
 - The BSD Burmese wordlist (41,343 rows) was used only for orthographic candidate discovery; it supplied no IPA or syllabification, and no collision status was promoted.
 - Required CI 43622250968 SUCCESS: 273 Python + 68 subtests, 20 Node, 58 Playwright; npm audit 0 vulnerabilities; production build and generated-data freshness passed.
 - Optional diagnostics 43622250978 SUCCESS: Google WFST 6/6 outputs, 0 runtime errors, no gold (accuracy null); CRF 100 outputs, 84 source-concordant, no gold, possible training overlap. No accuracy claim.
+
+
+## Final verification after evidence-boundary test correction — 2026-11-14
+
+- Branch tip at this checkpoint: 70481b4a8e6999402c1e83c6ba5c21337bbb7b09; dedicated branch research/burmese-medials-g2p-evidence-2026-11-13.
+- Starting main: dc90463bdd734867308f03cb627eb8941efc19d6. Branch comparison: 895 commits ahead, 0 behind; main unchanged.
+- Required CI run 43623058823 SUCCESS on the latest branch tip: 273 Python tests + 68 subtests, 20 Node tests, 58 Playwright Chromium tests. IPA-gold structural validation, npm ci, high-severity npm audit (0 vulnerabilities), production build and generated-data freshness passed.
+- Preceding run 43622770676 failed one assertion because the test expected a longer phrase than the registered source scope. Corrected the assertion in test commit b3fd204b192633c1c58580e679ef5549f9af9535; latest required CI passed.
+- Latest optional diagnostic run 43623058728: Epitran and CRF jobs passed; Google WFST job was still in progress at last inspection. Previous optional run 43622250978 completed all three jobs successfully; Google WFST 6/6 outputs, 0 runtime errors, no gold (accuracy null); CRF 100 predictions, 84 source-concordant, no gold and possible training overlap. No accuracy claim.
+- Registries: 91 sources / 192 claims. Collision ledger remains 25 groups; all eight target groups SECONDARY_ONE_SIDE_ONLY. No IPA gold, runtime rule or Ukrainian mapping was promoted.
+- myG2P CC BY-NC-SA 4.0 is permitted for non-commercial research with attribution and ShareAlike, but the 2.33 MB source dictionary bytes were not retrievable in this execution environment; no truncated query output was used.
+- The BSD wordlist scan produced only unverified orthographic leads; Wiktionary confirms ဒေါင့် is a phonetic respelling attached to ထောင့်, not a separate lexical lemma. No missing-side candidate was accepted.
+- Readiness remains PARTIAL PROTOTYPE, not linguistically release-ready.
