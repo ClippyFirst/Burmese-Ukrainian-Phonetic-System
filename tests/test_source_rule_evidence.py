@@ -633,3 +633,20 @@ def test_bsd_burmese_wordlist_candidate_scan_does_not_promote_unverified_lexemes
 
     expected_one_sided = {"am:", "aung.", "im", "im:", "im.", "ui", "um:", "um."}
     assert all(lexical[key]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY" for key in expected_one_sided)
+
+
+def test_rickaym_dictionary_dataset_remains_metadata_only_without_provenance_or_ipa():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+    source = sources["RICKAYM_BURMESE_DICTIONARY_HF_2025"]
+    claim = claims["CLM-RICKAYM-BURMESE-DICT-METADATA-001"]
+
+    assert "MIT" in source["scope"]
+    assert "19,258 rows" in source["scope"]
+    assert "does not identify the underlying lexicographic source" in source["scope"]
+    assert "not IPA" in source["scope"]
+    assert claim["source_id"] == "RICKAYM_BURMESE_DICTIONARY_HF_2025"
+    assert claim["status"] == "DOCUMENTARY"
+    assert "Only the first 2,000 rows" in claim["claim"]
+    assert "no full-dataset suffix scan was completed" in claim["claim"]
+    assert "No rows or phonetics were imported" in claim["claim"]
