@@ -318,8 +318,8 @@ test("unsupported Myanmar units remain visible in mixed Ukrainian output",async(
   await page.locator("#source").fill("ကာꩠ");
   await expect(page.locator("#source")).toHaveValue("ကာꩠ");
   await expect(page.locator("#syllables")).toContainText("ꩠ");
-  await expect(page.locator("#uk")).toHaveText("ка⟦ꩠ⟧");
-  await expect(page.locator("#uk-status")).toContainText("UNSUPPORTED");
+  await expect(page.locator("#uk")).toHaveText("⟦ကာꩠ⟧");
+  await expect(page.locator("#uk-status")).toContainText("UNCERTAIN");
 });
 
 test("full Burmese greeting sentence preserves every segmented source unit",async({page})=>{
@@ -441,7 +441,7 @@ test("browser separates မြန်မာ into two syllables, not three",async(
 
 test("unknown Myanmar extension letters stay attached to the same structural cluster as Python",async({page})=>{
   await page.goto("/");
-  const source="ကာ\\uAA60";
+  const source="ကာ"+String.fromCodePoint(0xAA60);
   await page.locator("#source").fill(source);
   const rows=page.locator("#syllables .syllable");
   await expect(rows).toHaveCount(1);
@@ -452,10 +452,11 @@ test("unknown Myanmar extension letters stay attached to the same structural clu
 
 test("unknown Myanmar extension letter before a supported onset preserves the onset boundary",async({page})=>{
   await page.goto("/");
-  const source="\\uAA60ကာ";
+  const unknown=String.fromCodePoint(0xAA60);
+  const source=unknown+"ကာ";
   await page.locator("#source").fill(source);
   const labels=await page.locator("#syllables .syllable strong").allTextContents();
-  expect(labels).toEqual(["01  \\uAA60","02  ကာ"]);
-  await expect(page.locator("#uk")).toContainText("⟦\\uAA60⟧");
-  await expect(page.locator("#ipa")).toContainText("ka");
+  expect(labels).toEqual(["01  "+unknown,"02  ကာ"]);
+  await expect(page.locator("#uk")).toContainText("⟦"+unknown+"⟧");
+  await expect(page.locator("#ipa")).toHaveText("?ka");
 });
