@@ -584,3 +584,18 @@ def test_tufs_med_ipa_crosswalk_and_lexical_examples_preserve_mlcts_boundary():
     assert "/t̪êiɴ/ (သိမ့်" in lexical["im."]["observed_ipa"]
     assert "discrepancy" in lexical["aung."]["interpretation"]
     assert "MLCTS" in lexical["im:"]["interpretation"]
+
+
+def test_myg2p_noncommercial_research_use_is_not_misclassified_as_blocked():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+
+    source = sources["MYG2P2026"]
+    claim = claims["CLM-MYG2P-NONCOMMERCIAL-RESEARCH-USE-001"]
+    assert "CC BY-NC-SA 4.0" in source["scope"]
+    assert "not an independently adjudicated project gold corpus" in source["scope"]
+    assert claim["source_id"] == "MYG2P2026"
+    assert claim["status"] == "DOCUMENTARY"
+    assert "non-commercial research use is therefore permitted" in claim["claim"]
+    assert "attribution and ShareAlike" in claim["claim"]
+    assert "commercial use remains outside this grant" in claim["claim"]
