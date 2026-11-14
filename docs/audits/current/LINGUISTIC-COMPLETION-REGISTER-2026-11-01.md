@@ -2186,3 +2186,11 @@ Extended the evidence-status correction to the browser G2P path. The browser now
 Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
 
 Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI has been triggered by the PR update; record exact-head outcomes before promoting this task to DONE_VERIFIED.
+
+## Browser evidence-status propagation and regression reconciliation — 2026-11-14
+
+**Task status: DONE_VERIFIED (narrow status-propagation correction); broader Python/browser phonological parity remains PARTIAL.** The browser aggregate `ipaStatus` previously converted all IPA-less states except `UNSUPPORTED` to `NOT_ESTABLISHED`, losing the already-derived `ANALYSIS_DEPENDENT`/`UNCERTAIN` reason. It now preserves those explicit statuses. Regression coverage checks the source-gated path and aggregate preservation.
+
+The exact-head browser run revealed four legacy Playwright cases expecting canonical IPA for `စိတ်`, `ဆာ`, `သာ`, `ယူ`, despite their source onset/vowel records being analysis-dependent. Their expectations now assert fail-closed IPA and Ukrainian output plus `IPA: ANALYSIS_DEPENDENT`; no new IPA values or Ukrainian mappings were created.
+
+Exact implementation/test head `9333bdfec405f9fafb36bab42d90965e11f5e155`; required PR CI `43630941796` SUCCESS: 277 Python tests + 68 subtests; build and generated-data freshness PASS; 21 Node tests PASS; 58 Playwright tests PASS. The push-triggered exact-head workflow `43630938330` was still running at the documentation checkpoint. No gold or accuracy claim follows from these engineering tests; independent adjudicated IPA gold remains 0.
