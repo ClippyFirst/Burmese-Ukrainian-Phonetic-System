@@ -1,4 +1,4 @@
-import { ONSETS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
+import { ONSETS, VOWELS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
 import { renderUkrainian } from "./ukrainian-adapter.js";
 import { renderMlctsText } from "./romanization-ukrainian.js";
 
@@ -175,7 +175,27 @@ function parseCluster(raw,withholdBareInherent=false){
 }
 
 function deriveIpa(sy){
-  const onset=ONSETS[sy.onset];if(!onset)return null;
+  const onset=ONSETS[sy.onset];
+  // The canonical browser IPA path must obey the same source-registry evidence
+  // gate as Python. A graphemic sign can be established orthographically while
+  // its phonetic realization remains analysis-dependent.
+  if(!onset||onset.status!=="established")return null;
+  const vowelIdsByName={
+    "MYANMAR VOWEL SIGN E":"e",
+    "MYANMAR VOWEL SIGN I":"i",
+    "MYANMAR VOWEL SIGN II":"ii",
+    "MYANMAR VOWEL SIGN AI":"ai",
+    "MYANMAR VOWEL SIGN U":"u",
+    "MYANMAR VOWEL SIGN UU":"uu",
+    "MYANMAR VOWEL SIGN TALL AA":"tall_aa",
+    "MYANMAR VOWEL SIGN AA":"aa",
+    "MYANMAR SIGN ANUSVARA":"anusvara",
+  };
+  if(sy.vowels.some(sign=>{
+    const name=SIGNS[sign]?.unicode_name;
+    const id=vowelIdsByName[name];
+    return !id||VOWELS[id]?.status!=="established";
+  }))return null;
   // The browser parser can recognize anusvara structurally, but its contextual
   // nasal/coda realization is not yet adjudicated. Match the Python adapter's
   // fail-closed boundary rather than mapping the sign to a bare vowel.
