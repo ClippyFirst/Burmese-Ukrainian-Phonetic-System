@@ -463,3 +463,13 @@ test("unknown Myanmar extension letter before a supported onset preserves the on
   await expect(page.locator("#uk")).toContainText("⟦"+unknown+"⟧");
   await expect(page.locator("#ipa")).toHaveText("?ka");
 });
+
+
+test("unsupported control characters delimit standalone bare consonants like Python", async ({page}) => {
+  for (const fixture of sharedUnicodeContract.bare_consonant_boundary_cases) {
+    await page.goto("/");
+    await page.locator("#source").fill(fixture.input);
+    await expect(page.locator("#ipa"), fixture.id).toHaveText(fixture.browser.ipa);
+    await expect(page.locator("#uk"), fixture.id).toContainText("⟦");
+  }
+});
