@@ -599,3 +599,25 @@ def test_myg2p_noncommercial_research_use_is_not_misclassified_as_blocked():
     assert "non-commercial research use is therefore permitted" in claim["claim"]
     assert "attribution and ShareAlike" in claim["claim"]
     assert "commercial use remains outside this grant" in claim["claim"]
+
+
+def test_bsd_burmese_wordlist_candidate_scan_does_not_promote_unverified_lexemes():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+    lexical = {row["mlcts"]: row for row in _rows(DATA / "romanization_rime_collision_lexical_audit.csv")}
+
+    source = sources["DANGERCHITTHU_MYANMAR_WORDLIST_2013"]
+    claim = claims["CLM-DANGERCHITTHU-ORTHOGRAPHIC-CANDIDATE-SCAN-001"]
+    assert "BSD license" in source["scope"]
+    assert "no IPA, meanings, or syllable segmentation" in source["scope"]
+    assert claim["source_id"] == "DANGERCHITTHU_MYANMAR_WORDLIST_2013"
+    assert claim["status"] == "DOCUMENTARY"
+    assert "41,343 non-comment lines" in claim["claim"]
+    assert "ခေါင့်, ဒေါင့်" in claim["claim"]
+    assert "ယို်" in claim["claim"]
+    assert "ရေခအုမ်း, လစာနှုမ်း" in claim["claim"]
+    assert "all had a dependent vowel sign immediately before ံး" in claim["claim"]
+    assert "no collision status is promoted" in claim["claim"]
+
+    expected_one_sided = {"am:", "aung.", "im", "im:", "im.", "ui", "um:", "um."}
+    assert all(lexical[key]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY" for key in expected_one_sided)
