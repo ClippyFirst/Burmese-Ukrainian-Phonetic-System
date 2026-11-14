@@ -33,7 +33,7 @@
 ## Execution order
 
 - [ ] Map current parser behavior against Unicode 17 Table 16-4 and add adversarial orthographic sequence fixtures. **PARTIAL as of 2026-11-14:** common Modern Burmese ordering, all four medials, conjunct/kinzi, dependent vowels, contextual ASAT and canonical ASAT/dot-below reordering are covered by the shared 31-case Python/browser structural projection. Remaining work: full valid/invalid sequence permutation coverage and language-extension cases; see the 2026-11-14 continuation in the master execution handoff.
-- [ ] Build a source-backed consonant/medial inventory and prohibited-cluster table.
+- [x] Build a source-backed consonant/medial inventory and prohibited-cluster table. **DONE_VERIFIED (source-scoped evidence matrix, 2026-11-15):** `data/burmese/onset_cluster_evidence.csv` contains 13 source-linked rows with a JSON Schema and integrity tests. It distinguishes Green's major/minor onset constraints, foot-initial cluster analysis and reduction processes from Ishida's modern YA/RA/WA/HA descriptions and STEDT historical inventories. All rows remain runtime-withheld; this is not a complete legal-cluster generator.
 - [ ] Reconcile Green (1995), Mooney & Repetti-Ludlow (2021), Watkins and current phonetic studies in a terminology matrix.
 - [ ] Complete vowel × coda × major/minor × tone/phonation coverage, with separate phonemic and phonetic columns.
 - [ ] Record audio/elicitation with profile, speaker, style and rights metadata; independently annotate IPA and acoustic cues.
@@ -161,3 +161,17 @@ Mya2Rom 0.4.4 exposes separate ipa, mlcts, mlcts2, simple and simple2 modes. The
 - Uploaded evidence artifacts (available until 2027-02-12 for Google/CRF and 2027-02-12 for Epitran): Google artifact SHA-256 `6315f8ab0b63be26a83f2cd30a2327e65c166e32ebda90c9bc69c5f3afa39399`; CRF `d91d42802ef5ca99c9ab192495a40782a05f8e3eb59801d623c485e111f36817`; Epitran `0574361cfe7b2bc817204debe0608b84f64ddbf68ecfc53299527c1e1fb69696`.
 - **Task ledger:** optional pinned Google FST raw-output build/smoke — DONE_VERIFIED; optional CRF/Epitran diagnostic execution and artifact upload — DONE_VERIFIED; comparative phonetic accuracy, model selection and runtime adoption — PARTIAL/BLOCKED by zero independent IPA gold and possible CRF training overlap. No model was promoted into production and no phonetic accuracy is claimed.
 - This terminal result supersedes the earlier note that run `43644381879` was still in progress. The required CI on the same head remains successful. Repository readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+
+### Source-scoped onset and medial evidence matrix — 2026-11-15
+
+The new `data/burmese/onset_cluster_evidence.csv` records 13 source-linked constraints and descriptive observations. It is deliberately not a binary list of every possible legal/illegal consonant pair:
+
+- Green's major-syllable analysis permits C or C+glide onsets; his minor-syllable analysis excludes complex onsets. The latter is a type-conditioned prohibition, not a global ban on clusters.
+- Green's foot-initial cluster analysis and onset simplification in reducing compounds are prosodic/morphological claims. They cannot be enforced by an orthographic grapheme parser without a prosodic and lexical analysis.
+- Green's /mj/ examples attest a glide-bearing onset but do not identify a unique Unicode medial sign.
+- Ishida's modern descriptive notes distinguish default YA/RA /j/ from velar-conditioned palatalization, WA's /w/ vs /ʊ/ contexts, and HA's aspiration/devoicing or selected /ʃ/ outcomes. These do not justify mechanical segment concatenation.
+- Hlaing's medial combinations are orthographic evidence only. STEDT's Written Burmese and historical Rangoon inventories remain separate source profiles and are not collapsed into a single modern Yangon rule.
+- The matrix uses existing source and claim IDs, a dedicated JSON Schema, and regression tests. Every row has `runtime_status=WITHHELD`; no new IPA or Ukrainian output was enabled.
+
+**Acceptance boundary:** DONE_VERIFIED for the source-linked evidence matrix and its integrity tests; PARTIAL for exhaustive segmental cluster legality, lexical distribution and profile-specific runtime rules. No source inspected in this pass supplies a complete modern onset × medial × rime legality table.
