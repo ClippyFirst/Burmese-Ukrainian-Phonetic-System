@@ -70,5 +70,28 @@
         "must_not_report_passthrough": true
       }
     }
+  ],
+  "phonetic_status_cases": [
+    {
+      "id": "medial-ra-wa-withheld",
+      "input": "ကြွေ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "recognized medials have no profile-adjudicated realization"
+    },
+    {
+      "id": "conjunct-withheld",
+      "input": "က္ကာ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "recognized stacked consonant has no profile-adjudicated realization"
+    },
+    {
+      "id": "kinzi-withheld",
+      "input": "င်္ကာ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "recognized kinzi has no profile-adjudicated realization"
+    }
   ]
 }
