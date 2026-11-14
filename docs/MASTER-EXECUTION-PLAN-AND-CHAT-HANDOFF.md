@@ -2614,3 +2614,12 @@ Latest code/test commit for this batch: 707481df47f8f734afed8e5e4a8ac1d17e334fdd
 **Regression coverage:** tests assert withheld outputs for six analysis-dependent onset/vowel examples; four established control outputs remain; a registry parity test ensures runtime allowlists exactly equal status=established rows. This is a precision/safety improvement, not expanded linguistic coverage. Browser IPA derivation is separate and has not been changed or proven equivalent; Python/browser parity remains PARTIAL.
 
 **CI:** current head ca6c20690094a0cec0e413917e141e1c1fd5e4a7 has required test workflow runs 43629935909 and 43629931025 IN_PROGRESS at checkpoint; no pass is claimed yet. Optional Epitran raw-output run 43629936000 is also IN_PROGRESS. Await exact-head results before marking DONE_VERIFIED.
+
+
+## Cross-runtime canonical IPA evidence gate — 2026-11-14
+
+Extended the evidence-status correction to the browser G2P path. The browser now checks generated ONSETS and VOWELS registry statuses before deriving canonical IPA. This is important because orthographic vowel-sign recognition in vowel_signs.csv is not itself proof that the phonetic value in ipa_vowels.csv is established. If the onset or any vowel value is analysis-dependent, browser IPA is withheld and the syllable status remains ANALYSIS_DEPENDENT rather than being flattened to a generic not-established state. Onset-only provisional hints remain separate from canonical IPA.
+
+Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
+
+Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI has been triggered by the PR update; record exact-head outcomes before promoting this task to DONE_VERIFIED.
