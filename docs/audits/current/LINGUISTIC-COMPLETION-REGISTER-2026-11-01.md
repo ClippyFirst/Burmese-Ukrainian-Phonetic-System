@@ -2220,3 +2220,11 @@ Exact implementation/test head `9333bdfec405f9fafb36bab42d90965e11f5e155`; requi
 |---|---|---|
 | Internal kinzi closes preceding Python syllable | DONE_VERIFIED (structural only) | Python now segments `မင်္ဂလာ` as `မင်္` + `ဂ` + `လာ`, records the first unit's kinzi/final nasal structurally, and withholds IPA. Prefix kinzi remains attached to its onset. Shared Python/Playwright fixture and exact-head CI [43638895912](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638895912) SUCCESS (280 Python + 68 subtests, 21 Node, 60 Playwright). |
 | Full Burmese syllable-boundary parity | PARTIAL | Only the kinzi boundary case is newly shared; broader source-annotated boundary corpus and all parser states remain outstanding. |
+
+
+## MLC medial inventory shared structural fixtures — 2026-11-14
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Shared 11-form MLC medial structural contract | DONE_VERIFIED (orthographic only) | Shared fixture covers four basic medials, five pairs and two triples; Python asserts ordered medial IDs and one syllable, Playwright asserts matching syllable row and withheld `ANALYSIS_DEPENDENT` IPA. Exact-head CI [43639262508](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43639262508) SUCCESS: 280 Python + 68 subtests, 21 Node, 60 Playwright. |
+| Medial phonetic realization / Ukrainian output | BLOCKED / EVIDENCE-LIMITED | No selected-profile expert-adjudicated medial IPA gold. Structural inventory must not be interpreted as phonetic evidence. |
