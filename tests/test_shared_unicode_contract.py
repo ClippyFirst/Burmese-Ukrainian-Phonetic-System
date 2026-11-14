@@ -41,6 +41,10 @@ def test_shared_kinzi_coda_boundary_fixture():
         assert result["graphemes"] == expected["graphemes"], case["id"]
         assert len(result["syllables"]) == expected["syllable_count"], case["id"]
         first = result["syllables"][0]
+        if "first_status" in expected:
+            assert first["status"] == expected["first_status"], case["id"]
+            assert first["raw"] == expected["graphemes"][0], case["id"]
+            continue
         if "medials" in expected:
             assert [item["id"] for item in first["medials"]] == expected["medials"], case["id"]
             assert first["ipa"] is None, case["id"]
