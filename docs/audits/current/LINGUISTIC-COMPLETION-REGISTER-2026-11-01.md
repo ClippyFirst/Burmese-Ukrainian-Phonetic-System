@@ -2257,3 +2257,25 @@ Independent expert-adjudicated IPA gold remains 0; empirical accuracy remains nu
 - **Required push CI:** run [43641788491](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43641788491) SUCCESS — 280 Python tests + 68 subtests; 21 Node tests; 62 Playwright tests; IPA-gold structural validator executed; npm audit found 0 vulnerabilities; production build, generated-data freshness and Chromium installation passed.
 - PR-triggered exact-head workflow [43641792351](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43641792351) was still running when this note was added; record its terminal result separately. Optional raw-output diagnostic run [43641792365](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43641792365) had Epitran raw-output complete successfully; CRF and Google Thrax/OpenFst jobs were still in progress. These jobs are diagnostics only, not accuracy estimates.
 - **Status: DONE_VERIFIED for the medial-ya contextual-ASAT structural parity case.** Overall Python/browser structural projection and phonological parity remain PARTIAL. Independent expert-adjudicated IPA gold remains 0; empirical accuracy remains null. No phonological rule, IPA value or Ukrainian pronunciation mapping was introduced.
+
+
+## Continuation — Python/browser structural boundary parity — 2026-11-14
+
+### Medial-ya contextual ASAT coda
+
+- Python's parser consumes ASAT immediately after medial-ya as a contextual coda (`coda.marker=asat`, `orthographic_function=contextual`). The browser had retained only a generic ASAT flag. Browser parsing now mirrors the Python position-specific structure and exposes a diagnostic note.
+- Shared fixture `ကျ်` asserts the medial ID and contextual coda in Python; Playwright asserts the same source unit, withheld `ANALYSIS_DEPENDENT` IPA and diagnostic note. ASAT after other medials is not generalized by this change.
+
+### Unsupported controls as boundaries for bare consonants
+
+- Python's standalone-bare-consonant guard tests actual Myanmar phonological neighbours. Browser had treated unsupported C0/C1 control segments as non-Myanmar display units but not as phonological boundaries, so a bare consonant next to DEL or U+009F could follow the contiguous-Myanmar inherent-vowel fallback.
+- Browser now treats `unsupportedControl` segments as boundaries for the standalone-consonant guard while preserving the controls as unsupported input. Shared fixtures cover DEL before `က` and U+009F after `က`; Python and Playwright both assert IPA withholding.
+
+### Exact-head verification
+
+- Final code/test head: `6389cac84344baa6d13940d650846667182a79ee`.
+- Required push workflow [43642080740](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43642080740) SUCCESS; required PR workflow [43642084798](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43642084798) SUCCESS on the exact same head.
+- Results: **281 Python tests + 68 subtests**, **21 Node tests**, **63 Playwright Chromium tests**; independent IPA-gold structural validator executed; npm install/audit found **0 vulnerabilities**; production build, generated-data freshness and Chromium installation passed.
+- These changes improve structural parity only. No IPA pronunciation, phonological rule or Ukrainian mapping was introduced. The independent expert-adjudicated IPA gold set remains empty (0); empirical accuracy remains null.
+- **Task ledger:** medial-ya contextual-ASAT structural case — DONE_VERIFIED; control-delimited bare-consonant withholding parity — DONE_VERIFIED; complete Python/browser structural projection and phonological parity — PARTIAL; profile-matched expert IPA adjudication — BLOCKED pending qualified annotation/evidence.
+- Repository remains a **PARTIAL PROTOTYPE**, not linguistically release-ready. Main remains unchanged; PR #147 remains open/draft/unmerged; PR #129 remains untouched.
