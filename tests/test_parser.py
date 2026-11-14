@@ -169,3 +169,17 @@ def test_mlc_medial_inventory_is_parsed_structurally_without_phonetic_guessing()
         assert syllable["analysis"]["status"] == "established"
         assert syllable["ipa"] is None
         assert syllable["phonology"] == {}
+
+
+def test_kinzi_is_attached_as_final_nasal_to_preceding_syllable():
+    parsed = parse_burmese("မင်္ဂလာ")
+
+    assert parsed["graphemes"] == ["မင်္", "ဂ", "လာ"]
+    assert len(parsed["syllables"]) == 3
+    first = parsed["syllables"][0]
+    assert first["onset"]["character"] == "မ"
+    assert first["kinzi"]["position"] == "coda"
+    assert first["kinzi"]["phonological_role"] == "final_nasal"
+    assert first["coda"]["character"] == "င"
+    assert first["coda"]["orthographic_function"] == "kinzi_final_nasal"
+    assert first["analysis"]["status"] == "established"
