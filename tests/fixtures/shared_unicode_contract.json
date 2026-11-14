@@ -398,6 +398,28 @@
         ],
         "first_ipa_status": "UNSUPPORTED"
       }
+    },
+    {
+      "id": "medial-ya-contextual-asat-coda",
+      "input": "ကျ်",
+      "python": {
+        "graphemes": [
+          "ကျ်"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya"
+        ],
+        "coda_marker": "asat",
+        "coda_orthographic_function": "contextual"
+      },
+      "browser": {
+        "syllables": [
+          "ကျ်"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT",
+        "first_note": "Знак asat після medial ya збережено як контекстну фіналь."
+      }
     }
   ]
 }
