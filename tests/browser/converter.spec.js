@@ -438,3 +438,24 @@ test("browser separates မြန်မာ into two syllables, not three",async(
   await expect(rows.nth(1).locator("strong")).toContainText("မာ");
   await expect(page.locator("#ipa")).toContainText("?");
 });
+
+test("unknown Myanmar extension letters stay attached to the same structural cluster as Python",async({page})=>{
+  await page.goto("/");
+  const source="ကာ\\uAA60";
+  await page.locator("#source").fill(source);
+  const rows=page.locator("#syllables .syllable");
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first().locator("strong")).toContainText(source);
+  await expect(page.locator("#uk")).toHaveText("⟦"+source+"⟧");
+  await expect(page.locator("#uk-status")).toContainText("UNCERTAIN");
+});
+
+test("unknown Myanmar extension letter before a supported onset preserves the onset boundary",async({page})=>{
+  await page.goto("/");
+  const source="\\uAA60ကာ";
+  await page.locator("#source").fill(source);
+  const labels=await page.locator("#syllables .syllable strong").allTextContents();
+  expect(labels).toEqual(["01  \\uAA60","02  ကာ"]);
+  await expect(page.locator("#uk")).toContainText("⟦\\uAA60⟧");
+  await expect(page.locator("#ipa")).toContainText("ka");
+});
