@@ -2446,3 +2446,9 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Uploaded evidence artifacts (available until 2027-02-12 for Google/CRF and 2027-02-12 for Epitran): Google artifact SHA-256 `6315f8ab0b63be26a83f2cd30a2327e65c166e32ebda90c9bc69c5f3afa39399`; CRF `d91d42802ef5ca99c9ab192495a40782a05f8e3eb59801d623c485e111f36817`; Epitran `0574361cfe7b2bc817204debe0608b84f64ddbf68ecfc53299527c1e1fb69696`.
 - **Task ledger:** optional pinned Google FST raw-output build/smoke — DONE_VERIFIED; optional CRF/Epitran diagnostic execution and artifact upload — DONE_VERIFIED; comparative phonetic accuracy, model selection and runtime adoption — PARTIAL/BLOCKED by zero independent IPA gold and possible CRF training overlap. No model was promoted into production and no phonetic accuracy is claimed.
 - This terminal result supersedes the earlier note that run `43644381879` was still in progress. The required CI on the same head remains successful. Repository readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+## 2026-11-15 continuation — source-scoped onset/medial inventory
+
+- Added 13-row evidence table: data/burmese/onset_cluster_evidence.csv; schema: schemas/onset_cluster_evidence.schema.json; integrity tests: tests/test_onset_cluster_evidence.py.
+- The table is evidence-only and reuses registered source/claim IDs. It scopes Green's complex-onset restriction to minor syllables, keeps foot-initial and reduction claims prosodic/morphological, and separates modern Ishida medial descriptions from Hlaing orthographic combinations and STEDT historical inventories.
+- All entries are WITHHELD from runtime. Exhaustive modern Yangon segmental cluster legality and lexical distribution remain PARTIAL. Exact-head CI is pending; do not mark DONE_VERIFIED until the new test passes on the final branch head.
