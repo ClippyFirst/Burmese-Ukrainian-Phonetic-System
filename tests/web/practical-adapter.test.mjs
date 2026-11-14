@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFileSync } from "node:fs";
-import { PRACTICAL } from "../../src/web/generated/data.js";
+import { PRACTICAL, ONSETS, VOWELS } from "../../src/web/generated/data.js";
 import { renderUkrainian } from "../../src/web/ukrainian-adapter.js";
 const browserEngineSource = readFileSync(new URL("../../src/web/app.js", import.meta.url), "utf8");
 
@@ -62,4 +62,16 @@ test("browser engine exposes onset-only provisional IPA for unresolved Burmese u
   assert.ok(browserEngineSource.includes('sy.provisionalUnresolvedFeatures=["inherent_vowel"]'));
   assert.ok(browserEngineSource.includes('s.ipa||"?"'));
   assert.ok(browserEngineSource.includes('if(s.provisionalIpa){const preview=document.createElement("small")'));
+});
+
+
+test("browser G2P source registries distinguish orthographic signs from established phonetic values", () => {
+  assert.equal(ONSETS["စ"].status, "analysis_dependent");
+  assert.equal(ONSETS["ဓ"].status, "analysis_dependent");
+  assert.equal(VOWELS.ai.status, "analysis_dependent");
+  assert.equal(VOWELS.ii.status, "analysis_dependent");
+  assert.equal(VOWELS.uu.status, "analysis_dependent");
+  assert.ok(browserEngineSource.includes('if(!onset||onset.status!=="established")return null'));
+  assert.ok(browserEngineSource.includes('VOWELS[id]?.status!=="established"'));
+  assert.ok(browserEngineSource.includes('VOWELS, SIGNS'));
 });
