@@ -686,4 +686,4 @@ def test_myg2p_full_dictionary_scan_supports_three_secondary_equivalence_groups_
     assert "ဒေါင့် occurs as a segmented component" in lexical["aung."]["interpretation"]
     assert "တိံ" in lexical["im"]["interpretation"]
     assert "ဟုမ်း" in lexical["um:"]["interpretation"]
-    assert "exact am: matches in myG2P = 0" in lexical["am:"]["interpretation"]
+    assert "Exact am: matches in myG2P = 0" in lexical["am:"]["interpretation"]
