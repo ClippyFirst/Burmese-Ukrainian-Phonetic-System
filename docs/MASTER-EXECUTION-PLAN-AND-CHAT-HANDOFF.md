@@ -2789,7 +2789,7 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 
 ## Exact-head verification — source-scoped phonology evidence continuation — 2026-11-15
 
-- Branch head: 424e27120d51c7d256b1d43b30b6897ea3761f42. Main remains unchanged; branch is 1034 commits ahead and 0 behind.
+- Code/data/test verification head: 424e27120d51c7d256b1d43b30b6897ea3761f42. After its successful CI, only documentation files were updated; final documentation closeout head: e46a6cb9a3d483f61e1ccc25bf05eb4e99adca27. Main remains unchanged; branch is 1038 commits ahead and 0 behind.
 - Added 13 source-linked onset/medial/coda evidence rows, dedicated JSON Schema and integrity tests. The source-backed matrix is explicitly not an exhaustive modern Yangon prohibited-cluster list. Green's minor-syllable complex-onset restriction is scoped to minor syllables; C(G) remains allowed in his major-syllable analysis. Ishida's velar-conditioned palatalization means ကျ/ကြ are not globally marked prohibited.
 - Added cross-source terminology reconciliation covering tone, checked/killed, creaky phonation, phonemic length vs duration, consonantal spread-glottis, /N/, medial/glide distinctions and transcription conventions. Corrected stale Duan & Zhu scope wording: full text inspected, five mixed-region speakers, 89 words/694 valid tokens; no audio accessed.
 - Exact final-head required CI [43647671663](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671663) SUCCESS: 286 Python tests + 68 subtests, 21 Node tests, 64 Playwright Chromium tests; 0 npm vulnerabilities; production build, generated-data freshness, IPA-gold structure validation and Chromium tests pass.
