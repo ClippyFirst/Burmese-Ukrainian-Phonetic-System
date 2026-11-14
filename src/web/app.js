@@ -179,7 +179,8 @@ function deriveIpa(sy){
   // The canonical browser IPA path must obey the same source-registry evidence
   // gate as Python. A graphemic sign can be established orthographically while
   // its phonetic realization remains analysis-dependent.
-  if(!onset||onset.status!=="established")return null;
+  if(!onset)return null;
+  if(onset.status!=="established"){sy.status="ANALYSIS_DEPENDENT";return null;}
   const vowelIdsByName={
     "MYANMAR VOWEL SIGN E":"e",
     "MYANMAR VOWEL SIGN I":"i",
@@ -195,7 +196,7 @@ function deriveIpa(sy){
     const name=SIGNS[sign]?.unicode_name;
     const id=vowelIdsByName[name];
     return !id||VOWELS[id]?.status!=="established";
-  }))return null;
+  })){sy.status="ANALYSIS_DEPENDENT";return null;}
   // The browser parser can recognize anusvara structurally, but its contextual
   // nasal/coda realization is not yet adjudicated. Match the Python adapter's
   // fail-closed boundary rather than mapping the sign to a bare vowel.
