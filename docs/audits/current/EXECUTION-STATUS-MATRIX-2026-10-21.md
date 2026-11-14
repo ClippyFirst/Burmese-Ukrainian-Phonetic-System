@@ -2340,3 +2340,11 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - First implementation exposed three regressions in prefix-kinzi behavior (`tests/test_malformed_ipa_withholding.py`, `tests/test_shared_unicode_contract.py`, `tests/test_unicode.py`); corrected by requiring the current cluster not to start with KINZI before splitting at the following onset. No tests were weakened.
 - Exact PR-head required CI on corrected code/test SHA `e97aaebf43d99e9d21597fba6b35625fb5ca0bd2`, run [43638895912](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638895912), SUCCESS: 280 Python tests + 68 subtests; 21 Node tests; 60 Playwright tests; npm audit 0 vulnerabilities; build and generated-data freshness passed.
 - **Status: DONE_VERIFIED for this kinzi structural boundary only.** Full syllabification parity across the entire Burmese orthography remains PARTIAL; the shared case is structural, not IPA gold.
+
+
+## Shared all-medials structural parity fixtures — 2026-11-14
+
+- Extended `tests/fixtures/shared_unicode_contract.json` with the full 11-form MLC medial inventory: four basic signs, five two-medial combinations and two three-medial combinations. Each fixture checks the ordered Python medial IDs, one-cluster boundary, browser syllable row and `ANALYSIS_DEPENDENT` IPA withholding.
+- Python and Playwright suites consume the same cases. These are Unicode/orthographic structural probes only; no medial phonetic realization or Ukrainian candidate was added.
+- Exact PR-head required CI on code/test SHA `702568dcf2214787938b6964708cb6e7d4d52e92`, run [43639262508](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43639262508), SUCCESS: 280 Python tests + 68 subtests; 21 Node tests; 60 Playwright tests; npm audit 0 vulnerabilities; build, generated-data freshness and Chromium install passed.
+- **Status: DONE_VERIFIED for structural coverage of the listed medial inventory and its fail-closed browser behavior.** Complete syllable parsing and phonetic realization remain PARTIAL/BLOCKED by source-profile evidence and expert adjudication.
