@@ -362,6 +362,42 @@
         ],
         "first_ipa_status": "ANALYSIS_DEPENDENT"
       }
+    },
+    {
+      "id": "unknown-myanmar-extension-after-supported-syllable",
+      "input": "ကာꩠ",
+      "python": {
+        "graphemes": [
+          "ကာꩠ"
+        ],
+        "syllable_count": 1,
+        "first_status": "partially_unparsed"
+      },
+      "browser": {
+        "syllables": [
+          "ကာꩠ"
+        ],
+        "first_ipa_status": "UNCERTAIN"
+      }
+    },
+    {
+      "id": "unknown-myanmar-extension-before-supported-onset",
+      "input": "ꩠကာ",
+      "python": {
+        "graphemes": [
+          "ꩠ",
+          "ကာ"
+        ],
+        "syllable_count": 2,
+        "first_status": "unsupported_or_malformed"
+      },
+      "browser": {
+        "syllables": [
+          "ꩠ",
+          "ကာ"
+        ],
+        "first_ipa_status": "UNSUPPORTED"
+      }
     }
   ]
 }
