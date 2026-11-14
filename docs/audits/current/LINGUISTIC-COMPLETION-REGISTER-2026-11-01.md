@@ -2328,3 +2328,10 @@ Independent expert-adjudicated IPA gold remains 0; empirical accuracy remains nu
 - Uploaded evidence artifacts (available until 2027-02-12 for Google/CRF and 2027-02-12 for Epitran): Google artifact SHA-256 `6315f8ab0b63be26a83f2cd30a2327e65c166e32ebda90c9bc69c5f3afa39399`; CRF `d91d42802ef5ca99c9ab192495a40782a05f8e3eb59801d623c485e111f36817`; Epitran `0574361cfe7b2bc817204debe0608b84f64ddbf68ecfc53299527c1e1fb69696`.
 - **Task ledger:** optional pinned Google FST raw-output build/smoke — DONE_VERIFIED; optional CRF/Epitran diagnostic execution and artifact upload — DONE_VERIFIED; comparative phonetic accuracy, model selection and runtime adoption — PARTIAL/BLOCKED by zero independent IPA gold and possible CRF training overlap. No model was promoted into production and no phonetic accuracy is claimed.
 - This terminal result supersedes the earlier note that run `43644381879` was still in progress. The required CI on the same head remains successful. Repository readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+## 2026-11-15 — onset/medial evidence register update
+
+- Source-backed onset/medial evidence inventory — PARTIAL pending exact-head CI: 13 source-linked rows, dedicated JSON Schema, and tests added. No phonological runtime or IPA mapping changed.
+- Source-scoped prohibition — Green's complex-onset restriction applies to minor syllables, not globally; major syllables permit C(G) in his analysis.
+- Modern medial descriptions — YA/RA palatalization, WA glide/rime ambiguity and HA aspiration/fusion remain contextual candidates; Hlaing multi-medial sequences are orthographic-only; STEDT inventories remain profile/historical-specific.
+- Remaining acceptance: exact-head CI success; expand only where a source provides exact cluster/lexical evidence; do not infer a complete legality table from the current sources.
