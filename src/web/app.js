@@ -315,7 +315,12 @@ function isStandaloneBareConsonant(segments,index){
   const previous=segments[index-1],next=segments[index+1];
   // Do not apply the single-token guard to adjacent Myanmar clusters: those
   // remain on the existing contextual path until separately adjudicated.
-  return (!previous||previous.nonMyanmar)&&(!next||next.nonMyanmar);
+  // Unsupported controls are preserved as explicit invalid segments, but
+  // they are still boundaries (not Myanmar phonological neighbours), matching
+  // Python's _is_myanmar_phonological_char() check.
+  const leftBoundary=!previous||previous.nonMyanmar||previous.unsupportedControl;
+  const rightBoundary=!next||next.nonMyanmar||next.unsupportedControl;
+  return leftBoundary&&rightBoundary;
 }
 function convert(text){
   const normalized=normalize(text),segments=segment(normalized);
