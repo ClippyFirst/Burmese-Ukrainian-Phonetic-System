@@ -1112,6 +1112,90 @@
         "tone_mark": null,
         "analysis_status": "established"
       }
+    },
+    {
+      "id": "tall-aa-with-asat-contextual-coda",
+      "input": "ကာ်",
+      "python_projection": {
+        "raw": "ကာ်",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "e-aa-asat-contextual-coda",
+      "input": "ကော်",
+      "python_projection": {
+        "raw": "ကော်",
+        "codepoints": [
+          "U+1000",
+          "U+1031",
+          "U+102C",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "e",
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "canonical-asat-after-dot-below",
+      "input": "ကာ့်",
+      "python_projection": {
+        "raw": "ကာ့်",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+1037",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": "dot_below",
+        "analysis_status": "established"
+      }
     }
   ]
 }

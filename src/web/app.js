@@ -187,7 +187,7 @@ function parseCluster(raw,withholdBareInherent=false){
     }
   }
   while(i<raw.length){
-    if(raw[i]===ASAT){sy.asat=true;i++;continue;}
+    if(raw[i]===ASAT){sy.asat=true;if(!sy.coda)sy.coda={marker:"asat",codepoint:"U+103A",orthographic_function:"contextual"};i++;continue;}
     if(raw[i]==="ံ"||raw[i]==="့"||raw[i]==="း"){sy.prosodyMarks.push(raw[i]);sy.status="ANALYSIS_DEPENDENT";i++;continue;}
     sy.status="UNCERTAIN";sy.notes.push("Нерозібраний знак "+raw[i++]);
   }
