@@ -92,6 +92,34 @@
       "expected_python_phonetic_status": "analysis_dependent",
       "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
       "reason": "recognized kinzi has no profile-adjudicated realization"
+    },
+    {
+      "id": "nasal-coda-withheld",
+      "input": "ပင်",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "nasal coda surface realization is not adjudicated"
+    },
+    {
+      "id": "checked-coda-withheld",
+      "input": "ကိုက်",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "checked coda and vowel combination are not adjudicated"
+    },
+    {
+      "id": "asat-rime-withheld",
+      "input": "ကော်",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "asat-conditioned rime is not adjudicated"
+    },
+    {
+      "id": "anusvara-withheld",
+      "input": "ကံ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "anusvara realization remains contextual and unresolved"
     }
   ]
 }
