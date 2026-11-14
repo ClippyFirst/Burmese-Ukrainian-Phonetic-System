@@ -25,7 +25,6 @@ const NASAL_CODAS=new Set(["င","န","မ","ည"]);
 const CHECKED_CODAS=new Set(["က","ခ","ဂ","ဃ","စ","ဆ","ဇ","ဈ","တ","ထ","ဒ","ဓ","ပ","ဖ","ဗ","ဘ"]);
 const MEDIAL_CHARS=new Set(Object.keys(MEDIALS)), VOWEL_CHARS=new Set(Object.keys(SIGNS)), BASE=new Set(Object.keys(ONSETS));
 const ROMANIZATION_SUPPORTED_CHARS=new Set(ROMANIZATION_SUPPORTED), ROMANIZATION_BASE_CHARS=new Set(ROMANIZATION_BASES);
-const PHONETIC_INPUT_CHARS=new Set([...BASE,...VOWEL_CHARS,...MEDIAL_CHARS,ASAT,VIRAMA,"့","း"]);
 const STATUS_RANK={ESTABLISHED:0,WELL_SUPPORTED:1,PROPOSED:2,ANALYSIS_DEPENDENT:3,PROVISIONAL:4,NOT_ESTABLISHED:5,UNSUPPORTED:6,UNCERTAIN:7};
 function aggregateStatus(statuses,emptyStatus="NOT_ESTABLISHED"){
   if(!statuses.length)return emptyStatus;
@@ -94,13 +93,14 @@ function segment(text){
       out.push({raw:s.slice(start,i),nonMyanmar:true});continue;
     }
     const start=i;let prev=String.fromCodePoint(s.codePointAt(i));i+=widthAt(s,i);
-    if(!PHONETIC_INPUT_CHARS.has(prev)){
-      out.push({raw:prev,nonMyanmar:false});
-      continue;
-    }
+    // Match Python's structural segmentation: once inside a Myanmar run,
+    // retain every Myanmar-block code point in the current orthographic unit.
+    // Inventory support is a parser concern, not a segmentation boundary;
+    // otherwise an unknown extension letter after a valid syllable is split
+    // into a synthetic standalone token in the browser but attached as an
+    // unparsed tail in Python.
     while(i<s.length&&isMyanmarTextAt(s,i)){
       const ch=String.fromCodePoint(s.codePointAt(i));
-      if(!PHONETIC_INPUT_CHARS.has(ch))break;
       const isCodaBase=BASE.has(ch)&&s[i+ch.length]===ASAT;
       const followsKinzi=s.slice(Math.max(start,i-3),i)===KINZI;
       const startsWithKinzi=s.slice(start,i).startsWith(KINZI);
