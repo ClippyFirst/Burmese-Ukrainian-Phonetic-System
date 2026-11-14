@@ -2331,3 +2331,12 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Old browser expectations for `ပင်`, `ကုန်`, `ကိုက်` and `ကော်` were changed from guessed IPA to withheld output. This intentionally removes unsupported browser-only canonical IPA rather than promoting those rules into Python.
 - Exact PR-head required CI on code/test SHA `93e9c9283acb757ec7cb0a61d974faecc7e45eff`, run [43638560797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638560797), SUCCESS: 278 Python tests + 68 subtests; 21 Node tests; 59 Playwright tests; npm audit reports 0 vulnerabilities; build, generated-data freshness and Chromium install pass.
 - **Status remains PARTIAL:** status-level parity is verified for these cases, but complete parser object, syllable boundary, all vowel-combination and IPA→Ukrainian trace parity remain incomplete. Independent expert-adjudicated IPA gold remains 0; empirical accuracy is null.
+
+
+## Kinzi syllable-boundary parity — 2026-11-14
+
+- Corrected Python segmentation for internal kinzi: the `င + U+103A + U+1039` sequence closes the preceding syllable before the next written onset, matching the browser parser. Prefix kinzi remains attached to its following onset; the parser distinguishes these contexts explicitly.
+- Python now records internal kinzi as a structural final nasal (`kinzi.position=coda`, `coda.character=င`) while keeping IPA withheld. Shared fixture `မင်္ဂလာ` asserts the same three browser/Python syllable units: `မင်္`, `ဂ`, `လာ`.
+- First implementation exposed three regressions in prefix-kinzi behavior (`tests/test_malformed_ipa_withholding.py`, `tests/test_shared_unicode_contract.py`, `tests/test_unicode.py`); corrected by requiring the current cluster not to start with KINZI before splitting at the following onset. No tests were weakened.
+- Exact PR-head required CI on corrected code/test SHA `e97aaebf43d99e9d21597fba6b35625fb5ca0bd2`, run [43638895912](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638895912), SUCCESS: 280 Python tests + 68 subtests; 21 Node tests; 60 Playwright tests; npm audit 0 vulnerabilities; build and generated-data freshness passed.
+- **Status: DONE_VERIFIED for this kinzi structural boundary only.** Full syllabification parity across the entire Burmese orthography remains PARTIAL; the shared case is structural, not IPA gold.
