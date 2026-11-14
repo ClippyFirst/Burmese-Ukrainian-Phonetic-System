@@ -2206,3 +2206,15 @@ Exact Unicode candidate scan against the eight missing source units:
 - im (ိံ), im: (ိံး), im. (ိံ့) and um. (ုမ့်): no suffix matches.
 
 No candidates were promoted to lexical pronunciation evidence. All eight collision statuses remain SECONDARY_ONE_SIDE_ONLY. This word list is a candidate-discovery layer only; suffix matching does not perform Burmese syllabification and no IPA can be inferred from it. The findings are registered as CLM-DANGERCHITTHU-ORTHOGRAPHIC-CANDIDATE-SCAN-001.
+
+
+## Verification — 2026-11-14
+
+The latest code/data/test head for this batch is 0b061ef23132cbfa65e94e6c4307375a2c7e68b9. Required CI run 43622250968 completed SUCCESS:
+- 273 Python tests and 68 Python subtests passed.
+- 20 Node tests passed; 0 failed.
+- 58 Playwright Chromium tests passed.
+- Independent IPA-gold structural validation passed.
+- npm ci, high-severity npm audit (0 vulnerabilities), production build and generated-data freshness check passed.
+
+Optional diagnostic run 43622250978: CRF baseline and Epitran raw-output jobs completed SUCCESS; Google WFST raw-output job was still IN_PROGRESS at last check. Do not infer a new accuracy result from these diagnostics. Previous completed run 43620353669 had Google WFST 6/6 structural outputs, 0 runtime errors, 0 independent gold (accuracy null), and CRF 100 predictions / 84 source-concordant / 0 gold (NOT_SCORED_POSSIBLE_TRAINING_OVERLAP).
