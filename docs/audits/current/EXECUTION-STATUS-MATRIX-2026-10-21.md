@@ -2191,4 +2191,18 @@ The prior handoff wording treated the myG2P CC BY-NC-SA 4.0 license as a blocker
 - **Evidence boundary:** myG2P remains secondary research/reference data, not independent adjudicated IPA gold. Its IPA values may be compared and audited, not treated as ground truth.
 - The project owner confirms this is a research project and authorizes the project to proceed on that basis.
 - OpenSLR SLR80 is licensed CC BY-SA 4.0 and has a public transcript index, but actual TSV retrieval failed in this environment; per the owner's instruction, no corpus rows/audio are used or imported until the bytes are accessible. It remains metadata-only.
-- Added CLM-MYG2P-NONCOMMERCIAL-RESEARCH-USE-001 and a regression test. Registry now 89 sources / 190 claims; required CI pending on the new code/test head.
+- Added CLM-MYG2P-NONCOMMERCIAL-RESEARCH-USE-001 and a regression test. Registry now 90 sources / 191 claims; required CI pending on the new code/test head.
+
+
+## BSD Burmese word-list scan — 2026-11-14
+
+Added an accessible 40,000+ Burmese orthographic word list from dangerchitthu/myanmar-karen-word-lists. Its README states BSD licensing, the line-breaking/spell-checking purpose, and source projects including my-l10n and a SourceForge Myanmar-English dictionary. The exact raw file was retrieved; blob SHA 11fdf476285e242d383d3ca1047138deda3f80eb; license blob SHA 6f46e92f132c607cba418ffbecc9f4a29de25c01. The fetched file contained 41,343 non-comment rows. It provides orthographic strings only, not glosses, syllabification or IPA.
+
+Exact Unicode candidate scan against the eight missing source units:
+- am: (ံး): 483 raw suffix hits, but every hit had a dependent vowel sign immediately before ံး; no exact candidate for the standalone source-unit string was established.
+- aung. (ေါင့်): ခေါင့်, ဒေါင့်; neither was independently verified as a lexical headword. Wiktionary explicitly labels ဒေါင့် as a phonetic respelling of ထောင့်, so it is not a second lexical item for the missing spelling.
+- ui (ို်): ယို် — orthographic candidate only, not independently verified.
+- um: (ုမ်း): ရေခအုမ်း, လစာနှုမ်း — unverified candidate strings, no gloss or pronunciation.
+- im (ိံ), im: (ိံး), im. (ိံ့) and um. (ုမ့်): no suffix matches.
+
+No candidates were promoted to lexical pronunciation evidence. All eight collision statuses remain SECONDARY_ONE_SIDE_ONLY. This word list is a candidate-discovery layer only; suffix matching does not perform Burmese syllabification and no IPA can be inferred from it. The findings are registered as CLM-DANGERCHITTHU-ORTHOGRAPHIC-CANDIDATE-SCAN-001.
