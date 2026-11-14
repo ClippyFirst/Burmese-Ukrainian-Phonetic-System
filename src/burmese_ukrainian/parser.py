@@ -170,6 +170,13 @@ def _parse_cluster(cluster: str) -> Syllable:
         }
         i += 3
 
+    # Canonical Myanmar ordering can place a tone mark before a written
+    # final consonant. Preserve that mark, then recognize the base+ASAT coda.
+    while i < len(cluster) and cluster[i] in SPECIAL and SPECIAL[cluster[i]] in {"dot_below", "visarga"}:
+        role = SPECIAL[cluster[i]]
+        sy.tone_mark = {"marker": role, "codepoint": f"U+{ord(cluster[i]):04X}"}
+        i += 1
+
     # A final consonant is written as a base consonant followed by ASAT.
     # When it follows the syllable onset/medials/vowels, keep it inside this
     # orthographic syllable as a coda rather than leaving it unparsed.

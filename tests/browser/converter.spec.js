@@ -207,6 +207,9 @@ test("shared structural fixtures preserve kinzi coda syllable boundaries", async
     if (fixture.browser.first_note) {
       await expect(page.locator("#syllables"), fixture.id).toContainText(fixture.browser.first_note);
     }
+    if (fixture.browser.required_preserved_mark) {
+      await expect(page.locator("#syllables"), fixture.id).toContainText(fixture.browser.required_preserved_mark);
+    }
   }
 });
 

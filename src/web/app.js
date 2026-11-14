@@ -147,10 +147,14 @@ function parseCluster(raw,withholdBareInherent=false){
   // Read these tail marks without changing the underlying syllable analysis.
   if(!sy.coda){
     let j=i;
-    while(j<raw.length&&(raw[j]==="ံ"||raw[j]==="့"||raw[j]==="း"))j++;
+    const marks=[];
+    while(j<raw.length&&(raw[j]==="ံ"||raw[j]==="့"||raw[j]==="း"))marks.push(raw[j++]);
     if(j+1<raw.length&&BASE.has(raw[j])&&raw[j+1]===ASAT){
       sy.coda=raw[j];i=j+2;sy.asat=true;
-      sy.notes.push("Канонічний порядок знаків нормалізовано перед визначенням фіналі.");
+      // Do not lose the tone/prosody marks that precede the final consonant.
+      sy.prosodyMarks.push(...marks);
+      if(marks.length)sy.status="ANALYSIS_DEPENDENT";
+      sy.notes.push("Канонічний порядок знаків збережено перед визначенням фіналі.");
     }
   }
   while(i<raw.length){

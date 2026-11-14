@@ -420,6 +420,27 @@
         "first_ipa_status": "ANALYSIS_DEPENDENT",
         "first_note": "Знак asat після medial ya збережено як контекстну фіналь."
       }
+    },
+    {
+      "id": "tone-mark-before-asat-coda",
+      "input": "ကာ့င်",
+      "python": {
+        "graphemes": [
+          "ကာ့င်"
+        ],
+        "syllable_count": 1,
+        "tone_mark_marker": "dot_below",
+        "coda_character": "င",
+        "coda_orthographic_function": "final_consonant"
+      },
+      "browser": {
+        "syllables": [
+          "ကာ့င်"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT",
+        "first_note": "ကာ့င်",
+        "required_preserved_mark": "့"
+      }
     }
   ],
   "bare_consonant_boundary_cases": [
