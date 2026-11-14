@@ -673,10 +673,10 @@ def test_myg2p_full_dictionary_scan_supports_three_secondary_equivalence_groups_
     assert "1 component occurrence" in claim["claim"]
     assert "700 syllable occurrences" in claim["claim"]
     assert "all 700 were preceded by ု" in claim["claim"]
-    assert "No syllable matches were found for im:" in claim["claim"]
+    assert "im: / ိံး" in claim["claim"]
     assert "im. / ိံ့" in claim["claim"]
-    assert "No syllable matches were found for ui" in claim["claim"]
-    assert "No syllable matches were found for um." in claim["claim"]
+    assert "ui / ို်" in claim["claim"]
+    assert "um. / ုမ့်" in claim["claim"]
     assert "not independent gold or primary MLC adjudication" in claim["claim"]
 
     expected_equivalence = {"aung.", "im", "um:"}
