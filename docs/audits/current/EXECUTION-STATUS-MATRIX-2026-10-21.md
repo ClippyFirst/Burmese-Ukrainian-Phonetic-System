@@ -2162,7 +2162,7 @@ Required CI **43586334287 SUCCESS** on `dd494662f0c94bcf1f59170fe65ea6cd41199c64
 - Optional diagnostic run 43620353669 completed SUCCESS across Epitran, CRF and Google Thrax/OpenFst raw-output jobs. Google WFST: 6/6 structural probes produced outputs, 0 runtime errors, independent gold count 0, accuracy null. CRF: 100/100 predictions, 84 source-concordant rows, gold count 0, scoring status NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. These are raw-output diagnostics only, not accuracy benchmarks.
 - Evidence registries: 89 sources / 189 claims; CSV widths/refs/ID uniqueness validated. Collision lexical audit contains 25 groups; 8 target groups remain SECONDARY_ONE_SIDE_ONLY. TUFS examples add evidence only to already-observed sides and expose a secondary transcription disagreement for စောင့်; no mapping was promoted.
 - Open PRs: #147 (research: map Burmese medial and G2P evidence) and #129 (benchmark/hybrid). #147 remains open; no review submissions or inline review threads. #129 remains untouched because its branch is divergent from main (previous comparison: 53 ahead / 17 behind); compatible work already ported to #147 in the earlier continuation.
-- Remaining blockers: obtain permissioned access to the 2019 MED second edition (CiNii/NDL/official Ministry evidence identifies a 709-page copy at University of Tokyo General Library and copies at National Library Myanmar; no entry pages or transcription key inspected); find lexical examples for the missing sides of the eight one-sided groups; expert-adjudicated independent IPA gold; accessibility manual QA; full hermetic pinning for Google WFST dependencies; myG2P CC BY-NC-SA commercial-use resolution.
+- Remaining blockers: obtain permissioned access to the 2019 MED second edition (CiNii/NDL/official Ministry evidence identifies a 709-page copy at University of Tokyo General Library and copies at National Library Myanmar; no entry pages or transcription key inspected); find lexical examples for the missing sides of the eight one-sided groups; expert-adjudicated independent IPA gold; accessibility manual QA; full hermetic pinning for Google WFST dependencies; myG2P commercial deployment/distribution rights (non-commercial research use is permitted under CC BY-NC-SA 4.0).
 - Final classification: PARTIAL PROTOTYPE, not release-ready. Engineering CI is green on the code/test head; linguistic evidence, licensing and independent gold remain incomplete.
 
 
@@ -2179,3 +2179,16 @@ Optional diagnostics run 43620353669 completed SUCCESS: Epitran, CRF and Google 
 - Optional diagnostic workflow 43620353669 is also complete SUCCESS: Epitran, CRF and Google WFST raw-output jobs succeeded. Google WFST: 6/6 outputs, 0 runtime errors, no independent gold, accuracy null. CRF: 100 predictions, 84 source-concordant, no gold, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. No accuracy claim is made.
 - Final evidence totals: 89 sources / 189 claims; 25 collision groups; eight target groups remain one-sided. No primary MLC entries, independent adjudicated IPA gold or runtime/Ukrainian mapping promotion was obtained.
 - Final status remains PARTIAL PROTOTYPE, not release-ready; next genuine blocker is permissioned page-level access to the 2019 MED second edition and expert lexical/IPA adjudication.
+
+
+## myG2P license scope correction — 2026-11-14
+
+The prior handoff wording treated the myG2P CC BY-NC-SA 4.0 license as a blocker without separating research from commercial use. That was too broad. The upstream repository README explicitly grants non-commercial reuse subject to attribution and ShareAlike; it documents the five-field dataset (Burmese orthography, syllable segmentation, respelling, IPA) and says the lexicon is based mainly on MLC words with extensions for foreign pronunciations.
+
+- **Current non-commercial research:** permitted under the published CC BY-NC-SA 4.0 license; no separate maintainer permission is required for this activity, provided its conditions are followed.
+- **Redistributed derived data:** retain attribution and CC BY-NC-SA-compatible terms.
+- **Commercial deployment/distribution:** not covered; separate permission or removal of the material is required.
+- **Evidence boundary:** myG2P remains secondary research/reference data, not independent adjudicated IPA gold. Its IPA values may be compared and audited, not treated as ground truth.
+- The project owner confirms this is a research project and authorizes the project to proceed on that basis.
+- OpenSLR SLR80 is licensed CC BY-SA 4.0 and has a public transcript index, but actual TSV retrieval failed in this environment; per the owner's instruction, no corpus rows/audio are used or imported until the bytes are accessible. It remains metadata-only.
+- Added CLM-MYG2P-NONCOMMERCIAL-RESEARCH-USE-001 and a regression test. Registry now 89 sources / 190 claims; required CI pending on the new code/test head.
