@@ -2460,3 +2460,11 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - The optional comparator run [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671628) is diagnostic only; Epitran and CRF jobs succeeded, Google FST job was still in progress at this note. No diagnostic output is IPA gold or an accuracy result.
 - **Task ledger:** source-backed onset/medial evidence matrix + schema + integrity tests — DONE_VERIFIED; cross-source terminology reconciliation — DONE_VERIFIED as evidence documentation; exhaustive modern Yangon onset × medial × rime legality — PARTIAL; phonological runtime/IPA mapping — WITHHELD.
 - This supersedes the previous note that exact-head CI was pending. Independent adjudicated IPA gold remains 0; accuracy remains null. Main remains unchanged; PR #147 remains open/draft.
+
+## Terminal optional diagnostic closeout — 2026-11-15
+
+Optional run [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671628) is now **SUCCESS** on code/data/test head 424e27120d51c7d256b1d43b30b6897ea3761f42. All jobs passed: Epitran raw-output, CRF baseline and pinned Google Thrax/OpenFst build/symbol-table/raw-output.
+- Google FST: 6/6 outputs, 0 runtime errors, gold 0, accuracy null; report SHA-256 7fec8ba8845c5fe8758155708eb8d32cfa1fa684b46eeaabc7fc8455abae0606.
+- CRF: 100/100 predictions, 84/100 source-concordant, gold 0, accuracy null, scoring status NOT_SCORED_POSSIBLE_TRAINING_OVERLAP.
+- Artifacts: Google 14134846400 (digest ac5cd0b7b00a746d67116fc32831369e555e316d554bedfc34bf6b18378b0949; expires 2027-02-12); Epitran 14134308008 (digest 13ae2b78ac2a9b961e1e10231a58f787fb5b11142640997b7a1bf6ff327dc797; expires 2027-02-12); CRF 14135275454 (digest dcd9667213ea2c611795a8b3851c7809ea26b853755e6b36291d373e9466ccc0; expires 2026-12-14).
+These are raw-output diagnostics, not independent IPA gold, accuracy or promotion evidence. Earlier "still in progress" note is superseded.
