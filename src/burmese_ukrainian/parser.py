@@ -72,7 +72,10 @@ def segment_graphemes(text: str) -> list[str]:
             if (
                 s[i] in BASE_CONSONANTS
                 and not is_coda_base
-                and (s[i - 1] != "\u1039" or s[i - 3 : i] == KINZI)
+                and (
+                    s[i - 1] != "\u1039"
+                    or (s[i - 3 : i] == KINZI and not s[start:i].startswith(KINZI))
+                )
             ):
                 break
             i += 1
