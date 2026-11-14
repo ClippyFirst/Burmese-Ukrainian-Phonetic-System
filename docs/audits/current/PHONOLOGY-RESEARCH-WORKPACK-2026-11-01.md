@@ -186,3 +186,7 @@ Duan & Zhu's full text is now inspected and the previous abstract-only wording i
 ### Verification update — 2026-11-15
 
 The source-scoped onset/medial matrix and cross-source terminology table are now present and verified on the exact code/data/test head. Required code/data/test CI [43647671663](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671663) passed: 286 Python tests + 68 subtests, 21 Node tests, 64 Playwright Chromium tests, zero npm vulnerabilities, production build, generated-data freshness and IPA-gold structural validator. The evidence matrix is DONE_VERIFIED as a source-linked artifact; exhaustive modern Yangon cluster legality and phonological runtime coverage remain PARTIAL. No IPA or Ukrainian mapping was promoted.
+
+### Optional diagnostics — terminal status
+
+Workflow 43647671628 has now completed successfully on the code/data/test head: Epitran, CRF and pinned Google Thrax/OpenFst all passed. Google returned 6/6 outputs and 0 runtime errors; CRF returned 100/100 predictions with 84 source-concordant rows. Both have zero independent gold and null accuracy; CRF remains unscored due possible training overlap. Artifact IDs/digests and expiry are recorded in the master handoff and execution matrix. No engine was promoted.
