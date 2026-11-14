@@ -574,14 +574,17 @@ def test_tufs_med_ipa_crosswalk_and_lexical_examples_preserve_mlcts_boundary():
     assert "absent from the 2019 MED" in coverage["claim"]
     assert all(row["status"] == "DOCUMENTARY" for row in (crosswalk, tone, examples, divergence, coverage))
 
-    expected_one_sided = {"am:", "aung.", "im", "im:", "im.", "ui", "um:", "um."}
-    assert expected_one_sided <= lexical.keys()
+    expected_one_sided = {"am:", "im:", "im.", "ui", "um."}
+    expected_equivalence = {"aung.", "im", "um:"}
+    assert expected_one_sided | expected_equivalence <= lexical.keys()
     assert all(lexical[key]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY" for key in expected_one_sided)
+    assert all(lexical[key]["evidence_status"] == "SECONDARY_SYSTEM_EQUIVALENCE" for key in expected_equivalence)
     assert "483 raw strings" in lexical["am:"]["interpretation"]
+    assert "700 syllable suffix hits" in lexical["am:"]["interpretation"]
     assert "ခေါင့် and ဒေါင့်" in lexical["aung."]["interpretation"]
     assert "ယို်" in lexical["ui"]["interpretation"]
     assert "ရေခအုမ်း and လစာနှုမ်း" in lexical["um:"]["interpretation"]
-    assert "no forms ending in the missing source unit ိံ" in lexical["im"]["interpretation"]
+    assert "no forms ending in the missing source unit ိံ" in lexical["im"]["interpretation"] or "myG2P scan supplies" in lexical["im"]["interpretation"]
     assert "/káɴ/ (ကမ်း" in lexical["am:"]["observed_ipa"]
     assert "/sâuɴ/ (စောင့်" in lexical["aung."]["observed_ipa"]
     assert "/t̪èiɴ/ (သိမ်" in lexical["im"]["observed_ipa"]
@@ -628,11 +631,13 @@ def test_bsd_burmese_wordlist_candidate_scan_does_not_promote_unverified_lexemes
     assert "ခေါင့်, ဒေါင့်" in claim["claim"]
     assert "ယို်" in claim["claim"]
     assert "ရေခအုမ်း, လစာနှုမ်း" in claim["claim"]
-    assert "all had a dependent vowel sign immediately before ံး" in claim["claim"]
-    assert "no collision status is promoted" in claim["claim"]
+    assert "all 483 were preceded specifically by ု" in claim["claim"]
+    assert "this BSD scan itself promotes no collision status" in claim["claim"]
 
-    expected_one_sided = {"am:", "aung.", "im", "im:", "im.", "ui", "um:", "um."}
+    expected_one_sided = {"am:", "im:", "im.", "ui", "um."}
+    expected_equivalence = {"aung.", "im", "um:"}
     assert all(lexical[key]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY" for key in expected_one_sided)
+    assert all(lexical[key]["evidence_status"] == "SECONDARY_SYSTEM_EQUIVALENCE" for key in expected_equivalence)
 
 
 def test_rickaym_dictionary_dataset_remains_metadata_only_without_provenance_or_ipa():
@@ -650,3 +655,35 @@ def test_rickaym_dictionary_dataset_remains_metadata_only_without_provenance_or_
     assert "Only the first 2,000 rows" in claim["claim"]
     assert "no full-dataset suffix scan was completed" in claim["claim"]
     assert "No rows or phonetics were imported" in claim["claim"]
+
+
+def test_myg2p_full_dictionary_scan_supports_three_secondary_equivalence_groups_only():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+    lexical = {row["mlcts"]: row for row in _rows(DATA / "romanization_rime_collision_lexical_audit.csv")}
+
+    source = sources["MYG2P2026"]
+    claim = claims["CLM-MYG2P-MLCTS-COLLISION-SCAN-001"]
+    assert "24,802 five-field rows" in source["scope"]
+    assert "0 malformed rows" in source["scope"]
+    assert claim["source_id"] == "MYG2P2026"
+    assert claim["status"] == "DOCUMENTARY"
+    assert "5 component occurrences" in claim["claim"]
+    assert "2 component occurrences" in claim["claim"]
+    assert "1 component occurrence" in claim["claim"]
+    assert "700 syllable occurrences" in claim["claim"]
+    assert "all 700 were preceded by ု" in claim["claim"]
+    assert "No syllable matches were found for im:" in claim["claim"]
+    assert "No syllable matches were found for im." in claim["claim"]
+    assert "No syllable matches were found for ui" in claim["claim"]
+    assert "No syllable matches were found for um." in claim["claim"]
+    assert "not independent gold or primary MLC adjudication" in claim["claim"]
+
+    expected_equivalence = {"aung.", "im", "um:"}
+    expected_one_sided = {"am:", "im:", "im.", "ui", "um."}
+    assert all(lexical[key]["evidence_status"] == "SECONDARY_SYSTEM_EQUIVALENCE" for key in expected_equivalence)
+    assert all(lexical[key]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY" for key in expected_one_sided)
+    assert "ဒေါင့် occurs as a segmented component" in lexical["aung."]["interpretation"]
+    assert "တိံ" in lexical["im"]["interpretation"]
+    assert "ဟုမ်း" in lexical["um:"]["interpretation"]
+    assert "exact am: matches in myG2P = 0" in lexical["am:"]["interpretation"]
