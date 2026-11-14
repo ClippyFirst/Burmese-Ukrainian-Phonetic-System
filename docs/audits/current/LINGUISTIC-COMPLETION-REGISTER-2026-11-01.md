@@ -2070,7 +2070,7 @@ The prior handoff wording treated the myG2P CC BY-NC-SA 4.0 license as a blocker
 - **Evidence boundary:** myG2P remains secondary research/reference data, not independent adjudicated IPA gold. Its IPA values may be compared and audited, not treated as ground truth.
 - The project owner confirms this is a research project and authorizes the project to proceed on that basis.
 - OpenSLR SLR80 is licensed CC BY-SA 4.0 and has a public transcript index, but actual TSV retrieval failed in this environment; per the owner's instruction, no corpus rows/audio are used or imported until the bytes are accessible. It remains metadata-only.
-- Added CLM-MYG2P-NONCOMMERCIAL-RESEARCH-USE-001 and a regression test. Registry now 90 sources / 191 claims; required CI pending on the new code/test head.
+- Added CLM-MYG2P-NONCOMMERCIAL-RESEARCH-USE-001 and a regression test. Registry now 91 sources / 192 claims; required CI pending on the new code/test head.
 
 
 ## BSD Burmese word-list scan — 2026-11-14
@@ -2097,3 +2097,12 @@ The latest code/data/test head for this batch is 0b061ef23132cbfa65e94e6c4307375
 - npm ci, high-severity npm audit (0 vulnerabilities), production build and generated-data freshness check passed.
 
 Optional diagnostic run 43622250978 completed SUCCESS across Epitran, CRF and Google WFST raw-output jobs. Google WFST: 6/6 outputs, 0 runtime errors, independent_gold_count=0, accuracy=null; report SHA-256 0df0f24dd97c0537bcf882c4460ab1f4a3e315b6ece485ef0c6ae9ed22f42c34. CRF: 100/100 predictions, 84 source-concordant rows, gold_count=0, accuracy=null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. These are raw-output diagnostics only, not accuracy benchmarks.
+
+
+## Additional lexical source check — Wiktionary phonetic respelling and myG2P access boundary (2026-11-14)
+
+- Added the Wiktionary entry for ထောင့် as a separate source. It lists ဒေါင့် as a phonetic respelling for a second pronunciation of the same lemma, not as an independent lexical headword. Therefore the BSD wordlist candidate ဒေါင့် does not fill the missing aung. spelling side.
+- Registered CLM-WIKTIONARY-HTAUNG-DAUNG-RESP-001 and linked it from the aung. lexical audit. No collision status changed.
+- myG2P CC BY-NC-SA 4.0 remains permitted for non-commercial research with attribution and ShareAlike. However, the 2.33 MB upstream dictionary file itself could not be retrieved into the current analysis environment: GitHub file retrieval returned no content for the large file, raw download failed, and the hosted scrape reported that the page was too long to process fully. Per the owner's instruction, no partial/truncated query output was treated as evidence and no new myG2P lexical rows were used.
+- Registries now contain 91 sources / 192 claims. The 25-group collision audit remains unchanged in status; all eight target groups remain SECONDARY_ONE_SIDE_ONLY.
+- Latest corrected test run is pending after fixing a test assertion to match the source wording.
