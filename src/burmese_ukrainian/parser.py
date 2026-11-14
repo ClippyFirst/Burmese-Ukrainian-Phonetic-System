@@ -228,6 +228,33 @@ def _serialize_syllable(syllable: Syllable) -> dict:
     return record
 
 
+
+def project_syllable_structure(syllable: dict) -> dict:
+    """Return the shared orthographic projection, excluding phonetic guesses."""
+    onset = syllable.get("onset") or {}
+    kinzi = syllable.get("kinzi") or {}
+    coda = syllable.get("coda") or {}
+    vowel = syllable.get("vowel") or {}
+    tone_mark = syllable.get("tone_mark") or {}
+    return {
+        "raw": syllable.get("raw", ""),
+        "codepoints": list(syllable.get("codepoints", [])),
+        "onset": onset.get("character"),
+        "kinzi": bool(kinzi),
+        "conjunct": [item.get("character") for item in syllable.get("conjunct", [])],
+        "medials": [item.get("id") for item in syllable.get("medials", [])],
+        "vowel_signs": [item.get("id") for item in vowel.get("signs", [])],
+        "inherent_vowel_status": (syllable.get("inherent_vowel") or {}).get("status"),
+        "coda": ({
+            "character": coda.get("character"),
+            "marker": coda.get("marker"),
+            "orthographic_function": coda.get("orthographic_function"),
+        } if coda else None),
+        "tone_mark": tone_mark.get("marker"),
+        "analysis_status": syllable.get("status", "established"),
+    }
+
+
 def parse_burmese(text: str) -> dict:
     normalized = normalize_burmese(text)
     # Empty/whitespace-only input is not a successful pronunciation analysis.

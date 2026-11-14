@@ -113,11 +113,40 @@ function segment(text){
   return out;
 }
 
+function projectStructure(sy){
+  const coda=sy.coda&&typeof sy.coda==="object"
+    ? {character:sy.coda.character||null,marker:sy.coda.marker||null,orthographic_function:sy.coda.orthographic_function||null}
+    : sy.coda
+      ? {character:sy.coda,marker:sy.asat?"asat":null,orthographic_function:sy.kinziCoda?"kinzi_final_nasal":"final_consonant"}
+      : null;
+  const mark=sy.prosodyMarks.find(x=>x==="့"||x==="း");
+  const vowelIds={
+    "MYANMAR VOWEL SIGN E":"e","MYANMAR VOWEL SIGN I":"i",
+    "MYANMAR VOWEL SIGN II":"ii","MYANMAR VOWEL SIGN AI":"ai",
+    "MYANMAR VOWEL SIGN U":"u","MYANMAR VOWEL SIGN UU":"uu",
+    "MYANMAR VOWEL SIGN TALL AA":"tall_aa","MYANMAR VOWEL SIGN AA":"aa",
+    "MYANMAR SIGN ANUSVARA":"anusvara"
+  };
+  return {
+    raw:sy.raw,
+    codepoints:Array.from(sy.raw,ch=>"U+"+ch.codePointAt(0).toString(16).toUpperCase().padStart(4,"0")),
+    onset:sy.onset||null,
+    kinzi:Boolean(sy.kinzi||sy.kinziCoda),
+    conjunct:[...sy.conjunct],
+    medials:sy.medials.map(m=>MEDIALS[m]?.id||null),
+    vowel_signs:sy.vowels.map(v=>vowelIds[SIGNS[v]?.unicode_name]||null),
+    inherent_vowel_status:sy.onset?(sy.vowels.length?"overridden":"present_or_contextually_suppressed"):null,
+    coda,
+    tone_mark:mark==="့"?"dot_below":mark==="း"?"visarga":null,
+    analysis_status:sy.structureStatus||"established"
+  };
+}
+
 function parseCluster(raw,withholdBareInherent=false){
   const sy={raw,onset:null,kinzi:false,conjunct:[],medials:[],vowels:[],asat:false,status:"ESTABLISHED",ipa:null,uk:null,notes:[],prosodyMarks:[]};
   let i=0;
   if(raw.startsWith(KINZI)){sy.kinzi=true;i=3;}
-  if(i>=raw.length||!BASE.has(raw[i])){sy.status="UNSUPPORTED";sy.notes.push("Не вдалося визначити початкову приголосну.");return sy;}
+  if(i>=raw.length||!BASE.has(raw[i])){sy.status="UNSUPPORTED";sy.structureStatus="unsupported_or_malformed";sy.structure=projectStructure(sy);sy.notes.push("Не вдалося визначити початкову приголосну.");return sy;}
   sy.onset=raw[i++];
   while(i<raw.length&&raw[i]===VIRAMA){
     if(i+1<raw.length&&BASE.has(raw[i+1])){sy.conjunct.push(raw[i+1]);i+=2;}
@@ -164,6 +193,8 @@ function parseCluster(raw,withholdBareInherent=false){
   }
   // Keep repeated diagnostics deterministic and readable.
   sy.notes=[...new Set(sy.notes)];
+  sy.structureStatus=sy.status==="UNSUPPORTED"?"unsupported_or_malformed":sy.status==="UNCERTAIN"?"partially_unparsed":"established";
+  sy.structure=projectStructure(sy);
   const isolatedBare=withholdBareInherent&&!sy.vowels.length&&!sy.coda&&!sy.asat&&!sy.medials.length&&!sy.conjunct.length&&!sy.kinzi&&!sy.prosodyMarks.length;
   // Match the Python rule engine: medials, conjuncts and kinzi are parsed
   // structurally but remain outside the validated IPA rule inventory.
@@ -365,6 +396,7 @@ function render(){
       syllables.append(row);return;
     }
     syllableNumber+=1;
+    row.dataset.structure=JSON.stringify(s.structure);
     const head=document.createElement("strong");head.textContent=String(syllableNumber).padStart(2,"0")+"  "+s.raw;
     const detail=document.createElement("span");const shownStatus=s.provisionalStatus|| (s.uk?.status&&s.uk.status!=="ESTABLISHED"?s.status+" / передача: "+s.uk.status:s.status);detail.textContent=(s.ipa||"IPA не встановлено")+" → "+(s.uk?.text||"—")+" · "+shownStatus;row.append(head,detail);
     if(s.provisionalIpa){const preview=document.createElement("small");preview.textContent="Попередня підказка: "+s.provisionalIpa+" → "+s.provisionalUk+" [PROVISIONAL]";row.append(preview);}
