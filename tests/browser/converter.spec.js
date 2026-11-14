@@ -24,10 +24,12 @@ test("nasal closed i remains short ɪ, not an overgeneralized eɪ",async({page})
   await expect(page.locator("#ipa")).toContainText("pɪɴ");
 });
 
-test("checked closed i becomes eɪ with a glottal coda",async({page})=>{
+test("analysis-dependent onset withholds checked-i IPA rather than guessing its rime",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("စိတ်");
-  await expect(page.locator("#ipa")).toContainText("seɪʔ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦စိတ်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("closed u with a nasal coda becomes oʊɴ",async({page})=>{
@@ -60,20 +62,20 @@ test("mixed Myanmar and supplementary-block Myanmar material does not silently b
   await expect(page.locator("#issues")).not.toContainText("збережено без змін");
 });
 
-test("aspirated onset IPA is tokenized and receives a Ukrainian candidate",async({page})=>{
+test("analysis-dependent aspirated onset is withheld from canonical IPA",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ဆာ");
-  await expect(page.locator("#ipa")).toContainText("sʰa");
-  await expect(page.locator("#uk")).toContainText("с\u0027а");
-  await expect(page.locator("#uk-status")).toContainText("PROPOSED");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ဆာ⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
-test("theta IPA is tokenized through its explicitly marked candidate rule",async({page})=>{
+test("analysis-dependent theta onset remains withheld from canonical IPA",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("သာ");
-  await expect(page.locator("#ipa")).toContainText("θa");
-  await expect(page.locator("#uk")).toContainText("та");
-  await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦သာ⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("kinzi-coda structure is retained while unsupported IPA is withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("မင်္ဂလာ");await expect(page.locator("#ipa")).toContainText("?");await expect(page.locator("#syllables")).toContainText("မင်္");await expect(page.locator("#uk-status")).toContainText("NOT_ESTABLISHED");});
@@ -158,12 +160,12 @@ test("prosodic markers are summarized once instead of repeated in every segment 
 
 test("the medial ra in မြန် remains withheld rather than being dropped",async({page})=>{await page.goto("/");await page.locator("#source").fill("မြန်");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦မြန်⟧");});
 
-test("initial Burmese /juː/ is rendered contextually, not as literal candidate alternatives",async({page})=>{
+test("analysis-dependent uu vowel withholds /juː/ and Ukrainian output",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ယူ");
-  await expect(page.locator("#ipa")).toContainText("juː");
-  await expect(page.locator("#uk")).toContainText("ю");
-  await expect(page.locator("#uk")).not.toContainText("й/я/є/ю/йо");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ယူ⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 
