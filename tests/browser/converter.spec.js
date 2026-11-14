@@ -204,6 +204,9 @@ test("shared structural fixtures preserve kinzi coda syllable boundaries", async
     await expect(page.locator("#uk-status"), fixture.id).toContainText(
       "IPA: " + fixture.browser.first_ipa_status
     );
+    if (fixture.browser.first_note) {
+      await expect(page.locator("#syllables"), fixture.id).toContainText(fixture.browser.first_note);
+    }
   }
 });
 
