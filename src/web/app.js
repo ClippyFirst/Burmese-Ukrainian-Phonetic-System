@@ -153,8 +153,13 @@ function parseCluster(raw,withholdBareInherent=false){
   // Match the Python rule engine: medials, conjuncts and kinzi are parsed
   // structurally but remain outside the validated IPA rule inventory.
   const unsupportedStructure=sy.kinzi||sy.kinziCoda||sy.medials.length>0||sy.conjunct.length>0;
-  sy.ipa=isolatedBare||unsupportedStructure?null:deriveIpa(sy);
-  if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=unsupportedStructure?"ANALYSIS_DEPENDENT":"NOT_ESTABLISHED";
+  // Python's canonical IPA adapter withholds codas, asat, anusvara and
+  // prosodic marks until their selected-profile surface realizations are
+  // adjudicated. Keep the browser boundary equally conservative.
+  const unsupportedRime=Boolean(sy.coda||sy.asat||sy.prosodyMarks.length||sy.vowels.some(sign=>SIGNS[sign]?.unicode_name==="MYANMAR SIGN ANUSVARA"));
+  const evidenceIncomplete=unsupportedStructure||unsupportedRime;
+  sy.ipa=isolatedBare||evidenceIncomplete?null:deriveIpa(sy);
+  if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=evidenceIncomplete?"ANALYSIS_DEPENDENT":"NOT_ESTABLISHED";
   sy.uk=sy.status==="ESTABLISHED"&&sy.ipa?renderUkrainian(sy.ipa):{text:"",status:"NOT_ESTABLISHED",parts:[],prosody:[],unsupported:sy.raw};
   // Separate onset-only preview: never derive Ukrainian directly from Myanmar
   // graphemes and never guess the vowel, coda, medial, kinzi or tone.
