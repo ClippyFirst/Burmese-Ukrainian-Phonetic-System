@@ -577,6 +577,11 @@ def test_tufs_med_ipa_crosswalk_and_lexical_examples_preserve_mlcts_boundary():
     expected_one_sided = {"am:", "aung.", "im", "im:", "im.", "ui", "um:", "um."}
     assert expected_one_sided <= lexical.keys()
     assert all(lexical[key]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY" for key in expected_one_sided)
+    assert "483 raw strings" in lexical["am:"]["interpretation"]
+    assert "ခေါင့် and ဒေါင့်" in lexical["aung."]["interpretation"]
+    assert "ယို်" in lexical["ui"]["interpretation"]
+    assert "ရေခအုမ်း and လစာနှုမ်း" in lexical["um:"]["interpretation"]
+    assert "no forms ending in the missing source unit ိံ" in lexical["im"]["interpretation"]
     assert "/káɴ/ (ကမ်း" in lexical["am:"]["observed_ipa"]
     assert "/sâuɴ/ (စောင့်" in lexical["aung."]["observed_ipa"]
     assert "/t̪èiɴ/ (သိမ်" in lexical["im"]["observed_ipa"]
