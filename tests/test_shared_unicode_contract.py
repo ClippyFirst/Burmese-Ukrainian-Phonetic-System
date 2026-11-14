@@ -54,3 +54,14 @@ def test_shared_kinzi_coda_boundary_fixture():
         else:
             assert first["kinzi"]["position"] == expected["first_kinzi_position"], case["id"]
             assert first["coda"]["character"] == expected["first_coda_character"], case["id"]
+
+
+def test_shared_bare_consonant_control_boundaries_withhold_ipa():
+    from burmese_ukrainian.ipa import to_ipa
+
+    fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+    for case in fixture["bare_consonant_boundary_cases"]:
+        result = to_ipa(case["input"])
+        index = case["python"]["bare_consonant_index"]
+        assert result["syllables"][index]["raw"] == "က", case["id"]
+        assert result["syllables"][index]["ipa"] is case["python"]["ipa"], case["id"]
