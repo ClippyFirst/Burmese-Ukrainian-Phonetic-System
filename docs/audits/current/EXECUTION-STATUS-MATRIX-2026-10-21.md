@@ -2307,3 +2307,10 @@ Extended the evidence-status correction to the browser G2P path. The browser now
 Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
 
 Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI has been triggered by the PR update; record exact-head outcomes before promoting this task to DONE_VERIFIED.
+
+## Browser evidence-status propagation — 2026-11-14
+
+- **DONE_VERIFIED (narrow engineering correction):** Browser aggregate IPA status now preserves `ANALYSIS_DEPENDENT` and `UNCERTAIN` instead of flattening them to `NOT_ESTABLISHED`. Per-syllable fail-closed output remains unchanged.
+- **DONE_VERIFIED (regression alignment):** Four stale browser tests that expected unsupported canonical outputs (`စိတ်`, `ဆာ`, `သာ`, `ယူ`) were rewritten to assert withholding and explicit analysis-dependent IPA status. No linguistic rule or Ukrainian mapping was added.
+- **Exact-head verification:** `9333bdfec405f9fafb36bab42d90965e11f5e155`; PR test workflow `43630941796` SUCCESS — 277 Python tests + 68 subtests, package installation, gold-corpus structural validation, npm audit gate, production build, generated-data freshness, 21 Node tests, 58 Playwright tests. Push workflow `43630938330` was still running at checkpoint. Optional CRF and Epitran raw-output jobs succeeded; optional Google WFST build was still running.
+- **Remaining PARTIAL:** Full cross-runtime phonological parity, contextual medials/rimes/tone/phonation and independent expert-adjudicated IPA gold. Gold count remains 0; empirical accuracy remains null.
