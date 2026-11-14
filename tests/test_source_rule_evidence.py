@@ -613,6 +613,13 @@ def test_bsd_burmese_wordlist_candidate_scan_does_not_promote_unverified_lexemes
 
     source = sources["DANGERCHITTHU_MYANMAR_WORDLIST_2013"]
     claim = claims["CLM-DANGERCHITTHU-ORTHOGRAPHIC-CANDIDATE-SCAN-001"]
+    respelling_source = sources["WIKTIONARY_HTAUNG_ENTRY_2026"]
+    respelling_claim = claims["CLM-WIKTIONARY-HTAUNG-DAUNG-RESP-001"]
+    assert "phonetic respelling ဒေါင့်" in respelling_source["scope"]
+    assert "not an independent lexical lemma" in respelling_source["scope"]
+    assert respelling_claim["source_id"] == "WIKTIONARY_HTAUNG_ENTRY_2026"
+    assert respelling_claim["status"] == "DOCUMENTARY"
+    assert "not an independent lexical lemma" in respelling_claim["claim"]
     assert "BSD license" in source["scope"]
     assert "no IPA, meanings, or syllable segmentation" in source["scope"]
     assert claim["source_id"] == "DANGERCHITTHU_MYANMAR_WORDLIST_2013"
