@@ -2452,3 +2452,11 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Added 13-row evidence table: data/burmese/onset_cluster_evidence.csv; schema: schemas/onset_cluster_evidence.schema.json; integrity tests: tests/test_onset_cluster_evidence.py.
 - The table is evidence-only and reuses registered source/claim IDs. It scopes Green's complex-onset restriction to minor syllables, keeps foot-initial and reduction claims prosodic/morphological, and separates modern Ishida medial descriptions from Hlaing orthographic combinations and STEDT historical inventories.
 - All entries are WITHHELD from runtime. Exhaustive modern Yangon segmental cluster legality and lexical distribution remain PARTIAL. Exact-head CI is pending; do not mark DONE_VERIFIED until the new test passes on the final branch head.
+
+## Exact-head verification — onset/medial evidence and terminology matrix — 2026-11-15
+
+- Final code/data/test head for the 13-row onset/medial evidence table: the table, JSON Schema and four integrity tests were included before required CI run 43647554863. The later documentation-only terminology reconciliation was verified on the exact final head by required workflow 43647671663.
+- Exact final-head CI [43647671663](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671663) SUCCESS: **286 Python tests + 68 subtests**, **21 Node tests**, **64 Playwright Chromium tests**; npm audit reports **0 vulnerabilities**; production build, generated-data freshness, IPA-gold structural validator and Chromium browser tests passed.
+- The optional comparator run [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671628) is diagnostic only; Epitran and CRF jobs succeeded, Google FST job was still in progress at this note. No diagnostic output is IPA gold or an accuracy result.
+- **Task ledger:** source-backed onset/medial evidence matrix + schema + integrity tests — DONE_VERIFIED; cross-source terminology reconciliation — DONE_VERIFIED as evidence documentation; exhaustive modern Yangon onset × medial × rime legality — PARTIAL; phonological runtime/IPA mapping — WITHHELD.
+- This supersedes the previous note that exact-head CI was pending. Independent adjudicated IPA gold remains 0; accuracy remains null. Main remains unchanged; PR #147 remains open/draft.
