@@ -2779,3 +2779,10 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Task ledger: source-backed consonant/medial evidence matrix and source integrity test — DONE_VERIFIED after exact-head CI; exhaustive segmental cluster legality and lexical distribution — PARTIAL; profile-matched phonological runtime rules — PARTIAL/BLOCKED by insufficient source coverage and absent adjudicated IPA.
 - No audio was recorded, no third-party corpus was copied, and no licensing scope was expanded. Main remains unchanged; PR #147 remains the continuation vehicle.
 
+
+## Continuation — cross-source phonology terminology matrix — 2026-11-15
+
+- Added §10 to the vowel × medial × checked-syllable × prosody evidence matrix and marked the corresponding workpack task DONE_VERIFIED at the document/evidence level.
+- The matrix separates tone inventory, checked/killed labels, segmental /ʔ/, creaky phonation, phonemic vowel length, measured duration, consonantal spread-glottis, nasal /N/, glides/medials and source transcription conventions across Green, Watkins, Mooney & Repetti-Ludlow, Duan & Zhu and Repetti-Ludlow.
+- Reconciled stale Duan & Zhu coverage: the full text is now inspected (not merely the abstract); five speakers from Yangon, Taunggyi and the Mandalay region, 89 items and 694 valid tokens are reported; T1/T3 speaker variation is recorded. No audio was accessed. This remains a competing analysis, not project consensus.
+- No tone or phonation rule, IPA mapping or Ukrainian output was enabled. Independent adjudicated IPA gold remains 0.
