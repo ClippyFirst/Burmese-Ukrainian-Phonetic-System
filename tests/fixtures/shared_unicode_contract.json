@@ -20,7 +20,7 @@
       }
     },
     {
-      "id": "myanmar-extended-b-aa60",
+      "id": "myanmar-extended-a-aa60",
       "input": "ꩠ",
       "codepoints": [
         "U+AA60"
@@ -569,7 +569,7 @@
       }
     },
     {
-      "id": "unsupported-extended-b",
+      "id": "unsupported-extended-a",
       "input": "ꩠ",
       "python_projection": {
         "raw": "ꩠ",
@@ -585,6 +585,532 @@
         "coda": null,
         "tone_mark": null,
         "analysis_status": "unsupported_or_malformed"
+      }
+    },
+    {
+      "id": "bare-inherent-vowel",
+      "input": "က",
+      "python_projection": {
+        "raw": "က",
+        "codepoints": [
+          "U+1000"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "conjunct-subjoined-ka",
+      "input": "က္က",
+      "python_projection": {
+        "raw": "က္က",
+        "codepoints": [
+          "U+1000",
+          "U+1039",
+          "U+1000"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [
+          "က"
+        ],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "kinzi-final-nasal",
+      "input": "မင်္",
+      "python_projection": {
+        "raw": "မင်္",
+        "codepoints": [
+          "U+1019",
+          "U+1004",
+          "U+103A",
+          "U+1039"
+        ],
+        "onset": "မ",
+        "kinzi": true,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": {
+          "character": "င",
+          "marker": "asat",
+          "orthographic_function": "kinzi_final_nasal"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya",
+      "input": "ကျ",
+      "python_projection": {
+        "raw": "ကျ",
+        "codepoints": [
+          "U+1000",
+          "U+103B"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra",
+      "input": "ကြ",
+      "python_projection": {
+        "raw": "ကြ",
+        "codepoints": [
+          "U+1000",
+          "U+103C"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-wa",
+      "input": "ကွ",
+      "python_projection": {
+        "raw": "ကွ",
+        "codepoints": [
+          "U+1000",
+          "U+103D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_wa"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ha",
+      "input": "ကှ",
+      "python_projection": {
+        "raw": "ကှ",
+        "codepoints": [
+          "U+1000",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-wa",
+      "input": "ကျွ",
+      "python_projection": {
+        "raw": "ကျွ",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya",
+          "medial_wa"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra-wa",
+      "input": "ကြွ",
+      "python_projection": {
+        "raw": "ကြွ",
+        "codepoints": [
+          "U+1000",
+          "U+103C",
+          "U+103D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra",
+          "medial_wa"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-ha",
+      "input": "ကျှ",
+      "python_projection": {
+        "raw": "ကျှ",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra-ha",
+      "input": "ကြှ",
+      "python_projection": {
+        "raw": "ကြှ",
+        "codepoints": [
+          "U+1000",
+          "U+103C",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-wa-ha",
+      "input": "ကွှ",
+      "python_projection": {
+        "raw": "ကွှ",
+        "codepoints": [
+          "U+1000",
+          "U+103D",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_wa",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-wa-ha",
+      "input": "ကျွှ",
+      "python_projection": {
+        "raw": "ကျွှ",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103D",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya",
+          "medial_wa",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra-wa-ha",
+      "input": "ကြွှ",
+      "python_projection": {
+        "raw": "ကြွှ",
+        "codepoints": [
+          "U+1000",
+          "U+103C",
+          "U+103D",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra",
+          "medial_wa",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-e",
+      "input": "ကေ",
+      "python_projection": {
+        "raw": "ကေ",
+        "codepoints": [
+          "U+1000",
+          "U+1031"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "e"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-i",
+      "input": "ကိ",
+      "python_projection": {
+        "raw": "ကိ",
+        "codepoints": [
+          "U+1000",
+          "U+102D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "i"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-ii",
+      "input": "ကီ",
+      "python_projection": {
+        "raw": "ကီ",
+        "codepoints": [
+          "U+1000",
+          "U+102E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "ii"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-ai",
+      "input": "ကဲ",
+      "python_projection": {
+        "raw": "ကဲ",
+        "codepoints": [
+          "U+1000",
+          "U+1032"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "ai"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-u",
+      "input": "ကု",
+      "python_projection": {
+        "raw": "ကု",
+        "codepoints": [
+          "U+1000",
+          "U+102F"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "u"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-uu",
+      "input": "ကူ",
+      "python_projection": {
+        "raw": "ကူ",
+        "codepoints": [
+          "U+1000",
+          "U+1030"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "uu"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-tall_aa",
+      "input": "ကါ",
+      "python_projection": {
+        "raw": "ကါ",
+        "codepoints": [
+          "U+1000",
+          "U+102B"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "tall_aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-aa",
+      "input": "ကာ",
+      "python_projection": {
+        "raw": "ကာ",
+        "codepoints": [
+          "U+1000",
+          "U+102C"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-anusvara",
+      "input": "ကံ",
+      "python_projection": {
+        "raw": "ကံ",
+        "codepoints": [
+          "U+1000",
+          "U+1036"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "anusvara"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
       }
     }
   ]
