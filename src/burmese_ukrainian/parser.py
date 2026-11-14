@@ -72,8 +72,7 @@ def segment_graphemes(text: str) -> list[str]:
             if (
                 s[i] in BASE_CONSONANTS
                 and not is_coda_base
-                and s[i - 1] != "\u1039"
-                and s[i - 3 : i] != KINZI
+                and (s[i - 1] != "\u1039" or s[i - 3 : i] == KINZI)
             ):
                 break
             i += 1
@@ -148,6 +147,25 @@ def _parse_cluster(cluster: str) -> Syllable:
             "status": "present_or_contextually_suppressed",
             "reason": "no_dependent_vowel_sign",
         }
+
+    # Kinzi can occur inside the preceding syllable, immediately before the
+    # following written onset. Preserve it as a structural final nasal rather
+    # than absorbing that next onset into the same grapheme cluster.
+    if i + 2 < len(cluster) and cluster[i : i + 3] == KINZI:
+        sy.kinzi = {
+            "sequence": [f"U+{ord(c):04X}" for c in KINZI],
+            "base": "nga",
+            "phonological_role": "final_nasal",
+            "position": "coda",
+        }
+        sy.coda = {
+            "character": "င",
+            "codepoint": "U+1004",
+            "marker": "asat",
+            "asat_codepoint": "U+103A",
+            "orthographic_function": "kinzi_final_nasal",
+        }
+        i += 3
 
     # A final consonant is written as a base consonant followed by ASAT.
     # When it follows the syllable onset/medials/vowels, keep it inside this
