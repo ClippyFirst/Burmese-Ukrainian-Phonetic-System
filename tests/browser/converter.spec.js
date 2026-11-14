@@ -193,6 +193,20 @@ test("shared phonetic-status fixtures preserve analysis-dependent structural unc
   }
 });
 
+test("shared structural fixtures preserve kinzi coda syllable boundaries", async ({page}) => {
+  for (const fixture of sharedUnicodeContract.structural_cases) {
+    await page.goto("/");
+    await page.locator("#source").fill(fixture.input);
+    const labels = await page.locator("#syllables .syllable strong").allTextContents();
+    expect(labels, fixture.id).toEqual(
+      fixture.browser.syllables.map((raw, index) => String(index + 1).padStart(2, "0") + "  " + raw)
+    );
+    await expect(page.locator("#uk-status"), fixture.id).toContainText(
+      "IPA: " + fixture.browser.first_ipa_status
+    );
+  }
+});
+
 test("shared Unicode contract fixtures preserve unsupported Myanmar status across runtimes", async ({page}) => {
   for (const fixture of sharedUnicodeContract.cases) {
     await page.goto("/");
