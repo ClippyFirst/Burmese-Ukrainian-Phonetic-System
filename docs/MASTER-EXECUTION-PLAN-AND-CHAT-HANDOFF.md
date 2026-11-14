@@ -2663,3 +2663,11 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Added shared structural fixture `မင်္ဂလာ` with exact expected syllable units `မင်္`, `ဂ`, `လာ`; Python and Playwright tests consume it. Python also asserts internal kinzi position, final nasal code point and structural status. No pronunciation, IPA or Ukrainian mapping was added.
 - Corrected code/test head `e97aaebf43d99e9d21597fba6b35625fb5ca0bd2`; exact PR-head required CI [43638895912](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638895912) SUCCESS: 280 Python tests + 68 subtests; 21 Node tests; 60 Playwright tests; npm audit 0 vulnerabilities; production build, generated-data freshness and Chromium install passed.
 - Structural kinzi boundary is **DONE_VERIFIED**. General Python/browser syllabification parity remains **PARTIAL**. IPA gold remains 0 and accuracy null. No audio accessed.
+
+
+## Continuation — shared all-medials structural parity contract — 2026-11-14
+
+- Extended the shared fixture file with all 11 medial forms listed by the existing MLC/Unicode structural inventory: four basic signs, five two-medial combinations and two three-medial combinations. The fixture carries ordered structural IDs only, not IPA or Ukrainian values.
+- Python tests assert the expected medial IDs and one orthographic syllable. Playwright tests consume the same JSON fixture and assert the same displayed syllable unit plus `IPA: ANALYSIS_DEPENDENT`; the browser continues to withhold canonical IPA and Ukrainian output for these medials.
+- Exact code/test head `702568dcf2214787938b6964708cb6e7d4d52e92`; required PR-head CI [43639262508](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43639262508) SUCCESS: 280 Python + 68 subtests; 21 Node; 60 Playwright; npm audit 0 vulnerabilities; production build, generated-data freshness and Chromium install passed.
+- This closes the shared structural fixture requirement for the enumerated medial inventory, not phonological parity. Medial phonetic realization, complete parser-state parity and Ukrainian adapter traces remain PARTIAL/BLOCKED pending source-located, profile-matched evidence and independent adjudication. IPA gold remains 0; accuracy null.
