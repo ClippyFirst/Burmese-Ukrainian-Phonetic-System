@@ -465,5 +465,127 @@
         "ipa": "??"
       }
     }
+  ],
+  "structural_projection_cases": [
+    {
+      "id": "plain-aa",
+      "input": "ကာ",
+      "python_projection": {
+        "raw": "ကာ",
+        "codepoints": [
+          "U+1000",
+          "U+102C"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-contextual-asat",
+      "input": "ကျ်",
+      "python_projection": {
+        "raw": "ကျ်",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "tone-mark-before-final-coda",
+      "input": "ကာ့င်",
+      "python_projection": {
+        "raw": "ကာ့င်",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+1037",
+          "U+1004",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": "င",
+          "marker": "asat",
+          "orthographic_function": "final_consonant"
+        },
+        "tone_mark": "dot_below",
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "unknown-extended-a-tail",
+      "input": "ကာꩠ",
+      "python_projection": {
+        "raw": "ကာꩠ",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+AA60"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "partially_unparsed"
+      }
+    },
+    {
+      "id": "unsupported-extended-b",
+      "input": "ꩠ",
+      "python_projection": {
+        "raw": "ꩠ",
+        "codepoints": [
+          "U+AA60"
+        ],
+        "onset": null,
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": null,
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "unsupported_or_malformed"
+      }
+    }
   ]
 }

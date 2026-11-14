@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from burmese_ukrainian import parse_burmese
+from burmese_ukrainian.parser import project_syllable_structure
 
 
 FIXTURE_PATH = Path(__file__).parent / "fixtures" / "shared_unicode_contract.json"
@@ -69,3 +70,12 @@ def test_shared_bare_consonant_control_boundaries_withhold_ipa():
         index = case["python"]["bare_consonant_index"]
         assert result["syllables"][index]["raw"] == "က", case["id"]
         assert result["syllables"][index]["ipa"] == case["python"]["ipa"], case["id"]
+
+
+def test_shared_structural_projection_contract():
+    fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+    for case in fixture["structural_projection_cases"]:
+        parsed = parse_burmese(case["input"])
+        assert len(parsed["syllables"]) == 1, case["id"]
+        actual = project_syllable_structure(parsed["syllables"][0])
+        assert actual == case["python_projection"], case["id"]

@@ -476,3 +476,15 @@ test("unsupported control characters delimit standalone bare consonants like Pyt
     await expect(page.locator("#uk"), fixture.id).toContainText("⟦");
   }
 });
+
+
+test("browser structural projection matches the shared Python contract",async({page})=>{
+  await page.goto("/");
+  for(const fixture of sharedUnicodeContract.structural_projection_cases){
+    await page.locator("#source").fill(fixture.input);
+    const rows=page.locator("#syllables .syllable[data-structure]");
+    await expect(rows,fixture.id).toHaveCount(1);
+    const projection=JSON.parse(await rows.first().getAttribute("data-structure"));
+    expect(projection,fixture.id).toEqual(fixture.python_projection);
+  }
+});
