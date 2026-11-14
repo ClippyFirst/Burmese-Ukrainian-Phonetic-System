@@ -19,3 +19,15 @@ def test_shared_unicode_contract_fixtures():
         assert result["syllables"][0]["status"] == expected["syllable_status"], case["id"]
         if expected["graphemes_preserved"]:
             assert result["graphemes"] == [case["input"]], case["id"]
+
+
+def test_shared_phonetic_status_contract_withholds_unimplemented_structures():
+    from burmese_ukrainian.ipa import to_ipa
+
+    fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+    for case in fixture["phonetic_status_cases"]:
+        result = to_ipa(case["input"])
+        assert len(result["syllables"]) == 1, case["id"]
+        syllable = result["syllables"][0]
+        assert syllable["ipa"] is None, case["id"]
+        assert syllable["phonetic_status"] == case["expected_python_phonetic_status"], case["id"]
