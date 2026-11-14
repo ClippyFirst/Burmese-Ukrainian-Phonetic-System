@@ -34,7 +34,7 @@ Implications:
 - **NonCommercial:** do not use the dictionary as a bundled dependency for commercial use without separate permission.
 - **ShareAlike:** adaptations of the licensed database/material may trigger share-alike obligations under the license; whether a particular integration is an adaptation or a separate work requires case-specific legal review.
 - **Attribution and notices:** preserve attribution, source provenance and required notices if used in a permitted context.
-- Do not copy myG2P entries into the project corpus, tests or generated artifacts without a documented rights/compatibility review. Facts about pronunciations and the licensed expression/compilation of a dictionary must be considered separately.
+- The CC BY-NC-SA 4.0 grant permits non-commercial research use, including analysis and adaptation, provided attribution and ShareAlike obligations are followed. Any redistributed myG2P-derived database or adaptation must retain compatible CC BY-NC-SA terms. Commercial product use remains outside the grant and requires separate permission. Do not treat the dictionary as independent IPA gold or copy its IPA as adjudicated truth.
 - It is not a universal default dependency for a project whose eventual code/data licensing and possible commercial use have not been decided.
 
 CC BY-NC-SA 4.0 legal text: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en
@@ -139,3 +139,14 @@ Mya2Rom 0.4.4 exposes distinct ipa, mlcts, mlcts2, simple and simple2 modes. MLC
 - SEAlang Burmese Text and Bitext corpora have no explicit reuse license in the inspected metadata; the metadata includes a 2007 NICT/Matsubara Lab/Anchor copyright notice. Bulk ingestion remains blocked.
 - The dictionary's entry-level transcription encoding is unresolved: metadata advertises IPA search/display while Mya2Rom documentation identifies MLCTS2 as used by the MLC dictionary and SEAlang. Do not treat it as IPA gold until the actual representation is inspected.
 
+
+
+## myG2P non-commercial research-use decision — 2026-11-14
+
+The upstream README explicitly states CC BY-NC-SA 4.0 and documents a five-field line format: ID, Burmese orthography, syllable segmentation, pronunciation respelling and IPA. It describes the dictionary as based mainly on MLC dictionary words and expanded with foreign pronunciations. The license therefore does not block this project's present non-commercial research analysis: use is permitted subject to attribution and ShareAlike. This is not a blanket commercial-use permission, and the source dictionary is not an independently adjudicated IPA gold set.
+
+- Current project status: **RESEARCH USE PERMITTED** under the published CC BY-NC-SA 4.0 terms.
+- Redistribution of copied/derived myG2P database material: retain attribution and compatible CC BY-NC-SA terms.
+- Commercial deployment or commercial distribution: **not covered** by this grant; obtain separate permission or exclude the material.
+- The user has confirmed this is a research project; no additional project-owner permission gate is required for the non-commercial research activity.
+- OpenSLR SLR80 has a published CC BY-SA 4.0 license and a public 528 KiB transcript index, but this execution environment could not retrieve the TSV bytes. Per project instruction, no rows/audio are imported or used unless the actual resource can be accessed. It remains metadata-only and inactive.
