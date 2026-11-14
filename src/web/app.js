@@ -123,7 +123,18 @@ function parseCluster(raw,withholdBareInherent=false){
     if(i+1<raw.length&&BASE.has(raw[i+1])){sy.conjunct.push(raw[i+1]);i+=2;}
     else{sy.status="UNCERTAIN";sy.notes.push("Неповна послідовність virama.");break;}
   }
-  while(i<raw.length&&MEDIAL_CHARS.has(raw[i]))sy.medials.push(raw[i++]);
+  while(i<raw.length&&MEDIAL_CHARS.has(raw[i])){
+    const medial=raw[i++];
+    sy.medials.push(medial);
+    // Python records ASAT immediately after medial-ya as a contextual coda.
+    // Preserve that structural distinction instead of flattening it to a tail mark.
+    if(i<raw.length&&raw[i]===ASAT&&MEDIALS[medial]?.id==="medial_ya"){
+      sy.coda={marker:"asat",codepoint:"U+103A",orthographic_function:"contextual"};
+      sy.asat=true;
+      i++;
+      sy.notes.push("Знак asat після medial ya збережено як контекстну фіналь.");
+    }
+  }
   // Dependent vowels belong to the preceding linguistic syllable; a following
   // kinzi is its final /ŋ/, even though the Unicode sequence is stored before
   // the next written base consonant.
