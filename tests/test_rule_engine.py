@@ -62,3 +62,20 @@ def test_canonical_ipa_withholds_analysis_dependent_onsets_and_vowels():
         result = to_ipa(source)
         assert result["syllables"][0]["ipa"] == expected, source
         assert result["syllables"][0]["phonetic_status"] == "conservative_partial", source
+
+
+def test_runtime_ipa_allowlists_match_the_established_source_registries():
+    import csv
+    from pathlib import Path
+    from burmese_ukrainian.ipa import ESTABLISHED_ONSETS, VOWEL_IPA
+
+    root = Path(__file__).resolve().parents[1]
+    with (root / "data/burmese/ipa_onsets.csv").open(encoding="utf-8", newline="") as stream:
+        onset_rows = list(csv.DictReader(stream))
+    with (root / "data/burmese/ipa_vowels.csv").open(encoding="utf-8", newline="") as stream:
+        vowel_rows = list(csv.DictReader(stream))
+
+    expected_onsets = {row["character"] for row in onset_rows if row["status"] == "established"}
+    expected_vowels = {row["id"] for row in vowel_rows if row["status"] == "established"}
+    assert ESTABLISHED_ONSETS == expected_onsets
+    assert set(VOWEL_IPA) == expected_vowels
