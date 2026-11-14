@@ -482,7 +482,7 @@ The export and benchmark now preserve and validate the complete frozen split ide
 | Browser fallback detail and canonical fail-closed behavior | DONE_VERIFIED (engineering behavior) | Workflow 43101914347 PASS; Playwright 54/54; production build, generated-data freshness and Node tests PASS |
 | Optional Epitran raw-output comparator | DONE_VERIFIED (workflow) | Run 43101914423 PASS; not an independent IPA accuracy benchmark |
 | Dedicated Yangon grapheme-position evidence registry | TODO | Existing onset inventory is reused; exact per-entry primary-source locators, scope and adjudication remain required |
-| Functional Python/browser parity fixture | TODO | Browser tests cover behavior, but no shared structured cross-runtime fixture yet |
+| Functional Python/browser parity fixture | PARTIAL | Shared fixture `tests/fixtures/shared_unicode_contract.json` is consumed by Python and Playwright tests for unsupported Myanmar units and analysis-dependent medial/conjunct/kinzi withholding; exact-head CI 43638222569 SUCCESS (278 Python + 68 subtests, 21 Node, 59 Playwright). Not a complete parser/phonology parity suite or IPA gold. |
 | Full Myanmar grapheme fallback | DEFERRED / evidence-limited | Only isolated bare consonants receive onset-only preview; vowel/rime/coda/asat/medial/kinzi/conjunct/tone structures remain fail-closed |
 
 
@@ -2194,3 +2194,12 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 The exact-head browser run revealed four legacy Playwright cases expecting canonical IPA for `စိတ်`, `ဆာ`, `သာ`, `ယူ`, despite their source onset/vowel records being analysis-dependent. Their expectations now assert fail-closed IPA and Ukrainian output plus `IPA: ANALYSIS_DEPENDENT`; no new IPA values or Ukrainian mappings were created.
 
 Exact implementation/test head `9333bdfec405f9fafb36bab42d90965e11f5e155`; required PR CI `43630941796` SUCCESS: 277 Python tests + 68 subtests; build and generated-data freshness PASS; 21 Node tests PASS; 58 Playwright tests PASS. The push-triggered exact-head workflow `43630938330` was still running at the documentation checkpoint. No gold or accuracy claim follows from these engineering tests; independent adjudicated IPA gold remains 0.
+
+
+## Python/browser structural-status parity continuation — 2026-11-14
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Browser status preservation for unimplemented medial/conjunct/kinzi structures | DONE_VERIFIED (narrow status contract) | `src/web/app.js` now retains `ANALYSIS_DEPENDENT` instead of flattening recognized unsupported structures to `NOT_ESTABLISHED`; canonical IPA and Ukrainian output remain withheld. |
+| Shared Python/browser structural-status fixtures | PARTIAL | Shared cases `ကြွေ`, `က္ကာ`, `င်္ကာ` are asserted in `tests/test_shared_unicode_contract.py` and `tests/browser/converter.spec.js`; exact-head run [43638222569](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638222569) SUCCESS: 278 Python + 68 subtests, 21 Node, 59 Playwright. Full parsed-object/boundary/coda/tone/adapter parity remains unimplemented. |
+| Independent IPA adjudication / accuracy | BLOCKED | Zero independent expert-adjudicated Yangon-profile IPA records; accuracy remains null. Structural fixtures are not phonetic gold. |
