@@ -2769,3 +2769,13 @@ Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI h
 - Uploaded evidence artifacts (available until 2027-02-12 for Google/CRF and 2027-02-12 for Epitran): Google artifact SHA-256 `6315f8ab0b63be26a83f2cd30a2327e65c166e32ebda90c9bc69c5f3afa39399`; CRF `d91d42802ef5ca99c9ab192495a40782a05f8e3eb59801d623c485e111f36817`; Epitran `0574361cfe7b2bc817204debe0608b84f64ddbf68ecfc53299527c1e1fb69696`.
 - **Task ledger:** optional pinned Google FST raw-output build/smoke — DONE_VERIFIED; optional CRF/Epitran diagnostic execution and artifact upload — DONE_VERIFIED; comparative phonetic accuracy, model selection and runtime adoption — PARTIAL/BLOCKED by zero independent IPA gold and possible CRF training overlap. No model was promoted into production and no phonetic accuracy is claimed.
 - This terminal result supersedes the earlier note that run `43644381879` was still in progress. The required CI on the same head remains successful. Repository readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+## Continuation — source-scoped onset/medial evidence matrix — 2026-11-15
+
+- Added data/burmese/onset_cluster_evidence.csv (13 source-linked rows), schemas/onset_cluster_evidence.schema.json, and tests/test_onset_cluster_evidence.py.
+- The matrix separates: obligatory onset and placeless coda claims; Green's C(G) major-syllable template; the minor-syllable-only complex-onset prohibition; foot-initial cluster analysis and reduction; attested /mj/ examples; Ishida's context-conditioned YA/RA/WA/HA descriptions; Hlaing's orthographic medial combinations; and STEDT's separate Written Burmese and historical Rangoon inventories.
+- Crucial negative finding: Green's prohibition on complex onsets in minor syllables is not a global ban. The sequences ကျ and ကြ are not labelled prohibited; Ishida records palatalized velar-conditioned outcomes. The sources inspected do not provide an exhaustive modern Yangon onset × medial × rime legality table.
+- All 13 rows have runtime_status=WITHHELD; this is an evidence inventory, not a new phonological runtime, IPA gold set or Ukrainian mapping.
+- Task ledger: source-backed consonant/medial evidence matrix and source integrity test — DONE_VERIFIED after exact-head CI; exhaustive segmental cluster legality and lexical distribution — PARTIAL; profile-matched phonological runtime rules — PARTIAL/BLOCKED by insufficient source coverage and absent adjudicated IPA.
+- No audio was recorded, no third-party corpus was copied, and no licensing scope was expanded. Main remains unchanged; PR #147 remains the continuation vehicle.
+
