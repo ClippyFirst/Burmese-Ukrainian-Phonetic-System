@@ -2513,3 +2513,12 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **BLOCKED — entry-level MLC evidence:** no live dictionary entry, IPA transcription, definition, or export record was retrieved. Do not mark any rime collision resolved or import data from the page's interface metadata. Acceptance requires a functioning record lookup/export or direct inspection of the 1993/1996 dictionary, with exact headword, displayed transcription, query/date and provenance captured. Copyright remains with MLC/Dunwoody Press; retrieval does not grant redistribution rights.
 - Useful primary-source access references: [live SEAlang Burmese Dictionary](https://sealang.net/burmese/dictionary.htm), [dictionary query help](https://sealang.net/help/q-dict.htm), and the archived [SEAlang Services API description](https://www.sealang.net/archives/sealang-2008.pdf). These establish interface/search capability and provenance, not entry-level lexical claims.
 - No registry rows, source claims, IPA labels, runtime rules, Ukrainian mappings or generated outputs changed as a result of this failed access probe.
+
+
+
+## 2026-11-15 — MLC print-source acquisition lead
+
+- **DONE_VERIFIED — bibliographic discovery only:** publisher listing for 1996 reprint of the 1993 MLC Myanmar-English Dictionary; National Diet Library and Cinii catalogue records for 1993/1996; Cinii record for revised 2019 second edition and one University of Tokyo holding.
+- **BLOCKED — entry-level pronunciation evidence:** no book page, symbol key or lexical entry has been inspected. Publisher metadata says the 1996 volume includes a transcription system as a pronunciation aid, but does not establish IPA, phonemic notation or a romanization scheme. The 2019 catalogue does not specify whether the field is retained.
+- **Acceptance criterion:** inspect the edition-specific symbol key and at least one relevant lexical entry; record page, headword, exact transcription, edition and provenance; classify the notation before crosswalk use. A catalogue entry alone cannot adjudicate an MLCTS collision or supply IPA gold.
+- New source/claim IDs: `MLC1996_REPRINT_CATALOG`, `MLC2019_REVISED_BIB`, `CLM-MLC1996-PRONUNCIATION-AID-001`, `CLM-MLC2019-REVISED-EDITION-001`. No pronunciation, IPA gold, runtime or Ukrainian mapping was added.
