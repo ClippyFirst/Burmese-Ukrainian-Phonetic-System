@@ -522,6 +522,13 @@ test("converter and methodology pages avoid page-level horizontal overflow at na
     await page.setViewportSize({width,height:800});
     for(const route of ["/","/system.html"]){
       await page.goto(route);
+      if(route==="/system.html"&&width===320){
+        const tableScroll=await page.locator(".table-wrap").first().evaluate(el=>({
+          clientWidth:el.clientWidth,scrollWidth:el.scrollWidth,overflowX:getComputedStyle(el).overflowX
+        }));
+        expect(tableScroll.scrollWidth).toBeGreaterThan(tableScroll.clientWidth);
+        expect(tableScroll.overflowX).toBe("auto");
+      }
       const dimensions=await page.evaluate(()=>({
         viewport:document.documentElement.clientWidth,
         document:document.documentElement.scrollWidth,
