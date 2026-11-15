@@ -72,3 +72,39 @@ def test_lda_overall_accuracy_is_not_misrepresented_as_project_accuracy():
     assert "5.4% for voiceless non-SG" in row["reported_phonetic_realization"]
     assert "Never cite the 86.7% figure as project accuracy" in row["implementation_consequence"]
     assert row["runtime_status"] == "WITHHELD"
+
+
+def test_icphs_study_scope_is_separate_and_phrase_position_conditioned():
+    evidence = {row["evidence_id"]: row for row in _rows(DATA / "sonorant_phonetics_evidence.csv")}
+    row = evidence["REPETTI-ICPH-SCOPE-001"]
+    assert "four voiced/voiceless sonorant pairs" in row["segment_class"]
+    assert "144 target phrases" in row["reported_phonetic_realization"]
+    assert "phrase-initial, phrase-medial and phrase-final" in row["reported_phonetic_realization"]
+    assert row["source_id"] == "ICPH2023_BURMESE_SONORANTS"
+    assert row["runtime_status"] == "WITHHELD"
+
+
+def test_icphs_prespiration_rate_is_not_merged_with_phonetica_study():
+    evidence = {row["evidence_id"]: row for row in _rows(DATA / "sonorant_phonetics_evidence.csv")}
+    row = evidence["REPETTI-ICPH-PREASP-001"]
+    assert "79%" in row["reported_phonetic_realization"]
+    assert "do not combine" in row["scope_limit"]
+    assert row["source_id"] != "REPETTI2023_BURMESE"
+    assert row["runtime_status"] == "WITHHELD"
+
+
+def test_phrase_final_cue_reweighting_is_not_mislabelled_as_contrast_neutralization():
+    evidence = {row["evidence_id"]: row for row in _rows(DATA / "sonorant_phonetics_evidence.csv")}
+    row = evidence["REPETTI-ICPH-REWEIGHT-001"]
+    assert "not final position" in row["reported_phonetic_realization"]
+    assert "HNR becomes more important finally" in row["reported_phonetic_realization"]
+    assert "not neutralization" in row["implementation_consequence"]
+    assert row["runtime_status"] == "WITHHELD"
+
+
+def test_icphs_classifier_scores_are_not_project_accuracy():
+    evidence = {row["evidence_id"]: row for row in _rows(DATA / "sonorant_phonetics_evidence.csv")}
+    row = evidence["REPETTI-ICPH-LDA-001"]
+    assert "84% phrase-initial; 87% phrase-medial; 87% phrase-final" in row["reported_phonetic_realization"]
+    assert "Never report these percentages as project accuracy" in row["implementation_consequence"]
+    assert row["runtime_status"] == "WITHHELD"

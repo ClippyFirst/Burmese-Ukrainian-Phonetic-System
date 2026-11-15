@@ -3062,3 +3062,11 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 ## 2026-11-15 — documentation-head CI confirmation
 
 - The documentation/status-only follow-up commit `fae584bea5ac580a535ce8c97c7c10c4a7d3f2cd` also passed exact-head PR tests [43723405031](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43723405031) and push tests [43723400788](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43723400788): 303 Python tests + 68 subtests, 21 Node tests, 68 Playwright tests, npm audit 0 vulnerabilities, production build and generated-data freshness all passed. This confirms the final documentation state does not break the verified build.
+
+
+## 2026-11-15 — ICPhS 2023 phrase-position sonorant evidence
+
+- Added a separately registered primary source, Chiara Repetti-Ludlow, “Acoustic Correlates and Contrast Maintenance in Burmese Voiceless Sonorants,” ICPhS 2023 proceedings paper 104 (https://www.internationalphoneticassociation.org/icphs-proceedings/ICPhS2023/full_papers/104.pdf). Do not conflate this study with the same author's separate Phonetica 2023 article (DOI 10.1515/phon-2022-0026): the ICPhS paper reports 79% preaspiration, while the Phonetica study reports 78% separately identifiable spread-glottis periods.
+- Added four documentary claims and four evidence rows. The ICPhS design covers four sonorant pairs, high/low tones, /a/, three phrase positions, nine speakers and 144 target phrases. Its key result is position-conditioned cue reweighting: following-vowel SoE distinguishes voicing in phrase-initial/medial but not phrase-final position, where HNR gains importance after final-vowel devoicing. The paper does not report loss of the underlying voicing contrast.
+- Added schema enum values and regression tests for the restricted study scope, the distinct 79% rate, phrase-final cue reweighting and non-transferability of internal LDA percentages. All evidence rows remain WITHHELD; no IPA, grapheme mapping, Ukrainian mapping or runtime behavior changed.
+- Registry checkpoint after this addition: 97 sources, 217 documentary claims, 10 sonorant evidence rows; rime/collision groups remain 25. This is a documentary evidence expansion, not full phonological coverage or a gold corpus.

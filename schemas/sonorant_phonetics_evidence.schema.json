@@ -31,7 +31,11 @@
         "realization_variability",
         "acoustic_contrast",
         "non_sg_correlates",
-        "classifier_scope"
+        "classifier_scope",
+        "phrase_position_scope",
+        "preaspiration_distribution",
+        "prosodic_cue_reweighting",
+        "position_specific_classifier"
       ]
     },
     "segment_class": {
