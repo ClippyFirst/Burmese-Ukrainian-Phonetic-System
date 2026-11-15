@@ -61,6 +61,11 @@ jobs:
         env:
           USE_BAZEL_VERSION: 7.4.1
         run: bazel build --noenable_bzlmod -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo
+      - name: Validate pinned Google IPA symbol-table invariants
+        working-directory: language-resources
+        env:
+          USE_BAZEL_VERSION: 7.4.1
+        run: bazel test --noenable_bzlmod -c opt //my:ipa_phonemes_are_uniquely_decodable //my:phoneme_syms_is_current //my:phoneme_tsv_is_current
       - name: Export Google WFST as a static browser model
         run: |
           set -euo pipefail
@@ -81,12 +86,14 @@ jobs:
             --openfst-commit 22867ee7b483598a729abe125da2517584a5d010 \
             --thrax-commit c65fb3d51f9bd0299503f3289a124f52c3431eeb
           python -c 'import json; m=json.load(open("public/models/google-burmese-wfst.json", encoding="utf-8")); assert m["available"] is True and m["arc_count"] > 0'
-          printf '%s\n' 'ကေ' 'ကော်' 'မြန်' 'ယူ' > artifacts/google-wfst-inputs.txt
-          (cd language-resources && bazel-bin/my/g2p < ../artifacts/google-wfst-inputs.txt) > artifacts/google-wfst-reference.tsv
-          node scripts/verify_google_wfst_model_parity.mjs artifacts/google-wfst-reference.tsv
       - uses: actions/setup-node@v7
         with:
           node-version: 22.12.0
+      - name: Verify browser WFST against upstream thrax_g2p CLI
+        run: |
+          printf '%s\n' 'ကေ' 'ကော်' 'မြန်' 'ယူ' > artifacts/google-wfst-inputs.txt
+          (cd language-resources && bazel-bin/my/g2p < ../artifacts/google-wfst-inputs.txt) > artifacts/google-wfst-reference.tsv
+          node scripts/verify_google_wfst_model_parity.mjs artifacts/google-wfst-reference.tsv
       - run: npm install --no-audit --no-fund
       - run: npm run build
       - run: npm test
