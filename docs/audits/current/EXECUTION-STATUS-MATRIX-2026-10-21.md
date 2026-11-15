@@ -2782,3 +2782,13 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - Optional diagnostics [43731256987](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256987): Epitran raw-output and CRF jobs completed SUCCESS; CRF returned 100/100 predictions and 84/100 source-concordant rows, but `gold_count=0`, `accuracy=null`, and `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. Google Thrax/OpenFst build was still in progress at this checkpoint; do not mark that job complete until its terminal status and smoke report are inspected.
 - Task ledger: DONE_VERIFIED — source/claim registration and regression guard; DONE_VERIFIED — exact-head engineering CI; PARTIAL — full Yangon lexical rime/coda/tone/phonation grid, /N/ surface realization and Python/browser parity; BLOCKED — independent G2P accuracy (0 adjudicated IPA gold) and MLC entry-level transcription evidence (SEAlang backend failure; physical dictionary pages not inspected); TODO — manual screen-reader/mobile/zoom/contrast accessibility QA; DEFERRED — independent IPA annotation remains outside current authorized scope.
 - No runtime phonology, IPA labels, Ukrainian mappings, gold annotations, merge, deployment, release or `main` write occurred. Overall readiness remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## 2026-11-15 — final optional diagnostics on Waxman test head (23983ab8)
+
+- Follow-up to the in-progress note above: optional workflow [43731256987](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256987) completed SUCCESS for all three jobs on PR head `23983ab8ade692e1795039dd114c352dddee16ef`.
+- Epitran 1.35.3 raw-output report SHA-256 `b695085d4c4528411576f2362b5d13740e6fc06b82afbe380e018b89b9a5ace5`, artifact `14168731263`.
+- CRF returned 100/100 predictions and 84/100 source-concordant rows; `gold_count=0`, `accuracy=null`, `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; artifact `14168446496`.
+- Google Burmese Thrax/OpenFst built successfully; all IPA symbol-table invariant checks passed; 6/6 structural-only probes produced outputs with 0 runtime errors; `independent_gold_count=0`, `accuracy=null`; report SHA-256 `c86d41b71a02c4d51f3cf5e432926e5d6993e9dff608426c745fd335e0e63296`, artifact `14168621272`.
+- These are successful build/raw-output diagnostics only. They do not establish accuracy or production readiness. Independent adjudicated IPA gold remains zero; CRF overlap remains unresolved.
+- Required exact-head tests workflow [43731256990](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256990) SUCCESS: 308 Python tests + 68 subtests, 21 Node tests, 68 Playwright tests, npm audit 0 vulnerabilities, build and generated-data freshness pass.
