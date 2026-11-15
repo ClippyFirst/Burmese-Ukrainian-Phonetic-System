@@ -87,3 +87,42 @@ All three final-head artifacts were downloaded and inspected. Outputs remain dia
 - `src/web/hybrid-engine.js`: runs all available providers, exposes IPA candidates and Ukrainian-adapter previews, records agreement/divergence and withholds external promotion pending independent gold.
 - myG2P v2 is not bundled: its dictionary license is CC BY-NC-SA 4.0 and no project redistribution/commercial-use permission is assumed.
 - Accuracy remains unmeasured: independent profile-matched IPA gold = 0.
+
+
+## 2026-11-15 — browser runtime IPA-first integration
+
+The browser hybrid orchestrator is now the source of the phonetic-mode display result. The UI no longer computes the hybrid analysis and then renders the older `segment.ipa` / `segment.uk` fields as if they were the hybrid result.
+
+The canonical path is:
+
+1. structural browser parser produces orthographic segments and a conservative project IPA candidate;
+2. project, Epitran and Google WFST candidates are retained as typed IPA results with provider provenance;
+3. only project IPA marked `ESTABLISHED` or `WELL_SUPPORTED` is currently eligible for canonical selection;
+4. the selected IPA is passed to the single `renderUkrainian()` IPA adapter;
+5. IPA status and Ukrainian adaptation status remain separate, and unresolved segments remain `?` / `⟦…⟧`.
+
+External candidates remain diagnostic. There is no voting, majority selection, or external fallback. Each provider's dialect profile remains unverified; agreement is therefore diagnostic rather than evidence of dialect-matched correctness.
+
+### Tone-aware candidate comparison
+
+The comparison now distinguishes:
+- exact normalized IPA agreement;
+- segmental agreement with a tone/prosody difference;
+- segmental divergence;
+- non-comparable candidates.
+
+Tone diacritics are excluded only from the segmental comparison key; they remain in the original IPA and are reported separately. Length, aspiration, glottal closure, and segment identity are not erased by this comparison. A missing tone mark is reported as underspecification, not as full agreement.
+
+### Evidence constraints
+
+The Google Burmese grammar is a Thrax/OpenFst G2P system that emits IPA; Oo et al. describe 88 symbols (34 consonants, 54 vowels), four tone categories, and tone-related vowel distinctions. The released Yangon-recorded corpus described in that paper is speech plus word-segmented text, not a phoneme-labelled gold lexicon; it must not be treated as IPA gold [Oo20].
+
+Watkins's IPA description is based on one Rangoon consultant and a careful reading style. It documents four non-reduced tone categories with pitch, phonation and length correlates, and a restricted coda pattern; it is valuable profile-scoped evidence, not a universal Burmese dialect specification [Wat01]. Hlaing and Mikami's FST syllabifier is orthographic segmentation, not pronunciation validation [Hla14]. Thu et al.'s G2P study uses 25,300 MLC dictionary words, but does not establish a redistributable lexicon or a fully specified IPA inventory [Thu16].
+
+### Acceptance status
+
+- Browser IPA-first handoff to the Ukrainian adapter: implemented; exact-head CI pending.
+- Tone-aware comparison and unknown-preserving policy: implemented; regression tests added; exact-head CI pending.
+- Independent dialect-matched lexical IPA gold: BLOCKED (0 adjudicated records).
+- Provider profile equivalence: BLOCKED (Google grammar and Epitran port are not independently established as the same Yangon speaker/profile).
+- Phonological completeness for medials, kinzi, conjuncts, rimes and surface prosody: PARTIAL/BLOCKED by evidence, not by browser execution.
