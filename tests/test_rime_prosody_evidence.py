@@ -20,7 +20,7 @@ def test_rime_prosody_evidence_is_schema_shaped_linked_and_withheld():
     evidence = rows(DATA / "rime_prosody_evidence.csv")
     schema = json.loads((ROOT / "schemas" / "rime_prosody_evidence.schema.json").read_text(encoding="utf-8"))
 
-    assert len(evidence) == 12
+    assert len(evidence) == 15
     assert len({row["evidence_id"] for row in evidence}) == len(evidence)
     for row in evidence:
         jsonschema.validate(row, schema)
@@ -75,3 +75,18 @@ def test_experimental_scope_and_phonation_observation_are_explicit():
     assert "nasalized" in phonation["reported_realization"]
     assert "experimental sample only" in phonation["profile_scope"]
     assert scope["evidence_status"] == "methodological_scope"
+
+
+def test_tufs_crosswalk_keeps_open_nasal_and_checked_notation_distinct():
+    evidence = {row["evidence_id"]: row for row in rows(DATA / "rime_prosody_evidence.csv")}
+    open_rime = evidence["TUFS-OPEN-RIME-CROSSWALK-001"]
+    nasal = evidence["TUFS-NASAL-RIME-CROSSWALK-001"]
+    checked = evidence["TUFS-CHECKED-RIME-CROSSWALK-001"]
+
+    assert open_rime["evidence_status"] == "documentary_crosswalk"
+    assert "MED 2019" in open_rime["reported_realization"]
+    assert "/ɴ/" in nasal["coda_class"]
+    assert "not a universal segmental [n]" in nasal["implementation_consequence"]
+    assert "/ʔ/" in checked["coda_class"]
+    assert "three-tone" in checked["reported_realization"]
+    assert all(row["runtime_status"] == "WITHHELD" for row in (open_rime, nasal, checked))
