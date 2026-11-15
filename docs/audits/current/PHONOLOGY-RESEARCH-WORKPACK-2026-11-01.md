@@ -197,3 +197,6 @@ Workflow 43647671628 has now completed successfully on the code/data/test head: 
 Added an 11-row `data/burmese/rime_prosody_evidence.csv`, JSON Schema and regression suite. The matrix records Green 2005's source-specific open/closed rime restrictions, diphthong/coda distribution, nasal-rhyme tone restriction, placeless /N/ realization and quantity/duration distinction. It also records Mooney & Repetti-Ludlow 2021's open/closed vowel sets, sonority-based centralization/diphthongization analysis, isolation vs sentential tone-cue differences, nasal/oral observations and one-speaker Yangon scope.
 
 The new rows link to seven source claims and all remain `WITHHELD`. This is a source-grounded evidence matrix, not a full lexical rime inventory, IPA gold set, or runtime rule table. Exact-head CI is pending; do not mark DONE_VERIFIED until it passes. No IPA or Ukrainian mapping was promoted.
+
+
+Printed-page verification correction: Green 2005's Table (9) and §2.2 page images resolve the OCR ambiguity. The open-only mid monophthongs are /e, o, ɔ/; /ɛ/ occurs open or before /ʔ/, but not before /N/. Added a separate source claim, evidence row and regression assertion. The evidence matrix now has 12 rows; no runtime mapping was enabled.
