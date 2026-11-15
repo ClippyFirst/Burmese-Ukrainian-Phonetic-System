@@ -696,7 +696,7 @@ def test_waxman_med_transcription_claim_remains_secondary_and_non_operational():
     claim = claims["CLM-WAXMAN2018-MED-TRANSCRIPTION-CHARACTER-001"]
     assert source["year"] == "2018"
     assert source["type"] == "conference_abstract"
-    assert "secondary conference abstract only" in source["scope"]
+    assert "Secondary conference abstract only" in source["scope"]
     assert "no notation key" in source["scope"]
     assert claim["source_id"] == source["source_id"]
     assert claim["status"] == "DOCUMENTARY"
