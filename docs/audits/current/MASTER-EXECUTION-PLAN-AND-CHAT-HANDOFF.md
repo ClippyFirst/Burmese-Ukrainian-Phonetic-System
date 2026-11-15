@@ -750,3 +750,12 @@ The paper documents a potentially useful 42 h 39 min / 307-speaker audio corpus,
 ### Final assessment
 
 **PARTIAL PROTOTYPE — NOT LINGUISTICALLY RELEASE-READY.** The research dossier is suitable for specialist review, but modern Yangon IPA gold, corpus provenance/quality clearance, unresolved phonological models and source-level adjudication are still absent.
+## Публікація GitHub Pages і live smoke test — 2026-11-15
+
+- DONE_VERIFIED — merge/publish: PR #147 об'єднано методом squash у main; merge commit 69cb277ea1d9209432d91adbed250625b14f3ee4.
+- DONE_VERIFIED — deployment: GitHub Actions workflow Deploy site to GitHub Pages, run https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43742948563, event push, head_sha=69cb277ea1d9209432d91adbed250625b14f3ee4, conclusion success.
+- DONE_VERIFIED — public smoke test: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/ віддає оновлений інтерфейс. У браузері введено မြန်မာ; MLCTS показав mran ma, романізаційна матриця — мранма; фонетичний режим показав ?ma та ⟦မြန်⟧ма, позначивши перший сегмент як NOT_ESTABLISHED / ANALYSIS_DEPENDENT. Структурний trace показав မြန် і မာ. Консольних помилок і page exceptions у smoke test не виявлено.
+- Висновок про коректність: smoke test підтверджує роботу публічного UI та контрольовану відмову від непідтвердженої вимови, але не є лінгвістичною валідацією. Незалежний ад’юдикований IPA gold corpus: 0 записів; емпірична IPA/українська точність лишається null.
+- PARTIAL — linguistic coverage: повна модель голосних, checked syllables/coda, тон/регістр/фонація, медалі/кінзі/кон’юнкти та незалежна лексична валідація залишаються незавершеними або доказово обмеженими.
+- TODO — release hygiene: ручний screen-reader/contrast/focus QA та перевірка на фізичному мобільному пристрої ще не підтверджені.
+- BLOCKER: без незалежно ад’юдикованих, джерельно атрибутованих IPA gold записів не можна заявляти виміряну точність або називати рушій лінгвістично завершеним.
