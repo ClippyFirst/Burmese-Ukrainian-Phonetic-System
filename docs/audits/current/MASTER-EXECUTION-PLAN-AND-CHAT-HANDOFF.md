@@ -904,3 +904,8 @@ Verification: Python tests, npm tests, build, generated-data freshness and built
 ### Segmental preview display refinement — 2026-11-15
 
 A further parity refinement keeps the existing Python behavior: segmental-only project IPA (e.g. ka) is visible as a PARTIAL/PROVISIONAL candidate, and its Ukrainian form is generated from that IPA through the shared adapter. It is not labeled canonical/full IPA. The UI's separate status fields report IPA ANALYSIS_DEPENDENT and Ukrainian PROVISIONAL. Inputs with no segmental candidate (e.g. မြန်) remain withheld. This is preferable to blanking all useful candidates and remains evidence-honest.
+
+
+### Python API parity refinement — 2026-11-15
+
+The Python RuleBasedBurmeseEngine now emits additive typed candidate/completeness metadata aligned with the browser: segmental-only IPA remains visible as a candidate, prosody status is not established, profile is scoped but not independently adjudicated, and canonical IPA/Ukrainian fields remain null. The existing `ipa` and `ukrainian` values are preserved for compatibility but explicitly tagged as candidates. Mixed-input segmental previews use PROVISIONAL_SEGMENTAL_ONLY rather than SUPPORTED_PATH. Tests were added; exact-head CI pending.
