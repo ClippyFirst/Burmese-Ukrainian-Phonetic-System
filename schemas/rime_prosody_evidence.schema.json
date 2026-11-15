@@ -84,7 +84,8 @@
       "enum": [
         "source_analysis",
         "experimental_observation",
-        "methodological_scope"
+        "methodological_scope",
+        "documentary_crosswalk"
       ]
     },
     "runtime_status": {
