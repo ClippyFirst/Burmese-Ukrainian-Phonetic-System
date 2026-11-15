@@ -824,3 +824,14 @@ The paper documents a potentially useful 42 h 39 min / 307-speaker audio corpus,
 - Remaining manual QA: screen reader, keyboard/focus/contrast review, and physical mobile-device check.
 - PR #129 remains open/draft and unchanged.
 - Next genuine project task: assemble and independently adjudicate a small Yangon-profile IPA gold set with provenance, tone/phonation/syllable-boundary annotation and reviewer agreement; then run comparative evaluation before any candidate promotion.
+
+
+### Commands and checks actually executed
+
+- `bazel build --noenable_bzlmod -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo` — PASS on the Pages build runner.
+- `bazel test --noenable_bzlmod -c opt //my:ipa_phonemes_are_uniquely_decodable //my:phoneme_syms_is_current //my:phoneme_tsv_is_current` — PASS.
+- `node scripts/validate_google_input_symbols.mjs language-resources/my/codepoint.syms` — PASS, 224/224 Myanmar codepoint labels.
+- `python scripts/export_google_wfst_model.py --fst-print artifacts/G2P.fst.txt --fst-info artifacts/G2P.fst.info --fst-binary language-resources/bazel-bin/my/G2P.fst --input-symbols language-resources/my/codepoint.syms --output-symbols language-resources/bazel-bin/my/ipa_phoneme.syms --output public/models/google-burmese-wfst.json --source-commit a90601024f07ab7e96c911243324e0adeb16da96 --openfst-commit 22867ee7b483598a729abe125da2517584a5d010 --thrax-commit c65fb3d51f9bd0299503f3289a124f52c3431eeb` — PASS, generated 191,796-byte model.
+- `node scripts/verify_google_wfst_model_parity.mjs artifacts/google-wfst-reference.tsv` — PASS, 4/4 upstream CLI probes.
+- `npm ci`, `npm run build`, `npm test`, `npx playwright install --with-deps chromium`, `npm run test:browser:built` — PASS on main commit `fa39452804257b0997a2ce37bd3d915ac56f4555`.
+- Pages deploy workflow additionally executed same-origin `curl`/asset smoke checks for `/`, `/system.html`, built JS/CSS, Mya2Rom vendor assets and `/models/google-burmese-wfst.json`; all passed.
