@@ -78,3 +78,17 @@ test("browser G2P source registries distinguish orthographic signs from establis
   assert.ok(browserEngineSource.includes('["UNSUPPORTED","ANALYSIS_DEPENDENT","UNCERTAIN"].includes(s.status)?s.status:"NOT_ESTABLISHED"'));
   assert.ok(browserEngineSource.includes('VOWELS, SIGNS'));
 });
+
+
+test("public phonetic UI renders the hybrid orchestrator result, not the pre-hybrid result", () => {
+  assert.ok(browserEngineSource.includes("uk.textContent=hybrid.uk"));
+  assert.ok(browserEngineSource.includes("ipa.textContent=hybrid.ipa"));
+  assert.ok(browserEngineSource.includes("hybrid.ukrainianStatus"));
+  assert.ok(browserEngineSource.includes("hybrid.ipaStatus"));
+});
+
+test("segmental-only IPA is shown as provisional and does not bypass the IPA adapter", () => {
+  assert.ok(browserEngineSource.includes('item.phoneticCompleteness==="SEGMENTAL_ONLY"'));
+  assert.ok(browserEngineSource.includes('provider: "PROJECT_RULES_SEGMENTAL"'));
+  assert.ok(browserEngineSource.includes("renderUkrainian(deterministicIpa)"));
+});
