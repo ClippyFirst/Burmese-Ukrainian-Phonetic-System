@@ -213,3 +213,17 @@ def test_am_dot_lexical_distinction_has_multiple_word_level_examples_without_pro
     assert all(word in claim["claim"] for word in ("စိမ့်", "ဆိမ့်", "နိမ့်", "လိမ့်", "ကြံ့"))
     assert "not a primary MLC adjudication" in claim["claim"]
     assert "no runtime" in row["acceptance_boundary"].lower()
+
+
+def test_any_colon_collision_has_multiple_lexical_attestations_and_preserves_source_units():
+    rows = {row["mlcts"]: row for row in read_rows("romanization_rime_collision_lexical_audit.csv")}
+    row = rows["any:"]
+    assert row["source_units"] == "ဉ်း;ည်း"
+    assert row["evidence_status"] == "SECONDARY_SOURCE_DISTINCTION"
+    assert all(word in row["observed_ipa"] for word in ("/ʔət͡ɕɪ́ɴ/", "/sɪ́ɴ/", "/t͡ɕɪ́ɴ/", "/pʰjɪ́ɴ/", "/nɛ́/"))
+    assert all(form in row["observed_mlcts"] for form in ("a.kyany:", "cany:", "kyany:", "hpyany:", "nany:"))
+    assert "not a controlled minimal pair" in row["interpretation"].lower()
+    claims = {claim["claim_id"]: claim for claim in read_rows("source_claims.csv")}
+    claim = claims["CLM-WIKTIONARY-ANY-COLON-WORD-LEVEL-EXAMPLES-001"]
+    assert all(word in claim["claim"] for word in ("စဉ်း", "ကျဉ်း", "ဖျဉ်း", "နည်း"))
+    assert "primary MLC adjudication" in claim["claim"]
