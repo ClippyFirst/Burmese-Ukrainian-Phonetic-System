@@ -2895,3 +2895,11 @@ Work branch: `fix/ipa-first-hybrid-pipeline-2026-11-15`.
 | Full medials/kinzi/conjunct/rime/prosody coverage | PARTIAL/BLOCKED | Structural recognition and provider outputs exist; evidence-backed canonical realization is incomplete |
 
 Research constraints incorporated: Oo20's corpus is Yangon-recorded speech with word segmentation, not a phoneme-labelled G2P gold set; Watkins 2001 is one Rangoon consultant and must remain scope-limited; Hla14's reported accuracy is orthographic syllabification, not G2P; Thu16's MLC lexicon is not licensed for redistribution by the paper itself.
+
+
+### 2026-11-15 — completeness gate refinement
+
+- Canonical selection now requires an internal IPA candidate with status `ESTABLISHED`/`WELL_SUPPORTED`, explicit `prosodyStatus` of the same accepted level, and a non-empty explicit `profileId`.
+- A project IPA string without tone/profile evidence is `SEGMENTAL_ONLY` and `ANALYSIS_DEPENDENT`; its Ukrainian adaptation is shown only as a provisional preview through the IPA adapter.
+- Regression coverage verifies that `ka` without prosody/profile metadata is withheld, while a fully scoped candidate reaches the adapter.
+- This prevents a segmental-only output from being mistaken for full Burmese IPA.
