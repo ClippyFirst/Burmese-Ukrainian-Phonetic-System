@@ -194,3 +194,8 @@ Added `data/burmese/rime_prosody_evidence.csv` (11 source-linked rows), `schemas
 Mooney & Repetti-Ludlow's experiments used one female native Yangon consultant and a restricted onset/vowel set; their work is valuable profile-relevant phonetic evidence but does not constitute a complete lexical inventory or independent multi-speaker validation. The article's reported acoustic results were inspected textually; project audio was not accessed.
 
 **Acceptance:** machine-readable source evidence and integrity tests are implemented; exact-head CI is required before marking the artifact `DONE_VERIFIED`. No IPA labels, Ukrainian correspondences, runtime phonological rules or tone-decoding behavior were added. The broader vowel × coda × tone × phonation inventory remains `PARTIAL`.
+
+
+### Printed-table verification correction — Green 2005
+
+A page-image check of Green's printed Table (9) and §2.2 (PDF pp.6–8) resolves the previously ambiguous OCR symbol: the open-only mid monophthongs are /e, o, ɔ/. The additional /ɛ/ class is allowed in open syllables and before /ʔ/, but not before /N/ (example (14)). The evidence CSV now records this as a separate twelfth row with its own source claim and regression assertion. This correction is based on the page image, not a guessed Unicode or IPA conversion.
