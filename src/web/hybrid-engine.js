@@ -58,7 +58,8 @@ function adaptationFor(ipa) {
 export function analyzeHybrid(segments, googleModel = null) {
   const records = segments.map((segment) => {
     if (segment.nonMyanmar) return { segment, passthrough: true };
-    const deterministicIpa = segment.ipa || null;
+    const deterministicIpa = segment.ipa && !["UNSUPPORTED", "UNCERTAIN"].includes(segment.status)
+      ? segment.ipa : null;
     const prosodyStatus = segment.prosodyStatus || segment.toneStatus || "NOT_ESTABLISHED";
     const profileId = segment.profileId || null;
     // A segmental onset+rime string is not complete Burmese IPA without an
@@ -110,8 +111,8 @@ export function analyzeHybrid(segments, googleModel = null) {
       selectedSource: deterministicEstablished ? "PROJECT_RULES"
         : projectCandidate ? "PROJECT_RULES_SEGMENTAL_PREVIEW" : "UNRESOLVED",
       ipaStatus: deterministicEstablished ? segment.status
-        : deterministicIpa ? "ANALYSIS_DEPENDENT"
-          : ["UNSUPPORTED", "ANALYSIS_DEPENDENT", "UNCERTAIN"].includes(segment.status) ? segment.status : "NOT_ESTABLISHED",
+        : ["UNSUPPORTED", "ANALYSIS_DEPENDENT", "UNCERTAIN"].includes(segment.status) ? segment.status
+          : deterministicIpa ? "ANALYSIS_DEPENDENT" : "NOT_ESTABLISHED",
       ukrainianStatus: selectedIpa ? selectedAdaptation.status
         : provisionalAdaptation?.text ? "PROVISIONAL" : "NOT_ESTABLISHED",
       selectedStatus: selectedIpa ? aggregate([segment.status, selectedAdaptation.status])
