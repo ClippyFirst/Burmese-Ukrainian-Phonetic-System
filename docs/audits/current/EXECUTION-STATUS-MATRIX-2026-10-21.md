@@ -2468,3 +2468,11 @@ Optional run [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phon
 - CRF: 100/100 predictions, 84/100 source-concordant, gold 0, accuracy null, scoring status NOT_SCORED_POSSIBLE_TRAINING_OVERLAP.
 - Artifacts: Google 14134846400 (digest ac5cd0b7b00a746d67116fc32831369e555e316d554bedfc34bf6b18378b0949; expires 2027-02-12); Epitran 14134308008 (digest 13ae2b78ac2a9b961e1e10231a58f787fb5b11142640997b7a1bf6ff327dc797; expires 2027-02-12); CRF 14135275454 (digest dcd9667213ea2c611795a8b3851c7809ea26b853755e6b36291d373e9466ccc0; expires 2026-12-14).
 These are raw-output diagnostics, not independent IPA gold, accuracy or promotion evidence. Earlier "still in progress" note is superseded.
+
+
+## 2026-11-15 continuation — rime/prosody evidence
+
+| Layer / acceptance gate | Implemented coverage | Tested coverage | Independently validated coverage | Status | Next acceptance criterion |
+|---|---|---|---|---|---|
+| Source-scoped rime × coda × tone × phonation evidence | 11-row Green 2005 / Mooney & Repetti-Ludlow 2021 matrix with source/claim/locator/profile fields; dedicated JSON Schema; all rows withheld from runtime | Dedicated integrity/schema tests added; exact-head CI pending | No independent adjudicated lexical IPA; one-speaker Mooney experiment is not a multi-speaker gold set | PARTIAL pending exact-head CI | Pass exact-head CI; then expand source coverage without conflating phonemic tone, /ʔ/, /N/, nasalization, quantity and duration |
+| Modern Yangon lexical rime inventory | Source-level distributional constraints now machine-readable | Evidence-integrity checks only | No complete source-located lexical inventory or adjudicated rime × tone grid | PARTIAL | Recover and verify primary MLC/Okell lexical entries and item-level source locators; retain unsupported cells as unknown |
