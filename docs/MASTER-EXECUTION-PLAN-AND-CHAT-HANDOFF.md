@@ -2813,3 +2813,8 @@ Optional workflow [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian
 - Mooney & Repetti-Ludlow 2021 is recorded as one female native Yangon consultant and restricted experimental targets. The matrix separates open/closed vowel alternations, the authors' tone-independent sonority analysis, isolation vs sentential acoustic cue differences, and nasalized vs oral token observations.
 - All rows remain `WITHHELD`; no phonological runtime rule, IPA value, Ukrainian mapping or gold label was added. The extracted article text is used for claims/locators; project audio was not accessed.
 - Exact-head CI is pending. Keep `BURMESE-RIME-PROSODY-MATRIX-001` PARTIAL until the new test suite and full required workflow pass. The complete lexical Yangon rime grid and independent adjudicated IPA gold remain open blockers.
+
+
+### Source transcription correction
+
+A visual check of Green 2005's printed Table (9) and §2.2 pages resolved an OCR ambiguity. The open-only mid-vowel set is /e, o, ɔ/; /ɛ/ is permitted in open syllables and before /ʔ/, but not before /N/. The rime/prosody matrix now has 12 rows and a dedicated claim/test for this distinction. This is a source-faithful correction only; no runtime rule was enabled.
