@@ -527,8 +527,13 @@ test("converter and methodology pages avoid page-level horizontal overflow at na
         document:document.documentElement.scrollWidth,
         offenders:[...document.querySelectorAll("body *")].map(el=>{
           const rect=el.getBoundingClientRect();
-          return {tag:el.tagName,id:el.id,className:typeof el.className==="string"?el.className:"",left:Math.round(rect.left),right:Math.round(rect.right),width:Math.round(rect.width)};
-        }).filter(el=>el.right>document.documentElement.clientWidth+1||el.left < -1).slice(0,12)
+          const parents=[];let node=el;
+          for(let depth=0;node&&depth<5;depth++,node=node.parentElement){
+            const box=node.getBoundingClientRect();const style=getComputedStyle(node);
+            parents.push({tag:node.tagName,className:typeof node.className==="string"?node.className:"",width:Math.round(box.width),left:Math.round(box.left),right:Math.round(box.right),clientWidth:node.clientWidth,scrollWidth:node.scrollWidth,overflowX:style.overflowX});
+          }
+          return {tag:el.tagName,id:el.id,className:typeof el.className==="string"?el.className:"",left:Math.round(rect.left),right:Math.round(rect.right),width:Math.round(rect.width),parents};
+        }).filter(el=>el.right>document.documentElement.clientWidth+1||el.left < -1).slice(0,4)
       }));
       expect(dimensions.document,route+" at "+width+"px; offenders="+JSON.stringify(dimensions.offenders)).toBeLessThanOrEqual(dimensions.viewport);
     }
