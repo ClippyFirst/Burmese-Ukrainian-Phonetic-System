@@ -2862,3 +2862,5 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - DEFERRED — CRF and Goruut browser ports: no model/license/quality basis justifies bundling them in this static-site pass; their Python research comparators remain separate.
 - Existing open PR #129 is not merged or modified by this work; it remains a separate research Python wrapper. No existing phonological rules were replaced.
 - Next acceptance gate: exact-head CI and Pages build must generate a nonempty WFST model, pass Node/Python/Playwright checks, deploy successfully, and pass deployed same-origin model smoke. Only then may the runtime integration tasks be marked DONE_VERIFIED.
+
+- CI correction record: initial Pages PR run 43752398240 failed before model export because Bazelisk selected Bazel 9.3.2, which enabled Bzlmod and hid the legacy `@openfst` WORKSPACE repository. The build step now pins Bazel 7.4.1 and disables Bzlmod explicitly; rerun is pending. This is a build-tool compatibility issue, not a linguistic or model-quality result.

@@ -56,7 +56,9 @@ jobs:
           PY
       - name: Build pinned Google Burmese WFST and OpenFst text tools
         working-directory: language-resources
-        run: bazel build -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo
+        env:
+          USE_BAZEL_VERSION: 7.4.1
+        run: bazel --noenable_bzlmod build -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo
       - name: Export Google WFST as a static browser model
         run: |
           set -euo pipefail
