@@ -896,3 +896,23 @@ Updated 25-group distribution: **0 unadjudicated / 12 secondary equivalence / 1 
 - The abstract characterizes the 1993 MED transcription system as novel and arguably more phonologically transparent, channeling tonal graphemic elements of Burmese script. This adds a secondary description of the dictionary's design intent, but does not reveal the notation key, exact tonal symbols, lexical entries, or whether its transcription is IPA, MLCTS2, or another system. The full paper and dictionary pages were not inspected. Do not treat this as an implementation specification or as evidence that the MED notation is identical to IPA/MLCTS2.
 - Added a regression test asserting source/claim linkage and the secondary-only, non-operational evidence boundary. No runtime rule, IPA label, Ukrainian mapping or gold annotation changed.
 - Source: https://www.centerforburmastudies.com/uploads/5/2/1/8/52185987/abstracts_template_final_draft_7-30.pdf (conference abstract, p.49).
+
+
+## 2026-11-15 — MLC dictionary access trail: SHACHI and TIL secondary index
+
+A targeted follow-up located two useful but non-equivalent access paths to the 1993 Myanmar-English Dictionary (MED):
+
+1. **SHACHI metadata for the SEAlang Library Burmese Dictionary** identifies the resource as an approximately 35,000-entry lexicon, says its source is the 1993 Myanmar-English Dictionary (republished 1996 by Dunwoody Press), and explicitly records that the source material was used with permission. The same metadata says the resource supports sound-based lookup using IPA. This is resource-level metadata, not a license grant to this repository, not the dictionary's notation key, and not evidence that every SEAlang sound-search output is independently adjudicated IPA. The linked SEAlang dictionary endpoint timed out during this review.
+2. **Tun Institute of Learning (TIL), “Romabama” material** contains many lexical examples explicitly attributed to MEDict with page numbers (for example, entries cited to pp. 15–17, 116–18, 212–14 and others). A separate TIL note states that MEDict supplies a pronunciation guide in a non-phonetic-alphabet script. However, TIL's visible forms are rendered in the TIL author's own Romabama conventions and are not demonstrated to reproduce the MED's original transcription symbols. TIL is therefore a secondary lexical index / cross-check lead, not the primary notation specification and not an IPA gold source. Its authorial interpretation and transcription must remain distinct from the MLC source.
+3. The Dunwoody Press catalogue confirms the 1993 original, approximately 35,000 entries and a transcription aid for English-speaking readers. The WHO Myanmar Library catalogue records a 635-page 1993 copy as available in its holdings. These records establish plausible physical access routes, not that the repository has inspected or obtained the book.
+
+**Evidence boundary and task update:** the broad statement “no entry-level MED-related material is discoverable” is too strong. Secondary MED-linked lexical examples are discoverable through TIL, and a licensed SEAlang-derived resource is described by SHACHI. The actual primary-source task remains BLOCKED: the MLC transcription key and original entry pages have not been inspected; the SEAlang endpoint did not load; SHACHI metadata does not itself supply the underlying data or project reuse permission. Secondary TIL examples may be used only as leads for later page-by-page primary verification, never silently promoted to source-authored MED transcription, IPA, or adjudicated gold.
+
+Sources:
+- SHACHI resource metadata: https://shachi.org/resources/3949
+- TIL Romabama page with MEDict page-referenced examples: https://www.tuninst.net/RBM-TYPEWRITER/von01.htm
+- TIL note describing MEDict's non-phonetic-alphabet pronunciation guide: https://www.tuninst.net/HUMAN-VOICE/HV-indx.htm
+- Dunwoody Press catalogue: https://www.thedunwoodypress.com/product-page/myanmar-english-dictionary
+- WHO Myanmar Library catalogue record: https://kohammr.searo.who.int/bib/487
+
+No lexical rows, IPA labels, source permissions, runtime rules or Ukrainian mappings were added or changed in this review.
