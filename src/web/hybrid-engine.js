@@ -78,7 +78,7 @@ export function analyzeHybrid(segments, googleModel = null) {
     const externalCandidates = epitranCandidate ? [{
       provider: "EPITRAN_PORT", ipa: epitranCandidate,
       typed: typedCandidate("EPITRAN_PORT", epitranCandidate, "PROVISIONAL",
-        { engine: "Epitran 1.35.3 Burmese mapping port", tones_requested: true }),
+        epitran.provenance || { engine: "Epitran 1.35.3 Burmese mapping port", tones_requested: true }),
     }] : [];
     const candidateAdaptations = [];
     if (projectCandidate && !deterministicEstablished) candidateAdaptations.push({
@@ -138,7 +138,7 @@ export function analyzeHybrid(segments, googleModel = null) {
           item.externalCandidates.push({
             provider: "GOOGLE_WFST", ipa: candidate,
             typed: typedCandidate("GOOGLE_WFST", candidate, "PROVISIONAL",
-              googleRun.provenance || { engine: "Google Burmese Thrax/OpenFst static model" }),
+              googleRun.provenance || googleModel?.provenance || { engine: "Google Burmese Thrax/OpenFst static model" }),
           });
           item.candidateAdaptations.push({
             provider: "GOOGLE_WFST", ipa: candidate,
