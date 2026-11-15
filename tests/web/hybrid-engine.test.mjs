@@ -105,12 +105,15 @@ test("provider comparison explicitly records unverified dialect scope", () => {
 test("segmental IPA without tone and profile evidence is not canonical", () => {
   const result = analyzeHybrid([{raw:"ကာ",nonMyanmar:false,ipa:"ka",status:"ESTABLISHED"}]);
   const record = result.records[0];
-  assert.equal(record.selectedSource, "UNRESOLVED");
+  assert.equal(record.selectedSource, "PROJECT_RULES_SEGMENTAL_PREVIEW");
   assert.equal(record.phoneticCompleteness, "SEGMENTAL_ONLY");
   assert.equal(record.ipaStatus, "ANALYSIS_DEPENDENT");
+  assert.equal(record.ukrainianStatus, "PROVISIONAL");
   assert.equal(record.selectionReason, "TONE_OR_PROFILE_NOT_ESTABLISHED");
-  assert.equal(result.ipa, "?");
-  assert.equal(result.uk, "⟦ကာ⟧");
+  assert.equal(result.ipa, "ka");
+  assert.equal(result.uk, "ка");
+  assert.equal(record.selectedPhoneticResult, null);
+  assert.equal(record.provisionalPhoneticResult.kind, "IPA_CANDIDATE");
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL" && item.ukrainian.text === "ка"));
 });
 
