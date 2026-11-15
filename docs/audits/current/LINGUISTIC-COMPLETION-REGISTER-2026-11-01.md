@@ -2374,3 +2374,10 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - CRF returned 100/100 predictions and 84/100 source-concordant rows; independent gold=0, accuracy=null, and possible train/test overlap remains unresolved.
 - Epitran 1.35.3 emitted raw output for six structural probes; eligible verified gold=0 and exact-match accuracy=null.
 - This closes the optional workflow execution task only. Engine comparison, accuracy, linguistic validation and runtime promotion remain BLOCKED by absent independent adjudicated IPA gold and unresolved provenance/overlap questions. No runtime mapping changed.
+
+
+## Accessibility implementation update — 2026-11-15
+
+- **PARTIAL:** added keyboard skip navigation to both `index.html` and `system.html`; the main landmark is now a focusable fragment target. Shared CSS exposes the link on focus and preserves reduced-motion scrolling behavior.
+- **PARTIAL / CI PENDING:** added three Playwright regressions covering both entry pages and reduced-motion preference. The exact implementation head is `481c26d6951d4795e16e239f9332c3e42f7d3f44`; hosted CI has not yet been observed for this head.
+- **TODO:** manual screen-reader, zoom/reflow, mobile and full contrast QA remain outstanding. No WCAG conformance claim is made.
