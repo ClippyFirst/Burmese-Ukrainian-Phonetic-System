@@ -909,3 +909,6 @@ A further parity refinement keeps the existing Python behavior: segmental-only p
 ### Python API parity refinement — 2026-11-15
 
 The Python RuleBasedBurmeseEngine now emits additive typed candidate/completeness metadata aligned with the browser: segmental-only IPA remains visible as a candidate, prosody status is not established, profile is scoped but not independently adjudicated, and canonical IPA/Ukrainian fields remain null. The existing `ipa` and `ukrainian` values are preserved for compatibility but explicitly tagged as candidates. Mixed-input segmental previews use PROVISIONAL_SEGMENTAL_ONLY rather than SUPPORTED_PATH. Tests were added; exact-head CI pending.
+
+
+Registry checkpoint from current branch: `data/burmese/sources.csv` has 101 data rows; `data/burmese/source_claims.csv` has 221 data rows; `data/burmese/rime_prosody_evidence.csv` has 18 data rows. The 3 new tone/context/dialect evidence rows are all WITHHELD.
