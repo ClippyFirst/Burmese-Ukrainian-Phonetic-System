@@ -46,7 +46,7 @@ def test_green_rime_constraints_remain_source_scoped():
 
 
 def test_mooney_vowel_alternation_is_not_encoded_as_tone_to_vowel_rule():
-    evidence = {row["evidence_id"]: row for row in rows(DATA / "burmese" / "rime_prosody_evidence.csv")}
+    evidence = {row["evidence_id"]: row for row in rows(DATA / "rime_prosody_evidence.csv")}
     alternation = evidence["MOONEY-CLOSED-VOWEL-ALTERNATION-001"]
     assert "tone-independent" in alternation["reported_realization"]
     assert "Do not implement a direct tone-to-vowel rule" in alternation["implementation_consequence"]
@@ -54,7 +54,7 @@ def test_mooney_vowel_alternation_is_not_encoded_as_tone_to_vowel_rule():
 
 
 def test_mooney_citation_and_sentential_tone_cues_are_not_collapsed():
-    evidence = {row["evidence_id"]: row for row in rows(DATA / "burmese" / "rime_prosody_evidence.csv")}
+    evidence = {row["evidence_id"]: row for row in rows(DATA / "rime_prosody_evidence.csv")}
     isolated = evidence["MOONEY-ISOLATED-TONE-CUES-001"]
     sentential = evidence["MOONEY-SENTENTIAL-TONE-CUES-001"]
     assert "F0 did not distinguish all four" in isolated["reported_realization"]
@@ -64,7 +64,7 @@ def test_mooney_citation_and_sentential_tone_cues_are_not_collapsed():
 
 
 def test_experimental_scope_and_phonation_observation_are_explicit():
-    evidence = {row["evidence_id"]: row for row in rows(DATA / "burmese" / "rime_prosody_evidence.csv")}
+    evidence = {row["evidence_id"]: row for row in rows(DATA / "rime_prosody_evidence.csv")}
     scope = evidence["MOONEY-EXPERIMENT-SCOPE-001"]
     phonation = evidence["MOONEY-NASAL-ORAL-PHONATION-001"]
     assert "One speaker" in scope["profile_scope"]
