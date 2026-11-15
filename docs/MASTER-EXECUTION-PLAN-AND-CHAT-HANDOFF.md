@@ -2882,3 +2882,13 @@ Manual screen-reader, mobile reflow, 200–400% zoom, deployed visual QA and ful
 - Added the `documentary_crosswalk` schema enum and a regression test that checks all three categories and their withholding. All 15 rime/prosody rows remain `WITHHELD`; no runtime mapping or generated pronunciation changed.
 - Source: Tokyo University of Foreign Studies, Burmese Pronunciation Module, Section 1.3, https://www.coelang.tufs.ac.jp/mt/my/pmod2/1-3/1.html (accessed 2026-11-15). The page is copyrighted; no source text dataset was copied.
 - Verification at this point: source table visually/textually inspected in the published university module; repository test execution awaits exact-head hosted CI. No local test execution is claimed.
+
+
+## TUFS rime crosswalk verification closeout — 2026-11-15
+
+- The three TUFS crosswalk records are now structurally valid CSV (15 data rows, 16 fields per row), linked to the existing TUFS source and claim, and schema-valid under the new `documentary_crosswalk` evidence type. A direct RFC-4180 field-count check through the fetched branch file confirmed all rows have exactly 16 fields; the regression suite additionally validates every row against the JSON Schema.
+- **Exact-head CI:** PR workflow [43691172177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43691172177) SUCCESS on `673319e267edeca7bf1a4d082fdf17835cfe8ffc`. Results: **292 Python tests + 68 subtests passed**, **21 Node tests passed**, **67 Playwright Chromium tests passed**, npm audit **0 vulnerabilities**, production build passed, generated web-data freshness passed, and independent IPA-gold structure validation completed. The test log reports 0 adjudicated IPA gold remains unchanged; no accuracy is established.
+- Two intermediate CI attempts exposed malformed CSV quoting and overly literal assertions. Both were corrected; the successful exact-head run above includes the final CSV and test changes. Earlier failed attempts are not counted as verification.
+- **BURMESE-RIME-PROSODY-MATRIX-001 — DONE_VERIFIED (source-evidence artifact and exact-head CI):** 15 linked rows, schema, regression tests. **BURMESE-YANGON-RIME-GRID-001 remains PARTIAL**; this is still not a full item-level lexical rime × coda × tone × phonation grid.
+- All 15 rows remain `WITHHELD`. No runtime rules, IPA gold, Ukrainian mappings, or generated pronunciation artifacts changed. Independent adjudicated IPA gold remains 0; empirical accuracy remains null.
+- Branch head at this closeout: `673319e267edeca7bf1a4d082fdf17835cfe8ffc`; PR #147 remains open and draft. Main remains unchanged.
