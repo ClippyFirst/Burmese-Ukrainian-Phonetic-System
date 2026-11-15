@@ -198,3 +198,18 @@ def test_a_dot_phonetic_literature_does_not_supply_orthographic_mapping():
     assert "mooney" in rows["a."]["interpretation"].lower()
     assert "watkins" in rows["a."]["interpretation"].lower()
     assert "both source-unit sides" in rows["a."]["interpretation"].lower()
+
+
+def test_am_dot_lexical_distinction_has_multiple_word_level_examples_without_promotion():
+    rows = {row["mlcts"]: row for row in read_rows("romanization_rime_collision_lexical_audit.csv")}
+    row = rows["am."]
+    assert row["evidence_status"] == "SECONDARY_SOURCE_DISTINCTION"
+    assert all(value in row["observed_mlcts"] for value in ("cim.", "hcim.", "nim.", "lim.", "kram."))
+    assert all(value in row["observed_ipa"] for value in ("/sḛɪɴ/", "/sʰḛɪɴ/", "/nḛɪɴ/", "/lḛɪɴ/", "/t͡ɕa̰ɴ/"))
+    assert "not a controlled minimal pair" in row["interpretation"].lower()
+    claims = {claim["claim_id"]: claim for claim in read_rows("source_claims.csv")}
+    claim = claims["CLM-WIKTIONARY-AM-DOT-LEXICAL-DISTINCTION-001"]
+    assert claim["source_id"] == "MYWIKTIONARY2026"
+    assert all(word in claim["claim"] for word in ("စိမ့်", "ဆိမ့်", "နိမ့်", "လိမ့်", "ကြံ့"))
+    assert "not a primary MLC adjudication" in claim["claim"]
+    assert "no runtime" in row["acceptance_boundary"].lower()
