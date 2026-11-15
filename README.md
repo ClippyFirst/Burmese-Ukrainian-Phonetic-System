@@ -8,6 +8,16 @@ Burmese Unicode → normalization → graphemic/syllable structure → onset/con
 
 The practical output is never produced by direct Myanmar-character substitution.
 
+## Runtime architecture and provenance (important distinction)
+
+The published site is **not a voting ensemble of third-party G2P engines**. It exposes two separate modes:
+
+1. **Phonetic mode (the project's own implementation):** the browser runs the repository's JavaScript Myanmar parser and deterministic, evidence-gated Burmese-to-IPA rules; it then passes established IPA through the repository's Ukrainian practical adapter. The Python package has a corresponding rule engine and IPA adapter. Browser and Python implementations are separate code paths with tested shared contracts, not one shared runtime binary; full phonological parity is still PARTIAL. This is original project integration/rule code, but it is not a complete empirically validated Burmese phonology model.
+2. **Romanization mode (third-party engine + project adapter):** the browser calls vendored **Mya2Rom 0.4.4** to obtain the MLCTS romanization, then applies the project's own MLCTS-to-Ukrainian correspondence table. This is an orthographic romanization route, not IPA and not the phonetic engine. Mya2Rom is distributed under CC BY-SA 4.0; see `vendor/mya2rom/NOTICE.md` and `vendor/mya2rom/License.md`. Its source rime inventory is explicitly marked evidence-limited.
+3. **Optional research comparators (not used by the public site):** the Python `HybridBurmeseEngine` wrapper can be given external providers such as Google Burmese WFST, myG2P, Epitran, CRF or a CLI backend. They run only when explicitly injected and locally available. Their outputs are retained as provenance-bearing candidates and are never voted into, or automatically promoted over, the deterministic rule result. myG2P licensing and profile compatibility restrictions remain in force.
+
+Therefore the accurate description is: **a project-built deterministic phonetic rule pipeline, a separately vendored Mya2Rom/MLCTS romanization mode with a project Ukrainian adapter, and optional research-only external IPA comparators**. Calling the production phonetic engine a hybrid ensemble would be misleading.
+
 ## Scope
 
 The default scope is contemporary Standard Burmese. Yangon-oriented claims are used only where the cited source supports that scope. Myanmar script is not treated as synonymous with Burmese.

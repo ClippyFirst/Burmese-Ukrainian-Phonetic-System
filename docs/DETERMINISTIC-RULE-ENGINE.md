@@ -77,3 +77,9 @@ Exact code/test head: `9333bdfec405f9fafb36bab42d90965e11f5e155`. Required PR CI
 - Independent IPA annotation/adjudication — **DEFERRED** per project-owner direction on 2026-11-14. Continue with existing published evidence and source registries only. This does not convert proposed rules into gold labels and does not permit an accuracy claim; independent adjudicated IPA gold remains 0 and empirical accuracy remains null.
 - No new phonological realization, IPA mapping or Ukrainian mapping was introduced by this continuation.
 - Repository readiness remains **PARTIAL PROTOTYPE**, not release-ready.
+
+## Clarification: browser production paths and external tools
+
+The public browser phonetic mode is the repository's own deterministic JavaScript rule path in `src/web/app.js`, followed by `src/web/ukrainian-adapter.js`. It does not call external G2P providers. The public browser's MLCTS mode is a separate path: vendored Mya2Rom 0.4.4 produces romanization, and the project adapter maps that output to Ukrainian. This mode is not IPA.
+
+The optional Python `HybridBurmeseEngine` in `src/burmese_ukrainian/hybrid.py` is a research wrapper for explicit external candidate collection. It is not the production site's engine and never promotes candidate outputs automatically. Browser and Python deterministic implementations are separate and full cross-runtime phonological parity remains PARTIAL.
