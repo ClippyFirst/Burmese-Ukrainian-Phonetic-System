@@ -2872,3 +2872,13 @@ Required workflow [43690500850](https://github.com/ClippyFirst/Burmese-Ukrainian
 The keyboard skip navigation and reduced-motion browser regressions are now **DONE_VERIFIED** by exact PR-head CI. This is not a full accessibility certification. A static WCAG contrast calculation on selected existing foreground/background pairs found: body 15.43:1, muted body 5.16:1, status text 5.73:1, input hint 4.56:1, warning copy 6.63:1, warning link 8.48:1, primary-button text 6.19:1, focus blue against the main surface 6.81:1. The smallest sampled ratio is 4.56:1; this limited source-color sample is not an automated full-page contrast audit and does not cover every state, overlay, disabled control or rendered pixel.
 
 Manual screen-reader, mobile reflow, 200–400% zoom, deployed visual QA and full-page contrast/state coverage remain **TODO**. No WCAG conformance claim is made. This verification supersedes the prior CI-pending note; the exact tested PR head is `a415dc1`, while the branch may advance with documentation-only closeout commits.
+
+
+## TUFS pronunciation-module rime crosswalk — 2026-11-15
+
+- Added three source-linked, explicitly typed documentary crosswalk rows to `data/burmese/rime_prosody_evidence.csv`: open-vowel, nasal-closed and checked-closed rimes. They record the university module's IPA/TLM/NEB/MED 2019/Ohno/Chinese-dictionary correspondences in Section 1.3, table 2 (open rows 151–172; nasal rows 173–193; checked rows 194–201).
+- The source explicitly warns that pronunciation notation varies with researchers' phonological interpretations. The new rows therefore classify this as `documentary_crosswalk`, not experimental or primary lexical evidence. MED forms such as -a/-a:/-a., -an/-an:/an: and -a' remain distinct from the module's IPA forms and are not assumed to be MLCTS.
+- The three rows preserve the module's distinction between nasalized vowels plus /ɴ/ and checked /ʔ/; its treatment of checked syllables separately from three open/nasal tones is one analytical convention, not project-wide consensus.
+- Added the `documentary_crosswalk` schema enum and a regression test that checks all three categories and their withholding. All 15 rime/prosody rows remain `WITHHELD`; no runtime mapping or generated pronunciation changed.
+- Source: Tokyo University of Foreign Studies, Burmese Pronunciation Module, Section 1.3, https://www.coelang.tufs.ac.jp/mt/my/pmod2/1-3/1.html (accessed 2026-11-15). The page is copyrighted; no source text dataset was copied.
+- Verification at this point: source table visually/textually inspected in the published university module; repository test execution awaits exact-head hosted CI. No local test execution is claimed.
