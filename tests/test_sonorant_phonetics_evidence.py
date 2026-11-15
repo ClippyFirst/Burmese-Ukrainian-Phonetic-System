@@ -98,7 +98,7 @@ def test_phrase_final_cue_reweighting_is_not_mislabelled_as_contrast_neutralizat
     row = evidence["REPETTI-ICPH-REWEIGHT-001"]
     assert "not final position" in row["reported_phonetic_realization"]
     assert "HNR becomes more important finally" in row["reported_phonetic_realization"]
-    assert "not neutralization" in row["implementation_consequence"]
+    assert "do not treat final SoE reduction as neutralization" in row["implementation_consequence"]
     assert row["runtime_status"] == "WITHHELD"
 
 
