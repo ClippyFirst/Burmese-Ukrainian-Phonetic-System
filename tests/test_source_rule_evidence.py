@@ -714,7 +714,7 @@ def test_existing_mya2rom_vendor_evidence_distinguishes_mlcts2_from_ipa():
     limits_claim = claims["CLM-MYA2ROM-LIMITATIONS-001"]
     assert source["type"] == "software"
     assert "Vendored CC BY-SA 4.0 software" in source["scope"]
-    assert "not a primary MLC specification" in source["scope"]
+    assert "code is not itself a primary MLC specification" in source["scope"]
     assert med_claim["source_id"] == source["source_id"]
     assert med_claim["status"] == "DOCUMENTARY"
     assert "mlcts2" in med_claim["claim"].lower()
