@@ -899,3 +899,8 @@ New research records: Gruber 2011 (10 Rangoon-origin listeners, one stimulus spe
 Research search completed: https://app.undermind.ai/projects/c8f82304-2600-4e9c-b038-5e6ce16c84f2?path=%2Fanalysis%2FBurmese%20lexical%20tone%20inference%20and%20profile%20matched%20IPA%20validation. Its summary is metadata/abstract based; the project also inspected full PDFs for Watkins 2001, Oo et al. 2020, Gruber 2011 and Mooney & Repetti-Ludlow 2021. Tian 2018 and Dellwo & Jenny 2020 remain abstract/metadata evidence only.
 
 Verification: Python tests, npm tests, build, generated-data freshness and built-browser Playwright were run in GitHub Actions on successive branch heads. Some earlier heads failed because the new acceptance tests were being migrated and because the main UI still used the pre-hybrid fields; those failures were fixed. Exact latest-head green status must be rechecked before marking DONE_VERIFIED. No local checkout/command runner was available. PR #154 is Draft and not merged; the public GitHub Pages site still runs the deployed main version until merge and deployment.
+
+
+### Segmental preview display refinement — 2026-11-15
+
+A further parity refinement keeps the existing Python behavior: segmental-only project IPA (e.g. ka) is visible as a PARTIAL/PROVISIONAL candidate, and its Ukrainian form is generated from that IPA through the shared adapter. It is not labeled canonical/full IPA. The UI's separate status fields report IPA ANALYSIS_DEPENDENT and Ukrainian PROVISIONAL. Inputs with no segmental candidate (e.g. မြန်) remain withheld. This is preferable to blanking all useful candidates and remains evidence-honest.
