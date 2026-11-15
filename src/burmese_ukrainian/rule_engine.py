@@ -21,10 +21,12 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
                 "source": item.get("raw", ""),
                 "ipa": item["ipa"],
                 "ukrainian": rendered.get("text") or "?",
-                "status": "SUPPORTED_PATH",
+                "status": "PROVISIONAL_SEGMENTAL_ONLY",
                 "position": "syllable",
                 "rule_id": None,
                 "unresolved_graphemes": [],
+                "unresolved_features": ["tone", "phonation", "quantity", "profile_adjudication"],
+                "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"],
             })
             continue
         onset = item.get("onset", {}).get("character")
