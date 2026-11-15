@@ -2827,3 +2827,11 @@ A visual check of Green 2005's printed Table (9) and §2.2 pages resolved an OCR
 - Latest required exact-head workflow `43689588512` on `f0c240a` is **QUEUED**, not yet passed. Optional diagnostics `43689588524` are also queued. Do not mark the matrix DONE_VERIFIED until exact-head CI succeeds.
 - A local clone/test run was not possible in this session because the container could not resolve github.com. No local test result is claimed.
 - Runtime, IPA and Ukrainian mappings remain unchanged. The full modern Yangon lexical rime grid and independent adjudicated IPA gold remain open.
+
+
+### Final exact-head CI closeout — rime/prosody evidence — 2026-11-15
+
+- Required workflow [43689588512](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588512) **SUCCESS** on code/data/test head `f0c240abde1a1aedefcfcb3f9694311318f91c04`.
+- Python: **291 passed + 68 subtests**; Node: **21 passed**; Playwright Chromium: **64 passed**.
+- npm audit: **0 vulnerabilities**; production build and generated-data freshness passed; IPA-gold structure validator executed successfully but still has zero adjudicated gold.
+- The 12-row source-linked rime/prosody evidence artifact is now `DONE_VERIFIED`. The full modern Yangon lexical rime grid, independent adjudicated IPA gold and runtime phonological coverage remain `PARTIAL/BLOCKED`; no IPA or Ukrainian mapping was promoted.
