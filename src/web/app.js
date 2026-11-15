@@ -19,7 +19,7 @@ function setOutputMode(mode){
   modeRomanization.classList.toggle("is-active",mode==="romanization");
   modeRomanization.setAttribute("aria-pressed",String(mode==="romanization"));
   outputMethodNote.textContent=mode==="phonetic"
-    ?"Гібридний режим у браузері: власні правила + порт Epitran → IPA → український адаптер. Зовнішній fallback позначається PROVISIONAL; жодних серверних API."
+    ?"Гібридний режим у браузері: власні правила + Epitran + локальна Google WFST-модель → IPA-кандидати й українські адаптації. Кандидати PROVISIONAL; жодних серверних API."
      :"Романізаційний режим: Burmese orthography → MLCTS → окрема українська матриця. Нерозпізнані MLCTS-послідовності залишаються видимими; фонетичний результат не використовується як fallback.";
 }
 
