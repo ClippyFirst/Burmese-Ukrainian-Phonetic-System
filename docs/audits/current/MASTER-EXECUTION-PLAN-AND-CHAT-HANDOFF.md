@@ -783,3 +783,5 @@ The paper documents a potentially useful 42 h 39 min / 307-speaker audio corpus,
 - Next acceptance gate: exact-head CI and Pages build must generate a nonempty WFST model, pass Node/Python/Playwright checks, deploy successfully, and pass deployed same-origin model smoke. Only then may the runtime integration tasks be marked DONE_VERIFIED.
 
 - CI correction record: initial Pages PR run 43752398240 failed before model export because Bazelisk selected Bazel 9.3.2, which enabled Bzlmod and hid the legacy `@openfst` WORKSPACE repository. The build step now pins Bazel 7.4.1 and disables Bzlmod explicitly; rerun is pending. This is a build-tool compatibility issue, not a linguistic or model-quality result.
+
+- Second CI correction record: run 43752563844 confirmed Bazel 7.4.1, but `--noenable_bzlmod` was placed as a startup option and Bazel rejected it. The flag is now moved after the `build` command (`bazel build --noenable_bzlmod ...`). Third exact-head run is pending.

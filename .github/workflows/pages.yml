@@ -58,7 +58,7 @@ jobs:
         working-directory: language-resources
         env:
           USE_BAZEL_VERSION: 7.4.1
-        run: bazel --noenable_bzlmod build -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo
+        run: bazel build --noenable_bzlmod -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo
       - name: Export Google WFST as a static browser model
         run: |
           set -euo pipefail
