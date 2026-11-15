@@ -2840,3 +2840,13 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - PARTIAL — linguistic coverage: повна модель голосних, checked syllables/coda, тон/регістр/фонація, медалі/кінзі/кон’юнкти та незалежна лексична валідація залишаються незавершеними або доказово обмеженими.
 - TODO — release hygiene: ручний screen-reader/contrast/focus QA та перевірка на фізичному мобільному пристрої ще не підтверджені.
 - BLOCKER: без незалежно ад’юдикованих, джерельно атрибутованих IPA gold записів не можна заявляти виміряну точність або називати рушій лінгвістично завершеним.
+## Runtime provenance clarification and republished methodology — 2026-11-15
+
+- DONE_VERIFIED — architecture inspection: live browser phonetic mode uses repository JavaScript structural parsing + deterministic evidence-gated Burmese-to-IPA rules + project Ukrainian IPA adapter; it is not a third-party G2P ensemble.
+- DONE_VERIFIED — romanization provenance: separate browser MLCTS mode calls vendored Mya2Rom 0.4.4 (CC BY-SA 4.0) and then the project's MLCTS-to-Ukrainian adapter. Its rime inventory remains EVIDENCE_LIMITED; this route is orthographic romanization, not IPA.
+- DONE_VERIFIED — research-only comparators: Python HybridBurmeseEngine is an optional wrapper. Google Burmese WFST, myG2P, Epitran, CRF and CLI providers require explicit injection; outputs remain diagnostic candidates and are not promoted or voted into canonical IPA. They are not public-site runtime dependencies.
+- DONE_VERIFIED — documentation/UI: README, methodology page, deterministic-engine contract and hybrid-engine note now describe the split accurately. PR #149 merged as 3abfe992eac8d38932ce0f5aff1bd7161589292e.
+- DONE_VERIFIED — CI and Pages: workflow 43747683399 SUCCESS; Pages workflow 43747683385 SUCCESS including browser suite, deployment and deployed-site/runtime-asset smoke test. Public methodology page was fetched and verified with the new sections.
+- PARTIAL — implementation parity: browser and Python deterministic engines are separate implementations. Shared structural contracts are tested, but full phonological parity remains unproven.
+- BLOCKED / evidence-limited — linguistic accuracy: independent adjudicated Yangon-profile IPA gold remains 0; empirical accuracy remains null. Do not promote proposed phonetic rules based on structural smoke tests or third-party raw outputs.
+- No runtime phonological mappings or Ukrainian transcription rules were changed in this work.
