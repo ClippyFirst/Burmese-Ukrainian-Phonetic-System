@@ -2484,3 +2484,16 @@ The rime/prosody evidence artifact now contains 12 rows (not 11): a printed-page
 ### Verification checkpoint — 2026-11-15
 
 The rime/prosody evidence batch's code/data/test head is `f0c240abde1a1aedefcfcb3f9694311318f91c04`. Manual CSV/reference checks pass (12 rows, 16 fields, unique IDs, valid source/claim links, all WITHHELD). An earlier required CI attempt failed on two assertion wording mismatches (289 passed + 68 subtests); those assertions were corrected. The latest exact-head CI run `43689588512` remains QUEUED, so the task remains PARTIAL pending hosted verification. Local clone/test execution was unavailable because github.com DNS resolution failed in the container.
+
+
+## Optional G2P diagnostics — completed artifact inspection (2026-11-15)
+
+Workflow [43689588524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588524) completed SUCCESS on code/data/test head `f0c240abde1a1aedefcfcb3f9694311318f91c04`; CRF, Epitran and Google Thrax/OpenFst jobs all completed. Downloaded artifacts were inspected:
+
+| Candidate | Raw result | Gold / score | Interpretation |
+|---|---|---|---|
+| Google Thrax/OpenFst | 6/6 structural probes non-empty; 0 runtime errors | 0 gold; accuracy null | Build/execution smoke only |
+| CRF | 100/100 predictions; 84/100 source-concordant | 0 gold; accuracy null; possible training overlap | Source concordance is not accuracy; model training membership unknown |
+| Epitran 1.35.3 | Six structural probes emitted raw outputs | 0 eligible verified gold; exact-match accuracy null | Raw candidate output only |
+
+Artifact IDs/digests: Google `14152141084` / `eb9e803bf203e363bcf2eb173e21024798b55678f62bbdd3205bd539f85db0f6`; CRF `14151244554` / `39e9d49a4f100af0cb1b0e65032ebb76cc1d53c5ef30bba4787968ceec912b91`; Epitran `14151438782` / `2ab261cf68a6078f0428575c6d0c8ec2264e640486cb7e98c11a3b585afc68e1`. All outputs remain diagnostic; none is gold or runtime-enabled. This supersedes the prior note that the Google job was still in progress.
