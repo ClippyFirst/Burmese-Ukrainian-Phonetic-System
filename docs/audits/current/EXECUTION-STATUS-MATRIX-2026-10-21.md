@@ -2555,3 +2555,8 @@ The four first-side entries reinforce a source-level lexical distinction but do 
 | MLCTS `am.` source-unit distinction `မ့်;ံ့` | Four Wiktionary first-side entries (စိမ့်, ဆိမ့်, နိမ့်, လိမ့်) and one opposite-side entry (ကြံ့), each with recorded IPA/MLCTS; source claim and audit updated | Exact-head PR CI [43692035411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692035411) SUCCESS: 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium, 0 npm vulnerabilities, build and generated-data freshness pass | DONE_VERIFIED as a secondary lexical audit extension only; not primary MLC adjudication, controlled minimal pair, independent gold or runtime approval |
 
 No runtime, IPA gold, Ukrainian mapping or generated pronunciation data changed. Wider Yangon rime coverage remains PARTIAL.
+
+
+## Final am. evidence verification — 2026-11-15
+
+The final data/test head `74dc298086292bd6cbaeb965eb1a6ad9e1926a74` passed workflow [43692279971](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692279971): 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, build and generated-data freshness pass. Diff hygiene verified that only one source-claim row and one lexical-audit row changed relative to the pre-change head; no runtime/generated artifacts changed. Later commits in this closeout are documentation-only.
