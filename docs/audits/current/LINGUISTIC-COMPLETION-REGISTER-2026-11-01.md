@@ -2422,3 +2422,9 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - Exact-head PR CI [43692035411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692035411) SUCCESS at `ed16e0b9efba6780e21608ee04a09b1b9915770e`: 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium; npm audit 0 vulnerabilities; build and generated-data freshness passed.
 - Evidence remains secondary lexicographic transcription, not a controlled minimal pair or primary MLC adjudication. No independent IPA gold, accuracy evidence, runtime rules or Ukrainian mappings were added.
 - **BURMESE-YANGON-RIME-GRID-001 remains PARTIAL.**
+
+
+## 2026-11-15 — final am. evidence verification
+
+- Exact data/test head `74dc298086292bd6cbaeb965eb1a6ad9e1926a74` passed workflow [43692279971](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692279971): 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, build and generated-data freshness pass.
+- CSV diff hygiene: one row changed in source claims and one row in the lexical audit relative to pre-change head; unrelated rows preserved. Runtime and generated data unchanged. Documentation-only closeout commits follow this verified code/data head.
