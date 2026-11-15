@@ -232,3 +232,18 @@ No external corpus bytes were imported in this update. Independent expert-adjudi
 ### SEAlang interface-level IPA evidence — 2026-11-13
 
 The full 2008 SEAlang project description was inspected. It states that the Burmese dictionary interface accepts local orthography, IPA phonetic input, or both, and that result rows display IPA transliterations. This resolves the question of whether the *interface* supports IPA. It does not reveal whether IPA is stored as the dictionary's primary transcription field, generated from MLCTS2, or stored alongside it. Mya2Rom's MLCTS2 reference may concern a separate field/layer. The actual entry/export schema is still not accessible; do not mark the whole dictionary as IPA gold or MLCTS2-only.
+
+
+
+### MLC dictionary access routes — bibliographic leads (2026-11-15)
+
+The SEAlang live CGI remains unavailable at entry level (its current backend returns `SNARK: could not read ../../ram//.tei`). A separate bibliographic search identifies practical print-access routes:
+
+- The publisher's current catalogue describes the 1996 Dunwoody Press reprint of the 1993 MLC *Myanmar English Dictionary*: approximately 35,000 entries, standard orthography established by the 1986 Language Commission, and a transcription system used as a pronunciation aid for English speakers. The listing is currently offered for sale; price/stock may change. This is the most direct acquisition route for the exact 1993 edition family, but the catalogue does not establish the transcription's phonetic semantics or grant permission to reproduce entries.
+- The 1993 edition is independently catalogued by the National Diet Library of Japan (1996 Dunwoody Press imprint) and the WHO Myanmar Library (Yangon 1993 imprint). Cinii records seven Japanese university library holdings for the 1993 edition.
+- Cinii also identifies a 2019 second edition/revision (709 pages, Burmese entries with English definitions) and lists one holding at the University of Tokyo General Library. This is a later revised edition, not a substitute for the 1993 edition when verifying the exact older transcription system.
+- The 2019 catalogue record does not state whether the revised edition retains, revises or removes the 1993 pronunciation transcription field. That must be inspected in the book itself.
+
+Bibliographic sources: [Dunwoody Press 1996 reprint catalogue](https://www.thedunwoodypress.com/product-page/myanmar-english-dictionary), [National Diet Library record](https://ndlsearch.ndl.go.jp/en/books/R100000002-I000003254368), [Cinii 1993 edition holdings](https://ci.nii.ac.jp/ncid/BA24767941), [Cinii 2019 revised edition](https://ci.nii.ac.jp/ncid/BD10832446).
+
+**Disposition:** these references make physical access actionable but do not resolve any lexical rime collision. The 1996 publisher description suggests a pronunciation transcription aid, not necessarily IPA; before extracting anything, inspect its symbol key, determine whether values are phonetic, phonemic or romanization, capture edition/page/headword, and confirm the owner's existing research/ingestion authorization against the publisher's reproduction restrictions. No dictionary entry or pronunciation was inferred from catalogue metadata.
