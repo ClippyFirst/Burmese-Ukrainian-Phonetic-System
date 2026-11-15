@@ -2414,3 +2414,11 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - Added regression coverage for all five word-level observations, exact MLCTS forms and the no-promotion boundary.
 - Evidence remains secondary lexicographic transcription, not a controlled minimal pair or primary MLC adjudication. No runtime, IPA gold, Ukrainian mapping or generated data changed.
 - Sources inspected 2026-11-15: Wiktionary pages for ဆိမ့်, နိမ့် and လိမ့်; see claim locator for exact URLs and page-level details.
+
+
+## 2026-11-15 — am. lexical evidence verification closeout
+
+- **BURMESE-RIME-COLLISION-LEXICAL-AUDIT-001 — DONE_VERIFIED as a secondary lexical audit extension:** Wiktionary first-side examples for `မ့်` expanded to စိမ့် /sḛɪɴ/, ဆိမ့် /sʰḛɪɴ/, နိမ့် /nḛɪɴ/, and လိမ့် /lḛɪɴ/; opposite `ံ့` example ကြံ့ /t͡ɕa̰ɴ/ retained. Claim, audit row and regression test updated.
+- Exact-head PR CI [43692035411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692035411) SUCCESS at `ed16e0b9efba6780e21608ee04a09b1b9915770e`: 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium; npm audit 0 vulnerabilities; build and generated-data freshness passed.
+- Evidence remains secondary lexicographic transcription, not a controlled minimal pair or primary MLC adjudication. No independent IPA gold, accuracy evidence, runtime rules or Ukrainian mappings were added.
+- **BURMESE-YANGON-RIME-GRID-001 remains PARTIAL.**
