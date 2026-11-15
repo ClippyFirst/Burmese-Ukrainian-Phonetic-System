@@ -2362,3 +2362,6 @@ Correction: Green 2005's printed table was checked visually. The rime/prosody ev
 ### Verification checkpoint — 2026-11-15
 
 `BURMESE-RIME-PROSODY-MATRIX-001` remains PARTIAL pending exact-head CI. Code/data/test head: `f0c240abde1a1aedefcfcb3f9694311318f91c04`. Manual registry validation confirms 12 rows, consistent 16-column widths, unique IDs, valid source/claim links and runtime withholding. Earlier CI had two assertion-text failures in the new tests (289 passed + 68 subtests); both were corrected. Latest required workflow `43689588512` is QUEUED. No local tests were run because github.com was unreachable from the container.
+
+
+Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588512) SUCCESS on `f0c240abde1a1aedefcfcb3f9694311318f91c04`: 291 Python + 68 subtests, 21 Node, 64 Playwright Chromium, 0 npm vulnerabilities, build and generated-data freshness passed. The artifact is DONE_VERIFIED; full lexical coverage remains PARTIAL.
