@@ -2497,3 +2497,14 @@ Workflow [43689588524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic
 | Epitran 1.35.3 | Six structural probes emitted raw outputs | 0 eligible verified gold; exact-match accuracy null | Raw candidate output only |
 
 Artifact IDs/digests: Google `14152141084` / `eb9e803bf203e363bcf2eb173e21024798b55678f62bbdd3205bd539f85db0f6`; CRF `14151244554` / `39e9d49a4f100af0cb1b0e65032ebb76cc1d53c5ef30bba4787968ceec912b91`; Epitran `14151438782` / `2ab261cf68a6078f0428575c6d0c8ec2264e640486cb7e98c11a3b585afc68e1`. All outputs remain diagnostic; none is gold or runtime-enabled. This supersedes the prior note that the Google job was still in progress.
+
+
+## Accessibility continuation — 2026-11-15
+
+| Layer / acceptance gate | Implemented coverage | Tested coverage | Independently validated coverage | Status | Next acceptance criterion |
+|---|---|---|---|---|---|
+| Keyboard skip navigation | Skip-to-main link on converter and methodology pages; main landmark is focusable after fragment navigation | Three Playwright regressions authored: both page routes and reduced-motion preference | GitHub file-content checks confirm markup/CSS/test presence; exact-head hosted CI not yet observed; no manual assistive-technology session | PARTIAL / CI PENDING | Pass required exact-head workflow; manually verify keyboard sequence and screen-reader announcement in at least one desktop browser |
+| Reduced-motion preference | Existing CSS override retained and covered by new computed-style regression | Playwright test asserts computed `scroll-behavior: auto` under `reducedMotion: reduce` | No deployed browser/OS-level manual verification | PARTIAL | Pass exact-head CI; verify with OS preference and inspect any other animated transitions |
+| Full accessibility QA | Existing labels, landmarks, focus-visible styling and live regions retained | Targeted keyboard/reduced-motion tests only | No WCAG audit, screen-reader, contrast matrix or mobile reflow audit completed | TODO | Complete manual keyboard, screen-reader, zoom/reflow, contrast and mobile checks; record browser/AT versions and findings |
+
+Implementation head: `481c26d6951d4795e16e239f9332c3e42f7d3f44`. CI is not yet confirmed; do not promote these tasks to DONE_VERIFIED. No claim of WCAG conformance is made.
