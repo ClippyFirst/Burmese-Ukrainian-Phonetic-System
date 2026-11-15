@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { PRACTICAL, ONSETS, VOWELS } from "../../src/web/generated/data.js";
 import { renderUkrainian } from "../../src/web/ukrainian-adapter.js";
 const browserEngineSource = readFileSync(new URL("../../src/web/app.js", import.meta.url), "utf8");
+const hybridEngineSource = readFileSync(new URL("../../src/web/hybrid-engine.js", import.meta.url), "utf8");
 
 test("browser adapter covers Ukrainian h/g/x distinctions", () => {
   for (const segment of ["h", "ɦ", "ɡ", "g", "x"]) {
@@ -89,6 +90,7 @@ test("public phonetic UI renders the hybrid orchestrator result, not the pre-hyb
 
 test("segmental-only IPA is shown as provisional and does not bypass the IPA adapter", () => {
   assert.ok(browserEngineSource.includes('item.phoneticCompleteness==="SEGMENTAL_ONLY"'));
-  assert.ok(browserEngineSource.includes('provider: "PROJECT_RULES_SEGMENTAL"'));
-  assert.ok(browserEngineSource.includes("renderUkrainian(deterministicIpa)"));
+  assert.ok(hybridEngineSource.includes('provider: "PROJECT_RULES_SEGMENTAL"'));
+  assert.ok(hybridEngineSource.includes("adaptationFor(deterministicIpa)"));
+  assert.ok(hybridEngineSource.includes("renderUkrainian(ipa)"));
 });
