@@ -126,3 +126,10 @@ Watkins's IPA description is based on one Rangoon consultant and a careful readi
 - Independent dialect-matched lexical IPA gold: BLOCKED (0 adjudicated records).
 - Provider profile equivalence: BLOCKED (Google grammar and Epitran port are not independently established as the same Yangon speaker/profile).
 - Phonological completeness for medials, kinzi, conjuncts, rimes and surface prosody: PARTIAL/BLOCKED by evidence, not by browser execution.
+
+
+### Additional safety gate — segmental IPA is not complete Burmese IPA
+
+A project-generated string such as `ka` may encode only the segmental onset+rime. It is not canonical full IPA unless the corresponding prosodic analysis (tone/phonation/quantity as applicable) and an explicit dialect profile are established. The browser orchestrator now requires both `prosodyStatus` and `profileId` before selecting project IPA. Otherwise it labels the internal string `SEGMENTAL_ONLY`, adapts it only as a provisional Ukrainian preview, and withholds the main IPA/Ukrainian output.
+
+This is intentionally conservative. Watkins's one-consultant Rangoon description documents four non-reduced tone categories whose phonetic correlates include pitch, phonation and length [Wat01]. Oo et al.'s Google grammar uses tone-related vowel distinctions [Oo20]. A plain string match between providers cannot fill missing prosody or prove dialect equivalence.
