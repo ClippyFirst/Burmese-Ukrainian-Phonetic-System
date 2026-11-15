@@ -2877,3 +2877,21 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - **DONE_VERIFIED (CI):** Python and Node test steps, production build, and Playwright built-site suite completed successfully; Playwright reported 70 passed. Deploy job successfully fetched pages, JS/CSS, Mya2Rom assets and the WFST model.
 - **Still BLOCKED/PARTIAL:** independent profile-matched IPA gold remains 0; dialect profile of upstream Google model is unspecified; Epitran is a narrow mapping/postprocessor port, not full Python/PanPhon; Python/browser parity against independent gold is not established; manual screen-reader/real-device accessibility QA remains outstanding.
 - **Release classification:** deployed research prototype / partial linguistic system. The site is live with a real hybrid browser engine, but it is not a linguistically validated or accuracy-certified transcription engine.
+
+
+## 2026-11-15 — IPA-first browser integration ledger
+
+Starting main: `8aa91f3aa289b18fccd4dee338849b843441c1fc`.
+Work branch: `fix/ipa-first-hybrid-pipeline-2026-11-15`.
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| Make the hybrid orchestrator the actual source of phonetic UI output | PARTIAL pending exact-head CI | `render()` now displays `analyzeHybrid().ipa` and `.uk`, rather than the pre-orchestrator `convert()` strings |
+| Enforce selected IPA → one Ukrainian adapter | PARTIAL pending exact-head CI | Selected typed IPA is passed through `renderUkrainian()`; unresolved IPA stays withheld |
+| Preserve provider provenance and no-voting policy | DONE_VERIFIED by code inspection; CI pending | Provider candidates remain separate, typed, provisional; no external fallback |
+| Distinguish tone-only differences from segmental divergence | PARTIAL pending exact-head CI | Regression tests cover tone underspecification, tone disagreement and segmental divergence |
+| Keep dialect profile matching explicit | BLOCKED | Google and Epitran profile compatibility is not independently adjudicated |
+| Independent lexical IPA gold and accuracy | BLOCKED | Adjudicated profile-matched gold count remains 0 |
+| Full medials/kinzi/conjunct/rime/prosody coverage | PARTIAL/BLOCKED | Structural recognition and provider outputs exist; evidence-backed canonical realization is incomplete |
+
+Research constraints incorporated: Oo20's corpus is Yangon-recorded speech with word segmentation, not a phoneme-labelled G2P gold set; Watkins 2001 is one Rangoon consultant and must remain scope-limited; Hla14's reported accuracy is orthographic syllabification, not G2P; Thu16's MLC lexicon is not licensed for redistribution by the paper itself.
