@@ -84,7 +84,7 @@ textarea::placeholder{color:#aaa69d}
 .footer div:last-child{text-align:right}
 .footer strong{display:block;color:var(--ink)}
 .footer a{display:inline-block;margin-top:5px}
-.document{padding:clamp(22px,4vw,38px)}
+.document{padding:clamp(22px,4vw,38px);overflow-x:hidden}
 .document section{max-width:900px;padding:6px 0 34px}
 .document section+section{padding-top:28px;border-top:1px solid var(--line)}
 .document h2{margin:0 0 14px;font:500 clamp(1.5rem,3vw,2rem)/1.2 Georgia,"Times New Roman",serif}
