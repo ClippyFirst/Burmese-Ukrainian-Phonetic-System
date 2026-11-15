@@ -2804,3 +2804,12 @@ Optional workflow [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian
 - CRF: 100/100 predictions, 84/100 source-concordant, gold 0, accuracy null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP.
 - Artifacts: Google ID 14134846400, digest ac5cd0b7b00a746d67116fc32831369e555e316d554bedfc34bf6b18378b0949 (expires 2027-02-12); Epitran ID 14134308008, digest 13ae2b78ac2a9b961e1e10231a58f787fb5b11142640997b7a1bf6ff327dc797 (expires 2027-02-12); CRF ID 14135275454, digest dcd9667213ea2c611795a8b3851c7809ea26b853755e6b36291d373e9466ccc0 (expires 2026-12-14).
 - These are raw-output diagnostics only. They do not supply independent IPA gold, accuracy estimates or grounds to promote a backend. This terminal result supersedes the prior in-progress note.
+
+
+## Continuation — source-scoped rime/prosody evidence matrix — 2026-11-15
+
+- Added `data/burmese/rime_prosody_evidence.csv` with 11 source-scoped rows, `schemas/rime_prosody_evidence.schema.json`, `tests/test_rime_prosody_evidence.py`, and seven new claims in `data/burmese/source_claims.csv`.
+- Green 2005 evidence is scoped to its 50-major-rhyme/four-tone analysis: diphthongs are closed-only; /e,o/ are open-only in the cited table; nasal rhymes exclude checked tone; /N/ is represented separately from surface nasalization; vowel length is non-contrastive in the author's moraic analysis.
+- Mooney & Repetti-Ludlow 2021 is recorded as one female native Yangon consultant and restricted experimental targets. The matrix separates open/closed vowel alternations, the authors' tone-independent sonority analysis, isolation vs sentential acoustic cue differences, and nasalized vs oral token observations.
+- All rows remain `WITHHELD`; no phonological runtime rule, IPA value, Ukrainian mapping or gold label was added. The extracted article text is used for claims/locators; project audio was not accessed.
+- Exact-head CI is pending. Keep `BURMESE-RIME-PROSODY-MATRIX-001` PARTIAL until the new test suite and full required workflow pass. The complete lexical Yangon rime grid and independent adjudicated IPA gold remain open blockers.
