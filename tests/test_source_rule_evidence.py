@@ -702,4 +702,4 @@ def test_waxman_med_transcription_claim_remains_secondary_and_non_operational():
     assert claim["status"] == "DOCUMENTARY"
     assert "tonal graphemic elements" in claim["claim"]
     assert "not an inspected notation key" in claim["claim"]
-    assert "not a project IPA mapping" in claim["claim"] or "not a project IPA" in claim["claim"]
+    assert "or project IPA mapping" in claim["claim"]
