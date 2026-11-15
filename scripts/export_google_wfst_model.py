@@ -115,6 +115,8 @@ def main() -> int:
         "arcs": arcs, "finals": finals,
         "provenance": {
             "engine": "Google language-resources Burmese Thrax/OpenFst G2P",
+            "source_language_scope": "Burmese / Myanmar (Google upstream README)",
+            "dialect_profile": None,
             "source_commit": args.source_commit,
             "openfst_commit": args.openfst_commit,
             "thrax_commit": args.thrax_commit,
