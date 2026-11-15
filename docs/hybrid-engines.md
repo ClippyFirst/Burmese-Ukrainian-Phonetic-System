@@ -11,7 +11,7 @@ HybridBurmeseEngine запускає чинний RuleBasedBurmeseEngine і зб
 
 Epitran-порт є вузьким портом `mya-Mymr` mapping, greedy matching і post-rules, а не повною Python/PanPhon реалізацією. Google WFST виконується через браузерний інтерпретатор `src/web/wfst-runtime.js`; його граф збирається з pinned upstream revision у Pages workflow і пакується як локальний JSON asset. В runtime немає серверного API або зовнішнього запиту з введеним текстом; CSP дозволяє лише same-origin завантаження статичної моделі.
 
-Гібрид запускає провайдери й показує результати та розбіжності, але **не голосує і не просуває зовнішні кандидати до canonical IPA**. Наш встановлений результат лишається основним; зовнішні IPA та їхні українські адаптації позначаються як кандидати. За відсутності незалежного профільно узгодженого IPA gold автоматичне просування заборонене. Локальна модель-заглушка у вихідному checkout позначена `PENDING_MODEL`; Pages build має згенерувати справжній граф і завершується помилкою, якщо не може цього зробити.
+Гібрид запускає провайдери й показує результати та розбіжності, але **не голосує і не просуває зовнішні кандидати до canonical IPA**. Внутрішній проєктний IPA-кандидат зберігається; сегментний кандидат і його українська адаптація можуть бути показані як PROVISIONAL, але повний canonical IPA лишається невстановленим без просодичної та профільної adjudication. За відсутності незалежного профільно узгодженого IPA gold автоматичне просування заборонене. Локальна модель-заглушка у вихідному checkout позначена `PENDING_MODEL`; Pages build має згенерувати справжній граф і завершується помилкою, якщо не може цього зробити.
 
 Назва Python `HybridBurmeseEngine` нижче описує окрему дослідницьку обгортку з ін'єктованими провайдерами. Вона не є runtime сайту; браузерний оркестратор має власний контракт і тести.
 
@@ -30,7 +30,7 @@ engine = HybridBurmeseEngine({
 result = engine.analyze("မြန်မာ")
 ```
 
-Кандидати не голосують і не замінюють фінальне ipa. Внутрішній детермінований рушій зберігає контроль до появи незалежного gold.
+Кандидати не голосують і не замінюють проєктний IPA-кандидат. Без просодичної/профільної adjudication поля canonical IPA та canonical Ukrainian лишаються невстановленими.
 
 ## Бенчмарки та рішення
 
@@ -53,7 +53,7 @@ myG2P має CC BY-NC-SA 4.0; не копіювати словник у цей �
 5. **Goruut (90)** — останній comparator; слабка concordance, неповні фрагменти й відсутній weights asset.
 6. Невідомі провайдери (50) — не отримують довіри лише через підключення.
 
-Фінальне IPA залишається за внутрішніми детермінованими правилами. Підвищення джерела до авторитетного вимагає незалежного Yangon IPA gold, оцінки тону/фонації/довготи/код, відсутності витоку даних і відтворюваного профільного benchmark.
+Внутрішні правила генерують проєктні IPA-кандидати; це не автоматично повне фінальне IPA. Канонічний статус вимагає незалежного Yangon IPA gold, оцінки тону/фонації/довготи/код, відсутності витоку даних і відтворюваного профільного benchmark.
 
 
 ## Current-branch exact raw-output run — 2026-11-14
@@ -97,7 +97,7 @@ The canonical path is:
 
 1. structural browser parser produces orthographic segments and a conservative project IPA candidate;
 2. project, Epitran and Google WFST candidates are retained as typed IPA results with provider provenance;
-3. only project IPA marked `ESTABLISHED` or `WELL_SUPPORTED` is currently eligible for canonical selection;
+3. only project IPA marked `ESTABLISHED` or `WELL_SUPPORTED`, with explicit established prosody status and profile ID, is eligible for canonical selection;
 4. the selected IPA is passed to the single `renderUkrainian()` IPA adapter;
 5. IPA status and Ukrainian adaptation status remain separate, and unresolved segments remain `?` / `⟦…⟧`.
 
