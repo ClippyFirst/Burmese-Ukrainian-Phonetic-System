@@ -2490,3 +2490,16 @@ A further consistency review found that the original TUFS source claim described
 - Closed the previously pending optional diagnostic run [43696078060](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696078060): Google Thrax/OpenFst 6/6 outputs, 0 runtime errors; CRF 100/100 predictions and 84 source-concordant (not scored due possible training overlap); Epitran raw-output completed. Artifacts uploaded: FST 14154970133, CRF 14154556115, Epitran 14154307632.
 - These are diagnostic execution results only. Independent gold remains 0, accuracy remains null, and no external engine was promoted. No IPA gold, runtime pronunciation rule or Ukrainian mapping was added.
 - PR #147 remains open/Draft; PR #129 remains untouched; main unchanged. Overall project status remains PARTIAL PROTOTYPE.
+
+
+
+## 2026-11-15 — current-head verification and task-ledger reconciliation
+
+- **DONE_VERIFIED — engineering CI:** workflow [43696922642](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696922642) SUCCESS on exact branch head `9fdac2c94872eeb5702e801e1c46ea5e932ff6ae`: 298 Python tests + 68 subtests; 21 Node tests; 67 Playwright Chromium tests; npm audit 0 vulnerabilities; production build and generated-data freshness passed. IPA-gold structural validation executed successfully but has zero adjudicated records.
+- **DONE_VERIFIED — optional diagnostic execution only:** workflow [43696922641](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696922641) SUCCESS. Thrax/OpenFst: 6/6 raw outputs, 0 runtime errors; CRF: 100/100 predictions, 84 source-concordant but `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; Epitran raw-output completed. Artifact IDs 14154897335 / 14154871257 / 14154353595. No metric of phonetic accuracy is available.
+- **BLOCKED — independent G2P evaluation:** expert-adjudicated IPA gold remains 0; acceptance requires a documented independent modern Yangon lexical sample with independently annotated IPA, adjudication and provenance.
+- **PARTIAL — linguistic coverage:** full Yangon rime × coda × tone × phonation inventory, source-specific rime collision resolution, tone/register model, surface realization of abstract /N/, and Python/browser phonological parity still require completion or evidence-based deferral.
+- **TODO — manual accessibility QA:** automated keyboard/Playwright gates are verified, but screen-reader, mobile, zoom/reflow and comprehensive contrast review remain outstanding.
+- **DEFERRED — independent IPA annotation:** remains outside the currently authorized scope; do not infer labels from vendor outputs or source phonemic notation.
+
+The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 is OPEN / DRAFT / mergeable; PR #129 is untouched; main has not been modified. Overall state: PARTIAL PROTOTYPE, not release-ready.
