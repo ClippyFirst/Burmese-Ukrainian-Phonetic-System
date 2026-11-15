@@ -505,3 +505,13 @@ test("reduced-motion preference disables smooth document scrolling",async({page}
   await page.goto("/");
   await expect.poll(()=>page.locator("html").evaluate(el=>getComputedStyle(el).scrollBehavior)).toBe("auto");
 });
+
+
+test("methodology page exposes the same keyboard skip navigation",async({page})=>{
+  await page.goto("/system.html");
+  await page.keyboard.press("Tab");
+  const skip=page.getByRole("link",{name:"Перейти до основного вмісту"});
+  await expect(skip).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#main-content")).toBeFocused();
+});
