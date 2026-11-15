@@ -11,6 +11,8 @@ import { renderUkrainian } from "./ukrainian-adapter.js";
 import { transduceWfst } from "./wfst-runtime.js";
 import { transduceGoogleBurmese } from "./google-wfst-input.js";
 
+function normalizeCandidate(ipa) { return String(ipa).normalize("NFC").replace(/\s+/gu, ""); }
+
 const STATUS_RANK = {
   ESTABLISHED: 0, WELL_SUPPORTED: 1, PROPOSED: 2, PROVISIONAL: 3,
   ANALYSIS_DEPENDENT: 4, NOT_ESTABLISHED: 5, UNSUPPORTED: 6,
@@ -56,7 +58,7 @@ export function analyzeHybrid(segments, googleModel = null) {
     const raw = records.slice(start, end).map((item) => item.segment.raw).join("");
     const googleRun = transduceGoogleBurmese(raw, googleModel, transduceWfst);
     if (googleRun.status === "CANDIDATE") {
-      const pieces = googleRun.ipa.split(".");
+      const pieces = googleRun.ipa.split(".").map((piece) => piece.trim());
       if (pieces.length === end - start && pieces.every(Boolean)) {
         for (let index = start; index < end; index++) {
           const item = records[index], candidate = pieces[index - start];
@@ -88,7 +90,7 @@ export function analyzeHybrid(segments, googleModel = null) {
       ...item.externalCandidates.map((candidate) => candidate.ipa),
     ].filter(Boolean);
     item.agreement = candidates.length < 2 ? "NOT_COMPARABLE"
-      : candidates.every((candidate) => candidate === candidates[0]) ? "AGREEMENT" : "DIVERGENCE";
+      : candidates.every((candidate) => normalizeCandidate(candidate) === normalizeCandidate(candidates[0])) ? "AGREEMENT" : "DIVERGENCE";
   }
 
   const phonetic = records.filter((item) => !item.passthrough);

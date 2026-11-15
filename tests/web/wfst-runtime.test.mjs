@@ -14,7 +14,7 @@ test("WFST runtime finds a minimum-cost accepting path with epsilon arcs", () =>
   };
   const result = transduceWfst("ka", model);
   assert.equal(result.status, "CANDIDATE");
-  assert.equal(result.ipa, "ka");
+  assert.equal(result.ipa, "k a");
   assert.equal(result.cost, 0.2);
 });
 

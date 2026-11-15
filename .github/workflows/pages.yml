@@ -68,19 +68,22 @@ jobs:
           FSTPRINT="$(cd language-resources && find -L bazel-bin -type f -name fstprint -print -quit)"
           FSTINFO="$(cd language-resources && find -L bazel-bin -type f -name fstinfo -print -quit)"
           test -n "$FSTPRINT" && test -n "$FSTINFO"
-          (cd language-resources && "$FSTPRINT" --isymbols=my/grapheme.syms --osymbols=bazel-bin/my/ipa_phoneme.syms bazel-bin/my/G2P.fst) > artifacts/G2P.fst.txt
+          (cd language-resources && "$FSTPRINT" --isymbols=my/codepoint.syms --osymbols=bazel-bin/my/ipa_phoneme.syms bazel-bin/my/G2P.fst) > artifacts/G2P.fst.txt
           (cd language-resources && "$FSTINFO" bazel-bin/my/G2P.fst) > artifacts/G2P.fst.info
           python scripts/export_google_wfst_model.py \
             --fst-print artifacts/G2P.fst.txt \
             --fst-info artifacts/G2P.fst.info \
             --fst-binary language-resources/bazel-bin/my/G2P.fst \
-            --input-symbols language-resources/my/grapheme.syms \
+            --input-symbols language-resources/my/codepoint.syms \
             --output-symbols language-resources/bazel-bin/my/ipa_phoneme.syms \
             --output public/models/google-burmese-wfst.json \
             --source-commit a90601024f07ab7e96c911243324e0adeb16da96 \
             --openfst-commit 22867ee7b483598a729abe125da2517584a5d010 \
             --thrax-commit c65fb3d51f9bd0299503f3289a124f52c3431eeb
           python -c 'import json; m=json.load(open("public/models/google-burmese-wfst.json", encoding="utf-8")); assert m["available"] is True and m["arc_count"] > 0'
+          printf '%s\n' 'ကေ' 'ကော်' 'မြန်' 'ယူ' > artifacts/google-wfst-inputs.txt
+          (cd language-resources && bazel-bin/my/g2p < ../artifacts/google-wfst-inputs.txt) > artifacts/google-wfst-reference.tsv
+          node scripts/verify_google_wfst_model_parity.mjs artifacts/google-wfst-reference.tsv
       - uses: actions/setup-node@v7
         with:
           node-version: 22.12.0

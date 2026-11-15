@@ -99,7 +99,7 @@ export function transduceWfst(input, model, { maxVisited = 250000 } = {}) {
     best.set(nextKey, nextCost);
     return {
       key: nextKey, state: arc.dst, offset: nextOffset, cost: nextCost,
-      output: EPSILON.has(arc.olabel) ? current.output : current.output + arc.olabel,
+      output: EPSILON.has(arc.olabel) ? current.output : (current.output ? current.output + " " + arc.olabel : arc.olabel),
       depth: current.depth + 1,
     };
   };
