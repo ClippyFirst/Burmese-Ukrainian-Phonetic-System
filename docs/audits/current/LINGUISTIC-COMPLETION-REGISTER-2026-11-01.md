@@ -2352,7 +2352,7 @@ Run 43647671628 completed successfully: Epitran, CRF and pinned Google Thrax/Ope
 
 | ID | Status | Evidence | Acceptance boundary |
 |---|---|---|---|
-| BURMESE-RIME-PROSODY-MATRIX-001 | PARTIAL (implementation added; exact-head CI pending) | 11 source-linked rows in `data/burmese/rime_prosody_evidence.csv`; JSON Schema and dedicated regression tests; seven new claims link Green 2005 and Mooney & Repetti-Ludlow 2021 | Mark DONE_VERIFIED only after exact-head CI passes. This is not a complete lexical rime inventory, IPA gold, or runtime rule set. All rows remain WITHHELD. |
+| BURMESE-RIME-PROSODY-MATRIX-001 | DONE_VERIFIED (source evidence artifact and exact-head CI passed) | 11 source-linked rows in `data/burmese/rime_prosody_evidence.csv`; JSON Schema and dedicated regression tests; seven new claims link Green 2005 and Mooney & Repetti-Ludlow 2021 | Mark DONE_VERIFIED only after exact-head CI passes. This is not a complete lexical rime inventory, IPA gold, or runtime rule set. All rows remain WITHHELD. |
 | BURMESE-YANGON-RIME-GRID-001 | PARTIAL | Green's 50-rhyme analysis and Mooney's restricted one-speaker experiment provide complementary but non-identical evidence | Need a complete, profile-matched, item-level rime × coda × tone × phonation grid with source locators and adjudication; no extrapolation into missing cells. |
 
 
