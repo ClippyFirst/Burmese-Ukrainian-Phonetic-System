@@ -101,7 +101,7 @@ export function analyzeHybrid(segments, googleModel = null) {
       selectedIpa,
       selectedPhoneticResult: selectedIpa
         ? typedCandidate("PROJECT_RULES", selectedIpa, segment.status,
-          { engine: "project deterministic browser rules", source_status: segment.status })
+          { engine: "project deterministic browser rules", source_status: segment.status }, profileId || "UNSPECIFIED")
         : null,
       selectedAdaptation,
       selectedSource: deterministicEstablished ? "PROJECT_RULES" : "UNRESOLVED",
@@ -111,8 +111,8 @@ export function analyzeHybrid(segments, googleModel = null) {
       ukrainianStatus: selectedIpa ? selectedAdaptation.status : "NOT_ESTABLISHED",
       selectedStatus: selectedIpa ? aggregate([segment.status, selectedAdaptation.status]) : "NOT_ESTABLISHED",
       agreement: "NOT_COMPARABLE", comparison: { relation: "NOT_COMPARABLE" },
-      comparisonScope: "DIALECT_PROFILE_UNVERIFIED",
-      profileStatus: "NOT_ESTABLISHED",
+      comparisonScope: profileId ? "PROJECT_PROFILE_SCOPED_EXTERNAL_SCOPE_UNVERIFIED" : "DIALECT_PROFILE_UNVERIFIED",
+      profileStatus: profileId ? "PROJECT_PROFILE_SCOPED" : "NOT_ESTABLISHED",
       selectionReason: deterministicEstablished ? "PROFILE_AND_PROSODY_ESTABLISHED"
         : deterministicIpa ? "TONE_OR_PROFILE_NOT_ESTABLISHED"
           : "NO_COMPLETE_PROJECT_IPA",
