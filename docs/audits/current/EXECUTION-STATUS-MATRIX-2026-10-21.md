@@ -2628,3 +2628,16 @@ A further consistency review found that the original TUFS source claim described
 | Optional engine diagnostics | Pinned Google Thrax/OpenFst, CRF baseline, Epitran raw-output | [43696078060](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696078060) SUCCESS: FST 6/6 outputs and 0 runtime errors; CRF 100/100 predictions, 84 source-concordant but unscored due possible training overlap; Epitran raw-output completed | DONE_VERIFIED for execution and artifact upload only; no accuracy claim or runtime promotion |
 
 Artifact IDs: Google FST 14154970133; CRF 14154556115; Epitran 14154307632. All diagnostic reports retain `gold_count=0` / `accuracy=null` where applicable. The research branch is 1,138 commits ahead of main and 0 behind; PR #147 remains open/Draft; PR #129 untouched. Overall release readiness remains PARTIAL PROTOTYPE.
+
+
+
+## 2026-11-15 — exact current-head verification refresh
+
+| Work item | Evidence | Status |
+|---|---|---|
+| Required engineering CI on branch head `9fdac2c94872eeb5702e801e1c46ea5e932ff6ae` | Push workflow [43696922642](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696922642) SUCCESS: 298 Python + 68 subtests, 21 Node, 67 Playwright Chromium; npm audit 0 vulnerabilities; production build and generated-data freshness passed; IPA-gold structure validator ran with zero gold records | DONE_VERIFIED for engineering gates only |
+| Optional external-engine diagnostics | [43696922641](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696922641) SUCCESS: Thrax/OpenFst 6/6 raw outputs, 0 runtime errors; CRF 100/100 predictions, 84 source-concordant, NOT SCORED due possible training overlap; Epitran raw output completed | DONE_VERIFIED for execution/artifact provenance only; no accuracy claim |
+| Independent phonetic evaluation | IPA gold count 0; accuracy null across diagnostics | BLOCKED pending independent expert-adjudicated modern Yangon IPA gold |
+| Production linguistic readiness | No candidate engine promoted; tone/register, /N/, full Yangon rime/prosody and source-specific ambiguities remain unresolved | PARTIAL PROTOTYPE; not release-ready |
+
+Diagnostic artifacts: FST 14154897335 (archive SHA-256 `961b5989e9c037861f7bebd07fa86c6bec2547b69eeff7d6a43facc9c0cc2058`); CRF 14154871257 (`a7f21f44ca369e5857ae1eb6473128b1c0d4cf39388b405997151eeb7a6252a6`); Epitran 14154353595 (`18bbd88f16025d699bf4896eef81ef197b8881612b8f6f27d0d98bbb1f62e7ca`). These are raw-output diagnostics, not benchmark accuracy.
