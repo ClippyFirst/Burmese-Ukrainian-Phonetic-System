@@ -2476,3 +2476,6 @@ These are raw-output diagnostics, not independent IPA gold, accuracy or promotio
 |---|---|---|---|---|---|
 | Source-scoped rime × coda × tone × phonation evidence | 11-row Green 2005 / Mooney & Repetti-Ludlow 2021 matrix with source/claim/locator/profile fields; dedicated JSON Schema; all rows withheld from runtime | Dedicated integrity/schema tests added; exact-head CI pending | No independent adjudicated lexical IPA; one-speaker Mooney experiment is not a multi-speaker gold set | PARTIAL pending exact-head CI | Pass exact-head CI; then expand source coverage without conflating phonemic tone, /ʔ/, /N/, nasalization, quantity and duration |
 | Modern Yangon lexical rime inventory | Source-level distributional constraints now machine-readable | Evidence-integrity checks only | No complete source-located lexical inventory or adjudicated rime × tone grid | PARTIAL | Recover and verify primary MLC/Okell lexical entries and item-level source locators; retain unsupported cells as unknown |
+
+
+The rime/prosody evidence artifact now contains 12 rows (not 11): a printed-page check of Green 2005 corrected the open-only set to /e, o, ɔ/ and separately records /ɛ/ as open or pre-/ʔ/, excluding /ɛN/. Exact-head CI remains pending.
