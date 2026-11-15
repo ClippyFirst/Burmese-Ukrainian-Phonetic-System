@@ -30,7 +30,8 @@ button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible
 .research-notice,.issues{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;border:1px solid #e3d39b;background:#fff9e7}
 .research-notice>span,.issues>span{display:grid;place-items:center;flex:0 0 26px;width:26px;height:26px;border:1px solid var(--red);border-radius:50%;color:var(--red);font-weight:900}
 .research-notice strong,.issues strong{display:block;font-size:.9rem}
-.research-notice p,.issues p{margin:5px 0 0;color:#5e594c;font-size:.9rem;line-height:1.6}
+.research-notice>div,.issues>div{min-width:0}
+.research-notice p,.issues p{margin:5px 0 0;color:#5e594c;font-size:.9rem;line-height:1.6;overflow-wrap:anywhere}
 .research-notice a{color:#8c2028;font-weight:750}
 .workspace,.results,.document{margin-top:24px;border:1px solid var(--line);background:var(--surface)}
 .workspace,.results{padding:clamp(18px,3vw,28px)}
