@@ -2522,3 +2522,12 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **BLOCKED — entry-level pronunciation evidence:** no book page, symbol key or lexical entry has been inspected. Publisher metadata says the 1996 volume includes a transcription system as a pronunciation aid, but does not establish IPA, phonemic notation or a romanization scheme. The 2019 catalogue does not specify whether the field is retained.
 - **Acceptance criterion:** inspect the edition-specific symbol key and at least one relevant lexical entry; record page, headword, exact transcription, edition and provenance; classify the notation before crosswalk use. A catalogue entry alone cannot adjudicate an MLCTS collision or supply IPA gold.
 - New source/claim IDs: `MLC1996_REPRINT_CATALOG`, `MLC2019_REVISED_BIB`, `CLM-MLC1996-PRONUNCIATION-AID-001`, `CLM-MLC2019-REVISED-EDITION-001`. No pronunciation, IPA gold, runtime or Ukrainian mapping was added.
+
+
+
+## 2026-11-15 — current registry totals and reference integrity
+
+- Current canonical data: **96 sources / 207 claims / 25 rime groups**.
+- Rime statuses: 15 secondary equivalence, 5 secondary one-side-only, 3 secondary distinction, 1 secondary conflict, 1 special non-rime.
+- Structural validation: unique source IDs, unique claim IDs, and all 207 claim-to-source references resolve. This lightweight parse does not replace JSON Schema validation/full pytest.
+- Prior 80/164, 80/169, 80/170 and 80/172 figures are retained as historical checkpoints only.
