@@ -3148,3 +3148,11 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 - The current docs-only changes refine the MLC dictionary access evidence and remove duplicate validation sentences from `system.html`. No runtime or data files, source registries, IPA labels, gold annotations or Ukrainian mappings changed in this continuation.
 - Remaining acceptance blockers: primary MED notation key and page-located entries plus independent rights review; independent adjudicated IPA gold and overlap-free scoring; complete Yangon vowel/rime/coda/tone/phonation coverage; Python/browser parity against independent gold; manual screen-reader, zoom, contrast and focus QA.
 - Overall status remains **PARTIAL PROTOTYPE / NOT LINGUISTICALLY RELEASE-READY**.
+
+## 2026-11-15 — Mya2Rom secondary identification of MED transcription variant
+
+- Found a high-value secondary source: the Mya2Rom README explicitly distinguishes orthographic MLCTS from modified/phonetic MLCTS2 and says the modified version is used by the Myanmar Language Commission in its Myanmar-English Dictionary and by SEAlang. This is the strongest explicit identification found so far for the MED's transcription family, but it is not a primary MLC notation key or inspected dictionary entry.
+- Registered MYA2ROM2017 and CLM-MYA2ROM-MLCTS2-MED-IDENTIFICATION-001 in the existing source/claim registries. Added a regression test to keep this claim documentary/secondary and prohibit promotion to primary notation or IPA gold.
+- The same README documents major romanizer limitations: no schwa or voicing-sandhi modelling; incomplete stacked-letter/asat handling; alternate pronunciations omitted; Pali/Sanskrit exceptions. Its IPA mode is Wikipedia-style. Treat it as a secondary comparator, not a gold IPA engine.
+- The repository declares CC-BY-SA-4.0. No code/tables were copied; no license compatibility decision for this project's own distribution was made.
+- No phonology runtime, IPA gold, Ukrainian mapping or production output changed. Primary MLC notation-key verification and independent gold remain blocked.
