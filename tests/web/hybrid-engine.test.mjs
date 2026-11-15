@@ -126,3 +126,15 @@ test("explicit profile and prosody evidence allow canonical IPA to reach the ada
   assert.equal(result.ipa, "kà");
   assert.equal(result.uk, "ка");
 });
+
+
+test("uncertain structural segments cannot leak a partial internal IPA candidate", () => {
+  const result = analyzeHybrid([{
+    raw:"ကာꩠ",nonMyanmar:false,ipa:"ka",status:"UNCERTAIN"
+  }]);
+  assert.equal(result.ipa, "?");
+  assert.equal(result.uk, "⟦ကာꩠ⟧");
+  assert.equal(result.records[0].selectedSource, "UNRESOLVED");
+  assert.equal(result.records[0].projectCandidate, null);
+  assert.equal(result.ipaStatus, "UNCERTAIN");
+});
