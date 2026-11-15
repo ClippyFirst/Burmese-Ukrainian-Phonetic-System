@@ -2537,3 +2537,12 @@ No runtime or generated data was changed. All 15 rows remain WITHHELD.
 | TUFS open/nasal/checked rime crosswalk | Three additional rows; schema adds `documentary_crosswalk`; all 15 evidence rows have 16 valid CSV fields and source/claim links | Exact PR-head workflow [43691172177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43691172177) SUCCESS: 292 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, production build and generated-data freshness pass | TUFS §1.3 table 2 inspected; secondary university crosswalk only, not direct MED dictionary extraction or independent lexical adjudication | DONE_VERIFIED (evidence artifact and engineering CI only) | Expand item-level Yangon lexical coverage; preserve notation distinctions and keep runtime withheld pending adjudication |
 
 The wider `BURMESE-YANGON-RIME-GRID-001` remains PARTIAL. All 15 rows are WITHHELD; no runtime or generated data changed. Exact verified PR head `673319e267edeca7bf1a4d082fdf17835cfe8ffc`.
+
+
+## Additional lexical attestations for am. — 2026-11-15
+
+| Area | Evidence extension | Validation | Status / boundary |
+|---|---|---|---|
+| MLCTS `am.` collision, source units `မ့်;ံ့` | Wiktionary lexical audit now records four first-side entries: စိမ့် /sḛɪɴ/, ဆိမ့် /sʰḛɪɴ/, နိမ့် /nḛɪɴ/, လိမ့် /lḛɪɴ/; opposite side remains ကြံ့ /t͡ɕa̰ɴ/ | Source claim and lexical audit updated; regression test checks all five word/IPA/MLCTS items and retains non-promotion guard | PARTIAL / secondary distinction evidence only; not a controlled minimal pair or primary MLC adjudication; no runtime/Ukrainian mapping promotion |
+
+The four first-side entries reinforce a source-level lexical distinction but do not fill the missing independent adjudication gate.
