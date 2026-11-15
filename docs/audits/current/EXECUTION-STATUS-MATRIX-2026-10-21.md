@@ -2651,3 +2651,15 @@ Diagnostic artifacts: FST 14154897335 (archive SHA-256 `961b5989e9c037861f7bebd0
 - **BLOCKED — entry-level MLC evidence:** no live dictionary entry, IPA transcription, definition, or export record was retrieved. Do not mark any rime collision resolved or import data from the page's interface metadata. Acceptance requires a functioning record lookup/export or direct inspection of the 1993/1996 dictionary, with exact headword, displayed transcription, query/date and provenance captured. Copyright remains with MLC/Dunwoody Press; retrieval does not grant redistribution rights.
 - Useful primary-source access references: [live SEAlang Burmese Dictionary](https://sealang.net/burmese/dictionary.htm), [dictionary query help](https://sealang.net/help/q-dict.htm), and the archived [SEAlang Services API description](https://www.sealang.net/archives/sealang-2008.pdf). These establish interface/search capability and provenance, not entry-level lexical claims.
 - No registry rows, source claims, IPA labels, runtime rules, Ukrainian mappings or generated outputs changed as a result of this failed access probe.
+
+
+
+## 2026-11-15 — MLC primary dictionary access route refined
+
+| Work item | Evidence | Status |
+|---|---|---|
+| Identify a primary dictionary acquisition route | Dunwoody Press lists the 1996 reprint of the 1993 MLC dictionary; NDL and Cinii catalogue 1993/1996 copies; Cinii lists a 2019 revised second edition at University of Tokyo | DONE_VERIFIED for bibliographic discovery only |
+| Inspect dictionary transcription semantics and entries | No physical/digital page or entry inspected; 1996 publisher says only “transcription system” for pronunciation aid, not IPA semantics | TODO / BLOCKED pending access to book pages |
+| Resolve lexical rime collisions from MLC | No primary lexical examples transcribed or adjudicated | BLOCKED pending page-level evidence and notation-key interpretation |
+
+Source records added: `MLC1996_REPRINT_CATALOG`, `MLC2019_REVISED_BIB`; claims: `CLM-MLC1996-PRONUNCIATION-AID-001`, `CLM-MLC2019-REVISED-EDITION-001`. Catalogue evidence is bibliographic only and does not authorize pronunciation or runtime promotion.
