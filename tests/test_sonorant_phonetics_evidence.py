@@ -20,7 +20,7 @@ def test_sonorant_evidence_is_schema_valid_linked_and_withheld():
     evidence = _rows(DATA / "sonorant_phonetics_evidence.csv")
     schema = json.loads((ROOT / "schemas" / "sonorant_phonetics_evidence.schema.json").read_text(encoding="utf-8"))
 
-    assert len(evidence) == 6
+    assert len(evidence) == 10
     assert len({row["evidence_id"] for row in evidence}) == len(evidence)
     for row in evidence:
         jsonschema.validate(row, schema)
