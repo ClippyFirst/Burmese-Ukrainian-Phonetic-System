@@ -2807,3 +2807,9 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - Reconciled against the already registered/vendored source MYA2ROM044 and existing MLCTS2, MLCTS-vs-MLCTS2 and limitations claims; no duplicate source or claim row retained. Added a regression test covering those existing records.
 - Mya2Rom is not an IPA gold source: its README documents no schwa or voicing-sandhi modelling, incomplete stacked-letter/asat handling, omission of alternate pronunciations and Pali/Sanskrit exceptions. Its IPA mode is described as a Wikipedia-style output, not the MED's own transcription.
 - Acceptance remains: inspect primary MED front matter and page-located entries; verify exact symbol semantics and source rights independently; reconcile Mya2Rom/SEAlang/TIL forms against the primary pages. No runtime, IPA labels, gold or Ukrainian mappings were changed.
+
+## 2026-11-15 — Mya2Rom registry-boundary test and exact-head CI
+
+- Added regression test over the already-existing MYA2ROM044 source and documentary claims to assert that orthographic MLCTS and modified MLCTS2 remain distinct, that MLCTS2 is not conflated with the separate IPA mode, and that the documented romanizer limitations remain visible in the evidence registry. No duplicate source/claim row remains.
+- Exact-head workflow [43733991562](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43733991562) SUCCESS on code/test commit b27a5d3fce31df66ef3dab8296019a7796953468: **309 Python tests + 68 subtests**, **21 Node tests**, **68 Playwright Chromium tests**, production build, generated-data freshness and npm audit (0 vulnerabilities) all passed.
+- The IPA gold validator correctly remains NOT_READY_NO_ADJUDICATED_GOLD (0 adjudicated records). Passing engineering CI does not change linguistic readiness. Manual assistive-technology QA and independent IPA annotation remain unresolved/outside scope.
