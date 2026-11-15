@@ -2866,3 +2866,14 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - Preserved — the project deterministic rules, Ukrainian IPA adapter, separate Mya2Rom 0.4.4/MLCTS orthographic route, and research-only Python `HybridBurmeseEngine` remain in place. No phonological mapping rules were promoted or replaced in this port.
 - PR #129 remains open/draft and untouched; it is a separate research Python-wrapper/benchmark track, not a dependency of the Pages browser port.
 - Release assessment: the hybrid browser shell is technically deployed and smoke-tested on GitHub Pages. The repository remains a research prototype, not a linguistically release-ready transcription system, until independent profile-matched IPA gold and manual accessibility/mobile QA are complete.
+
+
+## 2026-11-15 · GitHub Pages hybrid browser port
+
+- **DONE_VERIFIED (delivery/integration):** PR #151 merged; current deployed main commit `75afaa8b216a7718bdf71ea9d865cb135cac20ec`; Pages workflow [43757659164](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43757659164) SUCCESS. No backend/API was introduced.
+- **DONE_VERIFIED (Google WFST build/export):** pinned Google language-resources Burmese Thrax/OpenFst graph exported as a static same-origin JSON asset: start state 130, 195 states, 2,966 arcs, 20 finals, 191,796 JSON bytes. The deployment smoke test fetched this asset and asserted `available === true` and `arc_count > 0`.
+- **DONE_VERIFIED (implementation parity, narrow smoke set):** browser WFST interpreter matched upstream `thrax_g2p` CLI exactly on four fixed strings (`ကေ`, `ကော်`, `မြန်`, `ယူ`). This is implementation parity, not independent pronunciation validation.
+- **DONE_VERIFIED (browser integration):** local Epitran 1.35.3 mapping port, deterministic project rules, and Google WFST run in the hybrid UI; provider candidates and Ukrainian adaptations are displayed separately as PROVISIONAL and are not promoted into canonical output.
+- **DONE_VERIFIED (CI):** Python and Node test steps, production build, and Playwright built-site suite completed successfully; Playwright reported 70 passed. Deploy job successfully fetched pages, JS/CSS, Mya2Rom assets and the WFST model.
+- **Still BLOCKED/PARTIAL:** independent profile-matched IPA gold remains 0; dialect profile of upstream Google model is unspecified; Epitran is a narrow mapping/postprocessor port, not full Python/PanPhon; Python/browser parity against independent gold is not established; manual screen-reader/real-device accessibility QA remains outstanding.
+- **Release classification:** deployed research prototype / partial linguistic system. The site is live with a real hybrid browser engine, but it is not a linguistically validated or accuracy-certified transcription engine.
