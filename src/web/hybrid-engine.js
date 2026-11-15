@@ -91,7 +91,9 @@ export function analyzeHybrid(segments, googleModel = null) {
       ukrainian: adaptationFor(epitranCandidate), status: "PROVISIONAL",
     });
     const selectedIpa = deterministicEstablished ? deterministicIpa : null;
-    const selectedAdaptation = adaptationFor(selectedIpa);
+    const selectedAdaptation = selectedIpa ? adaptationFor(selectedIpa) : null;
+    const provisionalAdaptation = !selectedIpa && deterministicIpa
+      ? adaptationFor(deterministicIpa) : null;
     return {
       segment, passthrough: false, deterministicIpa, deterministicStatus: segment.status,
       deterministicEstablished, prosodyStatus, profileId, projectCandidate,
@@ -103,13 +105,17 @@ export function analyzeHybrid(segments, googleModel = null) {
         ? typedCandidate("PROJECT_RULES", selectedIpa, segment.status,
           { engine: "project deterministic browser rules", source_status: segment.status }, profileId || "UNSPECIFIED")
         : null,
-      selectedAdaptation,
-      selectedSource: deterministicEstablished ? "PROJECT_RULES" : "UNRESOLVED",
+      selectedAdaptation, provisionalAdaptation,
+      provisionalPhoneticResult: !selectedIpa ? projectCandidate : null,
+      selectedSource: deterministicEstablished ? "PROJECT_RULES"
+        : projectCandidate ? "PROJECT_RULES_SEGMENTAL_PREVIEW" : "UNRESOLVED",
       ipaStatus: deterministicEstablished ? segment.status
         : deterministicIpa ? "ANALYSIS_DEPENDENT"
           : ["UNSUPPORTED", "ANALYSIS_DEPENDENT", "UNCERTAIN"].includes(segment.status) ? segment.status : "NOT_ESTABLISHED",
-      ukrainianStatus: selectedIpa ? selectedAdaptation.status : "NOT_ESTABLISHED",
-      selectedStatus: selectedIpa ? aggregate([segment.status, selectedAdaptation.status]) : "NOT_ESTABLISHED",
+      ukrainianStatus: selectedIpa ? selectedAdaptation.status
+        : provisionalAdaptation?.text ? "PROVISIONAL" : "NOT_ESTABLISHED",
+      selectedStatus: selectedIpa ? aggregate([segment.status, selectedAdaptation.status])
+        : provisionalAdaptation?.text ? "ANALYSIS_DEPENDENT" : "NOT_ESTABLISHED",
       agreement: "NOT_COMPARABLE", comparison: { relation: "NOT_COMPARABLE" },
       comparisonScope: profileId ? "PROJECT_PROFILE_SCOPED_EXTERNAL_SCOPE_UNVERIFIED" : "DIALECT_PROFILE_UNVERIFIED",
       profileStatus: profileId ? "PROJECT_PROFILE_SCOPED" : "NOT_ESTABLISHED",
@@ -190,11 +196,14 @@ export function analyzeHybrid(segments, googleModel = null) {
     phonetic.length ? "NOT_ESTABLISHED" : "UNSUPPORTED");
   const hasGoogle = googleModel?.available === true;
   return {
-    ipa: records.map((item) => item.passthrough ? item.segment.raw : (item.selectedIpa || "?")).join(""),
-    uk: records.map((item) => item.passthrough ? item.segment.raw
-      : (item.selectedIpa && item.selectedAdaptation.text
-        && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN"].includes(item.selectedAdaptation.status)
-        ? item.selectedAdaptation.text : "⟦" + item.segment.raw + "⟧")).join(""),
+    ipa: records.map((item) => item.passthrough ? item.segment.raw
+      : (item.selectedIpa || item.deterministicIpa || "?")).join(""),
+    uk: records.map((item) => {
+      if (item.passthrough) return item.segment.raw;
+      const adaptation = item.selectedAdaptation || item.provisionalAdaptation;
+      return adaptation?.text && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN"].includes(adaptation.status)
+        ? adaptation.text : "⟦" + item.segment.raw + "⟧";
+    }).join(""),
     status, ipaStatus, ukrainianStatus, records,
     providers: {
       project: "ACTIVE · conservative deterministic browser rules",
