@@ -3156,3 +3156,9 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 - The same README documents major romanizer limitations: no schwa or voicing-sandhi modelling; incomplete stacked-letter/asat handling; alternate pronunciations omitted; Pali/Sanskrit exceptions. Its IPA mode is Wikipedia-style. Treat it as a secondary comparator, not a gold IPA engine.
 - The repository declares CC-BY-SA-4.0. No code/tables were copied; no license compatibility decision for this project's own distribution was made.
 - No phonology runtime, IPA gold, Ukrainian mapping or production output changed. Primary MLC notation-key verification and independent gold remain blocked.
+
+## 2026-11-15 — Mya2Rom registry-boundary test and exact-head CI
+
+- Added regression test over the already-existing MYA2ROM044 source and documentary claims to assert that orthographic MLCTS and modified MLCTS2 remain distinct, that MLCTS2 is not conflated with the separate IPA mode, and that the documented romanizer limitations remain visible in the evidence registry. No duplicate source/claim row remains.
+- Exact-head workflow [43733991562](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43733991562) SUCCESS on code/test commit b27a5d3fce31df66ef3dab8296019a7796953468: **309 Python tests + 68 subtests**, **21 Node tests**, **68 Playwright Chromium tests**, production build, generated-data freshness and npm audit (0 vulnerabilities) all passed.
+- The IPA gold validator correctly remains NOT_READY_NO_ADJUDICATED_GOLD (0 adjudicated records). Passing engineering CI does not change linguistic readiness. Manual assistive-technology QA and independent IPA annotation remain unresolved/outside scope.
