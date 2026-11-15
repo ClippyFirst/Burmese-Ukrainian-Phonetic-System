@@ -265,7 +265,7 @@ def test_um_colon_loan_compound_dictionary_lead_is_not_ipa_evidence():
     sources = {row["source_id"]: row for row in read_rows("sources.csv")}
     claims = {claim["claim_id"]: claim for claim in read_rows("source_claims.csv")}
     row = {item["mlcts"]: item for item in read_rows("romanization_rime_collision_lexical_audit.csv")}["um:"]
-    source = sources["SHWE_NET_HOME_RULE_ENTRY_2015"]
+    source = sources["SHWE_NET_HOME_RULE_ENTRY"]
     claim = claims["CLM-SHWE-UM-COLON-LOAN-COMPOUND-001"]
     assert "ဟုမ်းမရူး" in source["scope"]
     assert "non-IPA phonetic respelling" in source["scope"]

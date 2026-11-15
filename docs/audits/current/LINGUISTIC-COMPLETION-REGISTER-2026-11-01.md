@@ -2455,5 +2455,5 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 ## 2026-11-15 — um: borrowed-compound dictionary corroboration
 
 - Registered Myanmar Net's dictionary index entry `ဟုမ်းမရူး` (“Home Rule”), with non-IPA respelling `/houn: ma ru:/`; the first component `ဟုမ်း` contains source unit `ုမ်း`.
-- Added source `SHWE_NET_HOME_RULE_ENTRY_2015`, claim `CLM-SHWE-UM-COLON-LOAN-COMPOUND-001`, and regression coverage. Explicitly recorded that the site does not identify the underlying dictionary edition in the result and that its respelling is not IPA.
+- Added source `SHWE_NET_HOME_RULE_ENTRY`, claim `CLM-SHWE-UM-COLON-LOAN-COMPOUND-001`, and regression coverage. Explicitly recorded that the site does not identify the underlying dictionary edition in the result and that its respelling is not IPA.
 - This is secondary lexical corroboration for a borrowed English compound only. The `um:` row remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime, IPA gold or Ukrainian mapping changed.
