@@ -2928,3 +2928,8 @@ A targeted search found a historical orthographic occurrence of `ကံး` in R
 ## Additional secondary component attestation for MLCTS im — 2026-11-15
 
 A Wiktionary entry for the Pali-derived Burmese proper noun `တာဝတိံသာ` provides contributor-supplied IPA `/tàwa̰tèɪɴθà/` and MLCTS `tawa.timsa`; its Burmese spelling contains component `တိံ`, corresponding to the `ိံ` source unit in the `im` collision. The entry cites the Myanmar-English Dictionary (Myanmar Language Commission 1993), but the IPA displayed is Wiktionary's field, not an MLC transcription. This adds secondary lexical corroboration to the existing myG2P component-level records; it does not create a native minimal pair or primary MLC adjudication. The `im` status remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime or Ukrainian mapping promotion. Inspected 2026-11-15: https://en.wiktionary.org/wiki/တာဝတိံသာ.
+
+
+## Myanmar Net lexical corroboration for MLCTS um: — 2026-11-15
+
+Myanmar Net's dictionary index lists the obsolete borrowed proper noun `ဟုမ်းမရူး` (“Home Rule”) and gives the non-IPA respelling `/houn: ma ru:/`. The initial component `ဟုမ်း` contains the `ုမ်း` source unit already found in the myG2P syllable segmentation. This is a separate dictionary-level lexical lead for an English loan compound, not an IPA attestation: the site does not identify its underlying dictionary edition in the search result and the respelling is not IPA. Added source record `SHWE_NET_HOME_RULE_ENTRY_2015`, claim `CLM-SHWE-UM-COLON-LOAN-COMPOUND-001`, audit provenance and regression coverage. The `um:` status remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime or Ukrainian mapping promotion. Source: https://shwe.net/ref/home/dictionary/%E1%80%9F/page/11/ (retrieved 2026-11-15).

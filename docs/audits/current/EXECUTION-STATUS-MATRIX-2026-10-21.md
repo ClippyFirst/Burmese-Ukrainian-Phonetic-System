@@ -2585,3 +2585,11 @@ The additional attestations expand coverage but do not resolve the primary MLC a
 |---|---|---|---|
 | MLCTS `im`, source unit `ိံ` | Wiktionary `တာဝတိံသာ` gives contributor IPA `/tàwa̰tèɪɴθà/`, MLCTS `tawa.timsa`, and cites MLC Myanmar-English Dictionary (1993); the form contains component `တိံ` | Existing `im` row and source-claim ledger extended; regression test preserves component status and IPA provenance | PARTIAL / Pali-derived proper noun; secondary Wiktionary IPA, not MLC IPA; not native minimal pair or primary MLC adjudication; no runtime/Ukrainian promotion |
 
+
+
+## Additional lexical corroboration for um: — 2026-11-15
+
+| Area | Evidence extension | Validation | Status / boundary |
+|---|---|---|---|
+| MLCTS `um:`, source unit `ုမ်း` | Myanmar Net dictionary index lists borrowed proper noun `ဟုမ်းမရူး` (“Home Rule”) with non-IPA respelling `/houn: ma ru:/`; first component `ဟုမ်း` contains `ုမ်း` | Added source registry entry, documentary claim, existing audit-row provenance and regression guard | PARTIAL / borrowed English compound; non-IPA respelling only; underlying dictionary edition unspecified; not independent phonetic gold or primary MLC adjudication; no runtime/Ukrainian promotion |
+
