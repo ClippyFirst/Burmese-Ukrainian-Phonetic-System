@@ -769,3 +769,15 @@ The paper documents a potentially useful 42 h 39 min / 307-speaker audio corpus,
 - PARTIAL — implementation parity: browser and Python deterministic engines are separate implementations. Shared structural contracts are tested, but full phonological parity remains unproven.
 - BLOCKED / evidence-limited — linguistic accuracy: independent adjudicated Yangon-profile IPA gold remains 0; empirical accuracy remains null. Do not promote proposed phonetic rules based on structural smoke tests or third-party raw outputs.
 - No runtime phonological mappings or Ukrainian transcription rules were changed in this work.
+
+## GitHub Pages browser hybrid ports — 2026-11-15 (verification pending)
+
+- PARTIAL — browser hybrid orchestration: `src/web/hybrid-engine.js` now runs project rules, a browser Epitran Burmese port and a local Google WFST provider; it preserves canonical project output and exposes external candidates, agreement/divergence and Ukrainian-adapter previews without automatic promotion.
+- PARTIAL — Epitran browser port: `src/web/epitran-mya.js` ports the pinned `mya-Mymr` mapping, greedy matching and postprocessing, with MIT notice and six pinned structural smoke-output fixtures. This is not the complete Python/PanPhon package.
+- PARTIAL — Google WFST browser port: `src/web/wfst-runtime.js` implements weighted OpenFst traversal (epsilon arcs and negative weights); `src/web/google-wfst-input.js` ports the source `UTF8_TO_GRAPHEME` mapping from `my/burmese.grm` / `my/grapheme.syms`. The Pages workflow now builds the pinned Google model and exports a static JSON graph. Exact workflow/build/browser verification is pending.
+- DONE_VERIFIED — source/licensing trace: Epitran MIT mapping provenance and Google Language Resources Apache-2.0 license are included; Google, OpenFst and Thrax source revisions are pinned. myG2P is deliberately not bundled because its dictionary is CC BY-NC-SA 4.0; no commercial redistribution permission is assumed.
+- PARTIAL — tests: Node unit tests, Python model-export parser tests and browser tests were added for provider execution, candidate withholding, local-only requests, WFST weights and run-level alignment. They are not marked passed until the exact branch CI completes.
+- BLOCKED / evidence-limited — linguistic accuracy: independent profile-matched IPA gold remains 0; accuracy remains null. External candidates are diagnostic only and are not promoted to canonical IPA or Ukrainian output.
+- DEFERRED — CRF and Goruut browser ports: no model/license/quality basis justifies bundling them in this static-site pass; their Python research comparators remain separate.
+- Existing open PR #129 is not merged or modified by this work; it remains a separate research Python wrapper. No existing phonological rules were replaced.
+- Next acceptance gate: exact-head CI and Pages build must generate a nonempty WFST model, pass Node/Python/Playwright checks, deploy successfully, and pass deployed same-origin model smoke. Only then may the runtime integration tasks be marked DONE_VERIFIED.

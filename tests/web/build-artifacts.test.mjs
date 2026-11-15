@@ -12,6 +12,9 @@ test("production Pages artifact contains both site pages and the Mya2Rom browser
   assert.ok(existsSync(path.join(dist, "system.html")), "methodology page must be in dist");
   assert.ok(existsSync(path.join(dist, "vendor", "mya2rom", "romanisations.js")), "Mya2Rom romanisation table must be copied into dist");
   assert.ok(existsSync(path.join(dist, "vendor", "mya2rom", "mya2rom.js")), "Mya2Rom browser engine must be copied into dist");
+  assert.ok(existsSync(path.join(dist, "models", "google-burmese-wfst.json")), "local Google WFST model manifest must be copied into dist");
+  const model = JSON.parse(readFileSync(path.join(dist, "models", "google-burmese-wfst.json"), "utf8"));
+  assert.equal(typeof model.available, "boolean");
   const serviceHtml = readFileSync(path.join(dist, "index.html"), "utf8");
   assert.match(serviceHtml, /vendor\/mya2rom\/romanisations\.js/);
   assert.match(serviceHtml, /vendor\/mya2rom\/mya2rom\.js/);

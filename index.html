@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
 <meta name="description" content="Бірманський текст → практична українська транскрипція з IPA та поясненням системи.">
 <title>မြန်မာ / УКРАЇНСЬКА</title>
 <link rel="stylesheet" href="./src/web/styles.css?v=20261102-responsive-ui">
@@ -44,7 +44,12 @@
     <button id="mode-phonetic" class="method-button is-active" type="button" aria-pressed="true">Фонетичний</button>
     <button id="mode-romanization" class="method-button" type="button" aria-pressed="false">За романізацією</button>
   </div>
-  <p id="output-method-note" class="method-note" aria-live="polite">Фонетичний режим: детерміновані бірманські правила → IPA → українська практична адаптація. Без голосування зовнішніх рушіїв.</p>
+  <p id="output-method-note" class="method-note" aria-live="polite">Гібридний режим у браузері: власні правила + порт Epitran → IPA → український адаптер. Зовнішній fallback позначається PROVISIONAL; жодних серверних API.</p>
+
+  <article id="hybrid-engine-panel" class="result-card" data-method-panel="phonetic">
+    <div class="result-meta"><span class="result-index">HYBRID</span><div><h3>Гібридні провайдери</h3><p>Паралельні кандидати, джерело вибору та явна невизначеність.</p></div></div>
+    <div id="hybrid-provider-results" class="syllables"></div>
+  </article>
 
   <article id="romanization-panel" class="result-card" data-method-panel="romanization">
     <div class="result-meta"><span class="result-index">01</span><div><h3>Романізація · MLCTS</h3><p>Орфографічна система Myanmar Language Commission; окремо від IPA й українського результату.</p></div><button class="copy" data-copy="romanization" type="button">Копіювати</button></div>

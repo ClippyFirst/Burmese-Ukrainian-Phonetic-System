@@ -7,9 +7,13 @@ HybridBurmeseEngine запускає чинний RuleBasedBurmeseEngine і зб
 
 ## Важливо: що реально працює на сайті
 
-Цей файл описує **дослідницьку Python-обгортку**, а не runtime-архітектуру публічного браузерного сервісу. Сайт не створює `HybridBurmeseEngine`, не запускає Google WFST, myG2P, Epitran, CRF або Goruut і не збирає з них голосування. Його фонетичний режим використовує окремо реалізований у `src/web/app.js` детермінований парсер/IPA шлях і `src/web/ukrainian-adapter.js`. Режим MLCTS використовує vendored Mya2Rom 0.4.4, а потім окремий український MLCTS-адаптер. Це різні конвеєри.
+Публічний сайт тепер має **власний браузерний гібридний оркестратор** у `src/web/hybrid-engine.js`. На кожному введенні він запускає проєктний детермінований шлях, браузерний порт Burmese mapping/postprocessing з Epitran 1.35.3 і, якщо Pages model asset завантажено, локальний Google Burmese Thrax/OpenFst WFST. Режим MLCTS залишається окремим орфографічним конвеєром на основі Mya2Rom 0.4.4.
 
-Назва `HybridBurmeseEngine` означає лише orchestration wrapper: внутрішній rule-engine плюс явно ін'єктовані зовнішні IPA-кандидати. Без `providers` він працює тільки на внутрішніх правилах; навіть із providers зовнішні результати не голосують і не просуваються до canonical IPA. Тому production phonetic path коректніше називати deterministic rule-based, а не hybrid ensemble.
+Epitran-порт є вузьким портом `mya-Mymr` mapping, greedy matching і post-rules, а не повною Python/PanPhon реалізацією. Google WFST виконується через браузерний інтерпретатор `src/web/wfst-runtime.js`; його граф збирається з pinned upstream revision у Pages workflow і пакується як локальний JSON asset. В runtime немає серверного API або зовнішнього запиту з введеним текстом; CSP дозволяє лише same-origin завантаження статичної моделі.
+
+Гібрид запускає провайдери й показує результати та розбіжності, але **не голосує і не просуває зовнішні кандидати до canonical IPA**. Наш встановлений результат лишається основним; зовнішні IPA та їхні українські адаптації позначаються як кандидати. За відсутності незалежного профільно узгодженого IPA gold автоматичне просування заборонене. Локальна модель-заглушка у вихідному checkout позначена `PENDING_MODEL`; Pages build має згенерувати справжній граф і завершується помилкою, якщо не може цього зробити.
+
+Назва Python `HybridBurmeseEngine` нижче описує окрему дослідницьку обгортку з ін'єктованими провайдерами. Вона не є runtime сайту; браузерний оркестратор має власний контракт і тести.
 
 ## Підключення
 
@@ -72,3 +76,14 @@ Optional workflow **43582678434 SUCCESS** on final branch tip `cf7bb590f0acb7929
 - CRF: 100/100 predictions, 84 source-concordant, 0 gold, `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. Report SHA-256 `741dc7fa1263e667cb1c51f91f7ee0a24b0bd6c2479d1efafe63798a63d73d20`; artifact ZIP SHA-256 `8ef5fc2357cbf241b23929a00039bd22dbd473f4b639622387d8d2bead587a6f`.
 
 All three final-head artifacts were downloaded and inspected. Outputs remain diagnostic only; no score is claimed.
+
+
+## GitHub Pages browser hybrid port — 2026-11-15
+
+- `src/web/epitran-mya.js`: Epitran 1.35.3 `mya-Mymr` map + postprocessing port; MIT license and exact upstream provenance are included.
+- `src/web/google-wfst-input.js`: Google Burmese UTF8_TO_GRAPHEME input port from the pinned language-resources revision.
+- `src/web/wfst-runtime.js`: browser tropical-weight shortest-path interpreter, including epsilon arcs and negative-weight alternatives from the upstream grammar.
+- `scripts/export_google_wfst_model.py`: converts the pinned compiled OpenFst graph into a static JSON model. The Pages workflow builds the model; the browser fetches only that same-origin asset.
+- `src/web/hybrid-engine.js`: runs all available providers, exposes IPA candidates and Ukrainian-adapter previews, records agreement/divergence and withholds external promotion pending independent gold.
+- myG2P v2 is not bundled: its dictionary license is CC BY-NC-SA 4.0 and no project redistribution/commercial-use permission is assumed.
+- Accuracy remains unmeasured: independent profile-matched IPA gold = 0.

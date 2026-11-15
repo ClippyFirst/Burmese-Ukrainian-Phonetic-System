@@ -55,6 +55,13 @@
 <li><a href="https://mon.gov.ua/static-objects/mon/sites/1/zagalna%20serednya/Pravopys.2019/ukrayinskii-pravopis-oficiine-vidannia-2026.pdf" target="_blank" rel="noreferrer">Офіційний текст Українського правопису 2026 ↗</a></li></ul><p>Повний реєстр джерел, claims та машинозчитуваних відповідностей залишається в GitHub-репозиторії.</p></section>
 </article>
 <footer class="footer"><div><strong>မြန်မာ / УКРАЇНСЬКА</strong><span>Методологічна сторінка авторської системи.</span></div><div><a href="./">← Повернутися до сервісу</a></div></footer>
+<section id="browser-hybrid-runtime" class="method-section">
+  <p class="eyebrow">02C · Гібридний браузерний runtime</p>
+  <h2>Гібрид працює безпосередньо на GitHub Pages</h2>
+  <p>Фонетичний режим запускає власні детерміновані правила та браузерний порт Burmese mapping з Epitran 1.35.3. Порт Epitran виконується як окремий провайдер і показує IPA та українську адаптацію-кандидат зі статусом <code>PROVISIONAL</code>. Кандидати порівнюються з нашими правилами, але не голосують і не підміняють невизначеність.</p>
+  <p>Google Burmese WFST має окремий браузерний інтерпретатор OpenFst і порт вхідного UTF8_TO_GRAPHEME mapping. Його скомпільований граф генерується з pinned upstream source під час Pages build і пакується як same-origin JSON asset. У локальному checkout без цього build-кроку провайдер чесно позначений як <code>PENDING_MODEL</code>. Серверних API чи передачі введеного тексту немає; браузер завантажує лише статичну модель із того самого GitHub Pages origin.</p>
+  <p>Це порт конкретного Epitran Burmese mapping/postprocessing, а не повна Python/PanPhon система. Жоден зовнішній результат не має незалежної Yangon-profile IPA gold-ад'юдикації; емпірична точність не заявляється.</p>
+</section>
 <section id="fail-closed-ipa" class="method-section">
   <h2>Fail-closed межа для непідтриманих структур</h2>
   <p>Парсер може структурно розпізнати медіали, кінзі та кон'юнкти, але це не означає, що для них уже встановлено повну фонетичну реалізацію. Як Python-рушій, так і браузерний рушій утримують IPA та український практичний результат для таких складів. Це навмисна відмова від неперевіреного припущення, а не помилка транслітерації. Після появи достатніх текстових IPA-джерел відповідні правила можна буде додати окремими тестованими змінами.</p>

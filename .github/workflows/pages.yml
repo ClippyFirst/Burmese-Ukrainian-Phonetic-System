@@ -3,6 +3,7 @@ name: Deploy site to GitHub Pages
 on:
   push:
     branches: ["main"]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -19,6 +20,63 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: google/language-resources
+          ref: a90601024f07ab7e96c911243324e0adeb16da96
+          path: language-resources
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: bazelbuild/setup-bazelisk@v3
+      - name: Pin legacy Abseil dependency for reproducible Google WFST build
+        working-directory: language-resources
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          workspace = Path("WORKSPACE")
+          content = workspace.read_text(encoding="utf-8")
+          old = '''http_archive(
+              name = "com_google_absl",
+              strip_prefix = "abseil-cpp-master",
+              urls = ["https://github.com/abseil/abseil-cpp/archive/master.zip"],
+          )
+          '''
+          new = '''git_repository(
+              name = "com_google_absl",
+              commit = "45fdade6c0415ec5af3f9312e6311a4ccc682a7b",
+              remote = "https://github.com/abseil/abseil-cpp.git",
+          )
+          '''
+          if old not in content:
+              raise SystemExit("Expected unpinned Abseil WORKSPACE block was not found")
+          workspace.write_text(content.replace(old, new), encoding="utf-8")
+          PY
+      - name: Build pinned Google Burmese WFST and OpenFst text tools
+        working-directory: language-resources
+        run: bazel build -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo
+      - name: Export Google WFST as a static browser model
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts public/models
+          FSTPRINT="$(cd language-resources && find -L bazel-bin -type f -name fstprint -print -quit)"
+          FSTINFO="$(cd language-resources && find -L bazel-bin -type f -name fstinfo -print -quit)"
+          test -n "$FSTPRINT" && test -n "$FSTINFO"
+          (cd language-resources && "$FSTPRINT" --isymbols=my/grapheme.syms --osymbols=bazel-bin/my/ipa_phoneme.syms bazel-bin/my/G2P.fst) > artifacts/G2P.fst.txt
+          (cd language-resources && "$FSTINFO" bazel-bin/my/G2P.fst) > artifacts/G2P.fst.info
+          python scripts/export_google_wfst_model.py \
+            --fst-print artifacts/G2P.fst.txt \
+            --fst-info artifacts/G2P.fst.info \
+            --fst-binary language-resources/bazel-bin/my/G2P.fst \
+            --input-symbols language-resources/my/grapheme.syms \
+            --output-symbols language-resources/bazel-bin/my/ipa_phoneme.syms \
+            --output public/models/google-burmese-wfst.json \
+            --source-commit a90601024f07ab7e96c911243324e0adeb16da96 \
+            --openfst-commit 22867ee7b483598a729abe125da2517584a5d010 \
+            --thrax-commit c65fb3d51f9bd0299503f3289a124f52c3431eeb
+          python -c 'import json; m=json.load(open("public/models/google-burmese-wfst.json", encoding="utf-8")); assert m["available"] is True and m["arc_count"] > 0'
       - uses: actions/setup-node@v7
         with:
           node-version: 22.12.0
@@ -35,6 +93,7 @@ jobs:
           path: ./dist
 
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -65,4 +124,6 @@ jobs:
           curl --fail --silent --show-error --retry 8 --retry-delay 5 --retry-all-errors "$css_url" -o /tmp/styles.css
           curl --fail --silent --show-error --retry 8 --retry-delay 5 --retry-all-errors "$base/vendor/mya2rom/mya2rom.js" -o /tmp/mya2rom.js
           curl --fail --silent --show-error --retry 8 --retry-delay 5 --retry-all-errors "$base/vendor/mya2rom/romanisations.js" -o /tmp/romanisations.js
-          test -s /tmp/app.js && test -s /tmp/styles.css && test -s /tmp/mya2rom.js && test -s /tmp/romanisations.js
+          curl --fail --silent --show-error --retry 8 --retry-delay 5 --retry-all-errors "$base/models/google-burmese-wfst.json" -o /tmp/google-burmese-wfst.json
+          python -c 'import json; m=json.load(open("/tmp/google-burmese-wfst.json", encoding="utf-8")); assert m["available"] is True and m["arc_count"] > 0'
+          test -s /tmp/app.js && test -s /tmp/styles.css && test -s /tmp/mya2rom.js && test -s /tmp/romanisations.js && test -s /tmp/google-burmese-wfst.json

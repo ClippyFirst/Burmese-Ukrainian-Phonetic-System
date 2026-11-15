@@ -546,3 +546,26 @@ test("converter and methodology pages avoid page-level horizontal overflow at na
     }
   }
 });
+
+test("browser hybrid runs Epitran locally and withholds external candidates from canonical IPA",async({page})=>{
+  const external=[];
+  page.on("request",request=>{if(new URL(request.url()).origin!== "http://127.0.0.1:4173")external.push(request.url());});
+  await page.goto("/");
+  await page.locator("#source").fill("မြန်");
+  await expect(page.locator("#hybrid-engine-panel")).toBeVisible();
+  await expect(page.locator("#hybrid-provider-results")).toContainText("Epitran 1.35.3");
+  await expect(page.locator("#hybrid-provider-results")).toContainText("məjaɴ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦မြန်⟧");
+  await expect(page.locator("#hybrid-provider-results")).toContainText("WITHHELD_PENDING_INDEPENDENT_PROFILE_MATCHED_IPA_GOLD");
+  expect(external).toEqual([]);
+});
+
+test("Google WFST model status is explicit in the browser provider panel",async({page})=>{
+  await page.goto("/");
+  await page.locator("#source").fill("ကော်");
+  const modelResponse=await page.request.get("/models/google-burmese-wfst.json");
+  expect(modelResponse.ok()).toBeTruthy();
+  const model=await modelResponse.json();
+  await expect(page.locator("#hybrid-provider-results")).toContainText(model.available?"ACTIVE · local Google Burmese WFST model":"PENDING_MODEL");
+});

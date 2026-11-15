@@ -1,6 +1,7 @@
 import { ONSETS, VOWELS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
 import { renderUkrainian } from "./ukrainian-adapter.js";
 import { renderMlctsText } from "./romanization-ukrainian.js";
+import { analyzeHybrid } from "./hybrid-engine.js";
 
 const source=document.querySelector("#source"), results=document.querySelector("#results"), empty=document.querySelector("#empty");
 const issues=document.querySelector("#issues"), issueText=document.querySelector("#issue-text"), count=document.querySelector("#count");
@@ -8,6 +9,8 @@ const uk=document.querySelector("#uk"), ipa=document.querySelector("#ipa"), roma
 const ukStatus=document.querySelector("#uk-status"), ipaStatus=document.querySelector("#ipa-status"), live=document.querySelector("#live");
 const uaRomanization=document.querySelector("#ua-romanization-result"), uaRomanizationStatus=document.querySelector("#ua-romanization-status");
 const modePhonetic=document.querySelector("#mode-phonetic"), modeRomanization=document.querySelector("#mode-romanization"), outputMethodNote=document.querySelector("#output-method-note");
+const hybridProviderResults=document.querySelector("#hybrid-provider-results");
+let googleWfstModel=null;
 
 function setOutputMode(mode){
   document.querySelectorAll("[data-method-panel]").forEach(panel=>{panel.hidden=panel.dataset.methodPanel!==mode;});
@@ -16,7 +19,7 @@ function setOutputMode(mode){
   modeRomanization.classList.toggle("is-active",mode==="romanization");
   modeRomanization.setAttribute("aria-pressed",String(mode==="romanization"));
   outputMethodNote.textContent=mode==="phonetic"
-    ?"Фонетичний режим: детерміновані бірманські правила → IPA → українська практична адаптація. Без голосування зовнішніх рушіїв."
+    ?"Гібридний режим у браузері: власні правила + порт Epitran → IPA → український адаптер. Зовнішній fallback позначається PROVISIONAL; жодних серверних API."
      :"Романізаційний режим: Burmese orthography → MLCTS → окрема українська матриця. Нерозпізнані MLCTS-послідовності залишаються видимими; фонетичний результат не використовується як fallback.";
 }
 
@@ -370,7 +373,7 @@ function convert(text){
 function render(){
   const text=source.value;count.textContent=[...text].length+" символів";
   if(!text){empty.hidden=false;results.hidden=true;issues.hidden=true;return;}
-  const r=convert(text);empty.hidden=true;results.hidden=false;uk.textContent=r.uk||"—";ipa.textContent=r.ipa||"—";
+  const r=convert(text);const hybrid=analyzeHybrid(r.segments,googleWfstModel);empty.hidden=true;results.hidden=false;uk.textContent=r.uk||"—";ipa.textContent=r.ipa||"—";
   romanization.textContent=typeof window.mya2rom==="function" ? romanizeTextPreservingNonMyanmar(text,window.mya2rom) : "Романізатор не завантажився; результат не сформовано.";
   const uaRomanized=typeof window.mya2rom==="function"
     ? renderMlctsText(text,window.mya2rom,segment,char=>ROMANIZATION_SUPPORTED_CHARS.has(char))
@@ -383,8 +386,13 @@ function render(){
       : uaRomanized.status==="UNSUPPORTED"
         ? "UNSUPPORTED · для цього вводу не знайдено достатніх MLCTS відповідників; оригінальні послідовності залишено видимими."
         : "PASSTHROUGH · аналізованих бірманських складів немає; сторонній текст збережено.";
-  ukStatus.textContent="Загальний статус: "+r.status+" · IPA: "+r.ipaStatus+" · українська передача: "+r.ukStatus;
-  ipaStatus.textContent=r.segments.some(x=>!x.nonMyanmar&&!x.ipa)?"Частину фонетичної структури не встановлено для цього вводу.":"Структурно розпізнані сегменти.";
+  ukStatus.textContent="Загальний статус: "+r.status+" · IPA: "+r.ipaStatus+" · українська передача: "+r.ukStatus+" · гібридний оркестратор: активний.";
+  const hasExternalCandidates=hybrid.records.some(item=>!item.passthrough&&item.externalCandidates.length>0);
+  ipaStatus.textContent=hasExternalCandidates?"Канонічне IPA не встановлено для частини сегментів. Зовнішні кандидати показані окремо й не просуваються автоматично.":"Канонічний IPA не встановлено для частини сегментів; зовнішні провайдери не підміняють невизначеність.";
+  hybridProviderResults.replaceChildren();
+  const providerIntro=document.createElement("p");providerIntro.className="status-line";providerIntro.textContent="Усі провайдери виконуються локально в браузері. Результати не надсилаються на сервер і не голосують між собою.";hybridProviderResults.append(providerIntro);
+  const providerStatus=document.createElement("p");providerStatus.className="status-line";providerStatus.textContent="Наш рушій: "+hybrid.providers.project+" · Epitran: "+hybrid.providers.epitran+" · Google WFST: "+hybrid.providers.google;hybridProviderResults.append(providerStatus);
+  hybrid.records.forEach((item)=>{if(item.passthrough)return;const row=document.createElement("div");row.className="syllable";const head=document.createElement("strong");head.textContent=item.segment.raw+" · канонічний вибір: "+item.selectedSource;const detail=document.createElement("span");const ukrainianCandidates=item.candidateAdaptations.map(candidate=>candidate.provider+" → "+(candidate.ukrainian.text||"—")+" [PROVISIONAL]").join(" · ");detail.textContent="Наші правила: "+(item.deterministicIpa||"не встановлено")+" · Epitran: "+(item.epitranCandidate||"немає повного кандидата")+" · Google WFST: "+(item.googleCandidate||item.googleRunCandidate||item.google.status)+" · узгодження: "+item.agreement+(ukrainianCandidates?" · українські кандидати: "+ukrainianCandidates:"")+" · "+item.promotionPolicy;row.append(head,detail);hybridProviderResults.append(row);});
   syllables.replaceChildren();
   let syllableNumber=0;
   r.segments.forEach(s=>{const row=document.createElement("div");row.className="syllable";
@@ -397,8 +405,10 @@ function render(){
     }
     syllableNumber+=1;
     row.dataset.structure=JSON.stringify(s.structure);
+    const hybridRecord=hybrid.records.find(item=>item.segment===s);
     const head=document.createElement("strong");head.textContent=String(syllableNumber).padStart(2,"0")+"  "+s.raw;
     const detail=document.createElement("span");const shownStatus=s.provisionalStatus|| (s.uk?.status&&s.uk.status!=="ESTABLISHED"?s.status+" / передача: "+s.uk.status:s.status);detail.textContent=(s.ipa||"IPA не встановлено")+" → "+(s.uk?.text||"—")+" · "+shownStatus;row.append(head,detail);
+    if(hybridRecord?.externalCandidates.length){const candidates=document.createElement("small");candidates.textContent="Зовнішні IPA-кандидати (не просунуті): "+hybridRecord.externalCandidates.map(candidate=>candidate.provider+": "+candidate.ipa).join(" · ");row.append(candidates);}
     if(s.provisionalIpa){const preview=document.createElement("small");preview.textContent="Попередня підказка: "+s.provisionalIpa+" → "+s.provisionalUk+" [PROVISIONAL]";row.append(preview);}
     if(s.notes.length){const note=document.createElement("small");note.textContent=s.notes.join(" ");row.append(note);}syllables.append(row);
   });
@@ -406,7 +416,7 @@ function render(){
   const preserved=r.segments.some(s=>s.nonMyanmar&&s.raw.trim()!=="");issues.hidden=problems.length===0&&!preserved;
   const hasProsody=r.segments.some(s=>!s.nonMyanmar&&(s.prosodyMarks?.length||s.uk?.prosody?.length));
   issueText.textContent=[problems.length?"Для "+problems.length+" сегмент"+(problems.length===1?"а":"ів")+" результат містить запропоновану або неповністю встановлену відповідність; сервіс не подає її як доведену.":"",preserved?"Латинський текст, цифри, пробіли та пунктуацію збережено без змін; аналізуються лише сегменти Myanmar.":"",hasProsody?"Просодичні знаки збережено в аналітичному шарі; вони не перетворюються автоматично на український наголос.":""].filter(Boolean).join(" ");
-  live.textContent="Конвертацію завершено. Статус: "+r.status;
+  live.textContent="Конвертацію завершено. Статус: "+r.status+"; гібридні провайдери виконано.";
 }
 modePhonetic.addEventListener("click",()=>setOutputMode("phonetic"));
 modeRomanization.addEventListener("click",()=>setOutputMode("romanization"));
@@ -416,3 +426,4 @@ document.querySelector("#example").addEventListener("click",()=>{source.value="�
 document.querySelector("#clear").addEventListener("click",()=>{source.value="";render();source.focus();});
 document.querySelectorAll("[data-copy]").forEach(btn=>btn.addEventListener("click",async()=>{const value=document.querySelector("#"+btn.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);btn.textContent="Скопійовано";setTimeout(()=>btn.textContent="Копіювати",1200);}catch{btn.textContent="Не вдалося";}}));
 render();
+fetch("./models/google-burmese-wfst.json").then(response=>response.ok?response.json():null).then(model=>{if(model?.available===true){googleWfstModel=model;render();}}).catch(()=>{});

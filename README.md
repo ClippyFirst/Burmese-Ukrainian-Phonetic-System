@@ -212,29 +212,31 @@ The service separates the orthographic MLCTS romanization route from the IPA-fir
 
 ## Production build and GitHub Pages
 
-The production build includes both the service and methodology pages and copies the Mya2Rom browser assets into the Vite artifact. Playwright runs against the built preview, not only the development server.
+The production build includes both site pages, Mya2Rom assets, and a compiled local Google Burmese WFST JSON model. The Pages workflow builds the pinned Google/OpenFst source before Vite packaging; Playwright runs against the built preview.
 
 
 ## Live service
 
 GitHub Pages: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/
 
-The production build contains both the service and methodology pages and the Mya2Rom assets. Playwright runs against the built Vite preview. The romanization tab is separate from the IPA-first phonetic tab; its Ukrainian crosswalk is still marked PARTIAL.
+The production build contains both site pages, Mya2Rom assets and the same-origin Google Burmese WFST model. The browser hybrid orchestrator compares project rules, Epitran and Google WFST candidates locally. External candidates remain unpromoted pending independent gold. The romanization tab is separate from the IPA-first phonetic tab; its Ukrainian crosswalk is still marked PARTIAL.
 
 ## Independent IPA gold corpus
 
 The project uses a provenance-backed, double-annotated IPA gold workflow. See [the corpus protocol](docs/ipa-gold-corpus.md) and [the language-specific phonology research workpack](docs/audits/current/PHONOLOGY-RESEARCH-WORKPACK-2026-11-01.md). The corpus is currently empty by design; no phonetic accuracy claim is available until expert adjudication is complete.
 
-## Deterministic rule engine
+## Deterministic rules and browser hybrid runtime
 
-The phonetic website and Python API use fixed, local repository rules for Myanmar normalization, grapheme/syllable parsing and conservative IPA derivation. No neural inference, Google WFST, myG2P, network call or candidate voting participates in phonetic output. Unsupported syllables remain withheld. MLCTS remains a separate orthographic mode. See [the deterministic engine contract](docs/DETERMINISTIC-RULE-ENGINE.md).
+The canonical phonetic result still comes from the project's conservative local rules and the IPA → Ukrainian adapter. The public GitHub Pages site now also runs a browser-side hybrid orchestrator: a pinned Epitran 1.35.3 Burmese mapping port and a Google Burmese Thrax/OpenFst model compiled into a same-origin static JSON asset during the Pages build. The WFST interpreter supports weighted alternatives and epsilon arcs. No server or external API receives the input text.
+
+External IPA candidates and their Ukrainian-adapter previews are shown beside the canonical result. They are not voted or automatically promoted; unresolved project output remains unresolved until independent, profile-matched IPA adjudication exists. The site loads only its own static WFST model asset. MLCTS remains a separate orthographic mode. See [the deterministic engine contract](docs/DETERMINISTIC-RULE-ENGINE.md) and [the browser hybrid-engine contract](docs/hybrid-engines.md).
 
 Python entry point: `from burmese_ukrainian import RuleBasedBurmeseEngine`. Deterministic execution does not make every PROPOSED pronunciation independently verified.
 
 
-## Evidence-gated hybrid IPA candidates
+## Research-only Python hybrid wrapper
 
-The optional Python `HybridBurmeseEngine` can collect explicitly configured Google Burmese WFST, myG2P v2, Epitran and command-line IPA candidates with provenance. It does not run external providers by default, vote between them, or replace the deterministic rule engine's final IPA. See [the hybrid-engine contract](docs/hybrid-engines.md) and [raw-output benchmarking boundaries](docs/benchmarking-and-external-ipa.md).
+The optional Python `HybridBurmeseEngine` can collect explicitly configured Google Burmese WFST, myG2P v2, Epitran and command-line IPA candidates with provenance. It does not run external providers by default, vote between them, or replace the deterministic rule engine's final IPA. The public website has a separate browser implementation; the Python wrapper is not its runtime. See [raw-output benchmarking boundaries](docs/benchmarking-and-external-ipa.md).
 
 
 ### Rime and prosody evidence
