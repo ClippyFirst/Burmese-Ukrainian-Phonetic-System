@@ -40,9 +40,9 @@ def test_sonorant_study_scope_does_not_expand_to_full_inventory():
     scope = evidence["REPETTI-SONORANT-EXPERIMENT-SCOPE-001"]
     assert "six voiced/voiceless pairs" in inventory["phonological_feature"]
     assert "four sonorant pairs" in scope["segment_class"]
-    assert "two tones" in scope["phonological_feature"]
+    assert "high/low tones" in scope["phonological_feature"]
     assert "Nine speakers" in scope["study_context"]
-    assert "[n, ɲ]" in scope["scope_limit"]
+    assert "[n, ɲ]" in scope["study_context"]
     assert scope["runtime_status"] == "WITHHELD"
 
 
