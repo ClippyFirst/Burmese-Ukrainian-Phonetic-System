@@ -170,7 +170,8 @@ export function analyzeHybrid(segments, googleModel = null) {
     } else {
       const comparisons = candidates.slice(1).map((candidate) =>
         compareIpaCandidates(candidates[0].ipa, candidate.ipa));
-      item.comparison = comparisons[0];
+      item.comparison = comparisons.find((value) => value.relation === "DIVERGENCE")
+        || comparisons.find((value) => value.relation !== "AGREEMENT") || comparisons[0];
       item.agreement = comparisons.every((value) => value.relation === "AGREEMENT")
         ? "AGREEMENT"
         : comparisons.some((value) => value.relation === "DIVERGENCE")
