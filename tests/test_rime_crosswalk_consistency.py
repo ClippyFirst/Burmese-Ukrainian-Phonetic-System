@@ -239,7 +239,7 @@ def test_am_colon_historical_spelling_lead_is_not_modern_pronunciation_evidence(
     assert "spelling generally follows Judson" in source["scope"]
     assert claim["status"] == "DOCUMENTARY"
     assert "historical orthographic attestation" in claim["claim"]
-    assert "no IPA" in claim["claim"]
+    assert "no pronunciation for this entry" in claim["claim"]
     assert lexical["am:"]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY"
     assert "St. John (1894)" in lexical["am:"]["interpretation"]
     assert "not a modern MLC dictionary entry" in lexical["am:"]["interpretation"]
