@@ -912,3 +912,16 @@ The Python RuleBasedBurmeseEngine now emits additive typed candidate/completenes
 
 
 Registry checkpoint from current branch: `data/burmese/sources.csv` has 101 data rows; `data/burmese/source_claims.csv` has 221 data rows; `data/burmese/rime_prosody_evidence.csv` has 18 data rows. The 3 new tone/context/dialect evidence rows are all WITHHELD.
+
+
+## Final verification checkpoint — 2026-11-15
+
+- Starting default-branch SHA: `8aa91f3aa289b18fccd4dee338849b843441c1fc`.
+- Feature branch: `fix/ipa-first-hybrid-pipeline-2026-11-15`.
+- Code/test head validated: `e321e72b610bbe4516570411821702d5597cca9a`.
+- Documentation ledger commit: `d7cdc8a378aad160cd2a1512d382c44971a3b90a` (docs-only after the tested code head).
+- GitHub Actions [test run 43768906066](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43768906066): SUCCESS — 315 Python tests + 68 subtests; 47 Node tests; production build; generated/web data validation; 70 Playwright built-browser tests; npm audit 0 vulnerabilities.
+- Optional pinned Google FST raw-output run [43768905998](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43768905998): still in progress at this checkpoint; upstream grammar build and raw-output smoke are optional research evidence, not required for the IPA-first browser code.
+- Exact deployed Pages status: not yet updated by this PR. PR #154 remains Draft/open; main and public Pages are unchanged until merge/deploy.
+- PR #129 remains open and untouched. It is a stale divergent research/benchmark branch; the current change was built from current main and selectively reused no PR #129 commits.
+- Final classification: implementation correction verified; repository remains a partial linguistic prototype, not linguistically release-ready. The independent profile-matched lexical IPA gold set remains 0 adjudicated records; tone/context/dialect evidence rows are recorded but withheld; manual screen-reader/real-device accessibility QA remains outstanding.
