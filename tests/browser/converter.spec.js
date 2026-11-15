@@ -286,7 +286,7 @@ test("romanization uses orthographic MLCTS, not modified phonetic MLCTS2",async(
   await page.locator("#source").fill("မြို့");
   await expect(page.locator("#romanization")).toHaveText("mrui.");
   await expect(page.locator("#romanization-status")).toContainText("Mya2Rom 0.4.4");
-  const headings=await page.locator("#results article h3").allTextContents();
+  const headings=await page.locator("#results article:not(#hybrid-engine-panel) h3").allTextContents();
   expect(headings.slice(0,3)).toEqual(["Романізація · MLCTS","Українська за романізацією","IPA"]);
 });
 
@@ -544,5 +544,32 @@ test("converter and methodology pages avoid page-level horizontal overflow at na
       }));
       expect(dimensions.document,route+" at "+width+"px; offenders="+JSON.stringify(dimensions.offenders)).toBeLessThanOrEqual(dimensions.viewport);
     }
+  }
+});
+
+test("browser hybrid runs Epitran locally and withholds external candidates from canonical IPA",async({page})=>{
+  const external=[];
+  page.on("request",request=>{if(new URL(request.url()).origin!== "http://127.0.0.1:4173")external.push(request.url());});
+  await page.goto("/");
+  await page.locator("#source").fill("မြန်");
+  await expect(page.locator("#hybrid-engine-panel")).toBeVisible();
+  await expect(page.locator("#hybrid-provider-results")).toContainText("Epitran 1.35.3");
+  await expect(page.locator("#hybrid-provider-results")).toContainText("məjaɴ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦မြန်⟧");
+  await expect(page.locator("#hybrid-provider-results")).toContainText("WITHHELD_PENDING_INDEPENDENT_PROFILE_MATCHED_IPA_GOLD");
+  expect(external).toEqual([]);
+});
+
+test("Google WFST model status is explicit in the browser provider panel",async({page})=>{
+  await page.goto("/");
+  await page.locator("#source").fill("ကော်");
+  const modelResponse=await page.request.get("/models/google-burmese-wfst.json");
+  expect(modelResponse.ok()).toBeTruthy();
+  const model=await modelResponse.json();
+  await expect(page.locator("#hybrid-provider-results")).toContainText(model.available?"ACTIVE · local Google Burmese WFST model":"PENDING_MODEL");
+  if (model.available) {
+    await expect(page.locator("#hybrid-provider-results")).toContainText("GOOGLE_WFST");
+    await expect(page.locator("#hybrid-provider-results")).not.toContainText("MODEL_NOT_DEPLOYED");
   }
 });

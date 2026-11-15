@@ -10,13 +10,12 @@ The practical output is never produced by direct Myanmar-character substitution.
 
 ## Runtime architecture and provenance (important distinction)
 
-The published site is **not a voting ensemble of third-party G2P engines**. It exposes two separate modes:
+The published site has a **browser-side hybrid diagnostic shell**, not a voting ensemble. It exposes two separate modes:
 
-1. **Phonetic mode (the project's own implementation):** the browser runs the repository's JavaScript Myanmar parser and deterministic, evidence-gated Burmese-to-IPA rules; it then passes established IPA through the repository's Ukrainian practical adapter. The Python package has a corresponding rule engine and IPA adapter. Browser and Python implementations are separate code paths with tested shared contracts, not one shared runtime binary; full phonological parity is still PARTIAL. This is original project integration/rule code, but it is not a complete empirically validated Burmese phonology model.
-2. **Romanization mode (third-party engine + project adapter):** the browser calls vendored **Mya2Rom 0.4.4** to obtain the MLCTS romanization, then applies the project's own MLCTS-to-Ukrainian correspondence table. This is an orthographic romanization route, not IPA and not the phonetic engine. Mya2Rom is distributed under CC BY-SA 4.0; see `vendor/mya2rom/NOTICE.md` and `vendor/mya2rom/License.md`. Its source rime inventory is explicitly marked evidence-limited.
-3. **Optional research comparators (not used by the public site):** the Python `HybridBurmeseEngine` wrapper can be given external providers such as Google Burmese WFST, myG2P, Epitran, CRF or a CLI backend. They run only when explicitly injected and locally available. Their outputs are retained as provenance-bearing candidates and are never voted into, or automatically promoted over, the deterministic rule result. myG2P licensing and profile compatibility restrictions remain in force.
+1. **Phonetic mode (canonical project rules + local IPA comparators):** the browser runs the repository's Myanmar parser and deterministic, evidence-gated Burmese-to-IPA rules, then passes established IPA through the project's Ukrainian practical adapter. Alongside that canonical path, the browser hybrid orchestrator runs a narrow port of Epitran 1.35.3's Burmese mapping/postprocessing and, when the Pages build has generated the static graph, Google's Burmese Thrax/OpenFst WFST (upstream describes the language only as Burmese / Myanmar and does not specify a dialect profile). Their IPA and Ukrainian adaptations are shown as provenance-bearing candidates. They are not voted, and they never replace unresolved project output. Google is compiled from pinned source during the GitHub Pages build and served as a same-origin static JSON model; no server API receives user input. The Epitran port is not the full Python/PanPhon stack. The Python package has a separate rule engine and IPA adapter; browser and Python are separate code paths, so full phonological parity remains PARTIAL.
+2. **Romanization mode (third-party engine + project adapter):** the browser calls vendored **Mya2Rom 0.4.4** to obtain MLCTS romanization, then applies the project's own MLCTS-to-Ukrainian correspondence table. This is an orthographic route, not IPA and not the phonetic engine. Mya2Rom is distributed under CC BY-SA 4.0; see `vendor/mya2rom/NOTICE.md` and `vendor/mya2rom/License.md`. Its source rime inventory remains evidence-limited.
 
-Therefore the accurate description is: **a project-built deterministic phonetic rule pipeline, a separately vendored Mya2Rom/MLCTS romanization mode with a project Ukrainian adapter, and optional research-only external IPA comparators**. Calling the production phonetic engine a hybrid ensemble would be misleading.
+The separate Python `HybridBurmeseEngine` is still a research wrapper for explicitly injected providers such as myG2P, CRF and CLI backends. myG2P is not bundled because its dictionary is CC BY-NC-SA 4.0. The public browser's two external comparators are Epitran and Google WFST; both remain diagnostic until independent, profile-matched IPA gold supports promotion. Therefore the accurate description is: **project-owned canonical phonetic rules + browser-local Epitran/Google IPA candidates + a separate Mya2Rom/MLCTS romanization route**. This is a hybrid shell, but not a consensus/voting G2P engine.
 
 ## Scope
 
@@ -212,29 +211,31 @@ The service separates the orthographic MLCTS romanization route from the IPA-fir
 
 ## Production build and GitHub Pages
 
-The production build includes both the service and methodology pages and copies the Mya2Rom browser assets into the Vite artifact. Playwright runs against the built preview, not only the development server.
+The production build includes both site pages, Mya2Rom assets, and a compiled local Google Burmese WFST JSON model. The Pages workflow builds the pinned Google/OpenFst source before Vite packaging; Playwright runs against the built preview.
 
 
 ## Live service
 
 GitHub Pages: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/
 
-The production build contains both the service and methodology pages and the Mya2Rom assets. Playwright runs against the built Vite preview. The romanization tab is separate from the IPA-first phonetic tab; its Ukrainian crosswalk is still marked PARTIAL.
+The production build contains both site pages, Mya2Rom assets and the same-origin Google Burmese WFST model. The browser hybrid orchestrator compares project rules, Epitran and Google WFST candidates locally. External candidates remain unpromoted pending independent gold. The romanization tab is separate from the IPA-first phonetic tab; its Ukrainian crosswalk is still marked PARTIAL.
 
 ## Independent IPA gold corpus
 
 The project uses a provenance-backed, double-annotated IPA gold workflow. See [the corpus protocol](docs/ipa-gold-corpus.md) and [the language-specific phonology research workpack](docs/audits/current/PHONOLOGY-RESEARCH-WORKPACK-2026-11-01.md). The corpus is currently empty by design; no phonetic accuracy claim is available until expert adjudication is complete.
 
-## Deterministic rule engine
+## Deterministic rules and browser hybrid runtime
 
-The phonetic website and Python API use fixed, local repository rules for Myanmar normalization, grapheme/syllable parsing and conservative IPA derivation. No neural inference, Google WFST, myG2P, network call or candidate voting participates in phonetic output. Unsupported syllables remain withheld. MLCTS remains a separate orthographic mode. See [the deterministic engine contract](docs/DETERMINISTIC-RULE-ENGINE.md).
+The canonical phonetic result still comes from the project's conservative local rules and the IPA → Ukrainian adapter. The public GitHub Pages site now also runs a browser-side hybrid orchestrator: a pinned Epitran 1.35.3 Burmese mapping port and a Google Burmese Thrax/OpenFst model compiled into a same-origin static JSON asset during the Pages build. The WFST interpreter supports weighted alternatives and epsilon arcs. No server or external API receives the input text.
+
+External IPA candidates and their Ukrainian-adapter previews are shown beside the canonical result. They are not voted or automatically promoted; unresolved project output remains unresolved until independent, profile-matched IPA adjudication exists. The site loads only its own static WFST model asset. MLCTS remains a separate orthographic mode. See [the deterministic engine contract](docs/DETERMINISTIC-RULE-ENGINE.md) and [the browser hybrid-engine contract](docs/hybrid-engines.md).
 
 Python entry point: `from burmese_ukrainian import RuleBasedBurmeseEngine`. Deterministic execution does not make every PROPOSED pronunciation independently verified.
 
 
-## Evidence-gated hybrid IPA candidates
+## Research-only Python hybrid wrapper
 
-The optional Python `HybridBurmeseEngine` can collect explicitly configured Google Burmese WFST, myG2P v2, Epitran and command-line IPA candidates with provenance. It does not run external providers by default, vote between them, or replace the deterministic rule engine's final IPA. See [the hybrid-engine contract](docs/hybrid-engines.md) and [raw-output benchmarking boundaries](docs/benchmarking-and-external-ipa.md).
+The optional Python `HybridBurmeseEngine` can collect explicitly configured Google Burmese WFST, myG2P v2, Epitran and command-line IPA candidates with provenance. It does not run external providers by default, vote between them, or replace the deterministic rule engine's final IPA. The public website has a separate browser implementation; the Python wrapper is not its runtime. See [raw-output benchmarking boundaries](docs/benchmarking-and-external-ipa.md).
 
 
 ### Rime and prosody evidence
