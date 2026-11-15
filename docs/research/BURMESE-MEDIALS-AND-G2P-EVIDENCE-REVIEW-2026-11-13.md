@@ -932,6 +932,6 @@ The repository also makes its implementation limits unusually clear. It describe
 - Its IPA output must not be promoted to independent adjudicated IPA or used to validate the project's G2P accuracy.
 - Its published CC-BY-SA-4.0 license is recorded as metadata for the external code; no code or tables were copied into this project, and this entry is not a project-wide licensing decision.
 
-Registered source MYA2ROM2017 and documentary claim CLM-MYA2ROM-MLCTS2-MED-IDENTIFICATION-001; added a regression guard that preserves the secondary-only and non-gold boundary. No runtime or Ukrainian mapping changed.
+Reconciled this finding with the already-vendored source MYA2ROM044 and its existing documentary claims CLM-MYA2ROM-SEALANG-MLCTS2-001, CLM-MYA2ROM-MLCTS-VS-MLCTS2-001 and CLM-MYA2ROM-LIMITATIONS-001; no duplicate source/claim rows were retained. Added a regression test over the existing registry entries. No runtime or Ukrainian mapping changed.
 
-Source: https://github.com/myanmaropenwordnet/mya2rom (README and repository license; accessed 2026-11-15).
+Source: https://github.com/myanmaropenwordnet/mya2rom (README and repository license; accessed 2026-11-15). The vendored v0.4.4 file and upstream README/license were already registered in MYA2ROM044; this review did not add another source row.
