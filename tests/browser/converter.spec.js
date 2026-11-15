@@ -515,3 +515,18 @@ test("methodology page exposes the same keyboard skip navigation",async({page})=
   await page.keyboard.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
 });
+
+
+test("converter and methodology pages avoid page-level horizontal overflow at narrow viewports",async({page})=>{
+  for(const width of [320,375,768]){
+    await page.setViewportSize({width,height:800});
+    for(const route of ["/","/system.html"]){
+      await page.goto(route);
+      const dimensions=await page.evaluate(()=>({
+        viewport:document.documentElement.clientWidth,
+        document:document.documentElement.scrollWidth
+      }));
+      expect(dimensions.document,route+" at "+width+"px").toBeLessThanOrEqual(dimensions.viewport);
+    }
+  }
+});
