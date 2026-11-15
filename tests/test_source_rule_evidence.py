@@ -703,3 +703,24 @@ def test_waxman_med_transcription_claim_remains_secondary_and_non_operational():
     assert "tonal graphemic elements" in claim["claim"]
     assert "not an inspected notation key" in claim["claim"]
     assert "or project IPA mapping" in claim["claim"]
+
+def test_existing_mya2rom_vendor_evidence_distinguishes_mlcts2_from_ipa():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+
+    source = sources["MYA2ROM044"]
+    med_claim = claims["CLM-MYA2ROM-SEALANG-MLCTS2-001"]
+    distinction_claim = claims["CLM-MYA2ROM-MLCTS-VS-MLCTS2-001"]
+    limits_claim = claims["CLM-MYA2ROM-LIMITATIONS-001"]
+    assert source["type"] == "software"
+    assert "Vendored CC BY-SA 4.0 software" in source["scope"]
+    assert "not a primary MLC specification" in source["scope"]
+    assert med_claim["source_id"] == source["source_id"]
+    assert med_claim["status"] == "DOCUMENTARY"
+    assert "MLCTS2" in med_claim["claim"]
+    assert "distinct from the tool's separate IPA mode" in med_claim["claim"]
+    assert distinction_claim["status"] == "DOCUMENTARY"
+    assert "orthographic transcription system" in distinction_claim["claim"]
+    assert "94-row inventory takes the MLCTS column" in distinction_claim["claim"]
+    assert limits_claim["status"] == "DOCUMENTARY"
+    assert "no schwa or voicing-sandhi" in limits_claim["claim"]
