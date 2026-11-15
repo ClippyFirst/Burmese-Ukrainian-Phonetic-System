@@ -2923,3 +2923,6 @@ The browser now follows the Python engine's existing distinction: a deterministi
 ### Python API completeness metadata — 2026-11-15
 
 The Python RuleBasedBurmeseEngine now exposes the same distinction additively: `ipa` remains the segmental candidate for compatibility; `ipa_status=analysis_dependent`, `phonetic_completeness=SEGMENTAL_ONLY`, `prosody_status=not_established`, and `profile_status=PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED` are explicit; `canonical_ipa` and `canonical_ukrainian` remain null; Ukrainian candidate status is PROVISIONAL. Mixed-input onset/rime previews are no longer labeled SUPPORTED_PATH. Regression tests cover this contract. Exact-head CI pending.
+
+
+Registry checkpoint from current branch: `data/burmese/sources.csv` has 101 data rows; `data/burmese/source_claims.csv` has 221 data rows; `data/burmese/rime_prosody_evidence.csv` has 18 data rows. The 3 new tone/context/dialect evidence rows are all WITHHELD.
