@@ -43,7 +43,7 @@ def parse_fst_header(path: Path) -> tuple[int, int, int, str, str]:
     _version, _flags = read("i"), read("i")
     _properties = read("Q")
     start, states, arcs = read("q"), read("q"), read("q")
-    if start < 0 or states <= 0 or arcs < 0 or start >= states:
+    if start < 0 or states < 0 or arcs < 0 or (states > 0 and start >= states):
         raise ValueError("invalid OpenFst start/state/arc counts")
     return int(start), int(states), int(arcs), fst_type, arc_type
 
@@ -97,15 +97,21 @@ def main() -> int:
     start, header_states, header_arcs, fst_type, arc_type = parse_fst_header(args.fst_binary)
     info_states, info_arcs = parse_info(args.fst_info.read_text(encoding="utf-8"))
     arcs, finals = parse_fstprint(args.fst_print.read_text(encoding="utf-8"))
-    if (header_states, header_arcs) != (info_states, info_arcs):
-        raise ValueError("binary FST header and fstinfo state/arc counts disagree")
-    if header_arcs != len(arcs):
-        raise ValueError(f"binary FST reports {header_arcs} arcs but fstprint exported {len(arcs)}")
-    if max(max(a["src"], a["dst"]) for a in arcs) >= header_states:
-        raise ValueError("arc state ID exceeds FST header state count")
+    if header_states and header_states != info_states:
+        raise ValueError(f"binary FST header state count {header_states} disagrees with fstinfo {info_states}")
+    if header_arcs and header_arcs != info_arcs:
+        raise ValueError(f"binary FST header arc count {header_arcs} disagrees with fstinfo {info_arcs}")
+    state_count = header_states or info_states
+    arc_count = header_arcs or info_arcs
+    if arc_count != len(arcs):
+        raise ValueError(f"FST reports {arc_count} arcs but fstprint exported {len(arcs)}")
+    if max(max(a["src"], a["dst"]) for a in arcs) >= state_count:
+        raise ValueError("arc state ID exceeds FST state count")
+    if any(item["state"] >= state_count for item in finals):
+        raise ValueError("final state ID exceeds FST state count")
     model = {
         "schema_version": "1.0", "available": True, "start_state": start,
-        "state_count": header_states, "arc_count": len(arcs),
+        "state_count": state_count, "arc_count": len(arcs),
         "arcs": arcs, "finals": finals,
         "provenance": {
             "engine": "Google language-resources Burmese Thrax/OpenFst G2P",
@@ -122,7 +128,7 @@ def main() -> int:
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(model, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
-    print(json.dumps({"start_state": start, "states": header_states, "arcs": len(arcs), "finals": len(finals), "bytes": args.output.stat().st_size}))
+    print(json.dumps({"start_state": start, "states": state_count, "arcs": len(arcs), "finals": len(finals), "bytes": args.output.stat().st_size}))
     return 0
 
 if __name__ == "__main__":

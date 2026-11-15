@@ -2874,3 +2874,5 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - Browser test selector refinement: the romanization test intentionally inspects hidden panels' text to verify their independent output. `:visible` was therefore too restrictive; the final selector excludes only the new hybrid panel while preserving the pre-existing all-panel contract. Rerun pending.
 
 - Fourth Pages build finding: the pinned OpenFst 1.7.2 `fstinfo` output reports state/arc counts but does not print the start state. The exporter now reads the exact `FstHeader` binary fields (magic, type, arc type, start state, state/arc counts) and cross-checks them against `fstinfo` and `fstprint`; this avoids assuming start state 0. Header parser tests added; rerun pending.
+
+- Fifth Pages export correction: OpenFst's binary header can leave `numstates`/`numarcs` unset (zero) while `fstinfo` computes them. The exporter now reads the exact start state from the header, uses `fstinfo` counts only when header counts are zero, cross-checks any nonzero header counts, and validates `fstprint` arc/final state IDs. Rerun pending.

@@ -48,3 +48,8 @@ def test_parser_rejects_corrupt_header_and_malformed_text(tmp_path):
         parse_info("# of states 2\n")
     with pytest.raises(ValueError, match="cannot parse"):
         parse_fstprint("0 1 ka\n")
+
+def test_openfst_header_can_leave_counts_unknown_for_fstinfo_fallback(tmp_path):
+    binary = tmp_path / "unknown-counts.fst"
+    _write_fst_header(binary, start=0, states=0, arcs=0)
+    assert parse_fst_header(binary) == (0, 0, 0, "vector", "standard")
