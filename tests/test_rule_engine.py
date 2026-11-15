@@ -97,3 +97,12 @@ def test_rule_engine_marks_profile_scope_without_claiming_profile_adjudication()
     assert result["ipa_candidate"]["profile"] == result["profile"]
     assert result["ipa_candidate"]["prosody_status"] == "not_established"
     assert result["ipa_candidate"]["phonetic_completeness"] == "SEGMENTAL_ONLY"
+
+
+def test_mixed_input_segmental_previews_are_not_labeled_supported():
+    result = RuleBasedBurmeseEngine().analyze("ကာ မြန်မာ")
+    preview = result["fallback_trace"][0]
+    assert preview["ipa"] == "ka"
+    assert preview["status"] == "PROVISIONAL_SEGMENTAL_ONLY"
+    assert "tone" in preview["unresolved_features"]
+    assert "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED" in preview["warnings"]
