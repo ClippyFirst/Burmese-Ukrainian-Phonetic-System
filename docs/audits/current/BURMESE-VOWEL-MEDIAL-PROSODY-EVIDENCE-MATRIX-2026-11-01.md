@@ -175,3 +175,22 @@ The matrix explicitly does not assert a complete prohibited consonant-pair list.
 | Transcription convention | Broad IPA-style transcription of spoken Burmese; Written Burmese orthography transliterated separately via ALA-LC | Broad IPA based on one consultant | Experimental phonetic symbols and acoustic measures; not a complete script-to-IPA lexicon | Acoustic/phonological proposal, mixed-region sample | Acoustic measurements, restricted contexts | Keep source transcription, project IPA, phonemic notation and orthographic romanization distinct |
 
 **Source scope:** Green 2002/2005, Watkins 2001, Mooney & Repetti-Ludlow 2021, Duan & Zhu 2025 and Repetti-Ludlow 2023 are not independent replications of one common sample or transcription convention. The table reconciles terminology and incompatible analysis levels; it does not average them or establish a consensus inventory. Duan & Zhu's full text has been inspected, but no audio was accessed. Independent adjudicated project IPA gold remains 0; no runtime or Ukrainian mapping is enabled by this matrix.
+
+
+## 11. Source-scoped rime × coda × tone × phonation evidence — 2026-11-15
+
+Added `data/burmese/rime_prosody_evidence.csv` (11 source-linked rows), `schemas/rime_prosody_evidence.schema.json`, and `tests/test_rime_prosody_evidence.py`. The rows are typed by dimension and preserve the source's scope; all are `WITHHELD` from runtime.
+
+| Source finding | Scope and locator | Interpretation boundary |
+|---|---|---|
+| Diphthongs /ei ai ou au/ occur only in closed major syllables; /e, o/ are open-only in the listed analysis | Green 2005 §2.2, pp.7–8, examples (12)–(13) | Source-specific rime constraints; not a grapheme-to-IPA table |
+| Nasal rhymes permit low/high/creaky but not checked in Green's four-tone account | Green 2005 §1.1, p.3; §2.4, pp.13–14 | Keep the tone category distinct from coda /N/ and glottal /ʔ/ |
+| /N/ is placeless and realized through vowel nasalization, with approximate place varying after monophthongs vs diphthongs | Green 2005 §1.2, p.5 | Do not map ASAT directly to a standalone [ŋ]/[ɴ] |
+| Vowel length is non-contrastive in Green's account; major syllables are analyzed as bimoraic and duration varies with tone | Green 2005 §2.1, p.7 | Moraic weight, phonemic quantity and measured duration remain separate |
+| Mooney & Repetti-Ludlow describe different open vs closed vowel sets and closed-syllable centralization/diphthongization | 2021 §§2.1, 3; pp.26–31 | Their tone-independent sonority analysis is a competing account, not project consensus |
+| Acoustic cue weighting differs between isolation and sentence frames | 2021 §§2.1.1–2.2.1, pp.26–28 | Citation-form duration/F0 cannot be reused as a universal sentential realization rule |
+| Closed high/low/creaky tokens were nasalized and killed tokens oral in the experiment | 2021 §2.1, pp.26–27 | One-speaker experimental observation, not a universal ASAT-conditioned rule |
+
+Mooney & Repetti-Ludlow's experiments used one female native Yangon consultant and a restricted onset/vowel set; their work is valuable profile-relevant phonetic evidence but does not constitute a complete lexical inventory or independent multi-speaker validation. The article's reported acoustic results were inspected textually; project audio was not accessed.
+
+**Acceptance:** machine-readable source evidence and integrity tests are implemented; exact-head CI is required before marking the artifact `DONE_VERIFIED`. No IPA labels, Ukrainian correspondences, runtime phonological rules or tone-decoding behavior were added. The broader vowel × coda × tone × phonation inventory remains `PARTIAL`.
