@@ -2406,3 +2406,11 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - Two intermediate CI failures identified CSV field quoting and assertion wording issues; both were corrected before the successful exact-head run.
 - **BURMESE-YANGON-RIME-GRID-001 — PARTIAL:** no exhaustive item-level rime × coda × tone × phonation inventory or independent lexical adjudication. The university crosswalk documents its own analytical correspondences and is not direct extraction from MED entries.
 - Runtime status remains WITHHELD for all 15 rows. Independent adjudicated IPA gold remains 0; accuracy remains null; no runtime mappings or generated pronunciation data changed.
+
+
+## 2026-11-15 — am. lexical evidence extension
+
+- Expanded `CLM-WIKTIONARY-AM-DOT-LEXICAL-DISTINCTION-001` and the `am.` row in `romanization_rime_collision_lexical_audit.csv` with three independently listed Wiktionary lemmas: ဆိမ့် /sʰḛɪɴ/, နိမ့် /nḛɪɴ/, လိမ့် /lḛɪɴ/. The first-side set now contains four entries including စိမ့် /sḛɪɴ/; the opposite side remains ကြံ့ /t͡ɕa̰ɴ/.
+- Added regression coverage for all five word-level observations, exact MLCTS forms and the no-promotion boundary.
+- Evidence remains secondary lexicographic transcription, not a controlled minimal pair or primary MLC adjudication. No runtime, IPA gold, Ukrainian mapping or generated data changed.
+- Sources inspected 2026-11-15: Wiktionary pages for ဆိမ့်, နိမ့် and လိမ့်; see claim locator for exact URLs and page-level details.
