@@ -2381,3 +2381,10 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - **PARTIAL:** added keyboard skip navigation to both `index.html` and `system.html`; the main landmark is now a focusable fragment target. Shared CSS exposes the link on focus and preserves reduced-motion scrolling behavior.
 - **PARTIAL / CI PENDING:** added three Playwright regressions covering both entry pages and reduced-motion preference. The exact implementation head is `481c26d6951d4795e16e239f9332c3e42f7d3f44`; hosted CI has not yet been observed for this head.
 - **TODO:** manual screen-reader, zoom/reflow, mobile and full contrast QA remain outstanding. No WCAG conformance claim is made.
+
+
+## Accessibility verification closeout — 2026-11-15
+
+- **DONE_VERIFIED (automated):** keyboard skip navigation on converter and methodology pages; reduced-motion scrolling behavior. Required PR-head CI workflow [43690500850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43690500850) SUCCESS: 291 Python + 68 subtests, 21 Node, 67 Playwright Chromium.
+- Static contrast calculation for eight selected existing color pairs: all sampled ratios are at least 4.56:1. This is a limited sample, not full-page WCAG validation.
+- **TODO:** manual screen-reader, mobile, zoom/reflow and comprehensive contrast/state QA. No WCAG conformance claim.
