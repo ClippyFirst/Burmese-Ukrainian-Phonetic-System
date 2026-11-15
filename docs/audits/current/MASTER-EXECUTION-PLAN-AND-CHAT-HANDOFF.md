@@ -810,3 +810,28 @@ The paper documents a potentially useful 42 h 39 min / 307-speaker audio corpus,
 - Full alphabet/model build evidence on commit `e0e2c37b36f1882a3403947b8d00fbcb4815d410`: pinned Google symbol-table invariant tests PASS; browser alphabet validator PASS for all 224 Myanmar entries in `my/codepoint.syms`; static model export PASS (start 130, 195 states, 2,966 arcs, 20 finals, 191,704 bytes); browser-vs-CLI parity PASS 4/4; Vite production build PASS. The Pages workflow then stopped at the Node test suite because the negative test incorrectly used U+109E, which is in the pinned symbol table. The fixture was corrected to U+10A0. Latest exact commit `23804a1be4c82b2167edd4b726958ae17972d900` now passes 312 Python tests, 68 subtests, 38 Node tests, and 70 Playwright tests; two dependency scans reported 0 vulnerabilities. Latest exact-head Pages build remains pending.
 
 - Google language-profile qualification: the pinned upstream repository README identifies `my` only as “Burmese / Myanmar” and does not document a dialect profile. The generated model provenance now records `dialect_profile: null`; documentation explicitly avoids claiming Yangon-specific coverage. Its outputs remain diagnostic candidates, and profile-matched independent IPA gold remains 0.
+
+
+## Final handoff — GitHub Pages hybrid port completed (2026-11-15)
+
+- Starting `main`: `9bf77cc9fc35a6231a17de7a59e9006f958b9951`.
+- Implementation branch: `feat/github-pages-hybrid-browser-ports-2026-11-15`.
+- PR #151 merged by squash; implementation commit on `main`: `fa39452804257b0997a2ce37bd3d915ac56f4555`.
+- Main test workflow: `43756709423` SUCCESS — 312 Python tests + 68 subtests, 38 Node tests, 70 Playwright tests; 0 npm vulnerabilities.
+- Main Pages workflow: `43756709415` SUCCESS — pinned Google WFST built and exported; 224/224 input symbols validated; upstream CLI parity 4/4; browser integration 70/70; Pages deployment and same-origin runtime-asset smoke test passed.
+- Deployed URL: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/
+- Main remaining blocker: independent, source-attributed, dialect/profile-matched IPA gold corpus is still empty (0 adjudicated entries); do not report empirical accuracy or promote external candidates. Google upstream dialect profile is unspecified. myG2P remains excluded for CC BY-NC-SA licensing; CRF/Goruut remain deferred.
+- Remaining manual QA: screen reader, keyboard/focus/contrast review, and physical mobile-device check.
+- PR #129 remains open/draft and unchanged.
+- Next genuine project task: assemble and independently adjudicate a small Yangon-profile IPA gold set with provenance, tone/phonation/syllable-boundary annotation and reviewer agreement; then run comparative evaluation before any candidate promotion.
+
+
+### Commands and checks actually executed
+
+- `bazel build --noenable_bzlmod -c opt //my:g2p @openfst//:fstprint @openfst//:fstinfo` — PASS on the Pages build runner.
+- `bazel test --noenable_bzlmod -c opt //my:ipa_phonemes_are_uniquely_decodable //my:phoneme_syms_is_current //my:phoneme_tsv_is_current` — PASS.
+- `node scripts/validate_google_input_symbols.mjs language-resources/my/codepoint.syms` — PASS, 224/224 Myanmar codepoint labels.
+- `python scripts/export_google_wfst_model.py --fst-print artifacts/G2P.fst.txt --fst-info artifacts/G2P.fst.info --fst-binary language-resources/bazel-bin/my/G2P.fst --input-symbols language-resources/my/codepoint.syms --output-symbols language-resources/bazel-bin/my/ipa_phoneme.syms --output public/models/google-burmese-wfst.json --source-commit a90601024f07ab7e96c911243324e0adeb16da96 --openfst-commit 22867ee7b483598a729abe125da2517584a5d010 --thrax-commit c65fb3d51f9bd0299503f3289a124f52c3431eeb` — PASS, generated 191,796-byte model.
+- `node scripts/verify_google_wfst_model_parity.mjs artifacts/google-wfst-reference.tsv` — PASS, 4/4 upstream CLI probes.
+- `pytest` — PASS, 312 tests + 68 subtests; `npm ci`, `npm run build`, `npm test`, `npx playwright install --with-deps chromium`, `npm run test:browser:built` — PASS on main commit `fa39452804257b0997a2ce37bd3d915ac56f4555`.
+- Pages deploy workflow additionally executed same-origin `curl`/asset smoke checks for `/`, `/system.html`, built JS/CSS, Mya2Rom vendor assets and `/models/google-burmese-wfst.json`; all passed.
