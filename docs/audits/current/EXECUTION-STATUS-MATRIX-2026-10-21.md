@@ -2866,3 +2866,5 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - CI correction record: initial Pages PR run 43752398240 failed before model export because Bazelisk selected Bazel 9.3.2, which enabled Bzlmod and hid the legacy `@openfst` WORKSPACE repository. The build step now pins Bazel 7.4.1 and disables Bzlmod explicitly; rerun is pending. This is a build-tool compatibility issue, not a linguistic or model-quality result.
 
 - Second CI correction record: run 43752563844 confirmed Bazel 7.4.1, but `--noenable_bzlmod` was placed as a startup option and Bazel rejected it. The flag is now moved after the `build` command (`bazel build --noenable_bzlmod ...`). Third exact-head run is pending.
+
+- Browser regression correction: the first hybrid UI test run on 74bf1ea passed 69/70 Playwright tests; the only failure was an existing romanization test counting a now-hidden phonetic hybrid-panel heading. The selector now scopes to visible article headings (`article:visible`); all other Node/Python/Playwright cases in that run passed. Exact rerun is pending.
