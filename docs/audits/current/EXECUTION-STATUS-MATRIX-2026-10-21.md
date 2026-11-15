@@ -2903,3 +2903,13 @@ Research constraints incorporated: Oo20's corpus is Yangon-recorded speech with 
 - A project IPA string without tone/profile evidence is `SEGMENTAL_ONLY` and `ANALYSIS_DEPENDENT`; its Ukrainian adaptation is shown only as a provisional preview through the IPA adapter.
 - Regression coverage verifies that `ka` without prosody/profile metadata is withheld, while a fully scoped candidate reaches the adapter.
 - This prevents a segmental-only output from being mistaken for full Burmese IPA.
+
+
+### 2026-11-15 — research expansion and canonical gate
+
+- Added GRUBER2011, TIAN2018 and DELLWO2020 to the source registry; added source-scoped claims and three new rime/prosody evidence rows. data/burmese/rime_prosody_evidence.csv now has 18 rows; all remain WITHHELD.
+- Evidence consequence: lexical tone uses interacting phonation/F0/duration cues; grammatical tone can be context-conditioned; standard/southern varieties differ in cue weighting. These are not context-free orthographic rules.
+- Mooney & Repetti-Ludlow's vowel/coda alternation account is kept separate from tone assignment; it is tone-independent in the environments analyzed and remains source-scoped.
+- Current implementation status: canonical IPA selection is blocked unless segmental IPA, explicit prosody status and an explicit profile ID are present. The browser parser currently supplies no such lexical/prosodic annotation; simple forms such as ka remain SEGMENTAL_ONLY.
+- Browser parser no longer computes a parallel sy.uk or a second ipaText/ukText output. convert() returns structural segments; analyzeHybrid() owns the main phonetic result; the selected IPA reaches renderUkrainian() once.
+- Exact-head CI remains pending at this ledger update; see PR #154. Do not mark the implementation DONE_VERIFIED until all relevant jobs, including built-browser Playwright, pass.
