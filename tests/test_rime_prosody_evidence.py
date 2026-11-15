@@ -20,7 +20,7 @@ def test_rime_prosody_evidence_is_schema_shaped_linked_and_withheld():
     evidence = rows(DATA / "rime_prosody_evidence.csv")
     schema = json.loads((ROOT / "schemas" / "rime_prosody_evidence.schema.json").read_text(encoding="utf-8"))
 
-    assert len(evidence) == 15
+    assert len(evidence) == 18
     assert len({row["evidence_id"] for row in evidence}) == len(evidence)
     for row in evidence:
         jsonschema.validate(row, schema)
@@ -90,3 +90,19 @@ def test_tufs_crosswalk_keeps_open_nasal_and_checked_notation_distinct():
     assert "/ʔ/" in checked["coda_class"]
     assert "three-tone open/nasal system" in checked["reported_realization"]
     assert all(row["runtime_status"] == "WITHHELD" for row in (open_rime, nasal, checked))
+
+
+def test_tone_cue_and_contextual_tone_evidence_stays_profile_scoped():
+    evidence = {row["evidence_id"]: row for row in rows(DATA / "rime_prosody_evidence.csv")}
+    gruber = evidence["GRUBER-FOUR-TONE-CUES-001"]
+    tian = evidence["TIAN-INDUCED-CREAKY-TONE-001"]
+    dellwo = evidence["DELLWO-STANDARD-SOUTHERN-TONE-CUES-001"]
+
+    assert "no single cue" in gruber["reported_realization"]
+    assert "one 40-year-old female speaker" in gruber["profile_scope"]
+    assert "syntax" in tian["reported_realization"]
+    assert "prosodic-word" in tian["reported_realization"]
+    assert "standard Burmese" in dellwo["reported_realization"]
+    assert "southern Burmese" in dellwo["reported_realization"]
+    assert "10 standard and 10 southern" in dellwo["profile_scope"]
+    assert all(row["runtime_status"] == "WITHHELD" for row in (gruber, tian, dellwo))

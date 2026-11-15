@@ -9,6 +9,13 @@ def test_rule_engine_generates_repeatable_ipa_from_repository_rules():
     assert first == second
     assert first["ipa"] == "ka"
     assert first["status"] == "PROPOSED"
+    assert first["ipa_status"] == "analysis_dependent"
+    assert first["phonetic_completeness"] == "SEGMENTAL_ONLY"
+    assert first["prosody_status"] == "not_established"
+    assert first["canonical_ipa"] is None
+    assert first["canonical_ukrainian"] is None
+    assert first["ipa_candidate"]["kind"] == "IPA_CANDIDATE"
+    assert first["ukrainian_candidate_status"] == "PROVISIONAL"
     assert first["deterministic"] is True
     assert first["external_backends_used"] == []
 
@@ -17,6 +24,8 @@ def test_unsupported_bare_consonant_is_withheld():
     result = RuleBasedBurmeseEngine().analyze("က")
     assert result["ipa"] is None
     assert result["status"] == "PARTIAL"
+    assert result["canonical_ipa"] is None
+    assert result["ukrainian_candidate_status"] == "NOT_ESTABLISHED"
 
 
 def test_hybrid_wraps_rule_engine_without_changing_final_ipa():
@@ -79,3 +88,21 @@ def test_runtime_ipa_allowlists_match_the_established_source_registries():
     expected_vowels = {row["id"] for row in vowel_rows if row["status"] == "established"}
     assert ESTABLISHED_ONSETS == expected_onsets
     assert set(VOWEL_IPA) == expected_vowels
+
+
+def test_rule_engine_marks_profile_scope_without_claiming_profile_adjudication():
+    result = RuleBasedBurmeseEngine().analyze("ကာ")
+    assert result["profile"] == "my-yangon-careful-citation-v1"
+    assert result["profile_status"] == "PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED"
+    assert result["ipa_candidate"]["profile"] == result["profile"]
+    assert result["ipa_candidate"]["prosody_status"] == "not_established"
+    assert result["ipa_candidate"]["phonetic_completeness"] == "SEGMENTAL_ONLY"
+
+
+def test_mixed_input_segmental_previews_are_not_labeled_supported():
+    result = RuleBasedBurmeseEngine().analyze("ကာ မြန်မာ")
+    preview = result["fallback_trace"][0]
+    assert preview["ipa"] == "ka"
+    assert preview["status"] == "PROVISIONAL_SEGMENTAL_ONLY"
+    assert "tone" in preview["unresolved_features"]
+    assert "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED" in preview["warnings"]

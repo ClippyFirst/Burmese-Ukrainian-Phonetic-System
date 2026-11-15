@@ -21,10 +21,12 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
                 "source": item.get("raw", ""),
                 "ipa": item["ipa"],
                 "ukrainian": rendered.get("text") or "?",
-                "status": "SUPPORTED_PATH",
+                "status": "PROVISIONAL_SEGMENTAL_ONLY",
                 "position": "syllable",
                 "rule_id": None,
                 "unresolved_graphemes": [],
+                "unresolved_features": ["tone", "phonation", "quantity", "profile_adjudication"],
+                "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"],
             })
             continue
         onset = item.get("onset", {}).get("character")
@@ -74,11 +76,11 @@ class RuleBasedBurmeseEngine:
             for item in syllables
             if not item.get("ipa") or item.get("phonetic_status") != "conservative_partial"
         ]
-        complete = bool(syllables) and not unresolved
-        ipa_parts = [item["ipa"] for item in syllables] if complete else []
-        ipa = " ".join(ipa_parts) if complete else None
+        segmental_complete = bool(syllables) and not unresolved
+        ipa_parts = [item["ipa"] for item in syllables] if segmental_complete else []
+        ipa = " ".join(ipa_parts) if segmental_complete else None
 
-        practical_parts = [transcribe_ipa(part) for part in ipa_parts] if complete else []
+        practical_parts = [transcribe_ipa(part) for part in ipa_parts] if segmental_complete else []
         practical_complete = bool(practical_parts) and all(
             part.get("text") is not None for part in practical_parts
         )
@@ -93,6 +95,22 @@ class RuleBasedBurmeseEngine:
             if practical_complete else None
         )
         preview = _provisional_preview(syllables)
+        phonetic_statuses = {item.get("phonetic_status") for item in syllables}
+        ipa_status = (
+            "analysis_dependent" if segmental_complete or "analysis_dependent" in phonetic_statuses
+            else "not_established"
+        )
+        ipa_candidate = ({
+            "kind": "IPA_CANDIDATE",
+            "notation": "IPA",
+            "provider": "PROJECT_RULES",
+            "raw": ipa,
+            "status": "PARTIAL",
+            "profile": self.profile,
+            "prosody_status": "not_established",
+            "phonetic_completeness": "SEGMENTAL_ONLY",
+            "provenance": {"engine": self.engine_id, "profile_id": self.profile},
+        } if segmental_complete else None)
         return {
             "input": text,
             "normalized": result.get("normalized", text),
@@ -100,8 +118,16 @@ class RuleBasedBurmeseEngine:
             "engine": self.engine_id,
             "deterministic": True,
             "ipa": ipa,
+            "ipa_status": ipa_status,
+            "canonical_ipa": None,
+            "ipa_candidate": ipa_candidate,
+            "phonetic_completeness": "SEGMENTAL_ONLY" if segmental_complete else "INCOMPLETE",
+            "prosody_status": "not_established",
+            "profile_status": "PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED",
             "ukrainian": practical_text,
             "ukrainian_status": practical_status,
+            "canonical_ukrainian": None,
+            "ukrainian_candidate_status": "PROVISIONAL" if practical_complete else "NOT_ESTABLISHED",
             "ukrainian_syllables": [part.get("text") for part in practical_parts] if practical_complete else [],
             "ukrainian_segments": [
                 segment for part in practical_parts for segment in part.get("segments", [])
@@ -109,12 +135,12 @@ class RuleBasedBurmeseEngine:
             "ukrainian_prosody": [
                 mark for part in practical_parts for mark in part.get("prosody", [])
             ],
-            "provisional_ipa": preview["ipa_preview"] if preview and not complete else None,
-            "provisional_ukrainian": preview["ukrainian_preview"] if preview and not complete else None,
-            "fallback_status": preview["status"] if preview and not complete else None,
-            "fallback_trace": preview["syllables"] if preview and not complete else [],
+            "provisional_ipa": preview["ipa_preview"] if preview and not segmental_complete else None,
+            "provisional_ukrainian": preview["ukrainian_preview"] if preview and not segmental_complete else None,
+            "fallback_status": preview["status"] if preview and not segmental_complete else None,
+            "fallback_trace": preview["syllables"] if preview and not segmental_complete else [],
             "ipa_with_placeholders": result.get("ipa"),
-            "status": "PROPOSED" if complete else (
+            "status": "PROPOSED" if segmental_complete else (
                 "NOT_ESTABLISHED" if not syllables else "PARTIAL"
             ),
             "syllables": syllables,
@@ -123,12 +149,13 @@ class RuleBasedBurmeseEngine:
                 "BURMESE_ORTHOGRAPHIC_PARSER",
                 "BURMESE_ONSET_MEDIAL_RIME_RULES",
                 "CONSERVATIVE_IPA_WITHHOLDING",
+                "PROSODY_AND_PROFILE_COMPLETENESS_GATE",
                 "PROVISIONAL_ONSET_IPA_PREVIEW",
                 "IPA_TO_UKRAINIAN_PRACTICAL_ADAPTER",
             ],
             "reason": (
-                "IPA is generated by deterministic repository rules. Its phonetic status remains proposed until independently adjudicated against the selected dialect profile."
-                if complete else
+                "The displayed IPA is a segmental-only candidate. Tone, phonation and quantity are not inferred; canonical full IPA remains withheld until the relevant prosodic dimensions are established for the selected profile."
+                if segmental_complete else
                 "Canonical IPA is withheld for unresolved structure. A separate onset-only low-confidence preview is shown where the registered initial IPA and Ukrainian adapter both support it; no rime, tone, medial or coda is inferred."
             ),
             "external_backends_used": [],

@@ -11,7 +11,7 @@ HybridBurmeseEngine запускає чинний RuleBasedBurmeseEngine і зб
 
 Epitran-порт є вузьким портом `mya-Mymr` mapping, greedy matching і post-rules, а не повною Python/PanPhon реалізацією. Google WFST виконується через браузерний інтерпретатор `src/web/wfst-runtime.js`; його граф збирається з pinned upstream revision у Pages workflow і пакується як локальний JSON asset. В runtime немає серверного API або зовнішнього запиту з введеним текстом; CSP дозволяє лише same-origin завантаження статичної моделі.
 
-Гібрид запускає провайдери й показує результати та розбіжності, але **не голосує і не просуває зовнішні кандидати до canonical IPA**. Наш встановлений результат лишається основним; зовнішні IPA та їхні українські адаптації позначаються як кандидати. За відсутності незалежного профільно узгодженого IPA gold автоматичне просування заборонене. Локальна модель-заглушка у вихідному checkout позначена `PENDING_MODEL`; Pages build має згенерувати справжній граф і завершується помилкою, якщо не може цього зробити.
+Гібрид запускає провайдери й показує результати та розбіжності, але **не голосує і не просуває зовнішні кандидати до canonical IPA**. Внутрішній проєктний IPA-кандидат зберігається; сегментний кандидат і його українська адаптація можуть бути показані як PROVISIONAL, але повний canonical IPA лишається невстановленим без просодичної та профільної adjudication. За відсутності незалежного профільно узгодженого IPA gold автоматичне просування заборонене. Локальна модель-заглушка у вихідному checkout позначена `PENDING_MODEL`; Pages build має згенерувати справжній граф і завершується помилкою, якщо не може цього зробити.
 
 Назва Python `HybridBurmeseEngine` нижче описує окрему дослідницьку обгортку з ін'єктованими провайдерами. Вона не є runtime сайту; браузерний оркестратор має власний контракт і тести.
 
@@ -30,7 +30,7 @@ engine = HybridBurmeseEngine({
 result = engine.analyze("မြန်မာ")
 ```
 
-Кандидати не голосують і не замінюють фінальне ipa. Внутрішній детермінований рушій зберігає контроль до появи незалежного gold.
+Кандидати не голосують і не замінюють проєктний IPA-кандидат. Без просодичної/профільної adjudication поля canonical IPA та canonical Ukrainian лишаються невстановленими.
 
 ## Бенчмарки та рішення
 
@@ -53,7 +53,7 @@ myG2P має CC BY-NC-SA 4.0; не копіювати словник у цей �
 5. **Goruut (90)** — останній comparator; слабка concordance, неповні фрагменти й відсутній weights asset.
 6. Невідомі провайдери (50) — не отримують довіри лише через підключення.
 
-Фінальне IPA залишається за внутрішніми детермінованими правилами. Підвищення джерела до авторитетного вимагає незалежного Yangon IPA gold, оцінки тону/фонації/довготи/код, відсутності витоку даних і відтворюваного профільного benchmark.
+Внутрішні правила генерують проєктні IPA-кандидати; це не автоматично повне фінальне IPA. Канонічний статус вимагає незалежного Yangon IPA gold, оцінки тону/фонації/довготи/код, відсутності витоку даних і відтворюваного профільного benchmark.
 
 
 ## Current-branch exact raw-output run — 2026-11-14
@@ -87,3 +87,58 @@ All three final-head artifacts were downloaded and inspected. Outputs remain dia
 - `src/web/hybrid-engine.js`: runs all available providers, exposes IPA candidates and Ukrainian-adapter previews, records agreement/divergence and withholds external promotion pending independent gold.
 - myG2P v2 is not bundled: its dictionary license is CC BY-NC-SA 4.0 and no project redistribution/commercial-use permission is assumed.
 - Accuracy remains unmeasured: independent profile-matched IPA gold = 0.
+
+
+## 2026-11-15 — browser runtime IPA-first integration
+
+The browser hybrid orchestrator is now the source of the phonetic-mode display result. The UI no longer computes the hybrid analysis and then renders the older `segment.ipa` / `segment.uk` fields as if they were the hybrid result.
+
+The canonical path is:
+
+1. structural browser parser produces orthographic segments and a conservative project IPA candidate;
+2. project, Epitran and Google WFST candidates are retained as typed IPA results with provider provenance;
+3. only project IPA marked `ESTABLISHED` or `WELL_SUPPORTED`, with explicit established prosody status and profile ID, is eligible for canonical selection;
+4. the selected IPA is passed to the single `renderUkrainian()` IPA adapter;
+5. IPA status and Ukrainian adaptation status remain separate, and unresolved segments remain `?` / `⟦…⟧`.
+
+External candidates remain diagnostic. There is no voting, majority selection, or external fallback. Each provider's dialect profile remains unverified; agreement is therefore diagnostic rather than evidence of dialect-matched correctness.
+
+### Tone-aware candidate comparison
+
+The comparison now distinguishes:
+- exact normalized IPA agreement;
+- segmental agreement with a tone/prosody difference;
+- segmental divergence;
+- non-comparable candidates.
+
+Tone diacritics are excluded only from the segmental comparison key; they remain in the original IPA and are reported separately. Length, aspiration, glottal closure, and segment identity are not erased by this comparison. A missing tone mark is reported as underspecification, not as full agreement.
+
+### Evidence constraints
+
+The Google Burmese grammar is a Thrax/OpenFst G2P system that emits IPA; Oo et al. describe 88 symbols (34 consonants, 54 vowels), four tone categories, and tone-related vowel distinctions. The released Yangon-recorded corpus described in that paper is speech plus word-segmented text, not a phoneme-labelled gold lexicon; it must not be treated as IPA gold [Oo20].
+
+Watkins's IPA description is based on one Rangoon consultant and a careful reading style. It documents four non-reduced tone categories with pitch, phonation and length correlates, and a restricted coda pattern; it is valuable profile-scoped evidence, not a universal Burmese dialect specification [Wat01]. Hlaing and Mikami's FST syllabifier is orthographic segmentation, not pronunciation validation [Hla14]. Thu et al.'s G2P study uses 25,300 MLC dictionary words, but does not establish a redistributable lexicon or a fully specified IPA inventory [Thu16].
+
+### Acceptance status
+
+- Browser IPA-first handoff to the Ukrainian adapter: implemented; exact-head CI pending.
+- Tone-aware comparison and unknown-preserving policy: implemented; regression tests added; exact-head CI pending.
+- Independent dialect-matched lexical IPA gold: BLOCKED (0 adjudicated records).
+- Provider profile equivalence: BLOCKED (Google grammar and Epitran port are not independently established as the same Yangon speaker/profile).
+- Phonological completeness for medials, kinzi, conjuncts, rimes and surface prosody: PARTIAL/BLOCKED by evidence, not by browser execution.
+
+
+### Additional safety gate — segmental IPA is not complete Burmese IPA
+
+A project-generated string such as `ka` may encode only the segmental onset+rime. It is not canonical full IPA unless the corresponding prosodic analysis (tone/phonation/quantity as applicable) and an explicit dialect profile are established. The browser orchestrator now requires both `prosodyStatus` and `profileId` before selecting project IPA. Otherwise it labels the internal string `SEGMENTAL_ONLY`, displays the segmental IPA and its Ukrainian adaptation as provisional candidates through the same IPA adapter, and withholds only the claim that they are complete/canonical full-pronunciation outputs.
+
+This is intentionally conservative. Watkins's one-consultant Rangoon description documents four non-reduced tone categories whose phonetic correlates include pitch, phonation and length [Wat01]. Oo et al.'s Google grammar uses tone-related vowel distinctions [Oo20]. A plain string match between providers cannot fill missing prosody or prove dialect equivalence.
+
+
+### 2026-11-15 — tone/context evidence and the canonical gate
+
+The new source-linked claims for Gruber 2011, Tian 2018 and Dellwo & Jenny 2020 are registered in `sources.csv`, `source_claims.csv` and `rime_prosody_evidence.csv`; corresponding validation tests are added. The new rows are all withheld from runtime.
+
+The evidence makes three distinctions operationally important: (1) lexical tone perception uses interacting phonation, F0 and duration cues rather than one universal cue; (2) grammatical induced creaky tone can depend on syntax, pragmatic factors and prosodic-word context; (3) standard and southern Burmese differ in cue weighting. The browser's `prosodyStatus` must therefore mean that the relevant prosodic dimensions and context have been established for the named profile, not merely that a vowel/consonant string was produced. A profile label alone is insufficient.
+
+Mooney & Repetti-Ludlow's vowel alternation account remains tone-independent in the analyzed environments; do not conflate coda-conditioned vowel alternation with tone assignment.

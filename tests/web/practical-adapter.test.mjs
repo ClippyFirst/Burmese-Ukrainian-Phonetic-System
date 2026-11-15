@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { PRACTICAL, ONSETS, VOWELS } from "../../src/web/generated/data.js";
 import { renderUkrainian } from "../../src/web/ukrainian-adapter.js";
 const browserEngineSource = readFileSync(new URL("../../src/web/app.js", import.meta.url), "utf8");
+const hybridEngineSource = readFileSync(new URL("../../src/web/hybrid-engine.js", import.meta.url), "utf8");
 
 test("browser adapter covers Ukrainian h/g/x distinctions", () => {
   for (const segment of ["h", "ɦ", "ɡ", "g", "x"]) {
@@ -49,9 +50,10 @@ test("browser adapter omits glottal stop and withholds unknown IPA", () => {
 });
 
 
-test("browser engine withholds IPA and Ukrainian output for unvalidated structures", () => {
+test("browser parser leaves Ukrainian adaptation to the hybrid IPA-first orchestrator", () => {
   assert.ok(browserEngineSource.includes("const unsupportedStructure=sy.kinzi||sy.kinziCoda||sy.medials.length>0||sy.conjunct.length>0"));
-  assert.ok(browserEngineSource.includes('sy.uk=sy.status==="ESTABLISHED"&&sy.ipa?renderUkrainian(sy.ipa)'));
+  assert.ok(!browserEngineSource.includes("sy.uk="));
+  assert.ok(hybridEngineSource.includes("renderUkrainian(ipa)"));
 });
 
 
@@ -60,7 +62,8 @@ test("browser engine exposes onset-only provisional IPA for unresolved Burmese u
   assert.ok(browserEngineSource.includes('sy.provisionalUk=adapted.text+"?"'));
   assert.ok(browserEngineSource.includes('sy.provisionalStatus="PROVISIONAL"'));
   assert.ok(browserEngineSource.includes('sy.provisionalUnresolvedFeatures=["inherent_vowel"]'));
-  assert.ok(browserEngineSource.includes('s.ipa||"?"'));
+  assert.ok(browserEngineSource.includes("ipa.textContent=hybrid.ipa"));
+  assert.ok(browserEngineSource.includes("uk.textContent=hybrid.uk"));
   assert.ok(browserEngineSource.includes('if(s.provisionalIpa){const preview=document.createElement("small")'));
 });
 
@@ -75,6 +78,21 @@ test("browser G2P source registries distinguish orthographic signs from establis
   assert.ok(browserEngineSource.includes('if(onset.status!=="established"){sy.status="ANALYSIS_DEPENDENT";return null;}'));
   assert.ok(browserEngineSource.includes('VOWELS[id]?.status!=="established"'));
   assert.ok(browserEngineSource.includes('sy.status="ANALYSIS_DEPENDENT";return null'));
-  assert.ok(browserEngineSource.includes('["UNSUPPORTED","ANALYSIS_DEPENDENT","UNCERTAIN"].includes(s.status)?s.status:"NOT_ESTABLISHED"'));
+  assert.ok(hybridEngineSource.includes('["UNSUPPORTED", "ANALYSIS_DEPENDENT", "UNCERTAIN"].includes(segment.status)'));
   assert.ok(browserEngineSource.includes('VOWELS, SIGNS'));
+});
+
+
+test("public phonetic UI renders the hybrid orchestrator result, not the pre-hybrid result", () => {
+  assert.ok(browserEngineSource.includes("uk.textContent=hybrid.uk"));
+  assert.ok(browserEngineSource.includes("ipa.textContent=hybrid.ipa"));
+  assert.ok(browserEngineSource.includes("hybrid.ukrainianStatus"));
+  assert.ok(browserEngineSource.includes("hybrid.ipaStatus"));
+});
+
+test("segmental-only IPA is shown as provisional and does not bypass the IPA adapter", () => {
+  assert.ok(browserEngineSource.includes('item.phoneticCompleteness==="SEGMENTAL_ONLY"'));
+  assert.ok(hybridEngineSource.includes('provider: "PROJECT_RULES_SEGMENTAL"'));
+  assert.ok(hybridEngineSource.includes("adaptationFor(deterministicIpa)"));
+  assert.ok(hybridEngineSource.includes("renderUkrainian(ipa)"));
 });

@@ -7,8 +7,9 @@
 1. NFC-нормалізація та сегментація Myanmar-послідовностей.
 2. Структурний розбір початкових приголосних, kinzi, conjunct, medials, голосних, фіналей та знаків.
 3. Застосування явних правил onset–medial–rime з таблиць репозиторію.
-4. Побудова IPA лише там, де реалізоване правило повністю покриває склад.
-5. Відмова від IPA для невстановлених фіналей, тональних/просодичних або неоднозначних комбінацій.
+4. Побудова типізованого сегментного IPA-кандидата лише там, де реалізоване правило покриває сегментну структуру.
+5. Окрема перевірка повноти тону, фонації, довготи, профілю та контексту; без неї сегментний IPA і його українська адаптація залишаються PROVISIONAL, а canonical_ipa/canonical_ukrainian — порожні.
+6. Відмова від IPA-кандидата для невстановлених фіналей, медіалей, кінзі, кон'юнктів або неоднозначних структур.
 
 ## Детермінованість і межі
 
@@ -25,19 +26,19 @@ result = RuleBasedBurmeseEngine().analyze("ကာ")
 print(result["ipa"], result["status"])
 ```
 
-`RuleBasedBurmeseEngine` залишається авторитетним рушієм фінального IPA. Окремий `HybridBurmeseEngine` — дослідницька оболонка: зовнішні провайдери запускаються лише за явної передачі в `providers`, їхні результати зберігаються як кандидати з provenance, але не голосують і не замінюють IPA. Виклик без провайдерів зберігає поведінку правилового рушія. MLCTS залишається окремим орфографічним режимом; див. [контракт гібридного шару](hybrid-engines.md).
+`RuleBasedBurmeseEngine` залишається авторитетним джерелом внутрішніх IPA-кандидатів, але не заявляє повне канонічне IPA без просодичної та профільної adjudication. Окремий `HybridBurmeseEngine` — дослідницька оболонка: зовнішні провайдери запускаються лише за явної передачі в `providers`, їхні результати зберігаються як кандидати з provenance, але не голосують і не замінюють IPA. Виклик без провайдерів зберігає поведінку правилового рушія. MLCTS залишається окремим орфографічним режимом; див. [контракт гібридного шару](hybrid-engines.md).
 
 
 ## Evidence-status gate in the Python IPA adapter — 2026-11-14
 
-The Python adapter now enforces the status column in data/burmese/ipa_onsets.csv and ipa_vowels.csv at the canonical IPA boundary. Previously, several analysis-dependent registry entries (for example onset စ /s/, ဓ /dʰ/ and vowels ီ /iː/, ဲ /ɛ/, ူ /uː/, ါ /a/) were present in hard-coded maps and could be emitted as canonical IPA despite their registry status. They remain available as structural or research hypotheses, but canonical IPA is now limited to registry entries marked established.
+The Python adapter now enforces the status column in data/burmese/ipa_onsets.csv and ipa_vowels.csv at the segmental IPA candidate boundary. Previously, several analysis-dependent registry entries (for example onset စ /s/, ဓ /dʰ/ and vowels ီ /iː/, ဲ /ɛ/, ူ /uː/, ါ /a/) were present in hard-coded maps and could be emitted as canonical IPA despite their registry status. They remain available as structural or research hypotheses, but canonical IPA is now limited to registry entries marked established.
 
 The change deliberately does not expand phonological coverage. It reduces unsupported output. Regression tests check both negative examples and positive established controls, and assert that the runtime allowlists exactly match the source registries. Browser parity has not yet been established by this Python-side fix; its separate derivation requires a corresponding audit before claiming cross-runtime equivalence.
 
 
 ## Cross-runtime canonical IPA evidence gate — 2026-11-14
 
-Extended the evidence-status correction to the browser G2P path. The browser now checks generated ONSETS and VOWELS registry statuses before deriving canonical IPA. This is important because orthographic vowel-sign recognition in vowel_signs.csv is not itself proof that the phonetic value in ipa_vowels.csv is established. If the onset or any vowel value is analysis-dependent, browser IPA is withheld and the syllable status remains ANALYSIS_DEPENDENT rather than being flattened to a generic not-established state. Onset-only provisional hints remain separate from canonical IPA.
+Extended the evidence-status correction to the browser G2P path. The browser now checks generated ONSETS and VOWELS registry statuses before deriving a segmental IPA candidate. This is important because orthographic vowel-sign recognition in vowel_signs.csv is not itself proof that the phonetic value in ipa_vowels.csv is established. If the onset or any vowel value is analysis-dependent, browser IPA is withheld and the syllable status remains ANALYSIS_DEPENDENT rather than being flattened to a generic not-established state. Onset-only provisional hints remain separate from canonical IPA.
 
 Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
 
@@ -80,6 +81,18 @@ Exact code/test head: `9333bdfec405f9fafb36bab42d90965e11f5e155`. Required PR CI
 
 ## Clarification: browser production paths and external tools
 
-The public browser phonetic mode is the repository's own deterministic JavaScript rule path in `src/web/app.js`, followed by `src/web/ukrainian-adapter.js`. It does not call external G2P providers. The public browser's MLCTS mode is a separate path: vendored Mya2Rom 0.4.4 produces romanization, and the project adapter maps that output to Ukrainian. This mode is not IPA.
+The public browser phonetic mode is the repository's own deterministic JavaScript rule path in `src/web/app.js`, followed by `src/web/ukrainian-adapter.js`. The public browser's MLCTS mode is a separate path: vendored Mya2Rom 0.4.4 produces romanization, and the project adapter maps that output to Ukrainian. This mode is not IPA.
 
 The optional Python `HybridBurmeseEngine` in `src/burmese_ukrainian/hybrid.py` is a research wrapper for explicit external candidate collection. It is not the production site's engine and never promotes candidate outputs automatically. Browser and Python deterministic implementations are separate and full cross-runtime phonological parity remains PARTIAL.
+
+
+## IPA candidate versus canonical full pronunciation — 2026-11-15
+
+A deterministic string such as `ka` can be a useful segmental candidate without being complete Burmese IPA. The Python API now makes this explicit with:
+- `ipa`: the displayed segmental candidate (when available);
+- `ipa_status=analysis_dependent` and `phonetic_completeness=SEGMENTAL_ONLY`;
+- `prosody_status=not_established` and `profile_status=PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED`;
+- `ipa_candidate`: a typed, provenance-bearing project candidate;
+- `canonical_ipa=None` and `canonical_ukrainian=None` until prosody/profile adjudication.
+
+The Ukrainian string may still be shown as a PROVISIONAL candidate, but it is not canonical. The browser follows the same semantic distinction. This preserves useful partial output without overstating tone, phonation, quantity or dialect certainty.

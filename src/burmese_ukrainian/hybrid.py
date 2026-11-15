@@ -1,7 +1,9 @@
 """Research hybrid wrapper for Burmese IPA candidates.
 
-The deterministic rule engine remains authoritative. Google WFST, myG2P and
-optional external G2P outputs are preserved as candidates, never voted.
+The deterministic rule engine remains the source of project IPA candidates.
+Canonical full IPA remains withheld without prosody/profile adjudication.
+Google WFST, myG2P and optional external G2P outputs are preserved as candidates,
+never voted or promoted.
 """
 from __future__ import annotations
 from typing import Any, Callable
@@ -72,7 +74,7 @@ class HybridBurmeseEngine:
             "external_candidate_count": len(candidates),
             "external_backends_used": [provider_id for provider_id, _ in ordered_providers],
             "provider_priority_policy": "lower_number_runs_first_and_orders_candidates; priorities_are_research_triage_only_not_accuracy_or_promotion; unknown_providers_use_default_priority_50",
-            "selection_policy": "internal_deterministic_rule_output_is_preserved; external_candidates_are_diagnostic_only; no_voting_or_promotion_without_independent_profile_matched_gold",
+            "selection_policy": "internal_project_ipa_candidate_is_preserved_with_completeness_status; external_candidates_are_diagnostic_only; canonical_ipa_remains_withheld_without_profile_matched_prosody_adjudication; no_voting_or_promotion",
         })
         return result
 

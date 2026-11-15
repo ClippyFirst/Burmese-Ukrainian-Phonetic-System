@@ -2877,3 +2877,57 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - **DONE_VERIFIED (CI):** Python and Node test steps, production build, and Playwright built-site suite completed successfully; Playwright reported 70 passed. Deploy job successfully fetched pages, JS/CSS, Mya2Rom assets and the WFST model.
 - **Still BLOCKED/PARTIAL:** independent profile-matched IPA gold remains 0; dialect profile of upstream Google model is unspecified; Epitran is a narrow mapping/postprocessor port, not full Python/PanPhon; Python/browser parity against independent gold is not established; manual screen-reader/real-device accessibility QA remains outstanding.
 - **Release classification:** deployed research prototype / partial linguistic system. The site is live with a real hybrid browser engine, but it is not a linguistically validated or accuracy-certified transcription engine.
+
+
+## 2026-11-15 — IPA-first browser integration ledger
+
+Starting main: `8aa91f3aa289b18fccd4dee338849b843441c1fc`.
+Work branch: `fix/ipa-first-hybrid-pipeline-2026-11-15`.
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| Make the hybrid orchestrator the actual source of phonetic UI output | DONE_VERIFIED | Public render uses `analyzeHybrid().ipa` and `.uk`; parser-side `sy.uk` and pre-hybrid aggregate output removed; test run 43768906066 passed on code/test head `e321e72b610bbe4516570411821702d5597cca9a` |
+| Enforce selected IPA → one Ukrainian adapter | DONE_VERIFIED | Full selected IPA and segmental-only candidate previews both pass through the same `renderUkrainian()` adapter; segmental preview is explicitly PROVISIONAL and canonical fields remain withheld; Python API exposes matching additive metadata |
+| Preserve provider provenance and no-voting policy | DONE_VERIFIED | Typed provider candidates retain provenance; external outputs never vote or replace project candidates; uncertain/unsupported structure blocks internal candidate leakage |
+| Distinguish tone-only differences from segmental divergence | DONE_VERIFIED | NFD-aware comparison distinguishes exact agreement, segmental agreement with tone/prosody difference, and segmental divergence; 47 Node tests and 70 Playwright tests passed; built browser conditionally checks Google candidate when model is present |
+| Keep dialect profile matching explicit | BLOCKED | Google and Epitran profile compatibility is not independently adjudicated |
+| Independent lexical IPA gold and accuracy | BLOCKED | Adjudicated profile-matched gold count remains 0 |
+| Full medials/kinzi/conjunct/rime/prosody coverage | PARTIAL/BLOCKED | Structural recognition and provider outputs exist; evidence-backed canonical realization is incomplete; lexical/contextual tone and profile gold remain unavailable |
+
+Research constraints incorporated: Oo20's corpus is Yangon-recorded speech with word segmentation, not a phoneme-labelled G2P gold set; Watkins 2001 is one Rangoon consultant and must remain scope-limited; Hla14's reported accuracy is orthographic syllabification, not G2P; Thu16's MLC lexicon is not licensed for redistribution by the paper itself.
+
+
+### 2026-11-15 — completeness gate refinement
+
+- Canonical selection now requires an internal IPA candidate with status `ESTABLISHED`/`WELL_SUPPORTED`, explicit `prosodyStatus` of the same accepted level, and a non-empty explicit `profileId`.
+- A project IPA string without tone/profile evidence is `SEGMENTAL_ONLY` and `ANALYSIS_DEPENDENT`; its Ukrainian adaptation is shown only as a provisional preview through the IPA adapter.
+- Regression coverage verifies that `ka` without prosody/profile metadata is withheld, while a fully scoped candidate reaches the adapter.
+- This prevents a segmental-only output from being mistaken for full Burmese IPA.
+
+
+### 2026-11-15 — research expansion and canonical gate
+
+- Added GRUBER2011, TIAN2018 and DELLWO2020 to the source registry; added source-scoped claims and three new rime/prosody evidence rows. data/burmese/rime_prosody_evidence.csv now has 18 rows; all remain WITHHELD.
+- Evidence consequence: lexical tone uses interacting phonation/F0/duration cues; grammatical tone can be context-conditioned; standard/southern varieties differ in cue weighting. These are not context-free orthographic rules.
+- Mooney & Repetti-Ludlow's vowel/coda alternation account is kept separate from tone assignment; it is tone-independent in the environments analyzed and remains source-scoped.
+- Current implementation status: canonical IPA selection is blocked unless segmental IPA, explicit prosody status and an explicit profile ID are present. The browser parser currently supplies no such lexical/prosodic annotation; simple forms such as ka remain SEGMENTAL_ONLY.
+- Browser parser no longer computes a parallel sy.uk or a second ipaText/ukText output. convert() returns structural segments; analyzeHybrid() owns the main phonetic result; the selected IPA reaches renderUkrainian() once.
+- Exact-head CI remains pending at this ledger update; see PR #154. Do not mark the implementation DONE_VERIFIED until all relevant jobs, including built-browser Playwright, pass.
+
+
+### Segmental candidate display refinement — 2026-11-15
+
+The browser now follows the Python engine's existing distinction: a deterministic segmental string such as ka may be displayed with its IPA-adapted Ukrainian candidate, but both remain explicitly provisional while tone/phonation/quantity and profile evidence are missing. The complete/canonical claim remains withheld; unknown structures such as မြန် remain bracketed. This avoids turning evidence caution into an empty interface while keeping the full-pronunciation status honest.
+
+
+### Python API completeness metadata — 2026-11-15
+
+The Python RuleBasedBurmeseEngine now exposes the same distinction additively: `ipa` remains the segmental candidate for compatibility; `ipa_status=analysis_dependent`, `phonetic_completeness=SEGMENTAL_ONLY`, `prosody_status=not_established`, and `profile_status=PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED` are explicit; `canonical_ipa` and `canonical_ukrainian` remain null; Ukrainian candidate status is PROVISIONAL. Mixed-input onset/rime previews are no longer labeled SUPPORTED_PATH. Regression tests cover this contract. Exact-head CI pending.
+
+
+Registry checkpoint from current branch: `data/burmese/sources.csv` has 101 data rows; `data/burmese/source_claims.csv` has 221 data rows; `data/burmese/rime_prosody_evidence.csv` has 18 data rows. The 3 new tone/context/dialect evidence rows are all WITHHELD.
+
+
+### Exact verification checkpoint — 2026-11-15
+
+Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`. GitHub Actions test run [43768906066](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43768906066) completed SUCCESS: 315 Python tests + 68 subtests; 47 Node tests passed; production build passed; generated/web data validation passed; Playwright built-browser suite 70 passed; npm audit reported 0 vulnerabilities. The independent optional Google FST raw-output workflow [43768905998](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43768905998) is still building the pinned upstream grammar; it is not a required gate for the IPA-first UI correction and remains pending. PR #154 remains Draft; no Pages deployment of this branch has occurred yet. Local tests were not run because no local checkout/command runner was exposed.

@@ -4,7 +4,7 @@ def test_external_candidate_is_preserved_but_not_promoted():
     result = HybridBurmeseEngine({"google-wfst": lambda _: {"ipa": "kʰaʊ"}}).analyze("ကော်")
     assert result["external_candidates"][0]["ipa_raw"] == "kʰaʊ"
     assert result["external_candidates"][0]["promotion"].startswith("WITHHELD")
-    assert result["selection_policy"].startswith("internal_deterministic_rule_output")
+    assert result["selection_policy"].startswith("internal_project_ipa_candidate")
 
 def test_partial_candidate_is_rejected():
     result = HybridBurmeseEngine({"partial": lambda _: "k? a"}).analyze("ကော်")
