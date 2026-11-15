@@ -2870,3 +2870,5 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - Browser regression correction: the first hybrid UI test run on 74bf1ea passed 69/70 Playwright tests; the only failure was an existing romanization test counting a now-hidden phonetic hybrid-panel heading. The selector now scopes to visible article headings (`article:visible`); all other Node/Python/Playwright cases in that run passed. Exact rerun is pending.
 
 - Third Pages build finding: Bazel 7.4.1 with WORKSPACE mode loaded the legacy OpenFst source, but its 2017 `unique_ptr` implementation fails under the runner's GCC 15. The Pages build runner is now pinned to Ubuntu 22.04/GCC 11, a compatible toolchain; the next model-build attempt is pending.
+
+- Browser test selector refinement: the romanization test intentionally inspects hidden panels' text to verify their independent output. `:visible` was therefore too restrictive; the final selector excludes only the new hybrid panel while preserving the pre-existing all-panel contract. Rerun pending.
