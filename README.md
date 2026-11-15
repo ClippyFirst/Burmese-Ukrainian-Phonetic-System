@@ -225,3 +225,8 @@ Python entry point: `from burmese_ukrainian import RuleBasedBurmeseEngine`. Dete
 ## Evidence-gated hybrid IPA candidates
 
 The optional Python `HybridBurmeseEngine` can collect explicitly configured Google Burmese WFST, myG2P v2, Epitran and command-line IPA candidates with provenance. It does not run external providers by default, vote between them, or replace the deterministic rule engine's final IPA. See [the hybrid-engine contract](docs/hybrid-engines.md) and [raw-output benchmarking boundaries](docs/benchmarking-and-external-ipa.md).
+
+
+### Rime and prosody evidence
+
+The source-scoped rime × coda × tone × phonation evidence matrix is maintained in `data/burmese/rime_prosody_evidence.csv`, with its JSON Schema and regression tests. It records Green's source-specific rime restrictions and Mooney & Repetti-Ludlow's restricted Yangon experimental findings without promoting them to runtime pronunciation rules. Every row is withheld from runtime; the matrix is not a lexical IPA gold set.
