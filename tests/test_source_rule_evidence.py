@@ -687,3 +687,19 @@ def test_myg2p_full_dictionary_scan_supports_three_secondary_equivalence_groups_
     assert "တိံ" in lexical["im"]["interpretation"]
     assert "ဟုမ်း" in lexical["um:"]["interpretation"]
     assert "Exact am: matches in myG2P = 0" in lexical["am:"]["interpretation"]
+
+def test_waxman_med_transcription_claim_remains_secondary_and_non_operational():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+
+    source = sources["WAXMAN2018_MED_AT_25"]
+    claim = claims["CLM-WAXMAN2018-MED-TRANSCRIPTION-CHARACTER-001"]
+    assert source["year"] == "2018"
+    assert source["type"] == "conference_abstract"
+    assert "secondary conference abstract only" in source["scope"]
+    assert "no notation key" in source["scope"]
+    assert claim["source_id"] == source["source_id"]
+    assert claim["status"] == "DOCUMENTARY"
+    assert "tonal graphemic elements" in claim["claim"]
+    assert "not an inspected notation key" in claim["claim"]
+    assert "not a project IPA mapping" in claim["claim"] or "not a project IPA" in claim["claim"]
