@@ -2800,3 +2800,10 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - **BLOCKED:** primary MLC transcription key and original entry pages remain uninspected; the SEAlang dictionary endpoint timed out; SHACHI metadata is not the dataset or a project reuse license. TIL's displayed Roman forms belong to the TIL author's Romabama conventions and must not be mislabeled as MLC transcription or IPA.
 - Acceptance criterion: inspect a primary MED copy (including its front matter / notation key and page-located entries), then reconcile any secondary TIL/SEAlang forms against those pages; separately verify rights before extracting or redistributing data. Until then, do not add MED lexical rows or use them as IPA gold.
 - No runtime, corpus, IPA annotation, mapping or licensing state changed. Overall readiness remains PARTIAL PROTOTYPE.
+
+## 2026-11-15 — Mya2Rom narrows the MED notation variant (secondary evidence)
+
+- **PARTIAL / stronger identification:** Mya2Rom's README distinguishes orthographic MLCTS from modified/phonetic MLCTS2 and explicitly states that MLCTS2 is used by the Myanmar Language Commission for its Myanmar-English Dictionary and by SEAlang. This is a secondary implementer statement, not inspection of the MLC dictionary's notation key.
+- Registered source MYA2ROM2017 and documentary claim CLM-MYA2ROM-MLCTS2-MED-IDENTIFICATION-001; added a test preserving the secondary/non-gold boundary.
+- Mya2Rom is not an IPA gold source: its README documents no schwa or voicing-sandhi modelling, incomplete stacked-letter/asat handling, omission of alternate pronunciations and Pali/Sanskrit exceptions. Its IPA mode is described as a Wikipedia-style output, not the MED's own transcription.
+- Acceptance remains: inspect primary MED front matter and page-located entries; verify exact symbol semantics and source rights independently; reconcile Mya2Rom/SEAlang/TIL forms against the primary pages. No runtime, IPA labels, gold or Ukrainian mappings were changed.
