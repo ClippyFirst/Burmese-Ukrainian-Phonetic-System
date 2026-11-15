@@ -3141,8 +3141,8 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 
 ## 2026-11-15 — continuation checkpoint after MLC access review
 
-- Final branch head for this continuation: `2a9d82022e0cc1c1f3a35cbef0a910cc73ffe69f` (the latest commit in this sequence updates the execution matrix; preceding commits update the research review and this handoff).
-- PR #147: OPEN / DRAFT / mergeable; head is the dedicated research branch; 1,208 commits ahead / 0 behind `main`, 78 changed files. No reviews or review threads are present. PR #129 remains OPEN / DRAFT / non-mergeable and was not modified.
+- Final branch head for this continuation: `9d9ea2257492e71feadb6bc881c7fb7d3cf48af6` (the handoff checkpoint is the latest commit; earlier sequential commits updated the research review, handoff, matrix and methodology page).
+- PR #147: OPEN / DRAFT / mergeable; head is the dedicated research branch; 1,210 commits ahead / 0 behind `main`, 78 changed files. No reviews or review threads are present. PR #129 remains OPEN / DRAFT / non-mergeable and was not modified.
 - Main remains the base; no merge, deployment, release or main-branch write occurred.
 - The required CI result for this exact documentation head is **not verified**: the combined commit-status endpoint returned no statuses, and the PR-triggered workflow lookup returned no runs for this head. Prior successful exact-head CI on code-bearing commit `23983ab8ade692e1795039dd114c352dddee16ef` remains valid for that code/test snapshot only; it must not be represented as a test run on this later documentation head.
 - The current docs-only changes refine the MLC dictionary access evidence and remove duplicate validation sentences from `system.html`. No runtime or data files, source registries, IPA labels, gold annotations or Ukrainian mappings changed in this continuation.
