@@ -2546,3 +2546,12 @@ The wider `BURMESE-YANGON-RIME-GRID-001` remains PARTIAL. All 15 rows are WITHHE
 | MLCTS `am.` collision, source units `မ့်;ံ့` | Wiktionary lexical audit now records four first-side entries: စိမ့် /sḛɪɴ/, ဆိမ့် /sʰḛɪɴ/, နိမ့် /nḛɪɴ/, လိမ့် /lḛɪɴ/; opposite side remains ကြံ့ /t͡ɕa̰ɴ/ | Source claim and lexical audit updated; regression test checks all five word/IPA/MLCTS items and retains non-promotion guard | PARTIAL / secondary distinction evidence only; not a controlled minimal pair or primary MLC adjudication; no runtime/Ukrainian mapping promotion |
 
 The four first-side entries reinforce a source-level lexical distinction but do not fill the missing independent adjudication gate.
+
+
+## am. lexical evidence verification closeout — 2026-11-15
+
+| Area | Implemented evidence | Verification | Status / acceptance boundary |
+|---|---|---|---|
+| MLCTS `am.` source-unit distinction `မ့်;ံ့` | Four Wiktionary first-side entries (စိမ့်, ဆိမ့်, နိမ့်, လိမ့်) and one opposite-side entry (ကြံ့), each with recorded IPA/MLCTS; source claim and audit updated | Exact-head PR CI [43692035411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692035411) SUCCESS: 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium, 0 npm vulnerabilities, build and generated-data freshness pass | DONE_VERIFIED as a secondary lexical audit extension only; not primary MLC adjudication, controlled minimal pair, independent gold or runtime approval |
+
+No runtime, IPA gold, Ukrainian mapping or generated pronunciation data changed. Wider Yangon rime coverage remains PARTIAL.
