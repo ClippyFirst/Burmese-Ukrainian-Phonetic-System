@@ -76,11 +76,11 @@ class RuleBasedBurmeseEngine:
             for item in syllables
             if not item.get("ipa") or item.get("phonetic_status") != "conservative_partial"
         ]
-        complete = bool(syllables) and not unresolved
-        ipa_parts = [item["ipa"] for item in syllables] if complete else []
-        ipa = " ".join(ipa_parts) if complete else None
+        segmental_complete = bool(syllables) and not unresolved
+        ipa_parts = [item["ipa"] for item in syllables] if segmental_complete else []
+        ipa = " ".join(ipa_parts) if segmental_complete else None
 
-        practical_parts = [transcribe_ipa(part) for part in ipa_parts] if complete else []
+        practical_parts = [transcribe_ipa(part) for part in ipa_parts] if segmental_complete else []
         practical_complete = bool(practical_parts) and all(
             part.get("text") is not None for part in practical_parts
         )
@@ -97,7 +97,7 @@ class RuleBasedBurmeseEngine:
         preview = _provisional_preview(syllables)
         phonetic_statuses = {item.get("phonetic_status") for item in syllables}
         ipa_status = (
-            "analysis_dependent" if complete or "analysis_dependent" in phonetic_statuses
+            "analysis_dependent" if segmental_complete or "analysis_dependent" in phonetic_statuses
             else "not_established"
         )
         ipa_candidate = ({
@@ -110,7 +110,7 @@ class RuleBasedBurmeseEngine:
             "prosody_status": "not_established",
             "phonetic_completeness": "SEGMENTAL_ONLY",
             "provenance": {"engine": self.engine_id, "profile_id": self.profile},
-        } if complete else None)
+        } if segmental_complete else None)
         return {
             "input": text,
             "normalized": result.get("normalized", text),
@@ -121,7 +121,7 @@ class RuleBasedBurmeseEngine:
             "ipa_status": ipa_status,
             "canonical_ipa": None,
             "ipa_candidate": ipa_candidate,
-            "phonetic_completeness": "SEGMENTAL_ONLY" if complete else "INCOMPLETE",
+            "phonetic_completeness": "SEGMENTAL_ONLY" if segmental_complete else "INCOMPLETE",
             "prosody_status": "not_established",
             "profile_status": "PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED",
             "ukrainian": practical_text,
@@ -135,12 +135,12 @@ class RuleBasedBurmeseEngine:
             "ukrainian_prosody": [
                 mark for part in practical_parts for mark in part.get("prosody", [])
             ],
-            "provisional_ipa": preview["ipa_preview"] if preview and not complete else None,
-            "provisional_ukrainian": preview["ukrainian_preview"] if preview and not complete else None,
-            "fallback_status": preview["status"] if preview and not complete else None,
-            "fallback_trace": preview["syllables"] if preview and not complete else [],
+            "provisional_ipa": preview["ipa_preview"] if preview and not segmental_complete else None,
+            "provisional_ukrainian": preview["ukrainian_preview"] if preview and not segmental_complete else None,
+            "fallback_status": preview["status"] if preview and not segmental_complete else None,
+            "fallback_trace": preview["syllables"] if preview and not segmental_complete else [],
             "ipa_with_placeholders": result.get("ipa"),
-            "status": "PROPOSED" if complete else (
+            "status": "PROPOSED" if segmental_complete else (
                 "NOT_ESTABLISHED" if not syllables else "PARTIAL"
             ),
             "syllables": syllables,
@@ -155,7 +155,7 @@ class RuleBasedBurmeseEngine:
             ],
             "reason": (
                 "The displayed IPA is a segmental-only candidate. Tone, phonation and quantity are not inferred; canonical full IPA remains withheld until the relevant prosodic dimensions are established for the selected profile."
-                if complete else
+                if segmental_complete else
                 "Canonical IPA is withheld for unresolved structure. A separate onset-only low-confidence preview is shown where the registered initial IPA and Ukrainian adapter both support it; no rime, tone, medial or coda is inferred."
             ),
             "external_backends_used": [],
