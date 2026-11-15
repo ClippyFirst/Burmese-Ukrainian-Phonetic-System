@@ -62,7 +62,8 @@ test("browser engine exposes onset-only provisional IPA for unresolved Burmese u
   assert.ok(browserEngineSource.includes('sy.provisionalUk=adapted.text+"?"'));
   assert.ok(browserEngineSource.includes('sy.provisionalStatus="PROVISIONAL"'));
   assert.ok(browserEngineSource.includes('sy.provisionalUnresolvedFeatures=["inherent_vowel"]'));
-  assert.ok(browserEngineSource.includes('s.ipa||"?"'));
+  assert.ok(browserEngineSource.includes("ipa.textContent=hybrid.ipa"));
+  assert.ok(browserEngineSource.includes("uk.textContent=hybrid.uk"));
   assert.ok(browserEngineSource.includes('if(s.provisionalIpa){const preview=document.createElement("small")'));
 });
 
@@ -77,7 +78,7 @@ test("browser G2P source registries distinguish orthographic signs from establis
   assert.ok(browserEngineSource.includes('if(onset.status!=="established"){sy.status="ANALYSIS_DEPENDENT";return null;}'));
   assert.ok(browserEngineSource.includes('VOWELS[id]?.status!=="established"'));
   assert.ok(browserEngineSource.includes('sy.status="ANALYSIS_DEPENDENT";return null'));
-  assert.ok(browserEngineSource.includes('["UNSUPPORTED","ANALYSIS_DEPENDENT","UNCERTAIN"].includes(s.status)?s.status:"NOT_ESTABLISHED"'));
+  assert.ok(hybridEngineSource.includes('["UNSUPPORTED", "UNCERTAIN"].includes(segment.status)'));
   assert.ok(browserEngineSource.includes('VOWELS, SIGNS'));
 });
 
