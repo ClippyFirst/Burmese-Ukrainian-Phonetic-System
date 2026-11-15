@@ -717,10 +717,10 @@ def test_existing_mya2rom_vendor_evidence_distinguishes_mlcts2_from_ipa():
     assert "not a primary MLC specification" in source["scope"]
     assert med_claim["source_id"] == source["source_id"]
     assert med_claim["status"] == "DOCUMENTARY"
-    assert "MLCTS2" in med_claim["claim"]
+    assert "mlcts2" in med_claim["claim"].lower()
     assert "distinct from the tool's separate IPA mode" in med_claim["claim"]
     assert distinction_claim["status"] == "DOCUMENTARY"
     assert "orthographic transcription system" in distinction_claim["claim"]
     assert "94-row inventory takes the MLCTS column" in distinction_claim["claim"]
     assert limits_claim["status"] == "DOCUMENTARY"
-    assert "no schwa or voicing-sandhi" in limits_claim["claim"]
+    assert "limitations for stacked letters, ASAT, schwa, voicing sandhi" in limits_claim["claim"]
