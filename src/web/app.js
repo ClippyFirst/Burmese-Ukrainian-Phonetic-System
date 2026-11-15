@@ -397,7 +397,7 @@ function render(){
     row.dataset.structure=JSON.stringify(s.structure);
     const hybridRecord=hybrid.records.find(item=>item.segment===s);
     const head=document.createElement("strong");head.textContent=String(syllableNumber).padStart(2,"0")+"  "+s.raw;
-    const detail=document.createElement("span");detail.textContent=(hybridRecord?.selectedIpa||"IPA не встановлено")+" → "+(hybridRecord?.selectedAdaptation?.text||"—")+" · IPA: "+(hybridRecord?.ipaStatus||s.status)+" / передача: "+(hybridRecord?.ukrainianStatus||"NOT_ESTABLISHED");row.append(head,detail);
+    const detail=document.createElement("span");detail.textContent=(hybridRecord?.selectedIpa||hybridRecord?.deterministicIpa||"IPA не встановлено")+" → "+(hybridRecord?.selectedAdaptation?.text||hybridRecord?.provisionalAdaptation?.text||"—")+" · IPA: "+(hybridRecord?.ipaStatus||s.status)+" / передача: "+(hybridRecord?.ukrainianStatus||"NOT_ESTABLISHED");row.append(head,detail);
     if(hybridRecord?.externalCandidates.length){const candidates=document.createElement("small");candidates.textContent="Зовнішні IPA-кандидати (не просунуті): "+hybridRecord.externalCandidates.map(candidate=>candidate.provider+": "+candidate.ipa).join(" · ");row.append(candidates);}
     if(s.provisionalIpa){const preview=document.createElement("small");preview.textContent="Попередня підказка: "+s.provisionalIpa+" → "+s.provisionalUk+" [PROVISIONAL]";row.append(preview);}
     if(s.notes.length){const note=document.createElement("small");note.textContent=s.notes.join(" ");row.append(note);}syllables.append(row);
