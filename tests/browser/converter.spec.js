@@ -488,3 +488,20 @@ test("browser structural projection matches the shared Python contract",async({p
     expect(projection,fixture.id).toEqual(fixture.python_projection);
   }
 });
+
+
+test("keyboard users can skip the repeated header and reach the main content",async({page})=>{
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  const skip=page.getByRole("link",{name:"Перейти до основного вмісту"});
+  await expect(skip).toBeFocused();
+  await expect(skip).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#main-content")).toBeFocused();
+});
+
+test("reduced-motion preference disables smooth document scrolling",async({page})=>{
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await page.goto("/");
+  await expect.poll(()=>page.locator("html").evaluate(el=>getComputedStyle(el).scrollBehavior)).toBe("auto");
+});
