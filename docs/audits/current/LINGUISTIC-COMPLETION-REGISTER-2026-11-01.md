@@ -2388,3 +2388,12 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - **DONE_VERIFIED (automated):** keyboard skip navigation on converter and methodology pages; reduced-motion scrolling behavior. Required PR-head CI workflow [43690500850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43690500850) SUCCESS: 291 Python + 68 subtests, 21 Node, 67 Playwright Chromium.
 - Static contrast calculation for eight selected existing color pairs: all sampled ratios are at least 4.56:1. This is a limited sample, not full-page WCAG validation.
 - **TODO:** manual screen-reader, mobile, zoom/reflow and comprehensive contrast/state QA. No WCAG conformance claim.
+
+
+## 2026-11-15 — TUFS rime notation crosswalk extension
+
+- **BURMESE-RIME-PROSODY-MATRIX-001 — PARTIAL / CI PENDING:** expanded from 12 to 15 source-linked rows with three TUFS Section 1.3 crosswalk records for open, nasal-closed and checked rimes. Added schema enum `documentary_crosswalk` and a regression test. The module compares IPA/TLM/NEB/MED 2019/Ohno/Chinese dictionary notations; it is a secondary university reference and explicitly reflects differing phonological interpretations.
+- The rows preserve nasalized vowel + /ɴ/ separately from checked /ʔ/, and record MED romanized forms without equating them to IPA or MLCTS. Checked-as-separate vs fourth-tone remains an analysis choice.
+- **Runtime status:** all 15 rows WITHHELD. No phonological runtime rules, IPA gold labels or generated data changed.
+- **Verification:** university source table inspected; repository tests have not yet been run for this exact update. Await exact-head hosted CI; local test execution unavailable in this connector-only session.
+- **Source:** TUFS Burmese Pronunciation Module, §1.3 table 2, https://www.coelang.tufs.ac.jp/mt/my/pmod2/1-3/1.html.
