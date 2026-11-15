@@ -73,5 +73,5 @@ def test_experimental_scope_and_phonation_observation_are_explicit():
     phonation = evidence["MOONEY-NASAL-ORAL-PHONATION-001"]
     assert "One speaker" in scope["profile_scope"]
     assert "nasalized" in phonation["reported_realization"]
-    assert "experiment only" in phonation["profile_scope"]
+    assert "experimental sample only" in phonation["profile_scope"]
     assert scope["evidence_status"] == "methodological_scope"
