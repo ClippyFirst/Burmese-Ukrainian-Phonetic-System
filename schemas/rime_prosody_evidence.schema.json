@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Burmese rime, coda, tone and phonation evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evidence_id",
+    "dimension",
+    "environment",
+    "syllable_type",
+    "vowel_class",
+    "coda_class",
+    "tone_class",
+    "reported_realization",
+    "source_id",
+    "claim_id",
+    "source_locator",
+    "profile_scope",
+    "evidence_status",
+    "runtime_status",
+    "implementation_consequence",
+    "notes"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]+$"
+    },
+    "dimension": {
+      "type": "string",
+      "enum": [
+        "rime_distribution",
+        "tone_coda_interaction",
+        "coda_phonetics",
+        "quantity_duration",
+        "vowel_coda_alternation",
+        "tone_phonetics",
+        "phonation_coda_interaction",
+        "source_scope"
+      ]
+    },
+    "environment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "syllable_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "vowel_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coda_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tone_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reported_realization": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_status": {
+      "type": "string",
+      "enum": [
+        "source_analysis",
+        "experimental_observation",
+        "methodological_scope"
+      ]
+    },
+    "runtime_status": {
+      "const": "WITHHELD"
+    },
+    "implementation_consequence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
