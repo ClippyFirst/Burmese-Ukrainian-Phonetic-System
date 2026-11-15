@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { analyzeHybrid } from "../../src/web/hybrid-engine.js";
 
 test("hybrid uses established project IPA and keeps Epitran as a comparator", () => {
-  const result = analyzeHybrid([{raw:"ကော်",nonMyanmar:false,ipa:"kaʊʔ",status:"ESTABLISHED"}]);
+  const result = analyzeHybrid([{raw:"ကော်",nonMyanmar:false,ipa:"kaʊʔ",status:"ESTABLISHED",prosodyStatus:"ESTABLISHED",profileId:"my-yangon-careful-citation-v1"}]);
   assert.equal(result.ipa, "kaʊʔ");
   assert.equal(result.records[0].selectedSource, "PROJECT_RULES");
   assert.equal(result.records[0].epitranCandidate, "kaʊʔ");
@@ -67,7 +67,7 @@ test("Google WFST is invoked on a contiguous word run and aligned by its syllabl
 
 
 test("canonical IPA is the actual input to the single Ukrainian adapter", () => {
-  const result = analyzeHybrid([{raw:"ကာ",nonMyanmar:false,ipa:"ka",status:"ESTABLISHED"}]);
+  const result = analyzeHybrid([{raw:"ကာ",nonMyanmar:false,ipa:"ka",status:"ESTABLISHED",prosodyStatus:"ESTABLISHED",profileId:"my-yangon-careful-citation-v1"}]);
   assert.equal(result.ipa, "ka");
   assert.equal(result.uk, "ка");
   assert.equal(result.records[0].selectedPhoneticResult.kind, "IPA_CANDIDATE");
@@ -99,4 +99,27 @@ test("provider comparison explicitly records unverified dialect scope", () => {
   const result = analyzeHybrid([{raw:"ကာ",nonMyanmar:false,ipa:"ka",status:"ESTABLISHED"}]);
   assert.equal(result.records[0].comparisonScope, "DIALECT_PROFILE_UNVERIFIED");
   assert.equal(result.records[0].profileStatus, "NOT_ESTABLISHED");
+});
+
+
+test("segmental IPA without tone and profile evidence is not canonical", () => {
+  const result = analyzeHybrid([{raw:"ကာ",nonMyanmar:false,ipa:"ka",status:"ESTABLISHED"}]);
+  const record = result.records[0];
+  assert.equal(record.selectedSource, "UNRESOLVED");
+  assert.equal(record.phoneticCompleteness, "SEGMENTAL_ONLY");
+  assert.equal(record.ipaStatus, "ANALYSIS_DEPENDENT");
+  assert.equal(record.selectionReason, "TONE_OR_PROFILE_NOT_ESTABLISHED");
+  assert.equal(result.ipa, "?");
+  assert.equal(result.uk, "⟦ကာ⟧");
+  assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL" && item.ukrainian.text === "ка"));
+});
+
+test("explicit profile and prosody evidence allow canonical IPA to reach the adapter", () => {
+  const result = analyzeHybrid([{
+    raw:"ကာ",nonMyanmar:false,ipa:"kà",status:"ESTABLISHED",
+    prosodyStatus:"ESTABLISHED",profileId:"my-yangon-careful-citation-v1"
+  }]);
+  assert.equal(result.records[0].selectedSource, "PROJECT_RULES");
+  assert.equal(result.ipa, "kà");
+  assert.equal(result.uk, "ка");
 });
