@@ -1,7 +1,9 @@
 """Research hybrid wrapper for Burmese IPA candidates.
 
-The deterministic rule engine remains authoritative. Google WFST, myG2P and
-optional external G2P outputs are preserved as candidates, never voted.
+The deterministic rule engine remains the source of project IPA candidates.
+Canonical full IPA remains withheld without prosody/profile adjudication.
+Google WFST, myG2P and optional external G2P outputs are preserved as candidates,
+never voted or promoted.
 """
 from __future__ import annotations
 from typing import Any, Callable
