@@ -2918,3 +2918,8 @@ Research constraints incorporated: Oo20's corpus is Yangon-recorded speech with 
 ### Segmental candidate display refinement — 2026-11-15
 
 The browser now follows the Python engine's existing distinction: a deterministic segmental string such as ka may be displayed with its IPA-adapted Ukrainian candidate, but both remain explicitly provisional while tone/phonation/quantity and profile evidence are missing. The complete/canonical claim remains withheld; unknown structures such as မြန် remain bracketed. This avoids turning evidence caution into an empty interface while keeping the full-pronunciation status honest.
+
+
+### Python API completeness metadata — 2026-11-15
+
+The Python RuleBasedBurmeseEngine now exposes the same distinction additively: `ipa` remains the segmental candidate for compatibility; `ipa_status=analysis_dependent`, `phonetic_completeness=SEGMENTAL_ONLY`, `prosody_status=not_established`, and `profile_status=PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED` are explicit; `canonical_ipa` and `canonical_ukrainian` remain null; Ukrainian candidate status is PROVISIONAL. Mixed-input onset/rime previews are no longer labeled SUPPORTED_PATH. Regression tests cover this contract. Exact-head CI pending.
