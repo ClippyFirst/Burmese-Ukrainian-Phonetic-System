@@ -50,9 +50,10 @@ test("browser adapter omits glottal stop and withholds unknown IPA", () => {
 });
 
 
-test("browser engine withholds IPA and Ukrainian output for unvalidated structures", () => {
+test("browser parser leaves Ukrainian adaptation to the hybrid IPA-first orchestrator", () => {
   assert.ok(browserEngineSource.includes("const unsupportedStructure=sy.kinzi||sy.kinziCoda||sy.medials.length>0||sy.conjunct.length>0"));
-  assert.ok(browserEngineSource.includes('sy.uk=sy.status==="ESTABLISHED"&&sy.ipa?renderUkrainian(sy.ipa)'));
+  assert.ok(!browserEngineSource.includes("sy.uk="));
+  assert.ok(hybridEngineSource.includes("renderUkrainian(ipa)"));
 });
 
 
