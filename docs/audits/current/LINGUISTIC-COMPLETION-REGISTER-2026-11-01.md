@@ -2365,3 +2365,12 @@ Correction: Green 2005's printed table was checked visually. The rime/prosody ev
 
 
 Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588512) SUCCESS on `f0c240abde1a1aedefcfcb3f9694311318f91c04`: 291 Python + 68 subtests, 21 Node, 64 Playwright Chromium, 0 npm vulnerabilities, build and generated-data freshness passed. The artifact is DONE_VERIFIED; full lexical coverage remains PARTIAL.
+
+
+## G2P optional diagnostic closeout — 2026-11-15
+
+- **DONE_VERIFIED (build/execution only):** optional workflow [43689588524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588524) completed all three jobs; downloaded and inspected the Google FST, CRF and Epitran JSON artifacts.
+- Google FST returned 6/6 non-empty raw outputs with zero runtime errors; independent gold=0 and accuracy=null.
+- CRF returned 100/100 predictions and 84/100 source-concordant rows; independent gold=0, accuracy=null, and possible train/test overlap remains unresolved.
+- Epitran 1.35.3 emitted raw output for six structural probes; eligible verified gold=0 and exact-match accuracy=null.
+- This closes the optional workflow execution task only. Engine comparison, accuracy, linguistic validation and runtime promotion remain BLOCKED by absent independent adjudicated IPA gold and unresolved provenance/overlap questions. No runtime mapping changed.
