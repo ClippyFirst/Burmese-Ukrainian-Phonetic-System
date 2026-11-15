@@ -107,7 +107,7 @@ export function analyzeHybrid(segments, googleModel = null) {
       selectedSource: deterministicEstablished ? "PROJECT_RULES" : "UNRESOLVED",
       ipaStatus: deterministicEstablished ? segment.status
         : deterministicIpa ? "ANALYSIS_DEPENDENT"
-          : ["UNSUPPORTED", "UNCERTAIN"].includes(segment.status) ? segment.status : "NOT_ESTABLISHED",
+          : ["UNSUPPORTED", "ANALYSIS_DEPENDENT", "UNCERTAIN"].includes(segment.status) ? segment.status : "NOT_ESTABLISHED",
       ukrainianStatus: selectedIpa ? selectedAdaptation.status : "NOT_ESTABLISHED",
       selectedStatus: selectedIpa ? aggregate([segment.status, selectedAdaptation.status]) : "NOT_ESTABLISHED",
       agreement: "NOT_COMPARABLE", comparison: { relation: "NOT_COMPARABLE" },
