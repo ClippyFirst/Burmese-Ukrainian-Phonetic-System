@@ -2792,3 +2792,11 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 - Google Burmese Thrax/OpenFst built successfully; all IPA symbol-table invariant checks passed; 6/6 structural-only probes produced outputs with 0 runtime errors; `independent_gold_count=0`, `accuracy=null`; report SHA-256 `c86d41b71a02c4d51f3cf5e432926e5d6993e9dff608426c745fd335e0e63296`, artifact `14168621272`.
 - These are successful build/raw-output diagnostics only. They do not establish accuracy or production readiness. Independent adjudicated IPA gold remains zero; CRF overlap remains unresolved.
 - Required exact-head tests workflow [43731256990](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256990) SUCCESS: 308 Python tests + 68 subtests, 21 Node tests, 68 Playwright tests, npm audit 0 vulnerabilities, build and generated-data freshness pass.
+
+
+## 2026-11-15 — MLC dictionary evidence access refinement
+
+- **PARTIAL:** a secondary MED-linked lexical index is discoverable. TIL's Romabama pages contain lexical examples with MEDict page references, and SHACHI describes the SEAlang Burmese Dictionary as based on the 1993 MLC dictionary and used with permission. Dunwoody Press and WHO Myanmar Library records establish catalogue/holding routes.
+- **BLOCKED:** primary MLC transcription key and original entry pages remain uninspected; the SEAlang dictionary endpoint timed out; SHACHI metadata is not the dataset or a project reuse license. TIL's displayed Roman forms belong to the TIL author's Romabama conventions and must not be mislabeled as MLC transcription or IPA.
+- Acceptance criterion: inspect a primary MED copy (including its front matter / notation key and page-located entries), then reconcile any secondary TIL/SEAlang forms against those pages; separately verify rights before extracting or redistributing data. Until then, do not add MED lexical rows or use them as IPA gold.
+- No runtime, corpus, IPA annotation, mapping or licensing state changed. Overall readiness remains PARTIAL PROTOTYPE.
