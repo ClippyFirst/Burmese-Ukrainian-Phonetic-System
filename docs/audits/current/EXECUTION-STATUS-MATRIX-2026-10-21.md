@@ -2528,3 +2528,12 @@ Exact PR head `a415dc1a89c7d9cf06a78896e3dcab3bb3824004`, tested merge ref `c559
 | TUFS open/nasal/checked rime crosswalk | Three additional rows in `data/burmese/rime_prosody_evidence.csv`; explicit `documentary_crosswalk` evidence type distinguishes notation correspondence from experimental/source phonology | Regression test asserts separate open, nasal-closed and checked-closed records, MED notation distinction, /ɴ/ vs /ʔ/, and runtime withholding | Published TUFS module Section 1.3 table 2 inspected; university module is a secondary phonetics reference, not direct MED dictionary extraction | PARTIAL / CI PENDING | Exact-head hosted CI; independently adjudicated lexical coverage and source-profile reconciliation remain outstanding |
 
 No runtime or generated data was changed. All 15 rows remain WITHHELD.
+
+
+## TUFS rime crosswalk exact-head verification closeout — 2026-11-15
+
+| Layer / acceptance gate | Implemented coverage | Tested coverage | Independently validated coverage | Status | Next acceptance criterion |
+|---|---|---|---|---|---|
+| TUFS open/nasal/checked rime crosswalk | Three additional rows; schema adds `documentary_crosswalk`; all 15 evidence rows have 16 valid CSV fields and source/claim links | Exact PR-head workflow [43691172177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43691172177) SUCCESS: 292 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, production build and generated-data freshness pass | TUFS §1.3 table 2 inspected; secondary university crosswalk only, not direct MED dictionary extraction or independent lexical adjudication | DONE_VERIFIED (evidence artifact and engineering CI only) | Expand item-level Yangon lexical coverage; preserve notation distinctions and keep runtime withheld pending adjudication |
+
+The wider `BURMESE-YANGON-RIME-GRID-001` remains PARTIAL. All 15 rows are WITHHELD; no runtime or generated data changed. Exact verified PR head `673319e267edeca7bf1a4d082fdf17835cfe8ffc`.
