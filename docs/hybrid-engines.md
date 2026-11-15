@@ -133,3 +133,12 @@ Watkins's IPA description is based on one Rangoon consultant and a careful readi
 A project-generated string such as `ka` may encode only the segmental onset+rime. It is not canonical full IPA unless the corresponding prosodic analysis (tone/phonation/quantity as applicable) and an explicit dialect profile are established. The browser orchestrator now requires both `prosodyStatus` and `profileId` before selecting project IPA. Otherwise it labels the internal string `SEGMENTAL_ONLY`, adapts it only as a provisional Ukrainian preview, and withholds the main IPA/Ukrainian output.
 
 This is intentionally conservative. Watkins's one-consultant Rangoon description documents four non-reduced tone categories whose phonetic correlates include pitch, phonation and length [Wat01]. Oo et al.'s Google grammar uses tone-related vowel distinctions [Oo20]. A plain string match between providers cannot fill missing prosody or prove dialect equivalence.
+
+
+### 2026-11-15 — tone/context evidence and the canonical gate
+
+The new source-linked claims for Gruber 2011, Tian 2018 and Dellwo & Jenny 2020 are registered in `sources.csv`, `source_claims.csv` and `rime_prosody_evidence.csv`; corresponding validation tests are added. The new rows are all withheld from runtime.
+
+The evidence makes three distinctions operationally important: (1) lexical tone perception uses interacting phonation, F0 and duration cues rather than one universal cue; (2) grammatical induced creaky tone can depend on syntax, pragmatic factors and prosodic-word context; (3) standard and southern Burmese differ in cue weighting. The browser's `prosodyStatus` must therefore mean that the relevant prosodic dimensions and context have been established for the named profile, not merely that a vowel/consonant string was produced. A profile label alone is insufficient.
+
+Mooney & Repetti-Ludlow's vowel alternation account remains tone-independent in the analyzed environments; do not conflate coda-conditioned vowel alternation with tone assignment.
