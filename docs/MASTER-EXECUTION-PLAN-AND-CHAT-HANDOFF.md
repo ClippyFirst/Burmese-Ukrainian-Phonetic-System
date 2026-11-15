@@ -2906,3 +2906,10 @@ A targeted Wiktionary follow-up verified three additional Burmese word entries f
 - Added a regression test for all five exact Burmese forms, MLCTS values and IPA values, including the no-runtime-promotion boundary.
 - Exact final-head PR CI [43692035411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692035411) SUCCESS on `ed16e0b9efba6780e21608ee04a09b1b9915770e`: **293 Python tests + 68 subtests passed**, **21 Node tests passed**, **67 Playwright Chromium tests passed**, npm audit **0 vulnerabilities**, production build and generated-data freshness passed.
 - The lexical audit remains secondary evidence; all runtime conversion rules and Ukrainian mappings remain unchanged. No adjudicated IPA gold was added and no accuracy claim follows.
+
+
+## Final am. evidence CI and diff hygiene — 2026-11-15
+
+- Rebuilt the two touched CSV files from their pre-change contents and replaced only the targeted `am.` evidence/claim records, preserving all unrelated rows byte-for-byte. The final compare against pre-change head `4196147de0a5735dea8c5e494346e192dd90d26b` shows exactly one changed line in `source_claims.csv` and one changed line in `romanization_rime_collision_lexical_audit.csv`, plus the new regression test and three documentation updates. No runtime or generated files are changed.
+- Exact-head workflow [43692279971](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692279971) SUCCESS on `74dc298086292bd6cbaeb965eb1a6ad9e1926a74`: **293 Python + 68 subtests**, **21 Node**, **67 Playwright Chromium**, npm audit **0 vulnerabilities**, build and generated-data freshness pass.
+- The subsequent documentation-only commits record this verified code/data head; they do not change executable files or evidence content. Current branch head at documentation update: `74dc298086292bd6cbaeb965eb1a6ad9e1926a74` before these doc-only commits.
