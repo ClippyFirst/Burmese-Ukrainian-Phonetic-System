@@ -28,12 +28,6 @@ const NASAL_CODAS=new Set(["င","န","မ","ည"]);
 const CHECKED_CODAS=new Set(["က","ခ","ဂ","ဃ","စ","ဆ","ဇ","ဈ","တ","ထ","ဒ","ဓ","ပ","ဖ","ဗ","ဘ"]);
 const MEDIAL_CHARS=new Set(Object.keys(MEDIALS)), VOWEL_CHARS=new Set(Object.keys(SIGNS)), BASE=new Set(Object.keys(ONSETS));
 const ROMANIZATION_SUPPORTED_CHARS=new Set(ROMANIZATION_SUPPORTED), ROMANIZATION_BASE_CHARS=new Set(ROMANIZATION_BASES);
-const STATUS_RANK={ESTABLISHED:0,WELL_SUPPORTED:1,PROPOSED:2,ANALYSIS_DEPENDENT:3,PROVISIONAL:4,NOT_ESTABLISHED:5,UNSUPPORTED:6,UNCERTAIN:7};
-function aggregateStatus(statuses,emptyStatus="NOT_ESTABLISHED"){
-  if(!statuses.length)return emptyStatus;
-  return statuses.reduce((worst,status)=>(STATUS_RANK[status]??4)>(STATUS_RANK[worst]??0)?status:worst,"ESTABLISHED");
-}
-
 function normalize(text){return text.normalize("NFC");}
 function isMyanmarCodePoint(n){
   // Myanmar, Myanmar Extended-A/B, and the supplementary Myanmar block.
@@ -209,7 +203,6 @@ function parseCluster(raw,withholdBareInherent=false){
   const evidenceIncomplete=unsupportedStructure||unsupportedRime;
   sy.ipa=isolatedBare||evidenceIncomplete?null:deriveIpa(sy);
   if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=evidenceIncomplete?"ANALYSIS_DEPENDENT":"NOT_ESTABLISHED";
-  sy.uk=sy.status==="ESTABLISHED"&&sy.ipa?renderUkrainian(sy.ipa):{text:"",status:"NOT_ESTABLISHED",parts:[],prosody:[],unsupported:sy.raw};
   // Separate onset-only preview: never derive Ukrainian directly from Myanmar
   // graphemes and never guess the vowel, coda, medial, kinzi or tone.
   if(!sy.ipa&&withholdBareInherent&&sy.onset&&ONSETS[sy.onset]?.ipa){
@@ -362,12 +355,8 @@ function isStandaloneBareConsonant(segments,index){
 }
 function convert(text){
   const normalized=normalize(text),segments=segment(normalized);
-  const parsed=segments.map((s,index)=>s.nonMyanmar?s:parseCluster(s.raw,isStandaloneBareConsonant(segments,index))),myanmar=parsed.filter(s=>!s.nonMyanmar);
-  const ipaText=parsed.map(s=>s.nonMyanmar?s.raw:(s.ipa||"?")).join(""),ukText=parsed.map(s=>s.nonMyanmar?s.raw:(s.uk&&(STATUS_RANK[s.uk.status]??4)<STATUS_RANK.NOT_ESTABLISHED?s.uk.text:"⟦"+s.raw+"⟧")).join("");
-  const ipaStatus=aggregateStatus(myanmar.map(s=>s.ipa?s.status:(["UNSUPPORTED","ANALYSIS_DEPENDENT","UNCERTAIN"].includes(s.status)?s.status:"NOT_ESTABLISHED")),myanmar.length?"ESTABLISHED":"UNSUPPORTED");
-  const ukStatus=aggregateStatus(myanmar.map(s=>s.uk?.status||"NOT_ESTABLISHED"),myanmar.length?"ESTABLISHED":"UNSUPPORTED");
-  const status=aggregateStatus([ipaStatus,ukStatus],myanmar.length?"ESTABLISHED":"UNSUPPORTED");
-  return{input:text,normalized,ipa:ipaText,uk:ukText,status,ipaStatus,ukStatus,segments:parsed};
+  const parsed=segments.map((s,index)=>s.nonMyanmar?s:parseCluster(s.raw,isStandaloneBareConsonant(segments,index)));
+  return{input:text,normalized,segments:parsed};
 }
 
 function render(){
@@ -408,14 +397,14 @@ function render(){
     row.dataset.structure=JSON.stringify(s.structure);
     const hybridRecord=hybrid.records.find(item=>item.segment===s);
     const head=document.createElement("strong");head.textContent=String(syllableNumber).padStart(2,"0")+"  "+s.raw;
-    const detail=document.createElement("span");const shownStatus=s.provisionalStatus|| (s.uk?.status&&s.uk.status!=="ESTABLISHED"?s.status+" / передача: "+s.uk.status:s.status);detail.textContent=(hybridRecord?.selectedIpa||"IPA не встановлено")+" → "+(hybridRecord?.selectedAdaptation?.text||"—")+" · IPA: "+(hybridRecord?.ipaStatus||s.status)+" / передача: "+(hybridRecord?.ukrainianStatus||"NOT_ESTABLISHED");row.append(head,detail);
+    const detail=document.createElement("span");detail.textContent=(hybridRecord?.selectedIpa||"IPA не встановлено")+" → "+(hybridRecord?.selectedAdaptation?.text||"—")+" · IPA: "+(hybridRecord?.ipaStatus||s.status)+" / передача: "+(hybridRecord?.ukrainianStatus||"NOT_ESTABLISHED");row.append(head,detail);
     if(hybridRecord?.externalCandidates.length){const candidates=document.createElement("small");candidates.textContent="Зовнішні IPA-кандидати (не просунуті): "+hybridRecord.externalCandidates.map(candidate=>candidate.provider+": "+candidate.ipa).join(" · ");row.append(candidates);}
     if(s.provisionalIpa){const preview=document.createElement("small");preview.textContent="Попередня підказка: "+s.provisionalIpa+" → "+s.provisionalUk+" [PROVISIONAL]";row.append(preview);}
     if(s.notes.length){const note=document.createElement("small");note.textContent=s.notes.join(" ");row.append(note);}syllables.append(row);
   });
   const problems=hybrid.records.filter(item=>!item.passthrough&&(!item.selectedIpa||["UNCERTAIN","NOT_ESTABLISHED","ANALYSIS_DEPENDENT","UNSUPPORTED"].includes(item.ipaStatus)||["NOT_ESTABLISHED","ANALYSIS_DEPENDENT","UNSUPPORTED","UNCERTAIN"].includes(item.ukrainianStatus)));
   const preserved=r.segments.some(s=>s.nonMyanmar&&s.raw.trim()!=="");issues.hidden=problems.length===0&&!preserved;
-  const hasProsody=r.segments.some(s=>!s.nonMyanmar&&(s.prosodyMarks?.length||s.uk?.prosody?.length));
+  const hasProsody=r.segments.some(s=>!s.nonMyanmar&&s.prosodyMarks?.length);
   issueText.textContent=[problems.length?"Для "+problems.length+" сегмент"+(problems.length===1?"а":"ів")+" результат містить запропоновану або неповністю встановлену відповідність; сервіс не подає її як доведену.":"",preserved?"Латинський текст, цифри, пробіли та пунктуацію збережено без змін; аналізуються лише сегменти Myanmar.":"",hasProsody?"Просодичні знаки збережено в аналітичному шарі; вони не перетворюються автоматично на український наголос.":""].filter(Boolean).join(" ");
   live.textContent="Конвертацію завершено. Статус: "+hybrid.status+"; IPA-first гібридні провайдери виконано.";
 }
