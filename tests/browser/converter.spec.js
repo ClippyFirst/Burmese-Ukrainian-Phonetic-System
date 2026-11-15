@@ -568,4 +568,8 @@ test("Google WFST model status is explicit in the browser provider panel",async(
   expect(modelResponse.ok()).toBeTruthy();
   const model=await modelResponse.json();
   await expect(page.locator("#hybrid-provider-results")).toContainText(model.available?"ACTIVE · local Google Burmese WFST model":"PENDING_MODEL");
+  if (model.available) {
+    await expect(page.locator("#hybrid-provider-results")).toContainText("GOOGLE_WFST");
+    await expect(page.locator("#hybrid-provider-results")).not.toContainText("MODEL_NOT_DEPLOYED");
+  }
 });

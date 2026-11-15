@@ -25,3 +25,13 @@ test("the Unicode codepoint port covers the pinned Burmese block U+1000..U+1059"
   assert.equal(result.complete, true);
   assert.equal(result.symbols.length, 0x5a);
 });
+
+test("Google input port preserves hexadecimal labels for Burmese extended codepoints", () => {
+  const codepoints = [0x105a, 0x109f, 0xa9e0, 0xa9ff, 0xaa60, 0xaa7f];
+  for (const codepoint of codepoints) {
+    const character = String.fromCodePoint(codepoint);
+    const result = googleInputSymbols(character);
+    assert.equal(result.complete, true, character);
+    assert.deepEqual(result.symbols, [codepoint.toString(16).toUpperCase()]);
+  }
+});

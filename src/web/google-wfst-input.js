@@ -27,11 +27,24 @@ const CODEPOINT_TO_SYMBOL = new Map([
   [0x1056,"1056"],[0x1057,"1057"],[0x1058,"1058"],[0x1059,"1059"],
 ]);
 
+const HEX_CODEPOINT_RANGES = [
+  [0x105a, 0x109f], [0xa9e0, 0xa9ff], [0xaa60, 0xaa7f],
+];
+
+function symbolForCodePoint(codePoint) {
+  const explicit = CODEPOINT_TO_SYMBOL.get(codePoint);
+  if (explicit) return explicit;
+  if (HEX_CODEPOINT_RANGES.some(([start, end]) => codePoint >= start && codePoint <= end)) {
+    return codePoint.toString(16).toUpperCase();
+  }
+  return null;
+}
+
 export function googleInputSymbols(text) {
   const symbols = [];
   const unsupported = [];
   for (const char of String(text).normalize("NFC")) {
-    const symbol = CODEPOINT_TO_SYMBOL.get(char.codePointAt(0));
+    const symbol = symbolForCodePoint(char.codePointAt(0));
     if (symbol) symbols.push(symbol);
     else unsupported.push(char);
   }

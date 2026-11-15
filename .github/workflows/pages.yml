@@ -66,6 +66,8 @@ jobs:
         env:
           USE_BAZEL_VERSION: 7.4.1
         run: bazel test --noenable_bzlmod -c opt //my:ipa_phonemes_are_uniquely_decodable //my:phoneme_syms_is_current //my:phoneme_tsv_is_current
+      - name: Verify browser input alphabet against Google's complete Burmese codepoint symbol table
+        run: node scripts/validate_google_input_symbols.mjs language-resources/my/codepoint.syms
       - name: Export Google WFST as a static browser model
         run: |
           set -euo pipefail
