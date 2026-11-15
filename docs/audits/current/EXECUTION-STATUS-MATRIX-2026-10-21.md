@@ -2508,3 +2508,14 @@ Artifact IDs/digests: Google `14152141084` / `eb9e803bf203e363bcf2eb173e21024798
 | Full accessibility QA | Existing labels, landmarks, focus-visible styling and live regions retained | Targeted keyboard/reduced-motion tests only | No WCAG audit, screen-reader, contrast matrix or mobile reflow audit completed | TODO | Complete manual keyboard, screen-reader, zoom/reflow, contrast and mobile checks; record browser/AT versions and findings |
 
 Implementation head: `481c26d6951d4795e16e239f9332c3e42f7d3f44`. CI is not yet confirmed; do not promote these tasks to DONE_VERIFIED. No claim of WCAG conformance is made.
+
+
+## Accessibility verification closeout — 2026-11-15
+
+| Layer / acceptance gate | Implemented coverage | Tested coverage | Independently validated coverage | Status | Next acceptance criterion |
+|---|---|---|---|---|---|
+| Keyboard skip navigation | Skip-to-main link on converter and methodology pages; main landmark is focusable after fragment navigation | Exact PR-head workflow 43690500850: both page routes pass in Playwright Chromium | Browser automation only; no assistive-technology session | DONE_VERIFIED (automated behavior) | Manual keyboard and screen-reader announcement check |
+| Reduced-motion preference | CSS disables smooth document scrolling when reduced motion is requested | Exact PR-head workflow 43690500850: computed `scroll-behavior: auto` assertion passes | Emulated browser media preference; OS-level verification not performed | DONE_VERIFIED (automated behavior) | Manual OS preference verification and inspect any future transitions |
+| Full accessibility QA | Existing labels, landmarks, focus-visible styling and live regions retained | Targeted keyboard/reduced-motion tests only | Limited static contrast sample: 8 selected text/focus pairs all ≥4.56:1; not a full-page audit | TODO | Screen reader, keyboard, zoom/reflow, mobile, and full state-by-state contrast checks; record browser/AT versions |
+
+Exact PR head `a415dc1a89c7d9cf06a78896e3dcab3bb3824004`, tested merge ref `c559d4d0bbb88c44f7cd64bf199014b26b23d556`. Required workflow [43690500850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43690500850) SUCCESS: 291 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, build and generated-data freshness pass. IPA gold remains zero. No WCAG conformance claim.
