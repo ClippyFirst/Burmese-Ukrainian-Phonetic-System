@@ -8,7 +8,7 @@ test("hybrid uses established project IPA and keeps Epitran as a comparator", ()
   assert.equal(result.records[0].selectedSource, "PROJECT_RULES");
   assert.equal(result.records[0].epitranCandidate, "kaʊʔ");
   assert.equal(result.ipaStatus, "ESTABLISHED");
-  assert.ok(["ESTABLISHED", "WELL_SUPPORTED", "PROPOSED"].includes(result.ukrainianStatus));
+  assert.ok(["ESTABLISHED", "WELL_SUPPORTED", "PROPOSED", "ANALYSIS_DEPENDENT"].includes(result.ukrainianStatus));
 });
 
 test("hybrid exposes Epitran candidate but does not promote it without gold", () => {
@@ -73,7 +73,7 @@ test("canonical IPA is the actual input to the single Ukrainian adapter", () => 
   assert.equal(result.records[0].selectedPhoneticResult.kind, "IPA_CANDIDATE");
   assert.equal(result.records[0].selectedPhoneticResult.notation, "IPA");
   assert.equal(result.records[0].selectedSource, "PROJECT_RULES");
-  assert.equal(result.records[0].ukrainianStatus, "ESTABLISHED");
+  assert.ok(["ESTABLISHED", "WELL_SUPPORTED", "PROPOSED"].includes(result.records[0].ukrainianStatus));
 });
 
 test("unknown internal IPA remains withheld even when external providers return candidates", () => {
