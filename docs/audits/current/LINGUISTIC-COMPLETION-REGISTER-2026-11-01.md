@@ -2397,3 +2397,12 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - **Runtime status:** all 15 rows WITHHELD. No phonological runtime rules, IPA gold labels or generated data changed.
 - **Verification:** university source table inspected; repository tests have not yet been run for this exact update. Await exact-head hosted CI; local test execution unavailable in this connector-only session.
 - **Source:** TUFS Burmese Pronunciation Module, §1.3 table 2, https://www.coelang.tufs.ac.jp/mt/my/pmod2/1-3/1.html.
+
+
+## 2026-11-15 — TUFS rime crosswalk exact-head closeout
+
+- **BURMESE-RIME-PROSODY-MATRIX-001 — DONE_VERIFIED (source-evidence artifact and engineering CI only):** 15 source-linked rows in `data/burmese/rime_prosody_evidence.csv`; all records have 16 valid CSV fields; JSON Schema includes `documentary_crosswalk`; regression test covers open, nasal-closed and checked-closed notation.
+- Exact PR-head CI [43691172177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43691172177) SUCCESS at `673319e267edeca7bf1a4d082fdf17835cfe8ffc`: 292 Python tests + 68 subtests, 21 Node tests, 67 Playwright Chromium tests, 0 npm vulnerabilities, build and generated-data freshness pass.
+- Two intermediate CI failures identified CSV field quoting and assertion wording issues; both were corrected before the successful exact-head run.
+- **BURMESE-YANGON-RIME-GRID-001 — PARTIAL:** no exhaustive item-level rime × coda × tone × phonation inventory or independent lexical adjudication. The university crosswalk documents its own analytical correspondences and is not direct extraction from MED entries.
+- Runtime status remains WITHHELD for all 15 rows. Independent adjudicated IPA gold remains 0; accuracy remains null; no runtime mappings or generated pronunciation data changed.
