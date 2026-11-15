@@ -9,9 +9,9 @@ test("Google Burmese UnicodeLabelMaker port maps codepoints to pinned input-symb
 });
 
 test("Google Burmese input port rejects codepoints outside the pinned codepoint symbol table", () => {
-  const result = googleInputSymbols("က႞");
+  const result = googleInputSymbols("ကက" + String.fromCodePoint(0x10a0));
   assert.equal(result.complete, false);
-  assert.deepEqual(result.unsupported, ["႞"]);
+  assert.deepEqual(result.unsupported, [String.fromCodePoint(0x10a0)]);
 });
 
 test("independent vowels use the exact names in the input codepoint symbol table", () => {
