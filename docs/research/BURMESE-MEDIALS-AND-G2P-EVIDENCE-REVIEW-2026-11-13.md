@@ -916,3 +916,22 @@ Sources:
 - WHO Myanmar Library catalogue record: https://kohammr.searo.who.int/bib/487
 
 No lexical rows, IPA labels, source permissions, runtime rules or Ukrainian mappings were added or changed in this review.
+
+## 2026-11-15 — Mya2Rom identifies the MED's modified MLCTS variant (secondary evidence)
+
+A further source materially narrows the MED notation question. The public **Myanmar Open Wordnet / Mya2Rom** repository documents five output modes and explicitly distinguishes:
+- MLCTS as an orthographic transcription system;
+- “MLCTS, modified” / MLCTS2 as a more phonetic version;
+- the modified version as the one used by the Myanmar Language Commission itself for its Myanmar-English Dictionary and by SEAlang.
+
+This is the first source found in this review that explicitly names the MED-associated variant as **MLCTS2**. It remains a third-party implementer statement, not a primary MLC notation key: Mya2Rom's author does not reproduce the dictionary's front matter or a page-level MED entry as proof. It therefore supports the working identification “MED uses modified MLCTS / MLCTS2” at secondary-documentation confidence, but does not yet establish exact symbol semantics or every dictionary convention.
+
+The repository also makes its implementation limits unusually clear. It describes its IPA output as the Wikipedia flavour (including use of N rather than nasalized vowels); acknowledges reliance on a public-domain script and Wikipedia/Wiktionary rules; and documents missing schwa and voicing-sandhi modelling, incomplete stacked-letter and asat handling, omitted alternate pronunciations, and Pali/Sanskrit exceptions. Consequently:
+- Mya2Rom is useful as a **secondary comparator / implementation lead**, not as a gold IPA oracle.
+- Its MLCTS2 output may help generate candidate queries for checking MED entries, but may not be represented as direct transcription from the MLC dictionary.
+- Its IPA output must not be promoted to independent adjudicated IPA or used to validate the project's G2P accuracy.
+- Its published CC-BY-SA-4.0 license is recorded as metadata for the external code; no code or tables were copied into this project, and this entry is not a project-wide licensing decision.
+
+Registered source MYA2ROM2017 and documentary claim CLM-MYA2ROM-MLCTS2-MED-IDENTIFICATION-001; added a regression guard that preserves the secondary-only and non-gold boundary. No runtime or Ukrainian mapping changed.
+
+Source: https://github.com/myanmaropenwordnet/mya2rom (README and repository license; accessed 2026-11-15).
