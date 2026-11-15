@@ -199,3 +199,13 @@ Mooney & Repetti-Ludlow's experiments used one female native Yangon consultant a
 ### Printed-table verification correction — Green 2005
 
 A page-image check of Green's printed Table (9) and §2.2 (PDF pp.6–8) resolves the previously ambiguous OCR symbol: the open-only mid monophthongs are /e, o, ɔ/. The additional /ɛ/ class is allowed in open syllables and before /ʔ/, but not before /N/ (example (14)). The evidence CSV now records this as a separate twelfth row with its own source claim and regression assertion. This correction is based on the page image, not a guessed Unicode or IPA conversion.
+
+
+## 2026-11-15 — expanded tone and dialect evidence
+
+New source records and source claims were added for Gruber 2011, Tian 2018 and Dellwo & Jenny 2020. The rime/prosody evidence dataset now contains 18 source-linked rows (all `WITHHELD` from runtime), including:
+- Gruber's limited Rangoon-listener/one-speaker cue-perception experiment: tone perception integrates phonation, F0 and duration; no single cue is sufficient.
+- Tian's grammatical induced-creaky-tone analysis: surface realization can depend on syntax, pragmatic factors and prosodic-word context.
+- Dellwo & Jenny's standard/southern comparison: different weighting of voice-quality and F0 cues across 10+10 speakers, from a conference abstract only.
+
+These findings strengthen the requirement to keep lexical tone, phonation, duration, grammatical tone and dialect profile separate. They do not supply a redistributable pronunciation lexicon or authorize a runtime tone decoder.
