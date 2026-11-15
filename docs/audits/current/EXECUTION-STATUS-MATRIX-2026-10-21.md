@@ -2479,3 +2479,8 @@ These are raw-output diagnostics, not independent IPA gold, accuracy or promotio
 
 
 The rime/prosody evidence artifact now contains 12 rows (not 11): a printed-page check of Green 2005 corrected the open-only set to /e, o, ɔ/ and separately records /ɛ/ as open or pre-/ʔ/, excluding /ɛN/. Exact-head CI remains pending.
+
+
+### Verification checkpoint — 2026-11-15
+
+The rime/prosody evidence batch's code/data/test head is `f0c240abde1a1aedefcfcb3f9694311318f91c04`. Manual CSV/reference checks pass (12 rows, 16 fields, unique IDs, valid source/claim links, all WITHHELD). An earlier required CI attempt failed on two assertion wording mismatches (289 passed + 68 subtests); those assertions were corrected. The latest exact-head CI run `43689588512` remains QUEUED, so the task remains PARTIAL pending hosted verification. Local clone/test execution was unavailable because github.com DNS resolution failed in the container.
