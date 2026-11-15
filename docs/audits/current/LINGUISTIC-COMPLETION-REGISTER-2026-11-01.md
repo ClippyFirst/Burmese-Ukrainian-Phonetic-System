@@ -2428,3 +2428,11 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 
 - Exact data/test head `74dc298086292bd6cbaeb965eb1a6ad9e1926a74` passed workflow [43692279971](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692279971): 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, build and generated-data freshness pass.
 - CSV diff hygiene: one row changed in source claims and one row in the lexical audit relative to pre-change head; unrelated rows preserved. Runtime and generated data unchanged. Documentation-only closeout commits follow this verified code/data head.
+
+
+## 2026-11-15 — any: lexical evidence extension
+
+- Expanded `CLM-WIKTIONARY-ANY-COLON-WORD-LEVEL-EXAMPLES-001` and the `any:` row in `romanization_rime_collision_lexical_audit.csv` with စဉ်း /sɪ́ɴ/, ကျဉ်း /t͡ɕɪ́ɴ/, and ဖျဉ်း /pʰjɪ́ɴ/. The `ဉ်း` side now has four word-level secondary entries including အကျဉ်း /ʔət͡ɕɪ́ɴ/; the opposite `ည်း` side remains နည်း /nɛ́/ or /ní/.
+- Added regression coverage for exact IPA/MLCTS forms and preservation of source-unit distinction.
+- Evidence remains secondary lexicographic transcription, not a controlled minimal pair or primary MLC adjudication. No runtime, IPA gold, Ukrainian mapping or generated data changed.
+- Pages inspected 2026-11-15: Wiktionary entries for စဉ်း, ကျဉ်း, ဖျဉ်း, အကျဉ်း and နည်း.
