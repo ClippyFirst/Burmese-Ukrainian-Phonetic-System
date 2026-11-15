@@ -2887,7 +2887,7 @@ Work branch: `fix/ipa-first-hybrid-pipeline-2026-11-15`.
 | Task | Status | Evidence / acceptance |
 |---|---|---|
 | Make the hybrid orchestrator the actual source of phonetic UI output | PARTIAL pending exact-head CI | `render()` now displays `analyzeHybrid().ipa` and `.uk`, rather than the pre-orchestrator `convert()` strings |
-| Enforce selected IPA → one Ukrainian adapter | PARTIAL pending exact-head CI | Selected typed IPA is passed through `renderUkrainian()`; unresolved IPA stays withheld |
+| Enforce selected IPA → one Ukrainian adapter | PARTIAL pending exact-head CI | Selected typed IPA is passed through `renderUkrainian()`; segmental-only IPA and its UA adaptation remain visible as PROVISIONAL candidates, while full canonical status is withheld |
 | Preserve provider provenance and no-voting policy | DONE_VERIFIED by code inspection; CI pending | Provider candidates remain separate, typed, provisional; no external fallback |
 | Distinguish tone-only differences from segmental divergence | PARTIAL pending exact-head CI | Regression tests cover tone underspecification, tone disagreement and segmental divergence |
 | Keep dialect profile matching explicit | BLOCKED | Google and Epitran profile compatibility is not independently adjudicated |
@@ -2913,3 +2913,8 @@ Research constraints incorporated: Oo20's corpus is Yangon-recorded speech with 
 - Current implementation status: canonical IPA selection is blocked unless segmental IPA, explicit prosody status and an explicit profile ID are present. The browser parser currently supplies no such lexical/prosodic annotation; simple forms such as ka remain SEGMENTAL_ONLY.
 - Browser parser no longer computes a parallel sy.uk or a second ipaText/ukText output. convert() returns structural segments; analyzeHybrid() owns the main phonetic result; the selected IPA reaches renderUkrainian() once.
 - Exact-head CI remains pending at this ledger update; see PR #154. Do not mark the implementation DONE_VERIFIED until all relevant jobs, including built-browser Playwright, pass.
+
+
+### Segmental candidate display refinement — 2026-11-15
+
+The browser now follows the Python engine's existing distinction: a deterministic segmental string such as ka may be displayed with its IPA-adapted Ukrainian candidate, but both remain explicitly provisional while tone/phonation/quantity and profile evidence are missing. The complete/canonical claim remains withheld; unknown structures such as မြန် remain bracketed. This avoids turning evidence caution into an empty interface while keeping the full-pronunciation status honest.
