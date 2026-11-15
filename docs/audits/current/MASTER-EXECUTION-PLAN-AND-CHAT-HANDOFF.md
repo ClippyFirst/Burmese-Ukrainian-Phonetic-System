@@ -875,3 +875,10 @@ The 2020 Burmese speech corpus paper describes a Yangon-recorded speech corpus w
 - Code/test files updated through GitHub Contents API. Exact-head workflow and runtime tests have not yet been observed; do not mark this work DONE_VERIFIED until CI completes.
 - Local tests were not run because this connector session exposes repository read/write operations but no local checkout/command runner.
 - Remaining genuine blockers: independent profile-matched IPA adjudication (0 records), provider dialect equivalence, full phonological coverage and any source/license permissions not explicitly established.
+
+
+### 2026-11-15 — prosody/profile gate
+
+The first IPA-first patch exposed a further semantic issue: a deterministic string such as `ka` can represent only the segmental skeleton while Burmese lexical tone/phonation/quantity remain unresolved. Canonical IPA selection now requires all three: (1) established project segmental IPA, (2) explicit established prosody status, and (3) an explicit profile ID. The browser parser currently supplies no profile-matched lexical tone annotation, so its simple `ka` result is retained as `SEGMENTAL_ONLY`, adapted only as a provisional preview, and withheld from the main output.
+
+This is supported by the scope-limited phonetic evidence: Watkins (2001) describes four non-reduced tone categories for one Rangoon consultant with pitch, phonation and length correlates [Wat01]; Oo et al. (2020) describe tone-related vowel distinctions in the Google Burmese G2P grammar [Oo20]. No lexical gold or dialect equivalence is inferred from either paper.
