@@ -12,13 +12,17 @@ if (model.available !== true) throw new Error("Google WFST model asset is not av
 const referencePath = process.argv[2];
 if (!referencePath) throw new Error("Usage: node scripts/verify_google_wfst_model_parity.mjs <reference.tsv>");
 const lines = readFileSync(referencePath, "utf8").split(/\r?\n/u).filter(Boolean);
-if (!lines.length) throw new Error("Google thrax_g2p produced no reference rows");
+const expectedInputs = ["ကေ", "ကော်", "မြန်", "ယူ"];
+if (lines.length !== expectedInputs.length) {
+  throw new Error("Google thrax_g2p returned " + lines.length + " rows; expected " + expectedInputs.length);
+}
 let checked = 0;
 for (const [index, line] of lines.entries()) {
   const tab = line.indexOf("\t");
   if (tab < 1) throw new Error("Malformed thrax_g2p TSV line " + (index + 1) + ": " + line);
   const input = line.slice(0, tab);
   const expected = line.slice(tab + 1).trim();
+  if (input !== expectedInputs[index]) throw new Error("Unexpected CLI input row " + (index + 1) + ": " + input);
   const encoded = googleInputSymbols(input);
   if (!encoded.complete) throw new Error("Browser input-symbol port rejects Google CLI sample: " + input);
   const actual = transduceWfst(encoded.symbols, model);
