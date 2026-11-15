@@ -17,7 +17,9 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # The pinned 2017 OpenFst release is not compatible with GCC 15; use the
+    # stable Ubuntu 22.04/GCC 11 toolchain for reproducible model generation.
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/checkout@v7

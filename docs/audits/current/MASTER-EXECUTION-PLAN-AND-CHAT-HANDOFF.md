@@ -787,3 +787,5 @@ The paper documents a potentially useful 42 h 39 min / 307-speaker audio corpus,
 - Second CI correction record: run 43752563844 confirmed Bazel 7.4.1, but `--noenable_bzlmod` was placed as a startup option and Bazel rejected it. The flag is now moved after the `build` command (`bazel build --noenable_bzlmod ...`). Third exact-head run is pending.
 
 - Browser regression correction: the first hybrid UI test run on 74bf1ea passed 69/70 Playwright tests; the only failure was an existing romanization test counting a now-hidden phonetic hybrid-panel heading. The selector now scopes to visible article headings (`article:visible`); all other Node/Python/Playwright cases in that run passed. Exact rerun is pending.
+
+- Third Pages build finding: Bazel 7.4.1 with WORKSPACE mode loaded the legacy OpenFst source, but its 2017 `unique_ptr` implementation fails under the runner's GCC 15. The Pages build runner is now pinned to Ubuntu 22.04/GCC 11, a compatible toolchain; the next model-build attempt is pending.
