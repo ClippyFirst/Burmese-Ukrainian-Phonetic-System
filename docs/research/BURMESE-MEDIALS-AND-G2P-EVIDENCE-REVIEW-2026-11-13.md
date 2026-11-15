@@ -935,3 +935,19 @@ The repository also makes its implementation limits unusually clear. It describe
 Reconciled this finding with the already-vendored source MYA2ROM044 and its existing documentary claims CLM-MYA2ROM-SEALANG-MLCTS2-001, CLM-MYA2ROM-MLCTS-VS-MLCTS2-001 and CLM-MYA2ROM-LIMITATIONS-001; no duplicate source/claim rows were retained. Added a regression test over the existing registry entries. No runtime or Ukrainian mapping changed.
 
 Source: https://github.com/myanmaropenwordnet/mya2rom (README and repository license; accessed 2026-11-15). The vendored v0.4.4 file and upstream README/license were already registered in MYA2ROM044; this review did not add another source row.
+
+
+## 2026-11-15 — lexical tone, grammatical tone and dialect-scoped cues
+
+The additional literature review reinforces that a segmental spelling-to-IPA rule is not a complete pronunciation model:
+
+- Gruber's four-way perception experiment used ten native listeners who had relocated from Rangoon and stimuli from one female speaker. Phonation, F0 and duration interacted; no single cue specified the four-way contrast. The experiment used two carrier syllables and resynthesized tokens, so it is evidence about cue use, not a full lexical decoder [GRUBER2011].
+- Tian analyzes induced creaky tone as a grammatical alternation from low/high tone conditioned by syntax, pragmatic factors and prosodic-word domains. A surface IPA form can therefore require more than a local orthographic syllable [TIAN2018].
+- Dellwo and Jenny report different cue weighting in standard and southern Burmese: standard speakers relied more on voice-quality correlates, southern speakers more on F0. The source is a JASA meeting abstract with 20 speakers (10 per variety), not a complete dialect grammar [DELLWO2020].
+- Mooney and Repetti-Ludlow's analysis treats the open/closed vowel alternations as tone-independent and conditioned by syllable/coda sonority; their experimental sample is one female Yangon consultant. Keep vowel/coda alternation separate from tone assignment [MOONEY2021].
+
+The source registry, source-claim registry and rime/prosody evidence table now record these claims. All three new evidence rows remain `WITHHELD` from runtime. No lexical tone, induced-creaky-tone, vowel-alternation or dialect conversion rule was added.
+
+### Pipeline consequence
+
+Keep orthographic syllabification, lexical identity, phonemic segmental representation, lexical tone, phonation, quantity, grammatical/prosodic context and surface phonetic realization as distinct typed layers. For canonical output, the coarse browser gate `prosodyStatus` must only be set after the applicable tone/phonation/quantity dimensions and context are accounted for (or explicitly marked not applicable) for a named profile. A profile name by itself is not evidence; an IPA-looking string by itself is not evidence.
