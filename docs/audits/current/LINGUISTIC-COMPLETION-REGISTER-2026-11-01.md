@@ -2346,3 +2346,11 @@ Independent expert-adjudicated IPA gold remains 0; empirical accuracy remains nu
 ## 2026-11-15 optional diagnostic terminal results
 
 Run 43647671628 completed successfully: Epitran, CRF and pinned Google Thrax/OpenFst jobs all passed. Google returned 6/6 outputs with 0 runtime errors; CRF returned 100/100 predictions and 84 source-concordant rows. Both report gold_count=0 and accuracy=null; CRF scoring remains NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. Artifacts are retained in GitHub Actions (Google/Epitran until 2027-02-12; CRF until 2026-12-14). No engine was promoted.
+
+
+## Source-scoped rime and prosody evidence — 2026-11-15
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BURMESE-RIME-PROSODY-MATRIX-001 | PARTIAL (implementation added; exact-head CI pending) | 11 source-linked rows in `data/burmese/rime_prosody_evidence.csv`; JSON Schema and dedicated regression tests; seven new claims link Green 2005 and Mooney & Repetti-Ludlow 2021 | Mark DONE_VERIFIED only after exact-head CI passes. This is not a complete lexical rime inventory, IPA gold, or runtime rule set. All rows remain WITHHELD. |
+| BURMESE-YANGON-RIME-GRID-001 | PARTIAL | Green's 50-rhyme analysis and Mooney's restricted one-speaker experiment provide complementary but non-identical evidence | Need a complete, profile-matched, item-level rime × coda × tone × phonation grid with source locators and adjudication; no extrapolation into missing cells. |
