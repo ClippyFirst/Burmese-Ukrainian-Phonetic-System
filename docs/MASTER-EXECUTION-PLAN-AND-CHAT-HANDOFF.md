@@ -2858,3 +2858,17 @@ Implemented a small, targeted accessibility improvement in the two public HTML e
 Current branch head after these changes: `481c26d6951d4795e16e239f9332c3e42f7d3f44` (1085 ahead / 0 behind main). File-level verification through GitHub confirms both pages contain the skip link and focusable main target, the shared stylesheet contains the focus-only skip-link rule and reduced-motion media query, and the browser suite contains all three regression cases. The required workflow run is not yet exposed for this exact head (commit workflow lookup returned no runs; combined commit status has not been verified as successful). Do not mark this acceptance gate DONE_VERIFIED until hosted CI passes.
 
 **Status:** implementation present; automated regression coverage authored; acceptance **PARTIAL / CI PENDING**. Manual screen-reader, mobile viewport, zoom/reflow and deployed visual QA remain TODO; no claim of WCAG conformance is made. The change does not alter conversion behavior or phonological mappings.
+
+
+## Accessibility verification closeout — 2026-11-15
+
+Required workflow [43690500850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43690500850) completed **SUCCESS** for PR #147 head `a415dc1a89c7d9cf06a78896e3dcab3bb3824004` (GitHub tested merge ref `c559d4d0bbb88c44f7cd64bf199014b26b23d556`). Exact logged outcomes:
+- Python: **291 passed + 68 subtests**.
+- Node: **21 passed, 0 failed**.
+- Playwright Chromium: **67 passed**, including the three new accessibility regressions.
+- IPA-gold validator executed successfully but reports 0 records, 0 annotations and 0 adjudicated records (`NOT_READY_NO_ADJUDICATED_GOLD`).
+- npm audit: **0 vulnerabilities**; production build passed; generated web data freshness passed.
+
+The keyboard skip navigation and reduced-motion browser regressions are now **DONE_VERIFIED** by exact PR-head CI. This is not a full accessibility certification. A static WCAG contrast calculation on selected existing foreground/background pairs found: body 15.43:1, muted body 5.16:1, status text 5.73:1, input hint 4.56:1, warning copy 6.63:1, warning link 8.48:1, primary-button text 6.19:1, focus blue against the main surface 6.81:1. The smallest sampled ratio is 4.56:1; this limited source-color sample is not an automated full-page contrast audit and does not cover every state, overlay, disabled control or rendered pixel.
+
+Manual screen-reader, mobile reflow, 200–400% zoom, deployed visual QA and full-page contrast/state coverage remain **TODO**. No WCAG conformance claim is made. This verification supersedes the prior CI-pending note; the exact tested PR head is `a415dc1`, while the branch may advance with documentation-only closeout commits.
