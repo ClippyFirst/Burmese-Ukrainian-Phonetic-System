@@ -2593,3 +2593,8 @@ The additional attestations expand coverage but do not resolve the primary MLC a
 |---|---|---|---|
 | MLCTS `um:`, source unit `ုမ်း` | Myanmar Net dictionary index lists borrowed proper noun `ဟုမ်းမရူး` (“Home Rule”) with non-IPA respelling `/houn: ma ru:/`; first component `ဟုမ်း` contains `ုမ်း` | Added source registry entry, documentary claim, existing audit-row provenance and regression guard | PARTIAL / borrowed English compound; non-IPA respelling only; underlying dictionary edition unspecified; not independent phonetic gold or primary MLC adjudication; no runtime/Ukrainian promotion |
 
+
+
+## 2026-11-15 — aung. evidence-boundary consistency correction
+
+A final cross-check of the existing lexical audit found stale acceptance-boundary wording: the row correctly described myG2P compound-internal attestations for both source units, but later appended text still said the second source unit ေါင့် was “unobserved”. Corrected the boundary in place. The evidence distinction is now explicit: ောင့် has standalone Wiktionary စောင့် /sa̰ʊɴ/; ေါင့် is attested only as segmented components ဒေါင့် /da̰ʊɴ/ in four compounds and ခေါင့် /kʰa̰ʊɴ/ in ဖြစ်ခေါင့်ဖြစ်ခဲ in the pinned myG2P dictionary. Neither component attestation establishes a standalone lexical lemma. The separate TUFS /sâuɴ/ vs Wiktionary /sa̰ʊɴ/ analysis discrepancy for စောင့် remains unresolved. Added regression assertions against stale “unobserved” wording and for the component-only limitation. No evidence status, source claim, runtime, IPA gold, Ukrainian mapping or generated output was promoted or changed.

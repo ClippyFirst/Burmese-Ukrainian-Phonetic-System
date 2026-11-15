@@ -2457,3 +2457,8 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - Registered Myanmar Net's dictionary index entry `ဟုမ်းမရူး` (“Home Rule”), with non-IPA respelling `/houn: ma ru:/`; the first component `ဟုမ်း` contains source unit `ုမ်း`.
 - Added source `SHWE_NET_HOME_RULE_ENTRY`, claim `CLM-SHWE-UM-COLON-LOAN-COMPOUND-001`, and regression coverage. Explicitly recorded that the site does not identify the underlying dictionary edition in the result and that its respelling is not IPA.
 - This is secondary lexical corroboration for a borrowed English compound only. The `um:` row remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime, IPA gold or Ukrainian mapping changed.
+
+
+## 2026-11-15 — aung. evidence-boundary consistency correction
+
+A final cross-check of the existing lexical audit found stale acceptance-boundary wording: the row correctly described myG2P compound-internal attestations for both source units, but later appended text still said the second source unit ေါင့် was “unobserved”. Corrected the boundary in place. The evidence distinction is now explicit: ောင့် has standalone Wiktionary စောင့် /sa̰ʊɴ/; ေါင့် is attested only as segmented components ဒေါင့် /da̰ʊɴ/ in four compounds and ခေါင့် /kʰa̰ʊɴ/ in ဖြစ်ခေါင့်ဖြစ်ခဲ in the pinned myG2P dictionary. Neither component attestation establishes a standalone lexical lemma. The separate TUFS /sâuɴ/ vs Wiktionary /sa̰ʊɴ/ analysis discrepancy for စောင့် remains unresolved. Added regression assertions against stale “unobserved” wording and for the component-only limitation. No evidence status, source claim, runtime, IPA gold, Ukrainian mapping or generated output was promoted or changed.

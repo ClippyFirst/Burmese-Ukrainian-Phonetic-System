@@ -155,6 +155,10 @@ def test_secondary_word_level_evidence_statuses_keep_their_limits_explicit():
     assert rows["aung."]["evidence_status"] == "SECONDARY_SYSTEM_EQUIVALENCE"
     assert "caung." in rows["aung."]["observed_mlcts"] and "/sa̰ʊɴ/" in rows["aung."]["observed_ipa"]
     assert "second source-unit side" in rows["aung."]["interpretation"]
+    boundary = rows["aung."]["acceptance_boundary"].lower()
+    assert "component-level" in boundary and "four compounds" in boundary
+    assert "remains unobserved" not in boundary
+    assert "no primary mlc adjudication" in boundary and "no runtime" in boundary
     assert rows["auk"]["evidence_status"] == "SECONDARY_SYSTEM_EQUIVALENCE"
     assert "pauk" in rows["auk"]["observed_mlcts"] and "kyauk" in rows["auk"]["observed_mlcts"]
     assert "/paʊʔ/" in rows["auk"]["observed_ipa"] and "/t͡ɕaʊʔ/" in rows["auk"]["observed_ipa"]
