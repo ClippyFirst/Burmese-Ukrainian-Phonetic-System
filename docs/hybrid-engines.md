@@ -130,7 +130,7 @@ Watkins's IPA description is based on one Rangoon consultant and a careful readi
 
 ### Additional safety gate — segmental IPA is not complete Burmese IPA
 
-A project-generated string such as `ka` may encode only the segmental onset+rime. It is not canonical full IPA unless the corresponding prosodic analysis (tone/phonation/quantity as applicable) and an explicit dialect profile are established. The browser orchestrator now requires both `prosodyStatus` and `profileId` before selecting project IPA. Otherwise it labels the internal string `SEGMENTAL_ONLY`, adapts it only as a provisional Ukrainian preview, and withholds the main IPA/Ukrainian output.
+A project-generated string such as `ka` may encode only the segmental onset+rime. It is not canonical full IPA unless the corresponding prosodic analysis (tone/phonation/quantity as applicable) and an explicit dialect profile are established. The browser orchestrator now requires both `prosodyStatus` and `profileId` before selecting project IPA. Otherwise it labels the internal string `SEGMENTAL_ONLY`, displays the segmental IPA and its Ukrainian adaptation as provisional candidates through the same IPA adapter, and withholds only the claim that they are complete/canonical full-pronunciation outputs.
 
 This is intentionally conservative. Watkins's one-consultant Rangoon description documents four non-reduced tone categories whose phonetic correlates include pitch, phonation and length [Wat01]. Oo et al.'s Google grammar uses tone-related vowel distinctions [Oo20]. A plain string match between providers cannot fill missing prosody or prove dialect equivalence.
 
