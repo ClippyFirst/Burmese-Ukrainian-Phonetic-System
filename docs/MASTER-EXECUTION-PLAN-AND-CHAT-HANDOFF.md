@@ -3137,3 +3137,14 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 - Ledger refinement: PARTIAL — discoverable secondary MED-linked lexical index and access routes; BLOCKED — primary MLC notation key / original entries, SEAlang content access and independent reuse-rights verification. No source rows or lexical data were added because no primary notation key, entry image or reusable dataset was obtained.
 - Sources: https://shachi.org/resources/3949 ; https://www.tuninst.net/RBM-TYPEWRITER/von01.htm ; https://www.tuninst.net/HUMAN-VOICE/HV-indx.htm ; https://www.thedunwoodypress.com/product-page/myanmar-english-dictionary ; https://kohammr.searo.who.int/bib/487
 - No runtime, IPA gold, Ukrainian mapping, licensing decision, merge, deployment or release change occurred. Readiness remains PARTIAL PROTOTYPE.
+
+
+## 2026-11-15 — continuation checkpoint after MLC access review
+
+- Final branch head for this continuation: `2a9d82022e0cc1c1f3a35cbef0a910cc73ffe69f` (the latest commit in this sequence updates the execution matrix; preceding commits update the research review and this handoff).
+- PR #147: OPEN / DRAFT / mergeable; head is the dedicated research branch; 1,208 commits ahead / 0 behind `main`, 78 changed files. No reviews or review threads are present. PR #129 remains OPEN / DRAFT / non-mergeable and was not modified.
+- Main remains the base; no merge, deployment, release or main-branch write occurred.
+- The required CI result for this exact documentation head is **not verified**: the combined commit-status endpoint returned no statuses, and the PR-triggered workflow lookup returned no runs for this head. Prior successful exact-head CI on code-bearing commit `23983ab8ade692e1795039dd114c352dddee16ef` remains valid for that code/test snapshot only; it must not be represented as a test run on this later documentation head.
+- The current docs-only changes refine the MLC dictionary access evidence and remove duplicate validation sentences from `system.html`. No runtime or data files, source registries, IPA labels, gold annotations or Ukrainian mappings changed in this continuation.
+- Remaining acceptance blockers: primary MED notation key and page-located entries plus independent rights review; independent adjudicated IPA gold and overlap-free scoring; complete Yangon vowel/rime/coda/tone/phonation coverage; Python/browser parity against independent gold; manual screen-reader, zoom, contrast and focus QA.
+- Overall status remains **PARTIAL PROTOTYPE / NOT LINGUISTICALLY RELEASE-READY**.
