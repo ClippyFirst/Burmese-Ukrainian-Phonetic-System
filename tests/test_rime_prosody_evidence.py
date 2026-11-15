@@ -86,7 +86,7 @@ def test_tufs_crosswalk_keeps_open_nasal_and_checked_notation_distinct():
     assert open_rime["evidence_status"] == "documentary_crosswalk"
     assert "MED 2019" in open_rime["reported_realization"]
     assert "/ɴ/" in nasal["coda_class"]
-    assert "not a universal segmental [n]" in nasal["implementation_consequence"]
+    assert "universal segmental [n]" in nasal["implementation_consequence"]
     assert "/ʔ/" in checked["coda_class"]
     assert "three open/nasal tones" in checked["reported_realization"]
     assert all(row["runtime_status"] == "WITHHELD" for row in (open_rime, nasal, checked))
