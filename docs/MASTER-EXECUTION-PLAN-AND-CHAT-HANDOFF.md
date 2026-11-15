@@ -2835,3 +2835,14 @@ A visual check of Green 2005's printed Table (9) and §2.2 pages resolved an OCR
 - Python: **291 passed + 68 subtests**; Node: **21 passed**; Playwright Chromium: **64 passed**.
 - npm audit: **0 vulnerabilities**; production build and generated-data freshness passed; IPA-gold structure validator executed successfully but still has zero adjudicated gold.
 - The 12-row source-linked rime/prosody evidence artifact is now `DONE_VERIFIED`. The full modern Yangon lexical rime grid, independent adjudicated IPA gold and runtime phonological coverage remain `PARTIAL/BLOCKED`; no IPA or Ukrainian mapping was promoted.
+
+
+## Optional diagnostic artifact inspection — 2026-11-15 (run 43689588524)
+
+The optional workflow [43689588524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588524) has now completed successfully on code/data/test head `f0c240abde1a1aedefcfcb3f9694311318f91c04` (PR merge ref `3c4c5c20bd9d8837d5af53832d69ae4bc9a92c52`). All three jobs completed: CRF baseline, Epitran raw output, and Google Thrax/OpenFst build + symbol-table invariants + raw-output smoke.
+
+- Google Thrax/OpenFst: **6/6** structural probes returned non-empty output; 0 runtime errors; independent gold 0; accuracy `null`; `RAW_OUTPUT_SMOKE_NOT_ACCURACY`. Report SHA-256 `eb9e803bf203e363bcf2eb173e21024798b55678f62bbdd3205bd539f85db0f6`; artifact ID `14152141084`, GitHub artifact digest `sha256:eb9e803bf203e363bcf2eb173e21024798b55678f62bbdd3205bd539f85db0f6`, expires 2027-02-13.
+- CRF: **100/100** predictions; **84/100** source-concordant; gold 0; accuracy `null`; status `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. Model training membership is not established, probe syllabification is supplied rather than evaluated, and source labels are related to the model's myG2P source. Artifact ID `14151244554`, digest `sha256:39e9d49a4f100af0cb1b0e65032ebb76cc1d53c5ef30bba4787968ceec912b91`, expires 2026-12-15.
+- Epitran **1.35.3**: all six structural probes emitted raw output; expected IPA remains empty and all comparisons are unscored. Report records zero eligible verified gold and null exact-match accuracy. Artifact ID `14151438782`, digest `sha256:2ab261cf68a6078f0428575c6d0c8ec2264e640486cb7e98c11a3b585afc68e1`, expires 2027-02-13.
+
+The three ZIP artifacts were downloaded and their JSON payloads inspected. This confirms reproducible build/execution and exposes candidate disagreement, not correctness. Do not calculate an accuracy from source concordance, promote any output to IPA gold, enable an external engine in runtime, or use these results to derive Ukrainian mappings. The optional workflow is now fully closed; the required exact-head CI remains the separate acceptance evidence for the implementation batch.
