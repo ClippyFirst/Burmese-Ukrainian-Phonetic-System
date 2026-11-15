@@ -2804,6 +2804,6 @@ Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime dis
 ## 2026-11-15 — Mya2Rom narrows the MED notation variant (secondary evidence)
 
 - **PARTIAL / stronger identification:** Mya2Rom's README distinguishes orthographic MLCTS from modified/phonetic MLCTS2 and explicitly states that MLCTS2 is used by the Myanmar Language Commission for its Myanmar-English Dictionary and by SEAlang. This is a secondary implementer statement, not inspection of the MLC dictionary's notation key.
-- Registered source MYA2ROM2017 and documentary claim CLM-MYA2ROM-MLCTS2-MED-IDENTIFICATION-001; added a test preserving the secondary/non-gold boundary.
+- Reconciled against the already registered/vendored source MYA2ROM044 and existing MLCTS2, MLCTS-vs-MLCTS2 and limitations claims; no duplicate source or claim row retained. Added a regression test covering those existing records.
 - Mya2Rom is not an IPA gold source: its README documents no schwa or voicing-sandhi modelling, incomplete stacked-letter/asat handling, omission of alternate pronunciations and Pali/Sanskrit exceptions. Its IPA mode is described as a Wikipedia-style output, not the MED's own transcription.
 - Acceptance remains: inspect primary MED front matter and page-located entries; verify exact symbol semantics and source rights independently; reconcile Mya2Rom/SEAlang/TIL forms against the primary pages. No runtime, IPA labels, gold or Ukrainian mappings were changed.
