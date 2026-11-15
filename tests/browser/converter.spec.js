@@ -524,9 +524,13 @@ test("converter and methodology pages avoid page-level horizontal overflow at na
       await page.goto(route);
       const dimensions=await page.evaluate(()=>({
         viewport:document.documentElement.clientWidth,
-        document:document.documentElement.scrollWidth
+        document:document.documentElement.scrollWidth,
+        offenders:[...document.querySelectorAll("body *")].map(el=>{
+          const rect=el.getBoundingClientRect();
+          return {tag:el.tagName,id:el.id,className:typeof el.className==="string"?el.className:"",left:Math.round(rect.left),right:Math.round(rect.right),width:Math.round(rect.width)};
+        }).filter(el=>el.right>document.documentElement.clientWidth+1||el.left < -1).slice(0,12)
       }));
-      expect(dimensions.document,route+" at "+width+"px").toBeLessThanOrEqual(dimensions.viewport);
+      expect(dimensions.document,route+" at "+width+"px; offenders="+JSON.stringify(dimensions.offenders)).toBeLessThanOrEqual(dimensions.viewport);
     }
   }
 });
