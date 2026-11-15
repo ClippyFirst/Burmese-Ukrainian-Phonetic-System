@@ -2560,3 +2560,12 @@ No runtime, IPA gold, Ukrainian mapping or generated pronunciation data changed.
 ## Final am. evidence verification — 2026-11-15
 
 The final data/test head `74dc298086292bd6cbaeb965eb1a6ad9e1926a74` passed workflow [43692279971](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692279971): 293 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, build and generated-data freshness pass. Diff hygiene verified that only one source-claim row and one lexical-audit row changed relative to the pre-change head; no runtime/generated artifacts changed. Later commits in this closeout are documentation-only.
+
+
+## Additional lexical attestations for any: — 2026-11-15
+
+| Area | Evidence extension | Validation | Status / boundary |
+|---|---|---|---|
+| MLCTS `any:` collision, source units `ဉ်း;ည်း` | Four Wiktionary entries on `ဉ်း`: အကျဉ်း /ʔət͡ɕɪ́ɴ/, စဉ်း /sɪ́ɴ/, ကျဉ်း /t͡ɕɪ́ɴ/, ဖျဉ်း /pʰjɪ́ɴ/; opposite `ည်း` remains နည်း /nɛ́/ or /ní/ | Existing source claim and lexical audit updated; regression test checks all examples and preserves the two source-unit spellings | PARTIAL / secondary lexical evidence only; not a controlled minimal pair or primary MLC adjudication; no runtime/Ukrainian mapping promotion |
+
+The additional attestations expand coverage but do not resolve the primary MLC adjudication requirement.
