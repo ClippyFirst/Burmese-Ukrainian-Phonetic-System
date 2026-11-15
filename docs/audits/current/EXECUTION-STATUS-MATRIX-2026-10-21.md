@@ -2886,13 +2886,13 @@ Work branch: `fix/ipa-first-hybrid-pipeline-2026-11-15`.
 
 | Task | Status | Evidence / acceptance |
 |---|---|---|
-| Make the hybrid orchestrator the actual source of phonetic UI output | PARTIAL pending exact-head CI | `render()` now displays `analyzeHybrid().ipa` and `.uk`, rather than the pre-orchestrator `convert()` strings |
-| Enforce selected IPA → one Ukrainian adapter | PARTIAL pending exact-head CI | Selected typed IPA is passed through `renderUkrainian()`; segmental-only IPA and its UA adaptation remain visible as PROVISIONAL candidates, while full canonical status is withheld |
-| Preserve provider provenance and no-voting policy | DONE_VERIFIED by code inspection; CI pending | Provider candidates remain separate, typed, provisional; no external fallback |
-| Distinguish tone-only differences from segmental divergence | PARTIAL pending exact-head CI | Regression tests cover tone underspecification, tone disagreement and segmental divergence |
+| Make the hybrid orchestrator the actual source of phonetic UI output | DONE_VERIFIED | Public render uses `analyzeHybrid().ipa` and `.uk`; parser-side `sy.uk` and pre-hybrid aggregate output removed; test run 43768906066 passed on code/test head `e321e72b610bbe4516570411821702d5597cca9a` |
+| Enforce selected IPA → one Ukrainian adapter | DONE_VERIFIED | Full selected IPA and segmental-only candidate previews both pass through the same `renderUkrainian()` adapter; segmental preview is explicitly PROVISIONAL and canonical fields remain withheld; Python API exposes matching additive metadata |
+| Preserve provider provenance and no-voting policy | DONE_VERIFIED | Typed provider candidates retain provenance; external outputs never vote or replace project candidates; uncertain/unsupported structure blocks internal candidate leakage |
+| Distinguish tone-only differences from segmental divergence | DONE_VERIFIED | NFD-aware comparison distinguishes exact agreement, segmental agreement with tone/prosody difference, and segmental divergence; 47 Node tests and 70 Playwright tests passed; built browser conditionally checks Google candidate when model is present |
 | Keep dialect profile matching explicit | BLOCKED | Google and Epitran profile compatibility is not independently adjudicated |
 | Independent lexical IPA gold and accuracy | BLOCKED | Adjudicated profile-matched gold count remains 0 |
-| Full medials/kinzi/conjunct/rime/prosody coverage | PARTIAL/BLOCKED | Structural recognition and provider outputs exist; evidence-backed canonical realization is incomplete |
+| Full medials/kinzi/conjunct/rime/prosody coverage | PARTIAL/BLOCKED | Structural recognition and provider outputs exist; evidence-backed canonical realization is incomplete; lexical/contextual tone and profile gold remain unavailable |
 
 Research constraints incorporated: Oo20's corpus is Yangon-recorded speech with word segmentation, not a phoneme-labelled G2P gold set; Watkins 2001 is one Rangoon consultant and must remain scope-limited; Hla14's reported accuracy is orthographic syllabification, not G2P; Thu16's MLC lexicon is not licensed for redistribution by the paper itself.
 
@@ -2926,3 +2926,8 @@ The Python RuleBasedBurmeseEngine now exposes the same distinction additively: `
 
 
 Registry checkpoint from current branch: `data/burmese/sources.csv` has 101 data rows; `data/burmese/source_claims.csv` has 221 data rows; `data/burmese/rime_prosody_evidence.csv` has 18 data rows. The 3 new tone/context/dialect evidence rows are all WITHHELD.
+
+
+### Exact verification checkpoint — 2026-11-15
+
+Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`. GitHub Actions test run [43768906066](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43768906066) completed SUCCESS: 315 Python tests + 68 subtests; 47 Node tests passed; production build passed; generated/web data validation passed; Playwright built-browser suite 70 passed; npm audit reported 0 vulnerabilities. The independent optional Google FST raw-output workflow [43768905998](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43768905998) is still building the pinned upstream grammar; it is not a required gate for the IPA-first UI correction and remains pending. PR #154 remains Draft; no Pages deployment of this branch has occurred yet. Local tests were not run because no local checkout/command runner was exposed.
