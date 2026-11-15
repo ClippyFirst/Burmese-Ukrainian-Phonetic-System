@@ -2818,3 +2818,12 @@ Optional workflow [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian
 ### Source transcription correction
 
 A visual check of Green 2005's printed Table (9) and §2.2 pages resolved an OCR ambiguity. The open-only mid-vowel set is /e, o, ɔ/; /ɛ/ is permitted in open syllables and before /ʔ/, but not before /N/. The rime/prosody matrix now has 12 rows and a dedicated claim/test for this distinction. This is a source-faithful correction only; no runtime rule was enabled.
+
+
+### Verification checkpoint — rime/prosody evidence batch (2026-11-15)
+
+- Final code/data/test head for this batch: `f0c240abde1a1aedefcfcb3f9694311318f91c04`. The new matrix has 12 rows, 16 consistent CSV fields, unique evidence IDs, valid source/claim references, schema-required fields aligned to the CSV header, and all 12 rows explicitly `WITHHELD`.
+- Required CI run `43689485005` on the earlier test head failed with **2 assertion-text mismatches only** in the new test file; 289 tests passed and 68 subtests passed. The test expectations and source wording were corrected, and Green's /ɔ/ vs /ɛ/ distribution was aligned with the printed page image.
+- Latest required exact-head workflow `43689588512` on `f0c240a` is **QUEUED**, not yet passed. Optional diagnostics `43689588524` are also queued. Do not mark the matrix DONE_VERIFIED until exact-head CI succeeds.
+- A local clone/test run was not possible in this session because the container could not resolve github.com. No local test result is claimed.
+- Runtime, IPA and Ukrainian mappings remain unchanged. The full modern Yangon lexical rime grid and independent adjudicated IPA gold remain open.
