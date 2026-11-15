@@ -94,7 +94,7 @@ textarea::placeholder{color:#aaa69d}
 .document th{color:var(--muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
 .pipeline{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0;padding:16px;border-left:3px solid var(--green);background:var(--soft);font-size:.86rem;line-height:1.6}
 .pipeline b{color:var(--red)}
-.table-wrap{max-width:100%;overflow-x:auto}
+.table-wrap{display:block;width:100%;min-width:0;max-width:100%;overflow-x:auto}
 .status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
 .status-grid div{padding:16px;border:1px solid var(--line);background:var(--soft)}
 .status-grid b{display:block;color:var(--green);font:800 .78rem ui-monospace,monospace}
