@@ -20,7 +20,7 @@ def test_rime_prosody_evidence_is_schema_shaped_linked_and_withheld():
     evidence = rows(DATA / "rime_prosody_evidence.csv")
     schema = json.loads((ROOT / "schemas" / "rime_prosody_evidence.schema.json").read_text(encoding="utf-8"))
 
-    assert len(evidence) == 11
+    assert len(evidence) == 12
     assert len({row["evidence_id"] for row in evidence}) == len(evidence)
     for row in evidence:
         jsonschema.validate(row, schema)
@@ -36,13 +36,17 @@ def test_green_rime_constraints_remain_source_scoped():
     evidence = {row["evidence_id"]: row for row in rows(DATA / "rime_prosody_evidence.csv")}
     diphthongs = evidence["GREEN-DIPHTHONG-CODA-001"]
     mid = evidence["GREEN-MID-VOWEL-OPEN-001"]
+    epsilon = evidence["GREEN-EPSILON-OPEN-CHECKED-001"]
     nasal_tone = evidence["GREEN-NASAL-TONE-001"]
 
     assert "/ei ai ou au/" in diphthongs["vowel_class"]
     assert "/ʔ/ or /N/" in diphthongs["coda_class"]
     assert mid["syllable_type"] == "open"
+    assert "/e o ɔ/" in mid["vowel_class"]
+    assert epsilon["syllable_type"] == "open or checked"
+    assert "never /N/" in epsilon["coda_class"]
     assert "checked absent" in nasal_tone["tone_class"]
-    assert all(row["runtime_status"] == "WITHHELD" for row in (diphthongs, mid, nasal_tone))
+    assert all(row["runtime_status"] == "WITHHELD" for row in (diphthongs, mid, epsilon, nasal_tone))
 
 
 def test_mooney_vowel_alternation_is_not_encoded_as_tone_to_vowel_rule():
