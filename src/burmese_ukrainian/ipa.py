@@ -9,9 +9,15 @@ ONSET_IPA = {
     "ယ": "j", "ရ": "ɹ", "လ": "l", "ဝ": "w", "သ": "θ",
     "ဟ": "h", "ဠ": "l", "အ": "ʔ",
 }
+# Only entries explicitly marked "established" in ipa_vowels.csv may enter
+# canonical IPA. The other values remain visible in the structural parser and
+# provisional/research layers, but are not silently promoted by this adapter.
+ESTABLISHED_ONSETS = {
+    "က", "ခ", "ဂ", "င", "တ", "ထ", "ဒ", "န", "ပ", "ဖ", "ဗ", "မ",
+    "ယ", "လ", "ဝ", "ဟ",
+}
 VOWEL_IPA = {
-    "e": "e", "i": "i", "ii": "iː", "ai": "ɛ", "u": "u",
-    "uu": "uː", "tall_aa": "a", "aa": "a", "anusvara": "",
+    "e": "e", "i": "i", "u": "u", "aa": "a",
 }
 
 
@@ -22,13 +28,24 @@ def _ipa(s):
     if s.get("status") != "established":
         return None
 
+    # Medials, stacked consonants and kinzi are parsed structurally but do
+    # not yet have profile-adjudicated IPA realizations in this adapter.
+    # Withhold the whole syllable rather than silently omitting these segments.
+    if s.get("medials") or s.get("conjunct") or s.get("kinzi"):
+        return None
+
     # Coda/asat and prosodic marks are parsed structurally but do not yet have
     # an evidence-backed surface-IPA realization in this adapter. Withhold the
     # whole syllable rather than silently dropping contrastive material.
     if s.get("coda") or s.get("tone_mark"):
         return None
 
-    o = ONSET_IPA.get(s.get("onset", {}).get("character"))
+    onset = s.get("onset", {}).get("character")
+    # ONSET_IPA also contains documented hypotheses for previews. Canonical
+    # output is narrower and follows ipa_onsets.csv status=established.
+    if onset not in ESTABLISHED_ONSETS:
+        return None
+    o = ONSET_IPA.get(onset)
     if o is None:
         return None
     v = s.get("vowel")

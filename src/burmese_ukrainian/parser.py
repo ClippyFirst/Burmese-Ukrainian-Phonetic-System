@@ -62,10 +62,20 @@ def segment_graphemes(text: str) -> list[str]:
         start = i
         i += 1
         while i < len(s) and _is_myanmar_text(s[i]):
+            # A base consonant followed by ASAT is a final of the current syllable,
+            # not the onset of a new syllable. Keep Python aligned with the browser.
+            is_coda_base = (
+                i + 1 < len(s)
+                and s[i] in BASE_CONSONANTS
+                and s[i + 1] == "\u103a"
+            )
             if (
                 s[i] in BASE_CONSONANTS
-                and s[i - 1] != "\u1039"
-                and s[i - 3 : i] != KINZI
+                and not is_coda_base
+                and (
+                    s[i - 1] != "\u1039"
+                    or (s[i - 3 : i] == KINZI and not s[start:i].startswith(KINZI))
+                )
             ):
                 break
             i += 1
@@ -141,6 +151,50 @@ def _parse_cluster(cluster: str) -> Syllable:
             "reason": "no_dependent_vowel_sign",
         }
 
+    # Kinzi can occur inside the preceding syllable, immediately before the
+    # following written onset. Preserve it as a structural final nasal rather
+    # than absorbing that next onset into the same grapheme cluster.
+    if i + 2 < len(cluster) and cluster[i : i + 3] == KINZI:
+        sy.kinzi = {
+            "sequence": [f"U+{ord(c):04X}" for c in KINZI],
+            "base": "nga",
+            "phonological_role": "final_nasal",
+            "position": "coda",
+        }
+        sy.coda = {
+            "character": "င",
+            "codepoint": "U+1004",
+            "marker": "asat",
+            "asat_codepoint": "U+103A",
+            "orthographic_function": "kinzi_final_nasal",
+        }
+        i += 3
+
+    # Canonical Myanmar ordering can place a tone mark before a written
+    # final consonant. Preserve that mark, then recognize the base+ASAT coda.
+    while i < len(cluster) and cluster[i] in SPECIAL and SPECIAL[cluster[i]] in {"dot_below", "visarga"}:
+        role = SPECIAL[cluster[i]]
+        sy.tone_mark = {"marker": role, "codepoint": f"U+{ord(cluster[i]):04X}"}
+        i += 1
+
+    # A final consonant is written as a base consonant followed by ASAT.
+    # When it follows the syllable onset/medials/vowels, keep it inside this
+    # orthographic syllable as a coda rather than leaving it unparsed.
+    if (
+        i + 1 < len(cluster)
+        and cluster[i] in BASE_CONSONANTS
+        and cluster[i + 1] == "\u103a"
+    ):
+        final = cluster[i]
+        sy.coda = {
+            "character": final,
+            "codepoint": f"U+{ord(final):04X}",
+            "marker": "asat",
+            "asat_codepoint": "U+103A",
+            "orthographic_function": "final_consonant",
+        }
+        i += 2
+
     while i < len(cluster) and cluster[i] in SPECIAL:
         role = SPECIAL[cluster[i]]
         # Virama is only licensed in the immediately parsed conjunct sequence
@@ -172,6 +226,33 @@ def _serialize_syllable(syllable: Syllable) -> dict:
     record = asdict(syllable)
     record["status"] = syllable.analysis.status
     return record
+
+
+
+def project_syllable_structure(syllable: dict) -> dict:
+    """Return the shared orthographic projection, excluding phonetic guesses."""
+    onset = syllable.get("onset") or {}
+    kinzi = syllable.get("kinzi") or {}
+    coda = syllable.get("coda") or {}
+    vowel = syllable.get("vowel") or {}
+    tone_mark = syllable.get("tone_mark") or {}
+    return {
+        "raw": syllable.get("raw", ""),
+        "codepoints": list(syllable.get("codepoints", [])),
+        "onset": onset.get("character"),
+        "kinzi": bool(kinzi),
+        "conjunct": [item.get("character") for item in syllable.get("conjunct", [])],
+        "medials": [item.get("id") for item in syllable.get("medials", [])],
+        "vowel_signs": [item.get("id") for item in vowel.get("signs", [])],
+        "inherent_vowel_status": (syllable.get("inherent_vowel") or {}).get("status"),
+        "coda": ({
+            "character": coda.get("character"),
+            "marker": coda.get("marker"),
+            "orthographic_function": coda.get("orthographic_function"),
+        } if coda else None),
+        "tone_mark": tone_mark.get("marker"),
+        "analysis_status": syllable.get("status", "established"),
+    }
 
 
 def parse_burmese(text: str) -> dict:

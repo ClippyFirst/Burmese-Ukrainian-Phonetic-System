@@ -19,19 +19,21 @@ def test_unsupported_bare_consonant_is_withheld():
     assert result["status"] == "PARTIAL"
 
 
-def test_legacy_hybrid_name_is_rule_engine_not_ensemble():
-    assert HybridBurmeseEngine is RuleBasedBurmeseEngine
+def test_hybrid_wraps_rule_engine_without_changing_final_ipa():
+    baseline = RuleBasedBurmeseEngine().analyze("ကာ")
     result = HybridBurmeseEngine().analyze("ကာ")
-    assert result["engine"] == "burmese-deterministic-rules-v1"
-    assert result["external_backends_used"] == []
+    assert result["ipa"] == baseline["ipa"]
+    assert result["external_candidates"] == []
 
 
-def test_legacy_factory_rejects_external_backend_injection():
-    import pytest
+def test_hybrid_factory_accepts_candidates_but_does_not_promote_them():
     from burmese_ukrainian import create_hybrid_engine
-
-    with pytest.raises(TypeError):
-        create_hybrid_engine({"external-model": lambda _: "ka"})
+    baseline = RuleBasedBurmeseEngine().analyze("ကာ")
+    result = create_hybrid_engine({"external-model": lambda _: "ka"}).analyze("ကာ")
+    assert result["ipa"] == baseline["ipa"]
+    assert result["external_candidates"][0]["provider"] == "external-model"
+    assert result["external_candidates"][0]["promotion"].startswith("WITHHELD")
+    assert result["external_backends_used"] == ["external-model"]
 
 
 def test_provisional_onset_registry_includes_the_registered_nya_letter():
@@ -42,3 +44,38 @@ def test_provisional_onset_registry_includes_the_registered_nya_letter():
     assert result["ipa"] is None
     assert result["status"] == "PARTIAL"
     assert result["provisional_ipa"] == "ɲ"
+
+
+def test_canonical_ipa_withholds_analysis_dependent_onsets_and_vowels():
+    from burmese_ukrainian.ipa import to_ipa
+
+    # These values exist in the source registries as analysis-dependent
+    # hypotheses. Their presence in the parser inventory must not promote them
+    # to canonical IPA merely because a string mapping exists in Python.
+    for source in ("စေ", "ဓာ", "ကီ", "ကဲ", "ကူ", "ကါ"):
+        result = to_ipa(source)
+        assert result["syllables"][0]["ipa"] is None, source
+        assert result["syllables"][0]["phonetic_status"] == "analysis_dependent", source
+
+    # The established subset remains executable.
+    for source, expected in (("ကေ", "ke"), ("ကိ", "ki"), ("ကု", "ku"), ("ကာ", "ka")):
+        result = to_ipa(source)
+        assert result["syllables"][0]["ipa"] == expected, source
+        assert result["syllables"][0]["phonetic_status"] == "conservative_partial", source
+
+
+def test_runtime_ipa_allowlists_match_the_established_source_registries():
+    import csv
+    from pathlib import Path
+    from burmese_ukrainian.ipa import ESTABLISHED_ONSETS, VOWEL_IPA
+
+    root = Path(__file__).resolve().parents[1]
+    with (root / "data/burmese/ipa_onsets.csv").open(encoding="utf-8", newline="") as stream:
+        onset_rows = list(csv.DictReader(stream))
+    with (root / "data/burmese/ipa_vowels.csv").open(encoding="utf-8", newline="") as stream:
+        vowel_rows = list(csv.DictReader(stream))
+
+    expected_onsets = {row["character"] for row in onset_rows if row["status"] == "established"}
+    expected_vowels = {row["id"] for row in vowel_rows if row["status"] == "established"}
+    assert ESTABLISHED_ONSETS == expected_onsets
+    assert set(VOWEL_IPA) == expected_vowels

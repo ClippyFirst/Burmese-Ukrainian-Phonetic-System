@@ -12,36 +12,44 @@ test("non-Myanmar material is preserved in output",async({page})=>{await page.go
 test("scientific page is reachable",async({page})=>{await page.goto("/system.html");await expect(page.locator("h1")).toContainText("українське читання");});
 test("evidence status is not overstated",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကာ");await expect(page.locator("#ipa")).toContainText("ka");await expect(page.locator("#uk-status")).toContainText("PROPOSED");await expect(page.locator("#issues")).toBeVisible();});
 test("pure non-Myanmar input is not presented as a successful Burmese analysis",async({page})=>{await page.goto("/");await page.locator("#source").fill("ABC 123");await expect(page.locator("#uk")).toHaveText("ABC 123");await expect(page.locator("#uk-status")).toContainText("UNSUPPORTED");});
-test("kinzi-containing syllable is withheld rather than guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("င်္ကာ");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toContainText("⟦");await expect(page.locator("#uk-status")).toContainText("NOT_ESTABLISHED");});
-test("unsupported palatal medial is withheld instead of guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျား");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ကျား⟧");await expect(page.locator("#uk-status")).toContainText("NOT_ESTABLISHED");});
+test("kinzi-containing syllable is withheld rather than guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("င်္ကာ");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toContainText("⟦");await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");});
+test("unsupported palatal medial is withheld instead of guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျား");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ကျား⟧");await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");});
 test("closed ော rime with an unsupported medial remains withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျောင်း");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ကျောင်း⟧");});
 test("kinzi belongs to the preceding linguistic syllable",async({page})=>{await page.goto("/");await page.locator("#source").fill("မင်္ဂလာ");await expect(page.locator("#syllables")).toContainText("မင်္");await expect(page.locator("#syllables")).toContainText("ဂ");});
 test("ha-to with unsupported medial context is not guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("ရှ");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ရှ⟧");});
 
-test("nasal closed i remains short ɪ, not an overgeneralized eɪ",async({page})=>{
+test("nasal coda remains withheld until surface realization is adjudicated",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ပင်");
-  await expect(page.locator("#ipa")).toContainText("pɪɴ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ပင်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
-test("checked closed i becomes eɪ with a glottal coda",async({page})=>{
+test("analysis-dependent onset withholds checked-i IPA rather than guessing its rime",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("စိတ်");
-  await expect(page.locator("#ipa")).toContainText("seɪʔ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦စိတ်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
-test("closed u with a nasal coda becomes oʊɴ",async({page})=>{
+test("closed u with a nasal coda remains withheld pending profile adjudication",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကုန်");
-  await expect(page.locator("#ipa")).toContainText("koʊɴ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ကုန်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("medial wa rimes remain withheld until contextual rules are verified",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကွက် ကွန်");await expect(page.locator("#ipa")).toHaveText("? ?");await expect(page.locator("#uk")).toContainText("⟦ကွက်⟧");await expect(page.locator("#uk")).toContainText("⟦ကွန်⟧");});
 
-test("i+u closed rime becomes aɪ with a glottal coda",async({page})=>{
+test("i+u checked rime remains withheld pending profile adjudication",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကိုက်");
-  await expect(page.locator("#ipa")).toContainText("kaɪʔ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ကိုက်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("medial wa with a sonorant coda remains withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("ဆွမ်း");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ဆွမ်း⟧");});
@@ -60,23 +68,23 @@ test("mixed Myanmar and supplementary-block Myanmar material does not silently b
   await expect(page.locator("#issues")).not.toContainText("збережено без змін");
 });
 
-test("aspirated onset IPA is tokenized and receives a Ukrainian candidate",async({page})=>{
+test("analysis-dependent aspirated onset is withheld from canonical IPA",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ဆာ");
-  await expect(page.locator("#ipa")).toContainText("sʰa");
-  await expect(page.locator("#uk")).toContainText("с\u0027а");
-  await expect(page.locator("#uk-status")).toContainText("PROPOSED");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ဆာ⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
-test("theta IPA is tokenized through its explicitly marked candidate rule",async({page})=>{
+test("analysis-dependent theta onset remains withheld from canonical IPA",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("သာ");
-  await expect(page.locator("#ipa")).toContainText("θa");
-  await expect(page.locator("#uk")).toContainText("та");
-  await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦သာ⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
-test("kinzi-coda structure is retained while unsupported IPA is withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("မင်္ဂလာ");await expect(page.locator("#ipa")).toContainText("?");await expect(page.locator("#syllables")).toContainText("မင်္");await expect(page.locator("#uk-status")).toContainText("NOT_ESTABLISHED");});
+test("kinzi-coda structure is retained while unsupported IPA is withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("မင်္ဂလာ");await expect(page.locator("#ipa")).toContainText("?");await expect(page.locator("#syllables")).toContainText("မင်္");await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");});
 
 test("Burmese punctuation remains preserved around withheld words",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျောင်း၊ ကျောင်း။");await expect(page.locator("#ipa")).toContainText("?");await expect(page.locator("#uk")).toContainText("၊");await expect(page.locator("#uk")).toContainText("။");await expect(page.locator("#syllables")).not.toContainText("Нерозібраний знак ၊");await expect(page.locator("#syllables")).not.toContainText("Нерозібраний знак ။");});
 
@@ -128,12 +136,12 @@ test("open E vowel sign is analyzed and rendered as a provisional Ukrainian cand
   await expect(page.locator("#uk-status")).toContainText("PROPOSED");
 });
 
-test("the conventional ော် rime does not become an unsupported checked coda",async({page})=>{
+test("the conventional ော် rime remains withheld pending asat-conditioned adjudication",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကော်");
-  await expect(page.locator("#ipa")).toContainText("kɔ");
-  await expect(page.locator("#uk")).toContainText("ко");
-  await expect(page.locator("#ipa")).not.toContainText("?");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ကော်⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("the ည် rime after an unsupported ya/ra medial remains withheld",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကြည်");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ကြည်⟧");});
@@ -158,12 +166,12 @@ test("prosodic markers are summarized once instead of repeated in every segment 
 
 test("the medial ra in မြန် remains withheld rather than being dropped",async({page})=>{await page.goto("/");await page.locator("#source").fill("မြန်");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦မြန်⟧");});
 
-test("initial Burmese /juː/ is rendered contextually, not as literal candidate alternatives",async({page})=>{
+test("analysis-dependent uu vowel withholds /juː/ and Ukrainian output",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ယူ");
-  await expect(page.locator("#ipa")).toContainText("juː");
-  await expect(page.locator("#uk")).toContainText("ю");
-  await expect(page.locator("#uk")).not.toContainText("й/я/є/ю/йо");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ယူ⟧");
+  await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 
@@ -174,6 +182,36 @@ test("supplementary Myanmar code points are segmented by Unicode code point, not
   await expect(page.locator("#issues")).not.toContainText("збережено без змін");
 });
 
+
+test("shared phonetic-status fixtures preserve analysis-dependent structural uncertainty", async ({page}) => {
+  for (const fixture of sharedUnicodeContract.phonetic_status_cases) {
+    await page.goto("/");
+    await page.locator("#source").fill(fixture.input);
+    await expect(page.locator("#ipa"), fixture.id).toHaveText("?");
+    await expect(page.locator("#uk-status"), fixture.id).toContainText("IPA: " + fixture.expected_browser_ipa_status);
+    await expect(page.locator("#uk"), fixture.id).toContainText("⟦");
+  }
+});
+
+test("shared structural fixtures preserve kinzi coda syllable boundaries", async ({page}) => {
+  for (const fixture of sharedUnicodeContract.structural_cases) {
+    await page.goto("/");
+    await page.locator("#source").fill(fixture.input);
+    const labels = await page.locator("#syllables .syllable strong").allTextContents();
+    expect(labels, fixture.id).toEqual(
+      fixture.browser.syllables.map((raw, index) => String(index + 1).padStart(2, "0") + "  " + raw)
+    );
+    await expect(page.locator("#uk-status"), fixture.id).toContainText(
+      "IPA: " + fixture.browser.first_ipa_status
+    );
+    if (fixture.browser.first_note) {
+      await expect(page.locator("#syllables"), fixture.id).toContainText(fixture.browser.first_note);
+    }
+    if (fixture.browser.required_preserved_mark) {
+      await expect(page.locator("#syllables"), fixture.id).toContainText(fixture.browser.required_preserved_mark);
+    }
+  }
+});
 
 test("shared Unicode contract fixtures preserve unsupported Myanmar status across runtimes", async ({page}) => {
   for (const fixture of sharedUnicodeContract.cases) {
@@ -213,7 +251,7 @@ test("unresolved anusvara is not silently deleted from browser IPA",async({page}
   await page.locator("#source").fill("ကံ");
   await expect(page.locator("#ipa")).toHaveText("?");
   await expect(page.locator("#uk")).toHaveText("⟦ကံ⟧");
-  await expect(page.locator("#uk-status")).toContainText("NOT_ESTABLISHED");
+  await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");
   await expect(page.locator("#syllables")).toContainText("IPA не встановлено");
 });
 
@@ -286,8 +324,8 @@ test("unsupported Myanmar units remain visible in mixed Ukrainian output",async(
   await page.locator("#source").fill("ကာꩠ");
   await expect(page.locator("#source")).toHaveValue("ကာꩠ");
   await expect(page.locator("#syllables")).toContainText("ꩠ");
-  await expect(page.locator("#uk")).toHaveText("ка⟦ꩠ⟧");
-  await expect(page.locator("#uk-status")).toContainText("UNSUPPORTED");
+  await expect(page.locator("#uk")).toHaveText("⟦ကာꩠ⟧");
+  await expect(page.locator("#uk-status")).toContainText("UNCERTAIN");
 });
 
 test("full Burmese greeting sentence preserves every segmented source unit",async({page})=>{
@@ -384,4 +422,127 @@ test("MLCTS mode renders the separate Ukrainian syllable crosswalk",async({page}
   await expect(page.locator("#ua-romanization-result")).toHaveText("ка ABC");
   await expect(page.locator("#ua-romanization-status")).toContainText("PROPOSED");
   await expect(page.locator("#ipa")).toBeHidden();
+});
+
+
+test("browser keeps the medial-ra nasal coda in one orthographic syllable",async({page})=>{
+  await page.goto("/");
+  await page.locator("#source").fill("မြန်");
+  const rows=page.locator("#syllables .syllable");
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first().locator("strong")).toContainText("မြန်");
+  await expect(page.locator("#ipa")).toContainText("?");
+  await expect(page.locator("#uk")).toContainText("⟦မြန်⟧");
+});
+
+test("browser separates မြန်မာ into two syllables, not three",async({page})=>{
+  await page.goto("/");
+  await page.locator("#source").fill("မြန်မာ");
+  const rows=page.locator("#syllables .syllable");
+  await expect(rows).toHaveCount(2);
+  await expect(rows.nth(0).locator("strong")).toContainText("မြန်");
+  await expect(rows.nth(1).locator("strong")).toContainText("မာ");
+  await expect(page.locator("#ipa")).toContainText("?");
+});
+
+test("unknown Myanmar extension letters stay attached to the same structural cluster as Python",async({page})=>{
+  await page.goto("/");
+  const source="ကာ"+String.fromCodePoint(0xAA60);
+  await page.locator("#source").fill(source);
+  const rows=page.locator("#syllables .syllable");
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first().locator("strong")).toContainText(source);
+  await expect(page.locator("#uk")).toHaveText("⟦"+source+"⟧");
+  await expect(page.locator("#uk-status")).toContainText("UNCERTAIN");
+});
+
+test("unknown Myanmar extension letter before a supported onset preserves the onset boundary",async({page})=>{
+  await page.goto("/");
+  const unknown=String.fromCodePoint(0xAA60);
+  const source=unknown+"ကာ";
+  await page.locator("#source").fill(source);
+  const labels=await page.locator("#syllables .syllable strong").allTextContents();
+  expect(labels).toEqual(["01  "+unknown,"02  ကာ"]);
+  await expect(page.locator("#uk")).toContainText("⟦"+unknown+"⟧");
+  await expect(page.locator("#ipa")).toHaveText("?ka");
+});
+
+
+test("unsupported control characters delimit standalone bare consonants like Python", async ({page}) => {
+  for (const fixture of sharedUnicodeContract.bare_consonant_boundary_cases) {
+    await page.goto("/");
+    await page.locator("#source").fill(fixture.input);
+    await expect(page.locator("#ipa"), fixture.id).toHaveText(fixture.browser.ipa);
+    await expect(page.locator("#uk"), fixture.id).toContainText("⟦");
+  }
+});
+
+
+test("browser structural projection matches the shared Python contract",async({page})=>{
+  await page.goto("/");
+  for(const fixture of sharedUnicodeContract.structural_projection_cases){
+    await page.locator("#source").fill(fixture.input);
+    const rows=page.locator("#syllables .syllable[data-structure]");
+    await expect(rows,fixture.id).toHaveCount(1);
+    const projection=JSON.parse(await rows.first().getAttribute("data-structure"));
+    expect(projection,fixture.id).toEqual(fixture.python_projection);
+  }
+});
+
+
+test("keyboard users can skip the repeated header and reach the main content",async({page})=>{
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  const skip=page.getByRole("link",{name:"Перейти до основного вмісту"});
+  await expect(skip).toBeFocused();
+  await expect(skip).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#main-content")).toBeFocused();
+});
+
+test("reduced-motion preference disables smooth document scrolling",async({page})=>{
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await page.goto("/");
+  await expect.poll(()=>page.locator("html").evaluate(el=>getComputedStyle(el).scrollBehavior)).toBe("auto");
+});
+
+
+test("methodology page exposes the same keyboard skip navigation",async({page})=>{
+  await page.goto("/system.html");
+  await page.keyboard.press("Tab");
+  const skip=page.getByRole("link",{name:"Перейти до основного вмісту"});
+  await expect(skip).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#main-content")).toBeFocused();
+});
+
+
+test("converter and methodology pages avoid page-level horizontal overflow at narrow viewports",async({page})=>{
+  for(const width of [320,375,768]){
+    await page.setViewportSize({width,height:800});
+    for(const route of ["/","/system.html"]){
+      await page.goto(route);
+      if(route==="/system.html"&&width===320){
+        const tableScroll=await page.locator(".table-wrap").first().evaluate(el=>({
+          clientWidth:el.clientWidth,scrollWidth:el.scrollWidth,overflowX:getComputedStyle(el).overflowX
+        }));
+        expect(tableScroll.scrollWidth).toBeGreaterThan(tableScroll.clientWidth);
+        expect(tableScroll.overflowX).toBe("auto");
+      }
+      const dimensions=await page.evaluate(()=>({
+        viewport:document.documentElement.clientWidth,
+        document:document.documentElement.scrollWidth,
+        offenders:[...document.querySelectorAll("body *")].map(el=>{
+          const rect=el.getBoundingClientRect();
+          const parents=[];let node=el;
+          for(let depth=0;node&&depth<5;depth++,node=node.parentElement){
+            const box=node.getBoundingClientRect();const style=getComputedStyle(node);
+            parents.push({tag:node.tagName,className:typeof node.className==="string"?node.className:"",width:Math.round(box.width),left:Math.round(box.left),right:Math.round(box.right),clientWidth:node.clientWidth,scrollWidth:node.scrollWidth,overflowX:style.overflowX});
+          }
+          return {tag:el.tagName,id:el.id,className:typeof el.className==="string"?el.className:"",left:Math.round(rect.left),right:Math.round(rect.right),width:Math.round(rect.width),parents};
+        }).filter(el=>el.right>document.documentElement.clientWidth+1||el.left < -1).slice(0,4)
+      }));
+      expect(dimensions.document,route+" at "+width+"px; offenders="+JSON.stringify(dimensions.offenders)).toBeLessThanOrEqual(dimensions.viewport);
+    }
+  }
 });

@@ -25,7 +25,7 @@ Antony Green, “Word, Foot, and Syllable Structure in Burmese” (revised from 
 |---|---|---|
 | Green (1995/revised chapter) | Four-way low/high/creaky/checked analysis with major/minor syllables | SOURCE_ANALYSIS |
 | Mooney & Repetti-Ludlow (2021), [CC BY 4.0](https://doi.org/10.3765/plsa.v6i1.4900) | Two acoustic experiments with one female native Yangon consultant; duration/voice quality distinguish four tones in isolation, F0 distinguishes selected pairs; in sentential contexts duration largely neutralizes and pitch remains robust. Vowel alternations are argued to be coda/sonority-conditioned, not tone-driven. Four surface categories retained; killed H→HL with coda and creaky HL are hypotheses, not settled analysis. | PEER_REVIEWED_COMPETING_ANALYSIS; narrow one-speaker sample |
-| Duan & Zhu (2025), [publisher record](https://doi.org/10.1075/lali.00203.dua) | Two registers (modal and lower/breathy) and eight tones | PEER_REVIEWED_COMPETING_ANALYSIS; full paper/data not inspected |
+| Duan & Zhu (2025), [publisher record](https://doi.org/10.1075/lali.00203.dua) | Full text proposes eight yin/yang tone categories across modal and lower/breathy registers; five mixed-region speakers (two Yangon, two Taunggyi, one Mandalay region), 89 words and 694 valid tokens; reports T1/T3 speaker variation | PEER_REVIEWED_COMPETING_ANALYSIS; full text inspected, no audio accessed; mixed-region sample, not Yangon-only |
 | Repetti-Ludlow (2023), [Phonetica DOI](https://doi.org/10.1515/phon-2022-0026) | Voiceless sonorants show spread-glottis/turbulent cues; duration, F0 and following-vowel excitation contribute | CONSONANT_PHONATION_EVIDENCE, not vowel-tone inventory |
 | LREC 2020, [paper](https://aclanthology.org/2020.lrec-1.777.pdf) | Reports 34 consonants, seven basic vowels, schwa, four diphthongs and four tone categories; tone cues include pitch, contour, length and phonation | SYSTEM_DESCRIPTION, not gold data |
 
@@ -92,7 +92,7 @@ The paper therefore supports a typed distinction between phonemic voicelessness 
 
 - Green (2002) is the October 2002 ROA paper; Green (2005) is the published chapter in *Studies in Burmese Linguistics*, pp. 1–25. Both are the same research line; cite the exact edition used.
 - LREC 2020 is CC BY-NC. Its phonological description is usable as research evidence, but its corpus and resource package must not be copied into a commercial project without a separate rights review.
-- Duan & Zhu (2025) is an open-access CC BY 4.0 article. The publisher abstract and article outline establish the eight-tone/two-register proposal; the full empirical tables have not been extracted in this pass, so it remains a competing analysis, not implemented consensus.
+- Duan & Zhu (2025) is an open-access CC BY 4.0 article. The full text was inspected: it proposes eight yin/yang tone categories across modal and lower/breathy registers; §1.2 reports five speakers from Yangon, Taunggyi and the Mandalay region, 89 items and 694 valid tokens; §5.3 reports speaker variation, especially T1/T3. No audio was accessed. This remains a competing author analysis, not project consensus.
 - Repetti-Ludlow (2023) is a production study of a restricted subset of sonorants and contexts, not a general register or tone study.
 
 
@@ -116,3 +116,86 @@ The paper states that the authors' in-house Burmese speech corpora and segmentat
 
 
 **Extraction limit:** Green's 50-rhyme table is present in the source PDF, but the available text extraction corrupts several IPA symbols and tone marks. This pass records the table count and the source's explicit phonotactic restrictions, but does not reconstruct all 50 entries from corrupted OCR. A page-image/manual linguistic transcription is required before turning the table into machine-readable rows.
+
+
+## Full-text primary-source reconciliation — 2026-11-14
+
+### Thu et al. (2016), WSSANLP — benchmark interpretation
+
+The full paper confirms 25,300 Myanmar Language Commission dictionary words: 25,000 training items, three 100-word open test sets, and a separate 100-word closed test sampled from training. PER is phoneme-level Levenshtein after syllable alignment. Best open-set values are WFST 14.7 (Open1), 11.4 (Open2), and 15.7 (Open3, tied with CRF); PBSMT reports 16.1/13.1/22.0 and is described by the authors as best overall in manual evaluation, especially tone. The closed-set zero-error results are not held-out evidence. The paper's phone strings are romanized transcription, not project IPA. These figures are historical source-specific benchmark results, not accuracy estimates for this repository.
+
+### Oo et al. (2020), LREC — grammar and inventory
+
+The paper describes a Thrax grammar compiling to a weighted OpenFst transducer: Myanmar Unicode input, IPA phone output, 195 states and 2,966 arcs, with 139 input-side and 263 output-side epsilon transitions. It reports 88 phone symbols (34 consonants, 54 vowels), context-conditioned open and nasalized/glottally-closed vowel sets, four diphthongs, and four tone categories (low, high, creaky, checked). The paper's `/N/` notation is source-specific and not automatically a project decision about surface nasal consonants versus vowel nasalization. Counts and architecture are paper-reported, not independent current-build measurements. The in-house speech/segmentation corpus is explicitly not public domain; it is not imported.
+
+### Hlaing (2014) — orthographic segmentation, not G2P
+
+The full text reports 11,732 tested words and 99.93% word-level orthographic syllabification accuracy. It contains a numerical discrepancy: the abstract and Table 6 say 32,238 syllables, while §6.1 says 32,283. Table 4's counts imply eight stacked-word errors, while the prose says nine. This measures orthographic syllable-boundary segmentation, not pronunciation or IPA. The discrepancy is now explicitly recorded in the source registry; no corrected total is guessed.
+
+### Runtime acceptance consequence
+
+Medials, conjuncts and kinzi remain structurally parsed but are withheld by the IPA adapter until their Yangon-profile realizations are implemented and adjudicated. The parser still exposes the structural fields. Regression probes cover `ကြွေ`, `က္ကာ`, and `င်္ဂါ`; this is conservative abstention, not a new phonological rule.
+
+
+## Google WFST and primary-source closeout — 2026-11-14
+
+The current branch's optional comparator workflow **43582075278 SUCCESS**: pinned Google grammar built with Bazel 7.4.1, symbol-table invariants passed, and 6/6 structural-only probes emitted output. The artifact was downloaded and inspected; report SHA-256 `88372233d85df73593b030ee0f91aa678fe86fd1c6d5cdc18e7c609b8eefd2c6`, zero gold, accuracy null. Epitran 1.35.3 produced six raw structural-only outputs; CRF produced 100/100 outputs with 84 source-concordant but possible train/test overlap; both artifacts inspected, no accuracy claim. The required CI on the same test-bearing SHA passed 267 Python tests + 68 subtests, 20 Node tests, and 58 Playwright tests.
+
+Source registry closeout: **80 sources / 164 claims**. Rime ledger: **0 unadjudicated / 9 secondary equivalence / 1 conflict / 3 distinctions / 11 one-side-only / 1 special non-rime**. Independent adjudicated IPA gold remains 0. One high-severity npm vulnerability remains. PR #147 remains open/draft; PR #129 was selectively ported but left open and untouched.
+
+## Source-scoped onset, medial and coda constraints — 2026-11-15
+
+The project now keeps a 13-row, source-linked evidence matrix in data/burmese/onset_cluster_evidence.csv, validated by schemas/onset_cluster_evidence.schema.json and tests/test_onset_cluster_evidence.py.
+
+| Finding | Evidence scope | Consequence |
+|---|---|---|
+| Obligatory onset; placeless /N/ excluded from onset; only placeless /ʔ, N/ in coda | Green 2005, pp.4-5; one source analysis | Do not infer an onset or coda phonetic value from script signs alone |
+| C(G) permitted in major syllables | Green 2005, pp.1-2 | A broad C+glide template is not a complete legal cluster inventory |
+| Complex onset excluded in minor syllables | Green 2005, pp.2-3 | Scoped prohibition only; never generalize to all Burmese syllables |
+| Cluster tolerance at foot edge and simplification under reduction | Green 2005, pp.19-20 | Requires prosodic/morphological context; not an orthographic parser rule |
+| /mj/ examples | Green 2002, §1.1 p.2 | Attests a glide-bearing analysis, not a Unicode YA/RA mapping |
+| YA/RA, WA and HA correspondences | Ishida 2026, relevant medial sections | Keep palatalization, glide/rime alternatives and aspiration/fusion contextual |
+| Multiple medial signs | Hlaing 2014, Table 5 p.26 | Orthographic combinations are not a sequence of independent IPA segments |
+| Written Burmese and historical Rangoon inventories | STEDT Monograph 3, pp.61-66 | Keep historical and profile-specific inventories separate from modern standard Yangon |
+
+The matrix explicitly does not assert a complete prohibited consonant-pair list. In particular, the sequences ကျ and ကြ are not marked globally prohibited: Ishida documents velar-conditioned palatalized outcomes. Every row remains WITHHELD from runtime pending profile-matched lexical/phonetic evidence. See the workpack for locators and acceptance boundaries.
+
+
+## 10. Cross-source terminology matrix — phonemic category vs phonetic cue
+
+| Term/dimension | Green 2002/2005 | Watkins 2001 | Mooney & Repetti-Ludlow 2021 | Duan & Zhu 2025 | Repetti-Ludlow 2023 | Project interpretation |
+|---|---|---|---|---|---|---|
+| Tone inventory | Four major-syllable categories: low, high, creaky, checked; tone-bearing unit is the foot | Describes four categories, including killed; one Rangoon consultant, broad transcription | Retains four surface categories; acoustic cues differ by context | Proposes eight yin/yang categories across modal and lower/breathy registers | Not a tone-inventory study | Keep four-way and eight-way accounts separate; neither becomes a runtime selector |
+| Checked/killed | Checked category; coda analysis permits placeless /ʔ/; nasal rhymes exclude checked | Uses killed-tone terminology and describes /ʔ/ as the only modern coda | Uses killed label in examples with /ʔ/; does not license a universal merged label | Uses tone categories/register distinctions; not reducible to one coda label | Not in scope | Preserve lexical tone label and segmental coda as separate fields; do not infer one from the other outside the cited source |
+| Creaky | One of four tone categories | Broad tone description | Voice-quality measures contribute to tone contrasts; creaky is a surface category | Register/phonation participates in a competing eight-way analysis | Not a vowel-tone study | A creaky tone category is not identical to a generic creaky-voice phonetic feature |
+| Vowel length vs duration | Length is not phonemic in Green's analysis; major syllables are bimoraic and open vowels may be predictably longer | Broad phonetic descriptions do not establish a project-wide phonemic length contrast | Duration distinguishes categories in isolation but largely neutralizes in sentential frames | Length is one of the reported cues in the eight-category analysis | Not in scope | Keep phonemic quantity, moraic weight and measured duration as separate dimensions |
+| Voiceless sonorants | Proposes [spread glottis] as the phonological contrast rather than simply [voice] | Documents /j,w/ secondary articulation; not a dedicated sonorant-phonation experiment | Not the principal target | Lower/breathy register concerns vowels/register, not proof of consonant aspiration | 78% of voiceless-sonorant tokens show SG interval; 22% do not, in a restricted phrase-medial /a/ study | Consonantal voicelessness/aspiration must not be conflated with breathy vowel register or lexical tone |
+| Nasal coda /N/ | Placeless /N/; realized through preceding-vowel nasalization with approximate place conditioned by monophthong/diphthong | Source-specific coda and nasalization descriptions | Phrase-final nasal coda may lose its C-slot while nasal features remain on the vowel | Its own vowel/rhyme analysis must remain separate | Not in scope | Keep underlying /N/, orthographic ASAT, surface nasalization and place realization typed separately |
+| Glide/medial | C(G) template and /mj/ examples; no one-to-one Unicode medial map | /j,w/ may surface as secondary palatalization/labialization | Not the focus | Not the focus | Not the focus | A written medial is not automatically an independent [j] or [w]; preserve onset-conditioned effects |
+| Transcription convention | Broad IPA-style transcription of spoken Burmese; Written Burmese orthography transliterated separately via ALA-LC | Broad IPA based on one consultant | Experimental phonetic symbols and acoustic measures; not a complete script-to-IPA lexicon | Acoustic/phonological proposal, mixed-region sample | Acoustic measurements, restricted contexts | Keep source transcription, project IPA, phonemic notation and orthographic romanization distinct |
+
+**Source scope:** Green 2002/2005, Watkins 2001, Mooney & Repetti-Ludlow 2021, Duan & Zhu 2025 and Repetti-Ludlow 2023 are not independent replications of one common sample or transcription convention. The table reconciles terminology and incompatible analysis levels; it does not average them or establish a consensus inventory. Duan & Zhu's full text has been inspected, but no audio was accessed. Independent adjudicated project IPA gold remains 0; no runtime or Ukrainian mapping is enabled by this matrix.
+
+
+## 11. Source-scoped rime × coda × tone × phonation evidence — 2026-11-15
+
+Added `data/burmese/rime_prosody_evidence.csv` (11 source-linked rows), `schemas/rime_prosody_evidence.schema.json`, and `tests/test_rime_prosody_evidence.py`. The rows are typed by dimension and preserve the source's scope; all are `WITHHELD` from runtime.
+
+| Source finding | Scope and locator | Interpretation boundary |
+|---|---|---|
+| Diphthongs /ei ai ou au/ occur only in closed major syllables; /e, o/ are open-only in the listed analysis | Green 2005 §2.2, pp.7–8, examples (12)–(13) | Source-specific rime constraints; not a grapheme-to-IPA table |
+| Nasal rhymes permit low/high/creaky but not checked in Green's four-tone account | Green 2005 §1.1, p.3; §2.4, pp.13–14 | Keep the tone category distinct from coda /N/ and glottal /ʔ/ |
+| /N/ is placeless and realized through vowel nasalization, with approximate place varying after monophthongs vs diphthongs | Green 2005 §1.2, p.5 | Do not map ASAT directly to a standalone [ŋ]/[ɴ] |
+| Vowel length is non-contrastive in Green's account; major syllables are analyzed as bimoraic and duration varies with tone | Green 2005 §2.1, p.7 | Moraic weight, phonemic quantity and measured duration remain separate |
+| Mooney & Repetti-Ludlow describe different open vs closed vowel sets and closed-syllable centralization/diphthongization | 2021 §§2.1, 3; pp.26–31 | Their tone-independent sonority analysis is a competing account, not project consensus |
+| Acoustic cue weighting differs between isolation and sentence frames | 2021 §§2.1.1–2.2.1, pp.26–28 | Citation-form duration/F0 cannot be reused as a universal sentential realization rule |
+| Closed high/low/creaky tokens were nasalized and killed tokens oral in the experiment | 2021 §2.1, pp.26–27 | One-speaker experimental observation, not a universal ASAT-conditioned rule |
+
+Mooney & Repetti-Ludlow's experiments used one female native Yangon consultant and a restricted onset/vowel set; their work is valuable profile-relevant phonetic evidence but does not constitute a complete lexical inventory or independent multi-speaker validation. The article's reported acoustic results were inspected textually; project audio was not accessed.
+
+**Acceptance:** machine-readable source evidence and integrity tests are implemented; exact-head CI is required before marking the artifact `DONE_VERIFIED`. No IPA labels, Ukrainian correspondences, runtime phonological rules or tone-decoding behavior were added. The broader vowel × coda × tone × phonation inventory remains `PARTIAL`.
+
+
+### Printed-table verification correction — Green 2005
+
+A page-image check of Green's printed Table (9) and §2.2 (PDF pp.6–8) resolves the previously ambiguous OCR symbol: the open-only mid monophthongs are /e, o, ɔ/. The additional /ɛ/ class is allowed in open syllables and before /ʔ/, but not before /N/ (example (14)). The evidence CSV now records this as a separate twelfth row with its own source claim and regression assertion. This correction is based on the page image, not a guessed Unicode or IPA conversion.

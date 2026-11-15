@@ -220,3 +220,13 @@ The project uses a provenance-backed, double-annotated IPA gold workflow. See [t
 The phonetic website and Python API use fixed, local repository rules for Myanmar normalization, grapheme/syllable parsing and conservative IPA derivation. No neural inference, Google WFST, myG2P, network call or candidate voting participates in phonetic output. Unsupported syllables remain withheld. MLCTS remains a separate orthographic mode. See [the deterministic engine contract](docs/DETERMINISTIC-RULE-ENGINE.md).
 
 Python entry point: `from burmese_ukrainian import RuleBasedBurmeseEngine`. Deterministic execution does not make every PROPOSED pronunciation independently verified.
+
+
+## Evidence-gated hybrid IPA candidates
+
+The optional Python `HybridBurmeseEngine` can collect explicitly configured Google Burmese WFST, myG2P v2, Epitran and command-line IPA candidates with provenance. It does not run external providers by default, vote between them, or replace the deterministic rule engine's final IPA. See [the hybrid-engine contract](docs/hybrid-engines.md) and [raw-output benchmarking boundaries](docs/benchmarking-and-external-ipa.md).
+
+
+### Rime and prosody evidence
+
+The source-scoped rime × coda × tone × phonation evidence matrix is maintained in `data/burmese/rime_prosody_evidence.csv`, with its JSON Schema and regression tests. Separate voiced/voiceless sonorant evidence from Repetti-Ludlow (2023) is recorded in `data/burmese/sonorant_phonetics_evidence.csv`; it preserves the study's restricted sample and variable spread-glottis realization and remains withheld from runtime. It records Green's source-specific rime restrictions and Mooney & Repetti-Ludlow's restricted Yangon experimental findings without promoting them to runtime pronunciation rules. Every row is withheld from runtime; the matrix is not a lexical IPA gold set.

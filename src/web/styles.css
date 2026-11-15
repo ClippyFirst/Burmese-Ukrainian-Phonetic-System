@@ -30,7 +30,8 @@ button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible
 .research-notice,.issues{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;border:1px solid #e3d39b;background:#fff9e7}
 .research-notice>span,.issues>span{display:grid;place-items:center;flex:0 0 26px;width:26px;height:26px;border:1px solid var(--red);border-radius:50%;color:var(--red);font-weight:900}
 .research-notice strong,.issues strong{display:block;font-size:.9rem}
-.research-notice p,.issues p{margin:5px 0 0;color:#5e594c;font-size:.9rem;line-height:1.6}
+.research-notice>div,.issues>div{min-width:0}
+.research-notice p,.issues p{margin:5px 0 0;color:#5e594c;font-size:.9rem;line-height:1.6;overflow-wrap:anywhere}
 .research-notice a{color:#8c2028;font-weight:750}
 .workspace,.results,.document{margin-top:24px;border:1px solid var(--line);background:var(--surface)}
 .workspace,.results{padding:clamp(18px,3vw,28px)}
@@ -83,7 +84,7 @@ textarea::placeholder{color:#aaa69d}
 .footer div:last-child{text-align:right}
 .footer strong{display:block;color:var(--ink)}
 .footer a{display:inline-block;margin-top:5px}
-.document{padding:clamp(22px,4vw,38px)}
+.document{padding:clamp(22px,4vw,38px);overflow-x:hidden}
 .document section{max-width:900px;padding:6px 0 34px}
 .document section+section{padding-top:28px;border-top:1px solid var(--line)}
 .document h2{margin:0 0 14px;font:500 clamp(1.5rem,3vw,2rem)/1.2 Georgia,"Times New Roman",serif}
@@ -93,11 +94,13 @@ textarea::placeholder{color:#aaa69d}
 .document th{color:var(--muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
 .pipeline{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0;padding:16px;border-left:3px solid var(--green);background:var(--soft);font-size:.86rem;line-height:1.6}
 .pipeline b{color:var(--red)}
-.table-wrap{max-width:100%;overflow-x:auto}
+.table-wrap{display:block;width:100%;min-width:0;max-width:100%;overflow-x:auto}
 .status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
 .status-grid div{padding:16px;border:1px solid var(--line);background:var(--soft)}
 .status-grid b{display:block;color:var(--green);font:800 .78rem ui-monospace,monospace}
 .status-grid span{display:block;margin-top:7px;color:var(--muted);font-size:.88rem;line-height:1.5}
+.skip-link{position:absolute;z-index:1000;top:12px;left:12px;transform:translateY(-180%);padding:10px 14px;border:2px solid var(--focus);background:var(--surface);color:var(--ink);font-weight:750;text-decoration:none}
+.skip-link:focus{position:fixed;transform:none;outline:3px solid var(--focus);outline-offset:3px}
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 @media(max-width:760px){
   .shell{width:calc(100% - 28px);padding-top:18px}

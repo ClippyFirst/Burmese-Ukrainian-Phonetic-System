@@ -24,10 +24,10 @@
 - Verified `main` head: `ef82296a0906bf0c041d60a8cf6f193a602e9950`. The two methodology/completion-gate PRs for this repository are merged; there are no open PRs at this checkpoint. No implementation, linguistic registry, source record, benchmark label, or generated artifact was changed by those PRs.
 - Exact-head CI status at checkpoint: Burmese tests run 41877091198 and Pages deployment run 41877090949 are QUEUED. These runs have not completed; do not record them as successful. Earlier green PR runs are not substitutes for this exact mainline head.
 - GitHub branch metadata reports `main` as unprotected (no required status checks). This is a repository governance risk, not changed here; configuring branch protection or rulesets requires an owner decision and is outside this checkpoint.
-- Independent expert-adjudicated IPA gold remains 0; `data/benchmark/gold.tsv` remains header-only; empirical accuracy remains null. MYA-GOLD-001 remains BLOCKED (independent adjudicated gold=0; gold.tsv header-only; target profile is already confirmed as contemporary Standard Burmese, Yangon reference variety, careful citation-form speech (`my-yangon-careful-citation-v1`); the versioned IPA convention sheet, two independent annotators, third adjudicator, curator, private blind intake and rights-cleared 30 lexeme groups with speaker/audio metadata remain required). MYA-PHON-001, MYA-IPA-001 and MYA-ROM-001 remain PARTIAL; MYA-UI-001 remains TODO. Myanmar Wiktionary rights remain CONFLICT/UNKNOWN; MLCTS and myG2P remain orthographic/diagnostic evidence, not IPA gold.
+- Independent expert-adjudicated IPA gold remains 0; `data/benchmark/gold.tsv` remains header-only; empirical accuracy remains null. MYA-GOLD-001 remains BLOCKED (independent adjudicated gold=0; gold.tsv header-only; target profile is already confirmed as contemporary Standard Burmese, Yangon reference variety, careful citation-form speech (`my-yangon-careful-citation-v1`); the versioned IPA convention sheet, two independent text-based reviewers, third adjudicator, curator, private blind intake and rights-cleared 30 source-located written lexeme groups remain required). MYA-PHON-001, MYA-IPA-001 and MYA-ROM-001 remain PARTIAL; MYA-UI-001 remains TODO. Myanmar Wiktionary rights remain CONFLICT/UNKNOWN; MLCTS and myG2P remain orthographic/diagnostic evidence, not IPA gold.
 - Methodology upstream refresh: Unlazy remains at `16671491f6679ad9378f52604d3bc2415b4120c7`; Matt Pocock skills at `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d`; Ponytail at `96608e078b2d5ea607c5c3b8b5a54d1c1fba6846`. Superpowers main has advanced to `22f0b463e7a5e579904dd6211a520321035526f7` (v7.0.2), one commit beyond the project's pinned v7.0.1 snapshot. Its delta is primarily harness/platform integration and skill-helper changes; no runtime dependency or unreviewed copy was imported. Keep the existing pinned reference reproducible unless a project-specific adoption is justified.
 - Environment boundary: this checkpoint used GitHub's hosted repository/Actions APIs; no local checkout or local test execution was available. Do not claim local pytest/npm/Playwright results.
-- Next actionable work: Continue primary-source verification of MLCTS and the versioned IPA convention, while organizing a licensed audio-backed human pilot; do not treat MLCTS or sparse Wiktionary IPA as gold.
+- Next actionable work: Continue primary-source verification of MLCTS and the versioned IPA convention, while organizing a text-only human adjudication pilot based on written dictionary entries and published phonological descriptions; do not treat MLCTS or sparse Wiktionary IPA as gold.
 
 ---
 
@@ -137,7 +137,7 @@
 
 - **DONE_VERIFIED:** deterministic manifest-wide split identity; export/scorer held-out split integrity; strict TSV and JSON input validation; post-merge exact-main engineering verification.
 - **PARTIAL:** The complete vowel/medial/coda engine, tone/register/phonation and checked-syllable realization, contextual allophony, and primary-source-backed MLCTS → Ukrainian adapter remain incomplete.
-- **BLOCKED:** Approve a versioned IPA convention; recruit two qualified independent Burmese phonetic annotators and a separate adjudicator; secure licensed audio and source-specific derived-label rights.
+- **BLOCKED:** Approve a versioned broad/narrow IPA convention; recruit two qualified independent Burmese linguists for source-located written IPA adjudication and a separate reviewer; use rights-cleared written dictionaries, grammars and published phonological descriptions. No audio.
 - **TODO:** Manual visual, keyboard, screen-reader, responsive and mobile QA on the deployed site remains TODO.
 
 ## Historical checkpoints (retained for audit; superseded by the current state above)
@@ -331,7 +331,7 @@ Do not mark the repository 80% ready based on file count, test count, UI complet
 ## MLCTS rime inventory continuation — 2026-10-31
 
 - User confirmed the two-method contract: orthographic MLCTS → Ukrainian table adapter must be independent from phonetic IPA → Ukrainian adaptation. The romanization route is intended to cover supported written units; the phonetic route may withhold unsupported pronunciation.
-- Added `data/burmese/romanization_rimes_inventory.csv` with **94 rime keys** and their exact MLCTS column values extracted from the vendored Mya2Rom 0.4.4 `vowels` object. Every row records the upstream repository, file/object locator and an explicit warning that Mya2Rom's extended tables are not direct proof of an original MLC publication. No Ukrainian candidate is assigned; every row remains `EVIDENCE_LIMITED` pending source-level and target-language adjudication.
+- Added `data/burmese/romanization_rimes_inventory.csv` with **94 rime keys** and their exact MLCTS column values extracted from the vendored Mya2Rom 0.4.4 `vowels` object. Every row records the upstream repository, file/object locator and an explicit warning that Mya2Rom's extended tables are not direct proof of an original MLC publication. Ukrainian candidates are marked `PROPOSED` and every row remains `EVIDENCE_LIMITED` pending source-level and target-language adjudication.
 - Added `tests/test_romanization_rime_inventory.py` to verify the inventory count, unique source keys, non-empty MLCTS values, provenance, explicit evidence status and the absence of unsupported Ukrainian candidates.
 - Existing 35-row onset crosswalk, MLCTS profile, method tabs and production Pages asset-copy fix are preserved. This new inventory does not complete the MLCTS → Ukrainian syllable adapter or the medial/coda/contextual orthographic coverage audit.
 - Status: MYA-ROM-RIME-INVENTORY-001 = implementation added, CI verification pending; MYA-ROM-MATRIX-001 remains PARTIAL; MYA-ROM-UA-001 remains TODO; full IPA/phonological coverage remains PARTIAL/BLOCKED pending independent lexical gold and specialist adjudication.
@@ -408,10 +408,10 @@ Do not mark the repository 80% ready based on file count, test count, UI complet
 
 ## Full-sentence MLCTS and Myanmar punctuation/numeral preservation — 2026-10-31
 
-- Main head: \`b6ce024a26bef44c76744aa231b52de551c12c16\` (PR #69).
+- Main head: `b6ce024a26bef44c76744aa231b52de551c12c16` (PR #69).
 - PR #68 added a full Burmese greeting sentence to the browser MLCTS route. Its exact-head workflow [41240518900](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41240518900) passed the Python, Vite build, generated-data, Node, and built-artifact Playwright gates.
-- PR #69 fixed a confirmed source-loss bug. The app previously treated Basic Myanmar digits U+1040–1049 and punctuation U+104A–104B as romanizable script, then passed those code points to Mya2Rom; sentence stops and numerals could disappear. The shared segment predicate now preserves those as non-romanized text, and \`romanizeTextPreservingNonMyanmar\` passes only contiguous Myanmar text runs to Mya2Rom while preserving Latin text, numerals, whitespace, and punctuation around them.
-- The new browser regressions cover the supplied four-sentence greeting, the four U+104B sentence stops, and a mixed-script sample containing Latin \`ABC\`, Myanmar digits \`၁၂၃\`, comma U+104A, and full stop U+104B in both output modes.
+- PR #69 fixed a confirmed source-loss bug. The app previously treated Basic Myanmar digits U+1040–1049 and punctuation U+104A–104B as romanizable script, then passed those code points to Mya2Rom; sentence stops and numerals could disappear. The shared segment predicate now preserves those as non-romanized text, and `romanizeTextPreservingNonMyanmar` passes only contiguous Myanmar text runs to Mya2Rom while preserving Latin text, numerals, whitespace, and punctuation around them.
+- The new browser regressions cover the supplied four-sentence greeting, the four U+104B sentence stops, and a mixed-script sample containing Latin `ABC`, Myanmar digits `၁၂၃`, comma U+104A, and full stop U+104B in both output modes.
 - Exact-head workflow [41241791556](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41241791556) passed: Python tests, Vite production build, generated-data drift check, Node tests, Playwright Chromium setup, and **52/52 built-artifact browser tests**. The earlier test assumption that MLCTS periods must equal sentence punctuation was rejected: some vendor MLCTS forms themselves contain periods; the correct assertions distinguish those from the preserved Myanmar punctuation.
 - This is a bounded Basic Myanmar punctuation/numeral and mixed-text fix, not a full Myanmar Unicode inventory guarantee. Mya2Rom's 94-row table remains vendor-derived; the original MLC primary publication remains BLOCKED/EVIDENCE_LIMITED; MLCTS → Ukrainian syllable adaptation remains TODO; independent lexical IPA gold remains 0.
 - PR #53 remains open and untouched because its branch is diverged and replaces the stylesheet wholesale. At the time of this checkpoint, no post-PR #69 deployment run was yet accessible. A later check verified the Pages deployment at [41242001050](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41242001050), including deployed HTML, script, CSS and vendor-asset smoke checks; see the cross-mode integrity checkpoint below.
@@ -488,8 +488,8 @@ Do not mark the repository 80% ready based on file count, test count, UI complet
 ## External corpus/source triage — 2026-11-01
 
 - Task `MYA-IPA-SOURCE-TRIAGE-001`: `PARTIAL` for discovery and evidence triage; external data import / benchmark gold remains `BLOCKED` pending source-specific rights and expert validation.
-- External-source triage is PARTIAL; no independently adjudicated, openly reusable Burmese IPA gold was verified. myG2P offers richer IPA but states CC BY-NC-SA 4.0 and remains blocked for commercial use without permission. A 2026 Wiktionary extraction reports 22,191 words with full MLCTS but only 113 IPA rows (0.51%) under CC BY 4.0; it is a possible MLCTS crosswalk, not a broad IPA gold corpus. OpenSLR SLR80 has Burmese audio/transcripts under CC BY-SA 4.0 but requires expert IPA annotation. Mya2Rom is CC BY-SA 4.0 and a comparator, not gold. See the source-triage audit for boundaries and links. Gold remains 0.
-- No external corpus rows, IPA labels, model weights or audio were copied into the repository. No accuracy score or engine ranking is claimed.
+- External-source triage is PARTIAL; no independently adjudicated, openly reusable Burmese IPA gold was verified. myG2P offers richer IPA but states CC BY-NC-SA 4.0 and remains blocked for commercial use without permission. A 2026 Wiktionary extraction reports 22,191 words with full MLCTS but only 113 IPA rows (0.51%) under CC BY 4.0; it is a possible MLCTS crosswalk, not a broad IPA gold corpus. OpenSLR SLR80 is historical metadata only and excluded from active text-only research; it is not an annotation source or blocker. Mya2Rom is CC BY-SA 4.0 and a comparator, not gold. See the source-triage audit for boundaries and links. Gold remains 0.
+- No external corpus rows, IPA labels or model weights were copied into the repository. No accuracy score or engine ranking is claimed.
 - Full source register and acceptance gates: `docs/audits/current/EXTERNAL-PHONETIC-CORPUS-TRIAGE-2026-11-01.md`.
 
 
@@ -619,7 +619,7 @@ The following current statuses supersede older checkpoint rows above where they 
 
 | Workstream | Current status | Current acceptance boundary |
 |---|---|---|
-| Independent Burmese IPA gold | BLOCKED | Gold TSV is header-only; no independently adjudicated lexical IPA; accuracy=null. Requires licensed audio/source, dialect/speaker metadata, double annotation and adjudication. |
+| Independent Burmese IPA gold | BLOCKED | Gold TSV is header-only; no independently adjudicated lexical IPA; accuracy=null. Requires source-located written IPA/dictionary evidence, defined target profile, two independent text-based reviewers and adjudication; no audio. |
 | Consonant/kinzi/medial analysis | PARTIAL | Structural parsing exists; source-backed phonological contexts and full cross-runtime differential corpus remain incomplete. |
 | Vowel combinations and codas | PARTIAL | Full vowel derivation, checked-syllable and contextual coda realization are not implemented. |
 | Tone/register/phonation | TODO | Specialist adjudication of competing analyses and a scoped runtime model are required; do not collapse them into guessed tone labels. |
@@ -736,7 +736,7 @@ The following current statuses supersede older checkpoint rows above where they 
 - Inspected https://github.com/byu-matrix-lab/MekongPhon. Its pipeline README describes SEAlang frequency lists, IPA scraping, minor lexicon post-processing, OPUS sentence downloads, lexicon train/eval splits, and trie-based sentence conversion from word-level IPA entries. Treat this as a large external orthography–IPA resource and possible comparator, not automatically as independent sentence-level phonetic gold.
 - The upstream repository root LICENSE path was not present in the inspected tree. Dataset-specific redistribution permission, source terms, variety, IPA conventions, human verification/correction process, exact data files and overlap with our engine sources remain unverified. Do not import or redistribute any of it until those are resolved. Proceedings CC BY-NC-4.0 and Apache-2.0 model-card licenses do not license the underlying dataset by implication.
 - Khmer Acoustic Model dictionary remains a candidate external comparator only; its README states dictionary CC BY-SA 4.0 and claims native-linguist validation, but per-entry provenance, variety, IPA convention and exact version require inspection.
-- Burmese audio lead: Oo et al. (LREC 2020) speech corpus is described as 2,528 utterances from 20 female speakers with manual segmentation, plus G2P/normalization grammars. This is not IPA gold; inspect primary source, audio/transcript rights, consent, variety and metadata before considering it as lawful audio material for expert re-transcription.
+- Historical source note only: Oo et al. (LREC 2020) described an ASR corpus with orthographic text. It is excluded from active text-only work; no recordings, rights checks or re-transcription will be pursued.
 - No data files were imported and no IPA labels were added. Corpus remains empty and benchmark accuracy remains null.
 
 
@@ -747,10 +747,10 @@ The documentation-only playbook, corpus-guide and handoff changes at the precedi
 
 ## Source acquisition update — 2026-11-01
 
-- **Leading audio candidate:** OpenSLR 80 (SLR80), https://openslr.org/80, CC BY-SA 4.0. The primary paper (Oo et al. 2020, https://aclanthology.org/2020.lrec-1.777.pdf, pp. 6333–6334) reports 2,528 utterances from 20 female native Burmese speakers aged 25–35, recorded in Yangon at 48 kHz mono. It includes hand-curated word-segmented orthographic transcripts; trained native speakers checked audio/transcript match, volume, noise and fluency. Only female recordings were released at the time of publication.
-- **Use boundary:** SLR80 supplies sentence-context audio and text, not IPA. The paper's FST G2P is intended to generate/seed pronunciations for later human checking, not to serve as gold. The recording location does not establish each speaker's dialect; word-level timestamps are not provided and must be manually verified. Female-only speakers limit generalization claims.
+- Historical metadata only: OpenSLR 80 (SLR80) was previously reviewed as an audio/transcript resource. It is explicitly excluded from current text-only scope and is not an active candidate.
+- Scope boundary: SLR80 is not used. Text-only G2P research must rely on written lexical and phonological sources; no audio-based labels or evaluation are permitted.
 - Recommended split: a separately labelled contextual phonetic subset from SLR80, plus a distinct citation-form lexical set elicited from qualified speakers of the approved target variety. Never mix their accuracy denominators or claim citation-form accuracy from sentence-context tokens.
-- `MYA-GOLD-001` remains `BLOCKED`; independent gold 0 and accuracy `null`. No audio or IPA data imported. Next acceptance step: specialist approves the SLR80 profile and 30 contextual token sample, while a separate citation-form recording session is arranged.
+- MYA-GOLD-001 remains BLOCKED; independent text-adjudicated IPA gold is 0 and accuracy is null. Next acceptance step: two independent reviewers adjudicate source-located written lexical examples under one versioned IPA convention; no audio.
 
 
 ## Final exact-head verification — 2026-11-01
@@ -1056,7 +1056,7 @@ A code review found that truthiness-only identifier checks accepted whitespace-o
 
 - Created `research/burmese-open-pronunciation-evidence-20261104` from current main `11c4d4d73bc478c9d07ce7bfe3a3477327790445`.
 - Pinned and reviewed upstream myG2P at `54b5c76bb5a87fdbaaeddc1892e6ebd8f97ee225`; confirmed Version 2.0's five-field file includes an IPA field and is explicitly CC BY-NC-SA 4.0. Registered source `MYG2P2026` and documentary claim `CLM-MYG2P-001`.
-- Registered OpenSLR SLR80 (`OPENSLR80`) as a CC BY-SA 4.0 audio/transcript source. The provider documents manually quality-checked volunteer Burmese sentence recordings, anonymized file IDs and orthographic transcripts; the visible female subset is 541 KB index + 948 MB WAV archive. No IPA or sufficiently detailed dialect profile is supplied.
+- Historical registry note: OPENSLR80 remains registered for audit provenance only and is excluded from active text-only research; no data or recordings are accessed.
 - Added source-provenance regression tests to `tests/test_source_rule_evidence.py`, and updated the external corpus triage and linguistic completion register.
 - No dictionary/audio data copied. The existing myG2P probe remains test-only; the new source audit does not authorize production use, commercial redistribution, or treating myG2P outputs as project gold.
 - Independent adjudicated Burmese IPA gold remains 0; accuracy remains null. Hosted CI pending; no local test execution was available in this connector session.
@@ -1076,7 +1076,7 @@ A code review found that truthiness-only identifier checks accepted whitespace-o
 
 - Found a concrete gap in the shared `scripts/ipa_gold_corpus.py`: the release gate checked adjudicated-record counts, frozen splits and source redistribution rights, but did not enforce the playbooks' one-target-profile / one-IPA-convention requirement. A mixed-variety or mixed-kind corpus could therefore pass the numeric/rights gate and be scored as one benchmark.
 - Added regression tests first for mixed profile and mixed IPA kind in each of the three repositories. The first Lao test run failed on both new cases as expected; after adjusting the fixture to populate all three deterministic split buckets, the regression remained targeted. The Khmer and Burmese exact-head runs subsequently passed; final run IDs and merge evidence are recorded below.
-- Added shared gate checks: one signature across adjudicated records (`profile.id`, `variety`, `region`, `register`) and exactly one adjudicated IPA kind. Per-record speaker/audio IDs are deliberately excluded from target-profile identity.
+- Added shared gate checks for consistent target profile (`profile.id`, `variety`, `region`, `register`) and one adjudicated IPA kind. Speaker/audio identifiers are not part of the active text-only acceptance path.
 - Updated the corpus documentation and completion register. The checks do not replace approved convention sheets, human reviewer qualifications, blind annotation evidence, or language-specific contrast-coverage reports. The gate still does not calculate contrast coverage from free-text phonological metadata.
 - No IPA labels, pronunciation rules, Ukrainian mappings, source data, or benchmark scores were added. Independent adjudicated gold remains 0 in all three projects.
 
@@ -1148,16 +1148,16 @@ A code review found that truthiness-only identifier checks accepted whitespace-o
 ## 2026-11-11 continuation — Ukrainian practical transcription
 
 ### Repository state
-- Starting default-branch SHA: \`fab39881259df94be93634088a75667a13059cfc\`.
-- Current final verification branch: \`feat/burmese-ukrainian-practical-adapter-verified-final-2026-11-11\`.
+- Starting default-branch SHA: `fab39881259df94be93634088a75667a13059cfc`.
+- Current final verification branch: `feat/burmese-ukrainian-practical-adapter-verified-final-2026-11-11`.
 - Browser fail-closed implementation code SHA: `e9bd12819ed692d7be2607356008217de9430dca`. Subsequent commits update only handoff/matrix/register documentation; the live PR head is authoritative for the latest documentation commit.
 - Draft PR [#133](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/133), open, not merged.
 - Earlier drafts #129, #130, #131 and #132 are superseded/closed as appropriate; their branches are retained.
 - Main was not modified; no site deployment or publication occurred.
 
 ### Implemented
-- Added \`src/burmese_ukrainian/practical.py\` as the Python whole-IPA → Ukrainian adapter. \`RuleBasedBurmeseEngine\` invokes it after IPA derivation and concatenates per-syllable Ukrainian spellings into a word while preserving IPA syllable boundaries and per-syllable trace.
-- Added \`src/web/ukrainian-adapter.js\` for browser rendering, backed by generated data from \`data/burmese/ukrainian_practical.csv\` and \`data/burmese/practical_rules.csv\`.
+- Added `src/burmese_ukrainian/practical.py` as the Python whole-IPA → Ukrainian adapter. `RuleBasedBurmeseEngine` invokes it after IPA derivation and concatenates per-syllable Ukrainian spellings into a word while preserving IPA syllable boundaries and per-syllable trace.
+- Added `src/web/ukrainian-adapter.js` for browser rendering, backed by generated data from `data/burmese/ukrainian_practical.csv` and `data/burmese/practical_rules.csv`.
 - Added fail-closed handling for unknown IPA, and browser-side withholding of IPA/Ukrainian output for medials, conjuncts and kinzi until those structures have fully supported phonetic rules. Structural parsing remains available.
 - Target conventions: /h, ɦ/ → г; /ɡ/ (ASCII /g/) → ґ as a contrast-preserving project choice; /x/ → х; /w/ → в; /t͡s, d͡z, t͡ʃ, d͡ʒ/ → ц, дз, ч, дж; /tɕ, dʑ/ → ч, дж as approximations; aspiration is represented with a project apostrophe; syllable-initial /j/ uses Ukrainian yotated spellings where transparent.
 - Tone and length remain in IPA/prosody trace and are not converted into Ukrainian stress or vowel doubling.
@@ -1166,9 +1166,9 @@ A code review found that truthiness-only identifier checks accepted whitespace-o
 - Text-only work; no audio corpus was used.
 
 ### Verification evidence and limits
-- Previous code revision \`530cefbfc874b777650bd7e7ccdb5888534ab348\`, workflow [43094695944](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43094695944): Python tests (180 tests + 66 subtests), package build, generated-data freshness and Node tests passed. The Playwright browser step failed on two assertions: stale page copy and a kinzi-bearing syllable receiving a practical rendering.
+- Previous code revision `530cefbfc874b777650bd7e7ccdb5888534ab348`, workflow [43094695944](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43094695944): Python tests (180 tests + 66 subtests), package build, generated-data freshness and Node tests passed. The Playwright browser step failed on two assertions: stale page copy and a kinzi-bearing syllable receiving a practical rendering.
 - Both browser issues were corrected on the current branch: page copy now reflects the target policy, and the browser parser withholds unsupported kinzi/medial/conjunct structures consistently with Python. Regression coverage was added.
-- Final branch workflow [43095578672](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43095578672) is still \`queued\` with zero jobs started. Therefore the final browser/Playwright correction is implemented but not yet CI-verified; do not report the final browser suite as passed.
+- Final branch workflow [43095578672](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43095578672) is still `queued` with zero jobs started. Therefore the final browser/Playwright correction is implemented but not yet CI-verified; do not report the final browser suite as passed.
 - No independent adjudicated Burmese IPA/Ukrainian gold set exists. Passing code tests do not establish phonetic accuracy.
 
 ### Task ledger
@@ -1219,7 +1219,7 @@ A code review found that truthiness-only identifier checks accepted whitespace-o
 - Implemented Python and browser onset-only PROVISIONAL fallback. It uses the existing Yangon onset IPA inventory → existing IPA adapter → Ukrainian text plus ?. Canonical fields remain withheld.
 - Exact-head test workflow 43100176432 was queued at the latest check; no job had started. Do not claim test success.
 - Local test execution was unavailable: public GitHub clone attempt failed because the execution environment could not resolve github.com. No tests are claimed passed on the new fallback.
-- Remaining: execute Python/Node/Chromium tests on the exact head; add functional shared Python/browser fixtures; register each provisional onset with exact primary-source locator and Yangon-profile scope; expand only where positional evidence is explicit. Independent text-only Yangon adjudicated gold remains BLOCKED; audio remains DEFERRED.
+- Remaining: execute Python/Node/Chromium tests on the exact head; add functional shared Python/browser fixtures; register each provisional onset with exact written primary-source locator and Yangon-profile scope; expand only where positional evidence is explicit. Independent text-only Yangon adjudicated gold remains BLOCKED.
 
 
 ## Fallback scope clarification — 2026-11-11
@@ -1233,7 +1233,7 @@ The browser onset-only preview is now limited to isolated bare consonant tokens.
 - Workflow 43101914347 PASS: 182 Python tests, 66 subtests, npm install, build, generated-data freshness, Node tests and Chromium Playwright 54/54.
 - Optional Epitran raw-output comparator 43101914423 PASS; it is not an independent IPA accuracy gold set.
 - Browser keeps canonical IPA/Ukrainian output fail-closed and shows a separate onset-only preview only for isolated bare consonants. Contextual structures remain withheld.
-- Linguistic feature remains PARTIAL: dedicated Yangon-profile positional evidence registry and functional shared Python/browser parity fixture remain TODO. Independent adjudicated gold remains BLOCKED; audio DEFERRED.
+- Linguistic feature remains PARTIAL: dedicated Yangon-profile positional evidence registry and functional shared Python/browser parity fixture remain TODO. Independent text-based adjudicated gold remains BLOCKED.
 
 
 ## MLCTS romanization mainline reconciliation — 2026-11-12
@@ -1276,3 +1276,1907 @@ The browser onset-only preview is now limited to isolated bare consonant tokens.
 - Exact final-head tests [43318947338](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43318947338) SUCCESS: 187 Python tests + 66 subtests, 19 Node tests, 56 Chromium Playwright tests, build and generated-data freshness.
 - The IPA/ukrainian abstention for `မြန်` remains unchanged and deliberate: positional medial-ra/rime evidence is not established in the selected Yangon profile. The service must not infer an IPA form merely to avoid a placeholder.
 - Pages deployment [43319186954](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43319186954) was triggered after merge and must be checked before confirming the live site has updated. No local test execution is claimed.
+
+
+## Burmese medial/nasal-coda target note — 2026-11-13
+
+The proposed /ɴ/ → нг target rule is conditional on an IPA analysis that explicitly emits /ɴ/. Green's abstract placeless /N/ and nasalized-vowel realizations must not be routed through this rule without an explicit phonetic conversion decision.
+
+
+## Nasal coda and IPA schema boundary — 2026-11-13
+
+- Added source-backed phonotactic records for Green's placeless /N/ coda and nasal-rhyme tone restrictions.
+- The Ukrainian target rule /ɴ/ → нг is explicitly conditional on the selected IPA analysis producing /ɴ/; it does not automatically apply to abstract /N/ or nasalized vowels.
+- The IPA gold schema preserves nasalization in the literal IPA value but has no dedicated typed nasalization field. No schema change was made; consider an optional field only after the expert-approved convention sheet.
+
+
+## UCSY-SC1 rights note — 2026-11-13
+
+Historical metadata only: the paper's corpus description remains in the audit trail, but UCSY-SC1 is excluded from active text-only scope; no access or rights work is planned.
+
+
+## Final one-pass verification — 2026-11-13
+
+- Base/default-branch starting commit: dc90463bdd734867308f03cb627eb8941efc19d6.
+- Latest code/data-bearing research head: 826601139fd73a5152b6b37a5ed3574f3fca18a5.
+- Dedicated branch: research/burmese-medials-g2p-evidence-2026-11-13.
+- Draft PR: #147. It is intentionally not merged while independent linguistic adjudication remains absent.
+- Required exact-head CI 43327571175 SUCCESS: 201 Python tests + 66 subtests; independent IPA gold schema validation; npm build; generated web-data freshness; 19 Node tests; 58 Chromium/Playwright tests.
+- Optional raw comparator/CRF workflow 43327570809 SUCCESS. Outputs remain non-gold and accuracy remains null.
+- Intermediate CI failures were fixed and rerun: 43324492175 exposed Python coda segmentation and matrix CSV issues; 43326933757 exposed a temporary practical_rules.csv path-mapping overwrite during documentation work. The table was restored from main, the conditional /ɴ/ note reapplied, and the final required CI passed.
+- No runtime medial IPA rule was enabled. The structural coda fix is verified; phonological coverage remains PARTIAL.
+- Independent expert-adjudicated IPA gold for the medial/coda cells: 0. Empirical accuracy: null.
+- PR #129 remains open/draft and untouched as a code branch (53 commits ahead / 17 behind current main, non-mergeable); its source-backed research findings were reconciled into this branch, but its broad hybrid-engine code was not ported.
+- Release assessment: PARTIAL PROTOTYPE, not linguistically release-ready. Research dossier is ready for specialist review and data-rights resolution.
+
+
+## Mya2Rom mode contract — 2026-11-13
+
+- Mya2Rom 0.4.4 exposes ipa, mlcts, mlcts2, simple and simple2; MLCTS is orthographic, MLCTS2 is more phonetic romanization but not standardized IPA.
+- The project browser adapter explicitly calls mya2rom(unit.raw, "mlcts", ...). A regression test now locks this mode.
+- Keep Latin→Ukrainian transliteration separate from source phonology → IPA → Ukrainian adaptation. The upstream README documents stacking, ASAT, schwa, voicing-sandhi and alternate-pronunciation limitations; its IPA convention uses /N/ instead of nasalized vowels.
+
+
+## Final exact-head verification — 2026-11-13
+
+- Starting default-branch commit: dc90463bdd734867308f03cb627eb8941efc19d6.
+- Latest code/data-bearing research head: fef242e4d4cc978823e4133f65abe48224355c13.
+- Dedicated branch: research/burmese-medials-g2p-evidence-2026-11-13; draft PR #147 is open and not merged.
+- Required exact-head CI 43328423650 SUCCESS: 201 Python tests + 66 subtests; independent IPA gold schema validation; npm build; generated web-data freshness; 20 Node tests; 58 Chromium/Playwright tests. The new Node regression asserts that the romanization adapter explicitly requests MLCTS, not MLCTS2 or IPA.
+- Optional raw comparator/CRF workflow 43328423664 SUCCESS. These artifacts remain non-gold; no accuracy is reported.
+- Intermediate CI failures were fixed and rerun: 43324492175 exposed Python coda segmentation and matrix CSV issues; 43326933757 exposed a temporary practical_rules.csv path-mapping overwrite during documentation work. The table was restored from main, the conditional /ɴ/ note reapplied, and final exact-head CI passed.
+- Structural coda parsing is verified: မြန် is one syllable; မြန်မာ is two; ကတ် retains final consonant + ASAT. Browser/Python tests pass.
+- No runtime medial IPA rule was enabled. Independent expert-adjudicated IPA gold for the medial/coda cells remains 0; empirical accuracy remains null.
+- PR #129 remains open/draft and untouched as a code branch (53 commits ahead / 17 behind current main, non-mergeable); its source-backed research findings were reconciled here, but its broad hybrid-engine code was not ported.
+- UCSY-SC1 remains a historical metadata record only; it is excluded from active text-only research and is not a blocker.
+- Release assessment: PARTIAL PROTOTYPE, not linguistically release-ready. The research dossier is ready for specialist review and data-rights resolution.
+
+## Text-only Burmese research continuation — 2026-11-13
+
+User direction: **use text sources only; do not use audio**. This is the active scope for future research and implementation. Do not acquire, inspect, process, annotate or request recordings. Historical SLR80/UCSY-SC1 notes are retained only as prior audit history and must not be turned into next-step tasks.
+
+Newly registered text resources:
+- MYX_MYANGLISH_2026: 2,121 Burmese Unicode ↔ Myanglish text pairs. Potential informal romanization diagnostic only. Its own documentation warns that Myanglish is non-standard and predominantly reflects one author's style; the viewer shows three columns while the README schema describes two. CC BY-SA 4.0 is declared. Not IPA gold; no rows imported.
+- MYX_ORTHO_2026: 4,800-row orthographic correction corpus. "phonetic" in filenames/categories means spelling confusion, not IPA. Future medial contrasts are roadmap items, not present validated evidence. CC BY-SA 4.0 is declared. No rows imported.
+- OKELL_TEXT_2018: John Okell's 8.8 MB text corpus compiled in the 1990s. ELG lists CC BY 4.0, but Zenodo's Rights/License field is blank; blocked from ingestion pending direct rights reconciliation.
+
+Acceptance boundaries: preserve distinct orthographic MLCTS, informal Myanglish, IPA and Ukrainian adaptation fields. Never treat romanized text as IPA without an explicit convention and independent linguistic evidence. Before any import, pin exact dataset revision/hash, reconcile schema, inspect row-level quality and license obligations, and add source-to-claim-to-test provenance. No runtime medial rules are authorized by these resources alone.
+
+Current linguistic status remains unchanged: independent expert-adjudicated IPA gold = 0; empirical accuracy = null; medial/coda IPA rules remain withheld; release status = PARTIAL PROTOTYPE.
+
+## Historical Burmese medial evidence — 2026-11-13
+
+New text-only source: STEDT Monograph 3 (Namkung, ed., 1996), pp.61-66, which compiles three distinct Burmese source profiles. The Written Burmese inventory cites Benedict 1976 and treats /-w-/ as rhyme material while /-y-/ and /-r-/ are initial-cluster components. The Rangoon entries cite Burling 1967 and Roop 1972 and list /-y-/ and /-w-/ medials with source-specific distribution restrictions; Roop says /r/ appears only in borrowings.
+
+Do not merge these into one universal rule or equate the historical notation directly with modern Unicode U+103B/U+103C/U+103D. New source claims, matrix rows, evidence-only rules and tests are registered. Both rows remain WITHHELD. The STEDT book is marked All Rights Reserved; no tables or lexical data were copied. Current Yangon runtime and IPA outputs are unchanged.
+
+## Written Burmese historical-medial reconciliation — 2026-11-13
+
+Nishi (1997) distinguishes OWB, MWB, EModWB and ModWB spelling standards. OWB medial -l- was replaced by MWB -r-/-v- depending on initial context; EModWB inserted -y- after k-/kh- before written -i, reflecting a phonemic change. Nishi explicitly separates Written Burmese H from spoken Burmese L and warns that their phonological systems and historical periods are not identical.
+
+Matisoff (2003, pp.56,70-71) describes historical WB *-r- > Modern Burmese -y- and explains why Written Burmese is not reliable for reconstructing the distinction among proto *-r-, *-l- and *-y-. Orthographic spellings can shift or vacillate across periods.
+
+New source claims, matrix rows, evidence-only rules and tests are registered. All new historical rows remain WITHHELD; they are not modern Unicode-to-IPA rules. The full Nishi 1976 "Medials in Burmese" chapter is still a source-access target; only bibliographic records and later secondary citations are currently verified.
+
+## Contextual Burmese voicing research — 2026-11-13
+
+Nishi (1998), *The Development of Voicing Rules in Standard Burmese* (BNME 23(1), pp.253-260; DOI 10.15021/00004129), describes two textually documented voicing-sandhi patterns: optional/exception-rich C1aC2 voicing around atonic /a/, and voicing of eligible initials after non-stop tonal rhymes in close juncture within words or phrases with postpositions. The paper warns that "Standard Burmese" is not a well-defined variety and documents differences across regional dialects. It also reports that the Myanmar-English Dictionary (1993) reflects the second rule in its lexical phonemic transcriptions.
+
+The source, three claims, two analysis-dependent rule records and a provenance test are registered. Neither rule is enabled globally. Next acceptance step: select the target spoken profile and reconcile Nishi's descriptions with accessible written dictionary examples and Okell's text grammar. No audio is used.
+
+## Hill (2019) full-text access target — 2026-11-13
+
+Cambridge University Press confirms Nathan W. Hill, *The Historical Phonology of Tibetan, Burmese, and Chinese*, chapter 2 "Burmese", pp.46-83, DOI 10.1017/9781316550939.003. Only a short publisher preview was accessible; no medial-specific claim is made from it. The source and bibliographic/access claim are registered. Next research gate: obtain authorized full-text access, inspect Old Burmese medial clusters and written-to-spoken developments, and add only source-located claims. Do not infer content from the title or preview.
+
+## Verified continuation checkpoint — 2026-11-13
+
+### Repository state
+- Default branch: main, starting base SHA dc90463bdd734867308f03cb627eb8941efc19d6.
+- Existing research branch at start of this continuation: research/burmese-medials-g2p-evidence-2026-11-13, starting head 5e49b2d13506d32606050b10a43972d998cd6539.
+- Verified code/data head before this checkpoint: 4145126ec65b834df96fc7ed57749a719daa27c2.
+- PR #147 remains OPEN / DRAFT and mergeable; at the last comparison it was 66 commits ahead, 0 behind, with 25 changed files. It has not been merged.
+- PR #129 remains untouched; its broad hybrid implementation was not ported or merged.
+
+### Verification on exact head 4145126ec65b834df96fc7ed57749a719daa27c2
+Main CI run 43389272448: SUCCESS.
+- Independent IPA gold structure validation: SUCCESS.
+- Python: 206 passed, 66 subtests passed.
+- npm build: SUCCESS.
+- Generated web data freshness check: SUCCESS.
+- Node tests: 20 passed, 0 failed.
+- Playwright/Chromium browser tests: 58 passed.
+Optional diagnostic workflow 43389279081: SUCCESS.
+- CRF diagnostic: 100 inputs, 100 predictions, 84 source-concordant; gold_count=0, accuracy=null, scoring status NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. This is not an accuracy result.
+- Epitran 1.35.3 raw-output artifact generated; no gold comparison or accuracy claim.
+Manual registry integrity check: 51 source rows, 55 claim rows, 28 medial-evidence rows, 19 phonological-rule rows; all CSV row widths valid, IDs unique, all claim→source and rule→claim→source links resolve. No registry integrity issues found.
+
+### Commands executed by the verified GitHub Actions workflow
+- pip install -e ".[test]"
+- pytest
+- npm install
+- npm run build
+- generated web data freshness validation
+- npm test (generate:web plus Node test suite)
+- npx playwright install --with-deps chromium
+- npm run test:browser:built
+- independent IPA gold corpus structure validation
+
+No local repository checkout or local shell test run was performed in this session; verification above is from the exact-head GitHub Actions run. Earlier intermediate CI failures caught a medial-matrix CSV field alignment issue and test assertion wording/case mismatches; those were corrected before the successful exact-head run.
+
+### Scope and release boundary
+- Text-only research is the active user-directed scope. Legacy SLR80/UCSY-SC1 entries are historical metadata only and are DEFERRED / OUT OF SCOPE. No audio was acquired, inspected, processed, annotated or used.
+- No new corpus rows were imported; no runtime medial mapping or contextual voicing rule was enabled.
+- Independent text-adjudicated IPA gold remains 0; empirical accuracy remains null. The project remains a PARTIAL PROTOTYPE, not release-ready.
+
+### Remaining evidence/access gates
+1. Obtain authorized full text of Nishi (1976), “Medials in Burmese”, and Hill (2019), chapter 2; add claims only with exact locators.
+2. Reconcile historical Written Burmese/Rangoon analyses with modern Yangon orthography and phonology; keep source profiles separate until then.
+3. Obtain direct rights clarification for John Okell's text corpus (Zenodo Rights/License blank vs ELG CC BY 4.0).
+4. Pin and inspect exact Myanglish/orthography dataset revisions, reconcile schema, manually review text rows and CC BY-SA 4.0 obligations before any import.
+5. Build independent expert-reviewed text IPA fixtures from written dictionaries/grammars with one approved broad/narrow convention and source locators. No audio is part of this acceptance path.
+6. Resolve the competing tone/register analyses and the abstract /N/ vs surface nasalization representation before enabling affected IPA rules.
+7. Continue primary-source verification for the 94 MLCTS rime entries; current vendor-derived coverage is not fully primary-source adjudicated.
+
+## Green 2005 and SEAlang text resources — 2026-11-13
+
+Green's chapter “Word, foot and syllable structure in Burmese” in *Studies in Burmese Linguistics* (2005, pp.1-26) is an openly licensed CC BY-SA 4.0 text source. It explicitly separates broad IPA-style transcription of spoken Burmese from ALA-LC transliteration of Written Burmese; gives the medial transliteration order y, r, l, v, h; describes major-syllable CG onsets and minor-syllable restrictions; and analyzes coda /N/ as nasalization on the preceding vowel. The new source claims, evidence row, evidence-only rules and tests are registered. They do not enable a direct Unicode-medial rule.
+
+SEAlang's MLC-based dictionary (~35,000 entries), Burmese Text Corpus and Bitext Corpus are registered as text-only candidates. The dictionary's actual transcription field is unresolved (SHACHI metadata advertises IPA search/display, while Mya2Rom says MLCTS2 is used by MLC/SEAlang). The text and bitext corpora have no explicit reuse license; reported “contexts/pairs served” are service counts, not verified corpus sizes. No rows were downloaded or imported. Bulk reuse is blocked pending rights and schema verification.
+
+## Final verified snapshot after text-source expansion — 2026-11-13
+
+- Starting default-branch base: main at dc90463bdd734867308f03cb627eb8941efc19d6. Starting continuation branch head: 5e49b2d13506d32606050b10a43972d998cd6539.
+- Exact tested code/data head: d2800ce458ea3c08c3fecb9e61ad170502837343.
+- PR #147: OPEN / DRAFT, mergeable, 90 commits ahead of main and 0 behind; 25 files changed. Not merged. PR #129 remains untouched.
+- Exact-head main CI run 43390071180: SUCCESS — 209 Python tests + 66 subtests; independent IPA-gold schema validation; npm build; generated-data freshness; 20 Node tests; 58 Playwright/Chromium tests.
+- Exact-head optional diagnostic run 43390071177: SUCCESS. CRF: 100 inputs, 100 predictions, 84 source-concordant, gold_count=0, accuracy=null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. Epitran raw-output artifact generated; no gold comparison or accuracy claim.
+- Registry integrity: 55 source rows, 62 claims, 29 medial evidence rows, 22 phonological rules. CSV widths valid, IDs unique, all claim→source and rule→claim→source links resolve. No integrity issues.
+- New text evidence includes Green (2005) broad IPA vs ALA-LC separation, CG onset and /N/ nasalization; Nishi (1997/1998), Matisoff (2003), STEDT (1996); and SEAlang dictionary/text/bitext candidates with unresolved representation/rights gates.
+- No audio was acquired, inspected, processed, annotated or used. Legacy non-text source records are historical metadata only and DEFERRED / OUT OF SCOPE. No corpus rows were imported and no runtime medial or contextual voicing rule was enabled.
+- No local checkout or local shell test run was performed; verification is from the exact-head GitHub Actions runs. Commands executed by CI: pip install -e ".[test]"; pytest; npm install; npm run build; generated web-data freshness validation; npm test; npx playwright install --with-deps chromium; npm run test:browser:built; independent IPA-gold structure validation.
+- Earlier intermediate CI runs caught and corrected evidence-row field alignment and test assertion mismatches. The exact-head run above is successful.
+
+### Final unresolved acceptance gates
+1. Authorized full text for Nishi (1976) “Medials in Burmese” and Hill (2019) chapter 2; no claims until exact page/section evidence is inspected.
+2. Reconcile historical Written Burmese, Rangoon, and modern Yangon profiles; no direct Unicode-medial mapping from historical notation.
+3. Direct rights clarification for John Okell text corpus; Zenodo license field is blank while ELG lists CC BY 4.0.
+4. SEAlang dictionary entry inspection to resolve IPA vs MLCTS2 representation; explicit permission for bulk extraction from dictionary/text/bitext resources.
+5. Pin Myanglish and orthography dataset revisions/hashes; reconcile schema and manually review rows and CC BY-SA 4.0 obligations before import.
+6. Build independent expert-reviewed text IPA fixtures from written dictionaries/grammars with one broad/narrow convention and source locators. Gold remains 0; accuracy remains null.
+7. Resolve tone/register competing analyses and abstract /N/ vs surface nasalization before enabling affected rules.
+8. Verify the 94 MLCTS rime entries against primary written sources; vendor-derived coverage is not fully adjudicated.
+
+Repository classification: **PARTIAL PROTOTYPE**; research handoff is substantially improved, but linguistic release readiness is not established.
+
+## Final PR-head verification — 2026-11-13
+
+The previous final snapshot recorded 90 commits ahead; the final comparison before this note is 92 commits ahead, 0 behind, 25 changed files. PR #147 is OPEN / DRAFT / mergeable, with no submitted reviews; PR #129 remains OPEN / DRAFT and untouched.
+
+Exact final pre-note head 18b42a7415d3323220d09c0aacf2a17a3c6ff07d passed GitHub Actions run 43390340513: 209 Python tests + 66 subtests; independent IPA-gold structure validation; npm build; generated-data freshness; 20 Node tests; 58 Playwright/Chromium tests. Optional CRF/Epitran diagnostics passed on the same code/data tree at d2800ce458ea3c08c3fecb9e61ad170502837343; the two intervening commits were documentation-only.
+
+The active source registry has 55 sources, 62 claims, 29 medial evidence rows and 22 phonological rules. A manual parser verified every CSV row width, unique source/claim IDs and all claim→source and rule→claim→source links. No source rows or phonetic labels were imported. No audio was used. The active project remains a PARTIAL PROTOTYPE; no release or merge was performed.
+
+## Text-only continuation after project-owner permission confirmation — 2026-11-13
+
+### Scope and authorization
+
+The project owner confirms all required permissions for research use and project ingestion of textual resources. Rights are no longer treated as blockers to research processing. Preserve public source metadata and attribution. No audio was acquired, opened, processed, annotated or used; audio remains outside scope.
+
+### New primary-source work
+
+- Inspected full Nishi (1998), “Old Burmese: Toward the History of Burmese” (BNME 23(3), pp.659-692; DOI 10.15021/00004119), and registered source NISHI1998_OLDBURMESE.
+- Nishi §1.3 distinguishes historical -h with sonorants (voiceless/aspirated sonorant unit) from true -r/-l/-y/-w clusters called medials. Do not equate historical -h with modern Unicode U+103E.
+- Nishi §2.1.1 documents OWB -l- alongside -r/-y/-w, later -l- reflexes after velars/bilabials, and the MB -r-/-y- distinction merging into -y- in Standard EModWB.
+- Nishi §4 and Table 3 document the tentative Great Consonantal Shift and cross-dialect cluster reflexes among WB, SB, Arakanese, Tavoyan, Intha and Minor Taungyo. Standard-variety interference, hypercorrection and dialectal variation prevent universal modern mapping.
+- Added four claims/rules and 13 Nishi historical/dialect matrix rows; all remain WITHHELD from runtime.
+- Nishi's separate 1998 voicing paper states its slash-delimited forms follow Okell 1995 phonemic transcription. Added seven source-attested examples to data/burmese/sandhi_evidence.csv, explicitly NOT IPA; ipa_value is empty.
+
+### External textual corpora
+
+- Project owner permission confirmed for research use and project ingestion.
+- Myanglish raw CSV has two columns (myanmar,myanglish), while README metadata/viewer expose a third official_standard feature. This remains schema-uncertain; treat as informal romanization only.
+- myX orthography corpus is work-in-progress. Sampled hcara_phonetic.csv has target_words misalignment (ဆျာ→ဆရာ labelled with မင်ရည်/မှင်ရည်); sampled phet_bet rows can contain multiple substitutions. Keep quarantined for quality review and deduplication; not IPA gold.
+- At that earlier checkpoint, John Okell's 8.8 MB text corpus, SEAlang dictionary/corpora and Hill (2019) chapter 2 had not been retrieved. The Okell text corpus is now byte-verified and profiled in the 2026-11-13 continuation below; SEAlang records/corpora and the full Hill chapter remain access/schema blockers, not permission blockers. No audio was used.
+
+### Exact verification
+
+- Tested code/data head: 4835a0abc3e7e4a18c9d0bda35f554031912d570.
+- GitHub Actions run 43393402710 SUCCESS: 217 Python tests + 66 subtests; IPA-gold structure validation; npm build; generated-data freshness; 20 Node tests; 58 Playwright/Chromium tests.
+- Two preceding test runs failed on one case-sensitive test assertion only; the assertion was corrected and the exact-head run passed.
+- Registry integrity: 55 sources, 71 claims, 42 medial rows, 28 phonological rules, 7 source-phonemic sandhi rows. Manual CSV validation found no malformed widths, duplicate IDs or broken claim/source/rule links.
+- No runtime medial or contextual voicing rule enabled. Independent expert-adjudicated IPA gold = 0; empirical accuracy = null.
+
+### Current acceptance gates
+
+1. Obtain and pin Okell corpus bytes; run reproducible Unicode, duplicate, boundary and text-quality profiling.
+2. Retrieve SEAlang dictionary/text/bitext records and inspect actual entry representation/schema (IPA vs MLCTS2).
+3. Obtain Hill (2019) chapter 2 bytes; inspect exact historical medial sections and record locators.
+4. Obtain Nishi (1976) full text; Nishi (1998) is a secondary summary, not a substitute for claiming the 1976 paper was read.
+5. Pin and obtain raw Myanglish and myX orthography artifacts; reconcile metadata, deduplicate, and audit row-level target alignment.
+6. Build independently adjudicated text IPA fixtures with fixed broad/narrow convention and source locators; gold remains 0.
+7. Resolve four-tone vs eight-tone/register analyses and abstract /N/ vs surface nasalization before runtime promotion.
+8. Verify the 94 MLCTS rime entries against primary written sources.
+
+Repository remains **PARTIAL PROTOTYPE**, not linguistically release-ready. PR #147 remains a Draft; no merge or release performed.
+
+## Final exact-head handoff — 2026-11-13
+
+- Current PR #147 head: c03706474cf67b480c449790c9592e5fe0e53fd4; branch is 135 commits ahead of main, 0 behind, 28 files changed. PR is OPEN / DRAFT / mergeable; no reviews submitted. PR #129 untouched.
+- Exact-head CI 43394274053 SUCCESS: 217 Python tests + 66 subtests; IPA-gold structure validation; npm build; generated-data freshness; 20 Node tests; 58 Playwright/Chromium tests.
+- Exact-head diagnostics 43394274111 SUCCESS: CRF 100 predictions, 84 source-concordant, gold_count=0, accuracy=null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP; Epitran raw-output only.
+- Final data registries: 56 sources, 71 claims, 42 medial rows, 28 phonological rules, 7 source-phonemic sandhi cases. CSV widths, unique IDs and all cross-registry links verified.
+- Nishi (1998) Old Burmese full text and the separate Nishi (1998) voicing paper are source-registered. Thirteen new historical/dialect medial rows and seven source-phonemic sandhi cases are added and tested; none are project IPA gold or runtime rules.
+- Nishi (1976) Medials in Burmese is registered as a primary-source target but remains unread in this execution. Nishi (1998) is explicitly only a secondary summary.
+- All required text-only research and project-ingestion permissions are confirmed by the project owner. No audio was used.
+- Myanglish remains schema-uncertain (raw 2 columns vs metadata/viewer 3 features); myX orthography remains quarantined for target_words misalignment, multi-substitution examples and template duplication.
+- Okell, SEAlang and Hill chapter 2 remain blocked by tool access/schema, not permission. No corpus bytes were imported.
+- Independent expert-adjudicated IPA gold = 0; empirical accuracy = null. No runtime medial/voicing promotion. Release classification: PARTIAL PROTOTYPE.
+
+
+## Okell (1995) dialect medial evidence — 2026-11-13
+
+Full text of John Okell's *Three Burmese Dialects* (Pacific Linguistics A-83, pp.1-138) inspected. It explicitly distinguishes WB from SB (spoken) and compares Arakanese, Intha and Tavoyan against both.
+- Arakanese preserves the WB r/y distinction that SB merges in speech; the source's main Arakanese reference is high-prestige Sit-twe speech, not every Arakanese subvariety.
+- Intha and Tavoyan have restricted medial /l/ combinations; Tavoyan /-l/ is explicitly absent from SB.
+- Dialect text transcriptions are phonemic with limited allophonic approximations, not project IPA gold.
+- Added source OKELL1995_THREE_DIALECTS, seven claims, two dialect-dependent rules, three withheld medial rows and regression tests.
+- This pass inspected only written text/tables; no audio or recordings were accessed. No Okell regional rule is enabled for Yangon.
+
+
+## Okell (1969) reference grammar — next text-only source gate
+
+Registered John Okell's *A Reference Grammar of Colloquial Burmese* (two volumes, 498 pp., Oxford University Press, 1969). Bibliographic identity is confirmed by Glottolog and library catalogues. Nishi (1998) cites §§17-20 for voicing sandhi; Okell (1995) identifies it as the Spoken Burmese reference. Project owner confirms research-use permission. Full text was not retrieved in this run; obtain the text and inspect exact phonology/sandhi pages before attributing any new claims or considering runtime rules.
+
+
+## Consolidated verified handoff — 2026-11-13
+
+Exact tested code/data head 2a96f4121a43f704a8f0d2eb6d81cb343fba47db passed main CI 43395906072: 219 Python tests + 66 subtests, IPA-gold structure validation, npm build, generated-data freshness, 20 Node tests and 58 Playwright/Chromium tests. Optional diagnostics 43395906100 passed: CRF 100 predictions / 84 source-concordant / zero gold / null accuracy / NOT_SCORED_POSSIBLE_TRAINING_OVERLAP; Epitran raw output only.
+
+Final registries: 58 sources, 78 claims, 45 medial evidence rows, 30 phonological rules, 7 source-phonemic sandhi examples. Manual CSV integrity and traceability validation passed.
+
+New full-text source work includes Nishi (1998) Old Burmese and Okell (1995) Three Burmese Dialects. Nishi provides historical -h/-l/-r/-y distinctions and cross-dialect cluster correspondences; Okell provides distinct Arakanese, Intha and Tavoyan medial inventories. These are not current Yangon mappings and remain withheld. Nishi's seven sandhi examples are source phonemic, not IPA.
+
+Okell (1969) Reference Grammar and Nishi (1976) Medials in Burmese are registered as primary text targets, but their full texts were not retrieved. Hill (2019) chapter 2, Okell corpus bytes and SEAlang entries likewise remain tool-access/schema gates. Project owner confirms permissions for text-only research and project ingestion; no audio was used.
+
+Myanglish raw CSV vs metadata remains 2-column/3-feature uncertain; myX orthography remains quarantined for target-word misalignment, multiple substitutions and template duplication. Gold=0, accuracy=null, no runtime medial or voicing rules promoted.
+
+PR #147 remains OPEN / DRAFT / mergeable, 0 commits behind main and 28 files changed; the current ahead count is tracked on the PR. No reviews submitted. PR #129 untouched. Repository remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## Final text-only handoff — 2026-11-13
+
+Exact tested code/data head cda73ccb7fa80a0404fed5a65588ebd690253f94 passed main CI 43397172081: 220 Python tests + 66 subtests; IPA-gold structure validation; npm build; generated-data freshness; 20 Node tests; 58 Playwright/Chromium tests. Optional diagnostics 43397181331 passed: CRF 100 predictions / 84 source-concordant / zero gold / null accuracy / NOT_SCORED_POSSIBLE_TRAINING_OVERLAP; Epitran 1.35.3 raw-output artifact only.
+
+Final registries at the 2026-11-13 continuation: 59 sources, 83 claims, 45 medial rows, 30 phonological rules, 7 source-phonemic sandhi examples, 9 orthographic-only Okell corpus profile rows. Manual CSV integrity and traceability validation passed.
+
+Okell (1995) *Three Burmese Dialects* and Nishi (1998) *Old Burmese* full texts are inspected. Okell documents Arakanese WB r/y preservation and Intha/Tavoyan medial /l/ inventories absent from SB; Nishi documents historical -h/-l/-r/-y distinctions and cross-dialect cluster reflexes. All are historical/regional evidence, not current Yangon mappings; runtime remains withheld.
+
+SEAlang 2008 project description confirms that the Burmese dictionary interface accepts IPA phonetic queries and displays IPA transliterations. This is interface-level evidence only. Mya2Rom separately documents MLCTS2 use by MLC Dictionary/SEAlang; internal entry/export representation remains unresolved. No dictionary or corpus entries were retrieved.
+
+Nishi (1976) *Medials in Burmese* and Okell (1969) *A Reference Grammar of Colloquial Burmese* are registered primary-source targets, but their full texts were not retrieved. Hill (2019) chapter 2, Okell's 8.8 MB text corpus and SEAlang corpus bytes likewise remain tool-access/schema gates. Project owner confirms permissions; no audio used.
+
+Myanglish raw CSV vs metadata remains 2-column/3-feature uncertain; myX orthography remains quarantined for target-word misalignment, multi-substitution examples and template duplication. Gold=0, accuracy=null, no runtime medial or voicing rules promoted.
+
+PR #147 remains OPEN / DRAFT / mergeable, 0 commits behind main, 28 files changed; current ahead count is tracked on the PR. PR #129 untouched. Repository remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## Okell corpus access correction — 2026-11-13
+
+This entry supersedes earlier statements that Okell's 8.8 MB text corpus was inaccessible. The Zenodo direct endpoint returned HTTP 200 (`text/plain; charset=utf-8`) through text-only retrieval. The retrieved byte sequence is 8,809,265 bytes; its MD5 exactly matches Zenodo's provider checksum `f020d7bbcf9857631094a8861143d18f`; SHA-256 is `6bbafd699c587876317f6e0535b9dd8f9ec87c15efe4b7e65a8c7362ebcdbf4c`.
+
+The file has 19,565 CRLF-terminated lines (19,566 split segments including the final empty segment), 67 numbered heading lines, 21 BOM markers (one leading and 20 embedded), one NUL at line 9,300, non-NFC text, zero U+FFFD and 73 unique Myanmar code points. It contains mixed Burmese/English, dated and speaker-labelled dialogue/speech text, prose and tables. It is suitable for orthographic/context discovery only; no IPA annotation schema or gold labels were identified. No corpus text was imported into runtime data and no audio was used.
+
+Status: **PARTIAL / CONTENT AND BYTE INTEGRITY VERIFIED; TEXT QUALITY AUDIT PENDING**. Remaining work is segment-level provenance, boundary mapping, repeated-passage classification and inspection of the NUL and localized legacy glyph corruption. Preserve the original bytes and do not normalize or deduplicate the archival source automatically.
+
+The Zenodo Rights/License field remains blank while ELG lists CC BY 4.0. Project-owner authorization for text-only research and internal ingestion is recorded separately; downstream redistribution requires its own rights/attribution review.
+
+## Okell corpus byte-integrity completion — 2026-11-13
+
+The complete text-only Zenodo response was extracted as UTF-8, including its initial BOM and CRLF endings. Retrieved byte length: 8,809,265. Its MD5 exactly matches Zenodo's published provider checksum `f020d7bbcf9857631094a8861143d18f`; SHA-256: `6bbafd699c587876317f6e0535b9dd8f9ec87c15efe4b7e65a8c7362ebcdbf4c`.
+
+Profile: 19,565 CRLF-terminated lines (19,566 split segments including the final empty segment) / 19,565 CRLF delimiters; 67 numbered heading lines across embedded texts; valid UTF-8; 21 BOM markers (one leading and 20 embedded); one NUL at line 9,300; not NFC-normalized; zero U+FFFD; 73 unique Myanmar code points. The corpus contains mixed Burmese/English, dated and speaker-labelled dialogue/speech text, prose and tables, with localized legacy glyph/encoding corruption in some foreign technical terms. These are content/byte observations, not IPA labels. No rows imported; no audio accessed; no IPA gold created.
+
+Status advances to **PARTIAL / CONTENT AND BYTE INTEGRITY VERIFIED; TEXT QUALITY AUDIT PENDING**. Next acceptance: preserve the exact source externally, document document-level provenance and duplicate rates, inspect NUL/NFC/corrupted technical terms without modifying the source copy, and extract only source-located text examples into separate research records.
+
+
+## Okell corpus first-pass duplicate and boundary profile — 2026-11-13
+
+The exact text has 21 U+FEFF markers: one at byte-stream start and 20 embedded at apparent title/content transitions. These are boundary candidates, not proof of 21 original files or a one-to-one document map. The single NUL is in line 9,300 and sits inside a visibly corrupted passage. The text is not NFC-normalized; do not normalize the archival source in place.
+
+Line profile: 19,565 CRLF-terminated lines (19,566 split segments including the final empty segment); 18,060 nonblank lines; 17,052 distinct nonblank line values; 295 repeated nonblank line forms and 1,008 excess occurrences. There are 1,061 nonblank paragraph blocks and 23 repeated paragraph forms. Frequent repetitions include recurring poem/title lines, section headers and divider motifs; the most repeated line is a title/author-style header. These are not evidence of duplicate whole documents, so no automatic deduplication was applied.
+
+This advances structural understanding but not full quality clearance. Remaining work: map embedded BOM/title boundaries to source documents, inspect the NUL and legacy glyph corruption, identify provenance for each segment, and determine which repeated passages are genuine text reuse versus corpus duplication. Keep exact original bytes unchanged.
+
+
+## Okell corpus orthographic profile — 2026-11-13
+
+Added a separate orthographic-only profile tied to the byte-verified external corpus SHA-256. Raw codepoint counts: U+103B 50,072; U+103C 73,107; U+103D 49,248; U+103E 50,869. Raw substring matches: `မြန်` 659; `မြန်မာ` 288; `မြန်မာနိုင်ငံ` 45; `မြန်မာစာ` 18; `မြန်မာ့` 27.
+
+These counts are not tokenized and do not represent pronunciation or syllable distribution. They include repeated source material and non-NFC sequences. The profile is stored in `data/burmese/okell_text_corpus_orthographic_profile.csv`, and the source claim explicitly marks it DOCUMENTARY / ORTHOGRAPHIC_ONLY. No IPA labels, IPA gold rows or runtime mappings were created.
+
+
+## Final exact-head continuation — 2026-11-13 (supersedes earlier snapshots)
+
+- Starting default-branch commit: `dc90463bdd734867308f03cb627eb8941efc19d6`; `main` remains unchanged.
+- Final dedicated branch: `research/burmese-medials-g2p-evidence-2026-11-13`.
+- Latest verified code/data head: `601cf85a5c740627848f9eff1fa1f0911cf03796`; subsequent commits are handoff/audit documentation only. The exact final branch SHA is recorded in PR #147 and the final execution report.
+- PR #147: OPEN / DRAFT / mergeable; ahead of `main` (0 behind; exact ahead count is maintained by PR #147); 29 files changed. No merge or release performed.
+- PR #129: OPEN / DRAFT, untouched; 53 commits ahead and 17 behind `main`, diverged and non-mergeable. Its broad hybrid-engine code was not ported; no branch was deleted or rewritten.
+
+### Work completed in this continuation
+
+- Retrieved the complete text-only John Okell corpus through the Zenodo direct endpoint. The retrieved byte sequence is 8,809,265 bytes; its MD5 matches Zenodo's published checksum `f020d7bbcf9857631094a8861143d18f`; SHA-256 is `6bbafd699c587876317f6e0535b9dd8f9ec87c15efe4b7e65a8c7362ebcdbf4c`.
+- Profiled 19,565 CRLF-terminated lines (19,566 split segments including the final empty segment), 67 numbered heading lines, 21 BOM markers, one NUL at line 9,300, non-NFC text, zero U+FFFD, 73 unique Myanmar code points, 295 repeated nonblank line forms / 1,008 excess occurrences and 23 repeated paragraph forms. Repeated titles, headers and divider motifs are not duplicate-document evidence.
+- Added `data/burmese/okell_text_corpus_orthographic_profile.csv` with 4 medial codepoint counts and 5 target-substring counts. It is explicitly ORTHOGRAPHIC_ONLY; no tokenization, syllabification, IPA or pronunciation inference is asserted.
+- Updated source registry and claims, corpus triage, research report, completion register and status matrix. Added regression coverage for checksum, text-quality boundary and orthographic-only counts.
+- Current registries: 59 sources, 83 claims, 45 medial-evidence rows, 30 phonological rules, 7 source-phonemic sandhi examples and 9 orthographic-profile rows.
+- No audio was accessed, acquired, inspected, processed or used. No new medial or contextual voicing rule was enabled.
+
+### Exact-head verification
+
+- Required CI push run `43449980180` SUCCESS and PR run `43449989336` SUCCESS.
+- Python: 222 passed; 66 subtests passed.
+- IPA-gold schema validator executed successfully but reports 0 records, 0 annotations, 0 adjudicated records and `NOT_READY_NO_ADJUDICATED_GOLD`; this is not gold-set readiness.
+- npm production build: PASS; generated web-data freshness: PASS; Node: 20 passed; Playwright/Chromium: 58 passed.
+- Optional diagnostics `43449989348` SUCCESS. CRF: 100 predictions, 84 source-concordant rows, gold_count=0, accuracy=null, `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. Epitran 1.35.3: raw-output-only artifact, SHA-256 `8dc22b82c588af9575a0f398e69cabe21f9d5b22937b94f882632624caa53a99`, artifact ID `14048474215`. No accuracy claim is made.
+
+### Remaining blockers and acceptance
+
+- Okell (1969) full grammar and Nishi (1976) *Medials in Burmese*: bibliography confirmed, full texts not retrieved; no claims attributed directly. Nishi 1999 reprint is catalogued but NDL access is limited; Okell is behind limited preview/paywall routes.
+- Hill (2019), chapter 2: official Cambridge chapter metadata confirmed, but full chapter PDF unavailable through the research workspace; no new phonological claims taken from the publisher abstract.
+- Okell corpus: byte identity verified, but segment-level provenance, document boundaries, repeated passage classification and localized legacy encoding/glyph corruption remain PARTIAL. Do not normalize/deduplicate the source automatically.
+- SEAlang: actual dictionary records/export schema and corpus rows remain unresolved; IPA interface evidence is not an IPA gold corpus.
+- Independent adjudicated IPA gold remains 0; empirical accuracy remains null. Acceptance requires source-located examples, two independent annotators, a separate adjudicator, frozen splits and full IPA metadata.
+- Tone (four vs eight/register) and abstract /N/ vs surface nasalization remain unresolved; MLCTS 94 rime entries still need primary-source verification.
+- Myanglish third-column provenance remains uncertain; myX orthography corpus remains quarantined pending full 4,800-row target-span/duplicate audit.
+- Public metadata rights conflict for the Okell corpus remains recorded (Zenodo blank; ELG lists CC BY 4.0). Project-owner research/ingestion permission is confirmed; downstream redistribution still requires its own rights/attribution review.
+
+### Final assessment
+
+**PARTIAL PROTOTYPE — NOT LINGUISTICALLY RELEASE-READY.** The research dossier is suitable for specialist review, but modern Yangon IPA gold, corpus provenance/quality clearance, unresolved phonological models and source-level adjudication are still absent.
+
+
+## Full-text G2P and orthographic syllabification continuation — 2026-11-13
+
+Three additional full texts were inspected through Undermind in text/PDF mode only; no audio was accessed or used.
+
+- Thu et al. (2016), WSSANLP pp.11–22: 25,300 MLC dictionary words; 25,000 train; three 100-word open sets; 100-word closed set drawn from training. 113 reported phonemes but no complete formal inventory or transcription spec. Romanized examples are not IPA. PER uses SCLITE phoneme-level Levenshtein over syllable-segmented words. Closed-set zero-error scores are not independent generalization evidence.
+- Hlaing & Mikami (2014): orthographic Unicode syllabification FST, not G2P. 11,732 MLC orthography words; 99.93% reported word-level segmentation. Paper has unresolved internal discrepancies (32,238 vs 32,283 syllables; 8 vs 9 stacking errors); no independent annotator agreement or formal boundary metric.
+- Oo et al. (2020), LREC pp.6328–6339: text pipeline word segmentation → normalization → Thrax weighted FST graphemes-to-IPA; 34 consonants, 54 vowels; source-specific four-tone analysis and /N/ notation. Yangon recording location but no explicit dialect label. Web-crawled segmentation corpus/models are not public domain; G2P grammar described as open-source but no separate file license stated.
+- Nishi, *The Development of Voicing Rules in Standard Burmese* (1998): PDF retrieval failed; metadata/abstract only. Do not conflate it with Nishi's 1998 Old Burmese paper.
+
+Added source HLAING_MIKAMI2014_FST and eight page-located claims to source_claims.csv; updated the research review and current completion/status registers. Registry counts now 60 sources and 95 claims (other register counts unchanged unless independently revalidated).
+
+Exact code/data branch remains separate from main. No runtime rules promoted; independent expert-adjudicated IPA gold remains zero; accuracy remains null. No audio. No merge or release. Classification remains PARTIAL PROTOTYPE.
+
+
+## Nishi (1998) voicing paper — full text retrieved after prior access failure — 2026-11-13
+
+The full PDF is now available from the National Museum of Ethnology repository (DOI 10.15021/00004129, pp.253–260). This supersedes earlier notes that only metadata/abstract were available.
+
+Key findings: two synchronic Standard Burmese voicing patterns; first pattern explicitly non-obligatory and variable; atonicization is unpredictable and sometimes optional and should not be stated together with voicing; four-stage historical account; dialect-specific distributions across Intha, Taungyo, Danu, Arakanese, Tavoy, Mergui and Yaw; several exceptions remain unexplained. Standard Burmese is a broad, heterogeneous Rangoon–Mandalay label, not a narrow Yangon profile.
+
+Critical provenance correction: Nishi's phonemic notation follows Okell (1995), but footnote 3 states that all examples are quoted from Okell (1969), Reference Grammar §§17–20. The seven sandhi evidence rows now distinguish these layers and retain empty IPA values.
+
+Added four page-located claims and updated the source registry, sandhi evidence, research review, completion register and execution matrix. Registry totals: 60 sources, 95 claims, 30 rules, 45 medial rows, 7 sandhi examples, 9 Okell orthographic-profile rows. No runtime voicing rule promoted; independent adjudicated IPA gold remains zero; accuracy null; no audio used.
+
+## Nishi (1997) orthographic-standardization paper — full text verified — 2026-11-13
+
+Read the complete *The Orthographic Standardization of Burmese* PDF (BNME 22(4), pp.975–999; DOI 10.15021/00004135). Nishi distinguishes OWB, MWB, EModWB and ModWB; describes OWB -l replaced by -r/-v according to initial class and EModWB -y insertion after velars before written -i. He explicitly distinguishes Written Burmese High and Spoken Burmese Low varieties. The paper focuses on rhyme systems and treats initials only as needed, so it is not a complete medial inventory. Added scope claim CLM-NISHI97-SCOPE-001. No modern Unicode mapping or runtime rule promoted. Total registry: 60 sources, 96 claims.
+
+
+## Final verification and handoff — 2026-11-13
+
+### Verified snapshot
+
+- Default branch: `main`; starting base commit: `dc90463bdd734867308f03cb627eb8941efc19d6`.
+- Dedicated branch: `research/burmese-medials-g2p-evidence-2026-11-13`.
+- Code/data snapshot fully verified by GitHub Actions at commit `7158a401968576f882141bb9cac279204a626d63`; this final handoff-only documentation commit follows that snapshot.
+- PR #147 remains Open / Draft / mergeable, 228 commits ahead and 0 behind main, 29 files changed. Not merged.
+- PR #129 remains Open / Draft / non-mergeable; untouched because it is a separate pre-existing change set and has not been reconciled with the current branch.
+- `main` was not changed; no release or deployment was published.
+
+### Commands and checks actually completed on the verified snapshot
+
+GitHub Actions run 43455376658 (tests, run number 3099):
+- Independent IPA gold corpus structure validation — PASS.
+- `pip install -e ".[test]"` — PASS.
+- `pytest` — 222 passed, 66 subtests passed.
+- `npm install` — completed; reported one high-severity npm audit finding (not auto-fixed; dependency/security review remains open).
+- `npm run build` — PASS.
+- `npm run generate:web` and generated-data drift check — PASS.
+- `npm test` — PASS (20 Node tests).
+- `npx playwright install --with-deps chromium` — PASS.
+- `npm run test:browser:built` — PASS (58 Playwright tests).
+
+Optional diagnostic workflow 43455376657 (run number 537):
+- Epitran raw-output diagnostic — completed successfully; artifact uploaded.
+- Pinned CRFsuite baseline build and raw-output diagnostic — completed successfully; artifact uploaded.
+- These diagnostics are not independent accuracy evaluations. Existing evaluation boundary remains: no independent held-out IPA gold; accuracy is null. Do not present prediction/reference overlap as accuracy.
+
+Manual registry validation on the same snapshot:
+- CSV widths consistent across sources, claims, rules, medial matrix, sandhi evidence and Okell orthographic profile.
+- 60 source records; 96 claim records; 30 phonological rules; 45 medial evidence rows; 7 sandhi evidence rows; 9 Okell orthographic-profile rows.
+- No duplicate source IDs or claim IDs.
+- No broken claim→source, rule→source, rule→claim or medial→source references.
+- All seven sandhi rows retain empty IPA and source-attested traditional phonemic output; all identify examples as quoted from Okell (1969) while the notation convention follows Okell (1995).
+
+### Final research status and blockers
+
+- Full texts newly inspected: Thu et al. (2016), Hlaing & Mikami (2014), Oo et al. (2020), Nishi (1998) *The Development of Voicing Rules in Standard Burmese*, and Nishi (1997) *The Orthographic Standardization of Burmese*.
+- Nishi 1998 provenance correction: examples are quoted from Okell (1969) §§17–20; notation follows Okell (1995). Atonicization remains separate from voicing; first voicing pattern is not obligatory throughout broad Standard Burmese.
+- Nishi (1976/1977) *Medials in Burmese*: BLOCKED — bibliography and secondary citations found, complete primary text not retrieved. Acceptance: inspect full primary text and page locators.
+- Okell (1969) §§17–20: BLOCKED — catalogue/preview evidence found, full text not accessible in this session. Acceptance: inspect the actual sections and reconcile examples/conditions directly.
+- Independent expert-adjudicated modern Yangon IPA gold: TODO / evidence-limited, current count 0. Acceptance: build an independently adjudicated written set with explicit profile and transcription conventions.
+- Four-vs-eight tone/register reconciliation, abstract /N/ vs surface nasalization, 94 MLCTS rime primary-source audit, SEAlang record-level representation, Myanglish pinned artifact, and full myX 4,800-row audit remain open.
+- No runtime medials, tone, coda, /N/ or voicing rules were promoted in this pass.
+- No audio was accessed, played, processed or used.
+
+### Release assessment
+
+Still PARTIAL PROTOTYPE. Code/data validation and current CI pass, but release readiness is not established because independent modern Yangon IPA gold is zero, core phonological decisions remain evidence-limited, and several primary texts/record-level datasets remain unavailable. Next research blockers are Okell (1969) §§17–20 and Nishi (1976/1977) *Medials in Burmese*, followed by expert-adjudicated IPA gold.
+
+
+## Final register reconciliation after verification — 2026-11-13
+
+The completion register and execution matrix were reconciled to the final validated CSV totals after adding the Nishi (1997) scope claim. Final counts are 60 sources and 96 claims (not 97), 30 phonological rules, 45 medial evidence rows, 7 sandhi evidence rows and 9 Okell orthographic-profile rows. CSV validation found no width errors, duplicate source/claim IDs or broken source/claim/rule/medial references.
+
+The last changes after the fully tested code/data snapshot `7158a401968576f882141bb9cac279204a626d63` are documentation-only: completion register, execution matrix and this handoff. No code, runtime rules, generated artifacts or evidence data changed after that snapshot. Main CI run 43455376658 passed all steps; optional raw-output/CRF diagnostic run 43455376657 completed both jobs successfully. The final branch tip is reported in the session handoff/PR #147 head because this note is itself committed after the prior snapshot.
+
+
+## Duan & Zhu (2025) Burmese tone study — full-text audit — 2026-11-13
+
+| Work item | Status | Evidence / acceptance boundary |
+|---|---|---|
+| Duan & Zhu (2025), *Double registers and eight tones in Burmese* | DONE_VERIFIED (FULL-TEXT SOURCE EVIDENCE ONLY) | Full 44-page article inspected from the Academia Sinica journal download page; *Language and Linguistics* 26(3), pp.387–430; CC BY 4.0. The authors propose four traditional tone classes split into eight yin/yang categories (1a–4a, 1b–4b), with modal and lower/breathy registers and pitch, phonation/register and length as dimensions. |
+| Empirical sample and dialect scope | DONE_VERIFIED (SOURCE SAMPLE DESCRIPTION) | §1.2 p.392: five speakers aged 22–38, two from Yangon, two from Taunggyi and one from the Mandalay region; 89 words (80 monosyllabic, 9 disyllabic), each read twice; 694 valid word tokens. This is a mixed regional sample, not a Yangon-only sample. |
+| Individual variation | DONE_VERIFIED (SOURCE EVIDENCE) | §5.3 Figure 7 and discussion report speaker variation, particularly in T1 and T3; preserve within-source variability rather than forcing one invariant pitch contour. |
+| Runtime promotion / four-vs-eight reconciliation | PARTIAL / COMPETING ANALYSES | The paper advances an eight-category compound tone analysis, while Green and Oo et al. (2020) describe four categories. The new paper is a significant peer-reviewed competing analysis, not by itself a project-wide adjudication. No runtime tone model changed. |
+
+Claims added: CLM-DUAN25-MODEL-001, CLM-DUAN25-SAMPLE-001, CLM-DUAN25-VARIATION-001. Existing DUAN2025 source record updated from abstract-only to full-text inspected. Review was text-only: no source recordings were accessed or analyzed. Independent project IPA gold remains 0; empirical G2P accuracy remains null.
+
+
+## Okell (1999) Myanmar final and syllable-boundary proposal — full-text audit — 2026-11-13
+
+| Work item | Status | Evidence / acceptance boundary |
+|---|---|---|
+| ISO/IEC WG2 N2033, *Proposal for Extension of Myanmar Coded Set* | DONE_VERIFIED (FULL-TEXT ORTHOGRAPHIC EVIDENCE) | Full 18-page document inspected. Appendix 2 contains John Okell's 1999-05-11 research/chart of vowel-sign, tone-mark and final combinations. It separates the regular Burmese open/closed syllable system from added finals used for non-Burmese words and names. |
+| Added finals and syllable-boundary method | DONE_VERIFIED (SOURCE EVIDENCE ONLY) | Okell reports that added finals may follow regular finals and tone marks, occasionally with two or three finals; enumerating possible syllable endings is insufficient for boundary detection, and he suggests identifying the beginnings of new syllables. This is a text-processing proposal, not a ready-made phonological syllabifier. |
+| Open/closed syllable tone encoding | DONE_VERIFIED (ORTHOGRAPHIC EVIDENCE ONLY) | §§3–5 distinguish tone-mark arrangements in open and closed syllables; absence of an explicit mark has different interpretations in the two structures. This does not resolve the modern four-vs-eight tone analysis. |
+| Runtime changes / 94 MLCTS rime audit | DEFERRED / EVIDENCE GATE | Do not import added-final spellings into the native Burmese rime inventory. Compare the existing 94 MLCTS entries with the regular-system columns only; keep non-Burmese added finals separately classified. No runtime change made. |
+
+Claims added: CLM-OKELL99-ADDED-FINALS-001, CLM-OKELL99-SYLLABLE-BOUNDARY-001 and CLM-OKELL99-OPEN-CLOSED-TONE-ORTHOGRAPHY-001. Added regression coverage in `tests/test_source_rule_evidence.py`. Review used document text only; no audio.
+
+Current registry totals after this update: **61 sources, 102 claims**, 30 phonological rules, 45 medial evidence rows, 7 source-phonemic sandhi examples and 9 Okell orthographic-profile rows. CSV validation and CI for this exact head are pending.
+
+
+## Hill (2019) Burmese historical-phonology chapter — full-text access correction — 2026-11-13
+
+| Work item | Status | Evidence / acceptance boundary |
+|---|---|---|
+| Hill (2019), Chapter 2: Burmese, pp.46–83 | DONE_VERIFIED (SECONDARY HISTORICAL ANALYSIS) | Full chapter text inspected from a third-party mirror; title, DOI, chapter pagination and bibliographic identity checked against Cambridge metadata. The mirror is not the publisher source; publisher copyright notice retained, no redistribution. |
+| Old Burmese medials and Written Burmese scope | DONE_VERIFIED (SECONDARY SOURCE EVIDENCE) | §46: Old Burmese y-, r-, l-; -w- is derived from -o1- > -wa- and excluded from the historical medial inventory; limited double-medial evidence is noted but excluded from the figure. §47: Written Burmese is an idealized standard, not tied to one specific time/place; historical -l- merges with -y- after velars and -r- after labials. |
+| Old Burmese tone notation | DONE_VERIFIED (SOURCE-SPECIFIC RECONSTRUCTION) | §46: Old Burmese does not regularly mark tones; Hill projects Written Burmese tone marking backwards for reconstruction. Do not mistake this analytical choice for regular attested Old Burmese tone marking. |
+| Runtime promotion | DEFERRED / HISTORICAL ONLY | Use Hill to triangulate Nishi and other historical sources; no modern Unicode mapping or Yangon G2P rule is licensed. Nishi (1976) itself remains unread as a primary source. |
+
+Claims added: CLM-HILL2019-OB-MEDIALS-001, CLM-HILL2019-WB-SCOPE-001, CLM-HILL2019-OB-TONE-001 and CLM-HILL2019-OB-ORTHO-CAUTION-001. Review was text-only; no audio. Current registry totals: **61 sources, 106 claims**, 30 phonological rules, 45 medial evidence rows, 7 source-phonemic sandhi examples and 9 Okell orthographic-profile rows.
+
+
+## Primary-source access investigation: Okell 1969 and Nishi 1976/1977 — 2026-11-13
+
+| Work item | Status | Evidence / acceptance boundary |
+|---|---|---|
+| Okell (1969), *A Reference Grammar of Colloquial Burmese* edition structure | DONE_VERIFIED (BIBLIOGRAPHIC METADATA) | Two-volume work confirmed independently by Glottolog, Open Library and Indiana University catalogue: vol.1 pp.xvii + 1–240; vol.2 pp.241–482 (482 numbered pages; 498 total physical pages). A reference-material guide describes vol.1 as “Sounds” and vol.2 as alphabetical particles/common words. Nishi (1998) cites the relevant examples to §§17–20. |
+| Okell (1969) §§17–20 full text | BLOCKED (ACCESS) | National Library of Myanmar catalogue lists a PDF, but “View Resources” is paid. No open full text of §§17–20 was retrieved. Acceptance: inspect actual section pages, record examples/conditions and compare directly against Nishi 1998. Do not infer section contents from citations or catalogue metadata. |
+| Nishi (1976/1977), *Medials in Burmese* archival locator | DONE_VERIFIED (PHYSICAL HOLDING DESCRIPTION) | Cornell University Library finding aid for Nicholas C. Bodman Papers, Collection 14-13-3031, Box 8 Folder 148, lists a July 1977 copy of “Medials in Burmese”, pp.41–52. This verifies an archival copy and pagination, not its contents or online access. |
+| Nishi (1976) book chapter and 1977 journal reprint | DONE_VERIFIED (EDITION RECONCILIATION) | 1976 chapter in M. Hashimoto (ed.), pp.15–29; 1977 journal reprint in *Historical Science Reports of Kagoshima University* 26, pp.41–52. These are publication versions of the same study, not independent sources. |
+| Nishi (1976/1977) full text | BLOCKED (PHYSICAL ACCESS REQUIRED) | No full text or scan found. Acceptance: request/consult Cornell Box 8 Folder 148 or locate a complete journal scan; inspect all 12 pages, verify page-by-page claims and distinguish original chapter pagination from reprint pagination. |
+
+Claims added: CLM-OKELL1969-EDITION-STRUCTURE-001 and CLM-NISHI1977-ARCHIVAL-ACCESS-001. Source records updated with exact access limitations. Added regression test `test_okell_1969_edition_and_nishi_1977_archival_access_are_not_mistaken_for_full_text()`. No new linguistic rule or medial inventory claim was promoted. Current totals: **61 sources, 108 claims**, 30 phonological rules, 45 medial evidence rows, 7 source-phonemic sandhi examples and 9 Okell orthographic-profile rows. Review remained text-only; no audio.
+
+
+## Mya2Rom 0.4.4 — complete 94-key vendor audit and MLCTS collision analysis — 2026-11-13
+
+| Work item | Status | Evidence / acceptance boundary |
+|---|---|---|
+| Inventory-to-vendor fidelity | DONE_VERIFIED (SOURCE-CODE MATCH) | All **94/94 non-empty** Myanmar keys in `data/burmese/romanization_rimes_inventory.csv` match the vendored Mya2Rom 0.4.4 `vowels` object; all 94 MLCTS values match array column 2 (index 1). The upstream object has 95 keys including an empty-key fallback, intentionally excluded from the 94-row inventory. Vendored `romanisations.js` is byte-identical to upstream master at review. |
+| MLCTS-to-source invertibility | PARTIAL / NON-INJECTIVE | **25 MLCTS collision groups**, each mapping two different Myanmar keys to the same MLCTS string. Added `data/burmese/romanization_rime_collisions.csv`. Preserve the Myanmar key; do not reverse-map a Latin MLCTS string to a unique source spelling. Collisions alone do not establish homophony or interchangeable spelling. |
+| MLCTS vs MLCTS2 identity | DONE_VERIFIED (VENDOR DOCUMENTATION) | Upstream README distinguishes MLCTS (orthographic) from MLCTS2 (modified, more phonetic, reported as used by the MLC Myanmar-English Dictionary and SEAlang). The project's 94-row table uses the MLCTS column, not MLCTS2. Mya2Rom itself says its expanded tables also draw on Wikipedia and Wiktionary, so it is not a primary MLC publication. |
+| Special auk-myit key | PARTIAL / CONTEXT-DEPENDENT | Upstream comments identify the standalone key `့` as an auk-myit-induced creaky-tone provision; the algorithm applies it in syllable matching. Its row now warns that this is not an independent vowel or coda. Do not treat it as a regular rime or infer a free-standing Ukrainian syllable. |
+| Primary MLC written-source adjudication | BLOCKED / EVIDENCE GATE | Vendor fidelity is now verified, but the original MLC primary transcription table and every orthographic/rime distinction have not been checked against a primary MLC source or word-level dictionary entries. Acceptance: locate the actual MLC system tables and representative written dictionary entries for each collision group; reconcile orthographic variants, asat, anusvara, tone marks, and special cases. Keep all 94 Ukrainian candidates PROPOSED / EVIDENCE_LIMITED until that work and target-language adjudication are complete. |
+
+Added claims: CLM-MYA2ROM-RIME-EXACT-MATCH-001, CLM-MYA2ROM-MLCTS-COLLISIONS-001, CLM-MYA2ROM-MLCTS-VS-MLCTS2-001 and CLM-MYA2ROM-AUKMYIT-FALLBACK-001. Added a machine-readable 25-group collision audit and regression tests for 94/94 vendor fidelity, collision preservation and the special auk-myit key. No runtime phonological or transcription rule was changed. Current totals: **61 sources, 112 claims**, 30 phonological rules, 45 medial evidence rows, 7 sandhi examples and 9 Okell orthographic-profile rows. No audio was accessed.
+
+
+## Exact-head verification after 94-key MLCTS audit — 2026-11-13
+
+- Final verified code/data head: `3ab1fb3d4359ede4f9f98ea02b608354268eeef1` on `research/burmese-medials-g2p-evidence-2026-11-13`.
+- Main baseline remains `dc90463bdd734867308f03cb627eb8941efc19d6`; branch comparison: **270 commits ahead, 0 behind**. PR #147 remains OPEN / DRAFT / mergeable, 32 changed files; not merged. PR #129 remains untouched. No release or deployment published.
+- Main CI run **43477600192**: SUCCESS. Python **228 passed + 66 subtests passed**; Node **20 passed, 0 failed**; Playwright **58 passed**; IPA-gold validator completed with `NOT_READY_NO_ADJUDICATED_GOLD`; package installation, production build, generated-data freshness and Chromium installation passed.
+- Duplicate push-triggered CI run **43477590198** also completed successfully. Optional raw-output diagnostics **43477600305** completed successfully; diagnostics are not an accuracy benchmark.
+- `npm install` reports **1 high-severity vulnerability**. No `npm audit fix --force` or broad dependency upgrade was applied. Separate dependency review remains required.
+- Final registry totals: **61 sources, 112 claims**, 30 phonological rules, 45 medial evidence rows, 7 sandhi evidence rows, 9 Okell orthographic-profile rows; 94 vendor rime keys, 25 MLCTS collision groups. All Ukrainian rime candidates remain PROPOSED / EVIDENCE_LIMITED. No runtime phonological rule changed in this continuation.
+- Earlier CI attempt failed only because the newly qualified auk-myit note no longer contained the existing vendor-provenance phrase expected by a test. The note was corrected without removing the linguistic caveat; exact-head CI above passed afterward.
+- Repository remains a **PARTIAL PROTOTYPE**: primary MLC rime source, Okell §§17–20, Nishi 1976/1977 full text, independent modern Yangon IPA gold (0), tone model reconciliation and /N/ surface analysis remain open.
+
+
+## Preliminary lexical cross-check of MLCTS collision groups — 2026-11-13
+
+- Added data/burmese/romanization_rime_collision_lexical_audit.csv, a 25-row evidence ledger linked one-to-one to the existing 25 collision groups. It deliberately distinguishes secondary table evidence, unresolved groups, and the special non-rime ့ fallback.
+- Added secondary reference WIKTIONARY_BURMESE_TRANSLITERATION_2026 and claims CLM-WIKT-RIME-AM-001 / CLM-WIKT-RIME-ANY-001.
+- am group (မ်;ံ): Wiktionary's comparative rhyme table gives ကမ် and ကံ the same /kàɴ/ and MLCTS kam in its က-onset examples. This is a secondary table-level parallel, not a verified pair of MLC dictionary headwords and not proof of general spelling interchangeability.
+- any group (ဉ်;ည်): the same table distinguishes ကဉ် (/kɪ̀ɴ/, MLCTS kañ‘) from ကည် (/kì/, /kè/, /kɛ̀/, MLCTS kany), while the Mya2Rom inventory maps both isolated source units to any. This is a concrete secondary-source discrepancy signal. Do not patch the vendor data until the primary MLC transcription specification and representative entries are checked.
+- Special u. group (့;ု): retained as SPECIAL_NONRIME_CONTEXT_DEPENDENT; the ့ key is an auk-myit-induced fallback, not a normal rime, so it must not be adjudicated as a spelling pair.
+- The other 22 groups remain unadjudicated: no primary-source lexeme pairs have been checked. The ledger's acceptance boundary explicitly prevents secondary evidence from changing runtime, Ukrainian candidates, or linguistic release status.
+- SEAlang's public metadata confirms a roughly 35,000-entry dictionary based on the MLC 1993 dictionary and MLC 1986 standard orthography, but the live dictionary page timed out during direct retrieval in this pass. Firecrawl page retrieval could not run because the connected service had exhausted its credits. No dictionary entry content is claimed as inspected.
+- Registry totals after this addition: 62 sources, 114 claims. Existing 94 vendor keys and 25 collision groups are unchanged. All Ukrainian candidates remain PROPOSED / EVIDENCE_LIMITED; no runtime phonological rule changed; no audio was accessed.
+- Verification status: the new regression test checks all 25 rows, status partition (22 unadjudicated, 2 secondary-comparison records, 1 special non-rime), exact source-unit correspondence, and the am/any evidence boundaries. Hosted exact-head CI must be checked after this commit; no local test execution is claimed.
+- Next acceptance gate: retrieve and inspect the MLC 1993 dictionary entries (or a primary MLC system table) for representative headwords across all 25 groups; record exact entry locators, IPA/transcription fields and spelling context; reconcile any conflict between the vendor array and primary MLC material before changing data.
+
+
+## Secondary-source reconciliation of nasal-final collision groups — 2026-11-13
+
+- A second secondary reference, Wikipedia's MLC Transcription System overview, explicitly lists -any for both ည် and ဉ်, -am for both မ် and ံ, and -um for both ုမ် and ုံ (nasal-final table, lines 201-208). Registered WIKIPEDIA_MLCTS_SYSTEM_2026 and claim CLM-WIKI-MLCTS-NASAL-FINALS-001.
+- This changes the interpretation of three collision groups:
+  - am (မ်;ံ): secondary agreement. Wiktionary's rhyme examples give the same /kàɴ/ and kam; Wikipedia says both spellings use -am.
+  - um (ုမ်;ုံ): secondary agreement. Wiktionary's rhyme examples give the same /kòʊɴ/ and kum; Wikipedia says both spellings use -um.
+  - any (ဉ်;ည်): secondary-source conflict. Wiktionary's detailed table distinguishes kañ‘ from kany, whereas Wikipedia's MLC-system summary lists -any for both and the vendor uses any for both. This is not a confirmed vendor error; the primary MLC specification is still needed.
+- Updated the lexical audit statuses accordingly: 2 SECONDARY_SYSTEM_EQUIVALENCE, 1 SECONDARY_SOURCE_CONFLICT, 1 SPECIAL_NONRIME_CONTEXT_DEPENDENT, and 21 UNADJUDICATED_NO_WORD_LEVEL_EVIDENCE. No primary-source group is marked confirmed.
+- The Wikipedia article describes MLCTS as an orthographic system based on formal Burmese and separately notes that the anunasika (ံ) and -m final (မ်) are not differentiated. This is secondary-source context, not a primary MLC citation.
+- Updated regression assertions, source/claim registries, handoff, execution matrix and completion register. Registry totals now 63 sources / 115 claims. The 94-key inventory, 25 collision groups and all Ukrainian candidates are unchanged; no runtime rule changed; no audio used.
+- Primary MLC table and actual SEAlang dictionary entries remain BLOCKED pending direct access. The live SEAlang page timed out; Firecrawl retrieval was unavailable due to exhausted connected-service credits.
+
+
+## Exact-head verification after lexical collision audit — 2026-11-13
+
+- **Code/data snapshot:** 46b7da6afd7ecc94e4dcac87c7f759132c74bc6b.
+- **Required CI:** workflow run 43491799213 SUCCESS. Exact-head results: Python 229 passed + 66 subtests; Node 20 passed, 0 failed; Playwright 58 passed. Production build, generated web-data freshness, npm install and Chromium installation passed. IPA gold validator reports NOT_READY_NO_ADJUDICATED_GOLD; the repository still has 0 independently adjudicated IPA gold records.
+- **Optional diagnostics:** run 43491799196 SUCCESS for raw-output and CRF baseline jobs. These are diagnostic outputs only; no accuracy is established.
+- **Dependency note:** npm install reports 1 high-severity vulnerability. No force-upgrade or dependency-wide remediation was applied.
+- **Registry totals:** 63 sources, 115 claims; 94 vendor rime keys, 25 collision groups, 25 lexical audit rows. Audit status counts: 21 unadjudicated, 2 secondary-equivalence, 1 secondary-source conflict, 1 special non-rime. All 94 Ukrainian candidates remain PROPOSED / EVIDENCE_LIMITED.
+- **Evidence result:** am and um have secondary-source agreement; any has an unresolved secondary-source conflict. No group has primary MLC confirmation. The actual MLC table and SEAlang dictionary entries remain the next evidence gate.
+- **Branch and PR:** PR #147 remains OPEN / DRAFT / mergeable and unmerged. Branch is 287 commits ahead, 0 behind main; PR #129 remains open and untouched; merged PR #146 is preserved. Main was not changed.
+- **Release assessment:** PARTIAL PROTOTYPE, not linguistically release-ready. No audio accessed, no runtime phonological rule changed, no Ukrainian candidate promoted, no release/deployment published.
+
+
+
+## Continuation — MLCTS primary-source provenance check (2026-11-13)
+
+- Added two source records and two source claims:
+  - **OHNMAR_HTUN_2013**: the 2013 Nagaoka doctoral dissertation identifies MLCTS as a 1980 MLC system and provides three examples, but its bibliography [47] points to the Wikipedia system overview (accessed 2012-10-12), not a directly identified MLC publication. Treat this as secondary provenance only.
+  - **ALA_LC_BURMESE_2011**: the Library of Congress 2011 Burmese Romanization Table is an ALA-LC table, not MLCTS. It is registered separately to prevent system conflation.
+- Registry totals: **66 nonblank source records / 118 claims**. New claims: CLM-MLCTS-SECONDARY-PROVENANCE-001 and CLM-ALA-LC-NOT-MLCTS-001.
+- Primary-source status remains **BLOCKED / EVIDENCE GATE**. No original MLC 1980 table or primary MLC word-level entry text was retrieved. The dissertation's three examples do not constitute a complete specification; its own bibliography shows that its 1980 attribution is mediated by a secondary web page.
+- The LOC ALA-LC table is explicitly not an MLCTS substitute and cannot resolve the 25 MLCTS collision groups.
+- No source data, runtime rule, IPA gold label or Ukrainian candidate was promoted or changed. No audio was accessed.
+- Exact source locators: Htun dissertation §5.1.2.3 p.80 and ref. [47] p.122; LOC *Burmese Romanization Table*, 2011 version, pp.1–5.
+
+## Registry count reconciliation — 2026-11-13
+
+A fresh parse of the current CSV registries, counting only nonblank source rows and requiring unique IDs, finds **66 source records and 117 claim records**. The previous continuation note's 65-source count was one too low; the current source registry contains 66 nonblank IDs. Two pre-existing blank CSV records in `sources.csv` are ignored for this count. All 117 claim IDs are unique and every claim's `source_id` resolves to a registered source. The two new provenance records and claims are included in these totals.
+
+A regression test now protects the distinction between the Htun secondary provenance trail and the LOC ALA-LC table. Test/CI status for the final code-bearing commit is pending verification; no local checkout was available in this connector session.
+
+## Additional MLC bibliography lead — 2026-11-13
+
+- Registered **UNICODE_REFERENCE_LISTS_2022** and **CLM-MLC-DICT-BIB-UNICODE-001**. The Unicode Consortium's bibliography identifies the 1993 Myanmar-English Dictionary as compiled and edited by the Myanmar Language Commission and lists a 1996 Myanmar orthography treatise (PDF lines 681–690).
+- This provides independent bibliographic corroboration for the MLC dictionary already located through SEAlang metadata. It does not provide the original entries, the 1980 MLCTS specification, or evidence about whether a dictionary romanization field is MLCTS or MLCTS2.
+- A regression test now asserts the record and preserves that limitation. Registry totals: **66 nonblank source records / 118 claims**.
+- Primary-source acceptance remains blocked until actual MLC table/entry text and exact field semantics are inspected. No runtime or Ukrainian candidate changes; no audio accessed.
+
+## Final verification boundary for this continuation — 2026-11-13
+
+- Registry parse on the current branch: **66 nonblank source records / 118 claim records**; all IDs unique, all row widths conform to their CSV headers, and every claim source reference resolves. Two blank CSV records are ignored by the count.
+- The provenance regression test was added to `tests/test_romanization_rime_inventory.py`. The GitHub connector exposed no workflow runs and no commit status checks for final code/documentation head `caf66d5a6b58522ca33715654c38b075c1d1fc21`; therefore this latest test change is **NOT YET CI-VERIFIED**. Earlier successful CI on prior code/data head `46b7da6afd7ecc94e4dcac87c7f759132c74bc6b` does not cover this added test.
+- No local checkout or local Python test execution was available. Do not claim the new test passed.
+
+## MLC dictionary access routes identified — 2026-11-13
+
+- Registered WHO Myanmar Library catalogue record 487 and National Diet Library record 000003254368 as separate sources.
+- WHO Myanmar lists an available physical 1993 MLC dictionary (635 pages). NDL identifies the 1996 Dunwoody Press reprint (xxiii, 635, iii pages; call no. KL42-A3), with Tokyo Main and Kansai-kan holdings and one cooperating Japanese library.
+- Added claims CLM-MLC-DICT-1993-PHYSICAL-HOLDING-001 and CLM-MLC-DICT-1996-NDL-HOLDING-001. Current registry totals: **68 nonblank source records / 120 claims**.
+- This changes the next-step blocker from an unidentified book to access/inspection of known physical holdings. No page/entry content was obtained; no MLCTS/MLCTS2 field was adjudicated. The primary-source gate remains blocked until the text is consulted.
+- Regression tests assert the catalogue locators and their access-only limits. No runtime mapping or Ukrainian candidate changes; no audio used.
+
+## MLC dictionary field-purpose clue — 2026-11-13
+
+- Added **BURMA_DEBATE_1996_MLC_DICT_NOTICE** and **CLM-MLC-DICT-PRON-GUIDE-001**. A contemporaneous 1996 notice says the MLC dictionary's transcription system serves as an aid to pronunciation for English speakers; it also reports nearly 35,000 entries.
+- This is secondary promotional evidence about intended function, not the field's identity. It does not prove MLCTS2. The dictionary's own introduction and sample entries must be inspected to identify the transcription convention.
+- Registry totals: **69 nonblank source records / 121 claims**. A regression assertion guards against upgrading the notice into a specific MLCTS/MLCTS2 identification.
+
+## Final exact-head CI — provenance and registry tests (2026-11-13)
+
+Code/test head **508816dcddf22272e98647625b657bc79712817e** completed required CI successfully:
+- Workflow **43496624771**: SUCCESS.
+- Python: **231 passed + 66 subtests passed**.
+- Node: **20 passed, 0 failed**.
+- Playwright: **58 passed**.
+- Chromium install: PASS.
+- Production build: PASS.
+- Generated web-data freshness: PASS.
+- IPA-gold validator: executed successfully, but reports **0 records / 0 annotations / 0 adjudicated records** and `NOT_READY_NO_ADJUDICATED_GOLD`; this is a data-readiness blocker, not a validator failure.
+- Optional diagnostics workflow **43496624752**: SUCCESS for raw-output and CRF-baseline jobs. These remain diagnostics only, not scored accuracy.
+- `npm install` still reports **1 high-severity vulnerability**; no forced dependency upgrade was made.
+- Source registry integrity rechecked: **69 nonblank sources / 121 claims**, unique IDs, valid CSV row widths and all claim-to-source references resolve.
+- The latest changes after code/test head are documentation-only. Final branch tip will be recorded after this handoff update.
+
+## Continuation — MLCTS2 crosswalk and source naming audit (2026-11-13)
+
+- Added MOW source **MOW_2017_MLCTS_VARIANTS** and claim **CLM-MOW-MLCTS2-VARIANTS-001**. The MOW project page documents MLCTS and MLCTS 2 romanized variants in v0.1.2 and says MLCTS 2 is used in the MLC Myanmar-English Dictionary; MOW v0.1.3 is CC BY 4.0. It is a secondary semantic resource, not an MLC primary specification.
+- Added `data/burmese/romanization_rime_mlcts2_crosswalk.csv`, 25 rows computed from Mya2Rom v0.4.4. Of 25 duplicate-MLCTS groups, 21 have identical values in the modified third column and four differ: `any`, `any:`, `any.`, `ui`. For `any`, the column distinguishes `in` vs `i`; vendor IPA column distinguishes `ɪ̀ɴ` vs `|ì,ɛ̀|`. These are vendor outputs, not independent lexical or IPA gold evidence.
+- Reconciled a source naming discrepancy: Mya2Rom README/API says `mlcts2`; `mya2rom.js` selects index 2; `romanisations.js` labels that same third column `MLCTS-SL`. Registered **CLM-MYA2ROM-COLUMN3-NAMING-001** and guarded it with tests. Treat as one software column with two labels, not two separate representations.
+- Added regression test that derives each crosswalk value from the exact vendored source arrays and enforces the four differing groups, the special `့` fallback and the evidence boundary.
+- Registry totals: **70 nonblank sources / 123 claims**. No runtime behaviour, IPA gold, or Ukrainian candidate promoted; all 94 candidates remain PROPOSED / EVIDENCE_LIMITED. No audio accessed.
+- Latest test-bearing commit: `c4dcaa2ea0a33ed7c9038b472f068a1a7714c12b`; CI pending. Next acceptance gate: run exact-head CI, then obtain/inspect the actual MLC dictionary pages or a primary 1980 MLC transcription table before changing linguistic rules.
+
+## Earlier MLC Concise Dictionary lead (1978-1980) — 2026-11-13
+
+- Added **ALLOTT1985_BURMA_LANGUAGE_POLICY** and **OKELL1982_BURMESE_DICTIONARY_REVIEW**, with claims **CLM-MLC-CONCISE-DICT-1978-80-001** and **CLM-MLC-CONCISE-DICT-BIB-001**.
+- Allott's 1985 survey says the MLC Concise Burmese Dictionary appeared in five parts from late 1978 through 1980, established official spelling for entries and included pronunciations. Okell's 1982 bibliography independently records a five-volume Rangoon edition, 1978-1980, published by Mranmācā Aphwai.
+- This creates an earlier and potentially valuable primary lexicon access route. The original five volumes and their pronunciation key have not been inspected. It is not yet known whether their pronunciation notation is MLCTS, MLCTS2, or another convention.
+- Registry totals: **72 nonblank sources / 125 claims**. Regression tests now guard both bibliographic sources and their evidence limits.
+- Latest test-bearing commit **161e36c5deadb6da6fd008fb44fdf9eef9c454a8** awaits exact-head CI.
+
+## Complete Mya2Rom vendor-system inventory — 2026-11-13
+
+- Added `data/burmese/romanization_rimes_vendor_systems.csv`, a 94-row companion inventory that records the exact vendor IPA, MLCTS, modified MLCTS/MLCTS2, Simple and Simple2 values for every non-empty rime key. It is separate from the Ukrainian candidate inventory and does not change runtime behaviour.
+- All 94 source keys are present in the vendored Mya2Rom table. The only key whose array has four values rather than five is `ေါင်း`: its Simple2 value is not provided by the upstream array. This missing value is recorded as missing, not guessed.
+- Added regression coverage that parses the vendored JS array and compares all 94 rows/columns, while preserving the evidence boundary that these are vendor mappings, not a primary MLC table or independent IPA gold.
+- Registry remains **72 nonblank sources / 125 claims**; no new source claim was needed because this artifact is a deterministic extraction of already registered Mya2Rom v0.4.4.
+- Exact-head CI for this latest added full crosswalk test is pending.
+
+## Full crosswalk exact-head CI result — 2026-11-13
+
+Code/test commit **c35a7ae0255725aa85cf5f836c64b4ed1fa5b731** completed required CI successfully:
+- Workflow **43498396994**: SUCCESS.
+- Python: **233 passed + 66 subtests passed** (includes full 94-key and 25-collision crosswalk checks).
+- Node: **20 passed, 0 failed**.
+- Playwright: **58 passed**; Chromium installation passed.
+- Production build: PASS.
+- Generated web-data freshness: PASS.
+- IPA-gold structural validator executed, but gold remains **NOT_READY_NO_ADJUDICATED_GOLD** (0 independent adjudicated records); successful execution is not evidence that a gold set exists.
+- `npm install` still reports **1 high-severity vulnerability**. No dependency force-upgrade was made.
+- Latest branch changes after the tested code commit are documentation-only.
+
+## Branch and release-readiness checkpoint — 2026-11-13
+
+- Branch `research/burmese-medials-g2p-evidence-2026-11-13` remains dedicated, based on main, and at this checkpoint is **351 commits ahead / 0 behind**. PR **#147** is open, draft, mergeable and unmerged. PR #129 is left untouched (previously divergent/non-mergeable); PR #146 remains merged. No changes to main or release publication.
+- Required CI on code/test commit `c35a7ae0255725aa85cf5f836c64b4ed1fa5b731`, run **43498396994**, passed: 233 Python tests + 66 subtests; 20 Node tests; 58 Playwright tests; Chromium installation; production build; generated-data freshness.
+- Optional raw-output job passed; optional CRF baseline job was still running at checkpoint and is diagnostic only, not a score.
+- Registry validation: 72 source records / 125 claims; IDs unique, CSV row widths valid, all claim source references resolve.
+- Project remains **PARTIAL PROTOTYPE / NOT RELEASE-READY**. Outstanding evidence gates: inspect actual MLC dictionary/1980 system sources; adjudicate lexical collision groups from primary entries; produce independently adjudicated IPA gold; validate tone/prosody and full source-to-IPA-to-Ukrainian adapter coverage; resolve npm's one high-severity vulnerability.
+- No runtime mappings, IPA gold labels, or Ukrainian candidates promoted. All 94 Ukrainian candidates remain PROPOSED / EVIDENCE_LIMITED. No audio accessed.
+
+## MOW orthographic lemma coverage continuation (2026-11-13)
+
+- Added source **MOW_2017_0_1_3_DATASET** and claim **CLM-MOW-ORTHOGRAPHIC-RIME-COVERAGE-001** for the official MOW 0.1.3 TSV (upstream blob SHA `0c97fc4e98b3827dae0bc667858993037496ca58`, CC BY 4.0).
+- Added `data/burmese/mow_rime_orthographic_coverage.csv` (50 source-unit variants) and `data/burmese/mow_rime_orthographic_matches.csv` (508 exact word-final source-unit/lemma pairs). Input has 1,476 `mya:lemma` rows / 1,041 distinct lemma strings; matches represent 442 distinct lemma strings and 547 synsets. 35/50 source-unit variants are present.
+- Both source-unit variants occur in MOW for 11/25 MLCTS collision groups: `a`, `a:`, `am`, `am:`, `am.`, `any`, `any:`, `au`, `auk`, `aung:`, `u.`. One side occurs for 13/25; neither occurs for `um.`.
+- Crucial limit: matching was exact Unicode `lemma.endsWith(source_unit)`. It does not perform syllabification or provide pronunciation. These are orthographic lexical leads, not lexical pronunciation pairs or evidence of homophony. The prior collision-ledger partition remains unchanged: 21 unadjudicated, 2 secondary equivalence, 1 secondary conflict, 1 special non-rime. Use MOW hits to locate candidate MLC dictionary entries; do not alter runtime mappings or promote Ukrainian candidates based on this dataset.
+- Reused canonical generator `scripts/analyze_mow_orthographic_rime_coverage.py` plus vendored source snapshot `data/burmese/external/mow-0.1.3-mya_20171005165336.tab`; tests run its `--check` mode and verify coverage totals. Duplicate parallel exports were removed. Registry: **73 sources / 126 claims**. Test-bearing commit `8f1dee474a1588fb1f8d55c76afdc57c9ccae335`; registry deduplication is a follow-up data-only fix. Exact-head CI pending.
+
+## Reproducible MOW orthographic coverage audit — 2026-11-13
+
+- Vendored the exact upstream MOW v0.1.3 TSV at `data/burmese/external/mow-0.1.3-mya_20171005165336.tab`; its original header is preserved: `## MOW 0.1.3 / mya / CC BY 4.0`. Source ID **MOW_2017_0_1_3_DATASET** and claim **CLM-MOW-ORTHOGRAPHIC-RIME-COVERAGE-001** were added in the concurrent continuation commits already on this branch.
+- Added deterministic stdlib-only generator `scripts/analyze_mow_orthographic_rime_coverage.py` with `--check` mode, plus generated files `mow_rime_orthographic_matches.csv` (508 exact source-unit/lemma pairs) and `mow_rime_orthographic_coverage.csv` (50 source-unit rows).
+- Recomputed results from the vendored file: 1,476 MOW `mya:lemma` rows, 1,041 distinct lemma forms, 1,198 synsets; 508 suffix-match pairs across 35/50 source-unit variants; 442 distinct matched lemmas and 547 distinct matched synsets. For the 25 collision groups: both variants occur in 11 groups, one side in 13, neither in 1.
+- These are exact Unicode orthographic suffix matches, not Burmese syllabification or pronunciation. They do not confirm homophony, MLCTS equivalence, MLC system correctness, or Ukrainian outputs. The generator/test preserve this limitation. The raw upstream license header and source attribution are retained.
+- Added two tests: source/license header preservation and reproducible output/count/evidence-boundary validation. Exact-head CI pending.
+
+### Schema-gate correction for MOW dataset-derived claim — 2026-11-13
+
+The first CI attempt after registering the MOW orthographic coverage claim (workflow 43499220650) correctly rejected the locally invented evidence status `DATASET_DERIVED`, because the canonical claim schema does not allow that value. The claim was corrected to the existing schema-supported status `ANALYSIS_DEPENDENT` (commit 5e12f86e21f5576efee44afe84f80759e3799a9e); its scope remains orthographic suffix analysis only. The subsequent exact-head workflow is running with the schema correction, canonicalized test placement and reproducible generator check.
+
+## Final verification and current blocker update — 2026-11-13
+
+- Reconciled MOW coverage work to one canonical implementation: `scripts/analyze_mow_orthographic_rime_coverage.py` + vendored `data/burmese/external/mow-0.1.3-mya_20171005165336.tab` + `data/burmese/mow_rime_orthographic_matches.csv` + `data/burmese/mow_rime_orthographic_coverage.csv`. Deleted duplicate parallel exports and a duplicate test module; retained tests call generator `--check`.
+- Exact code/test head: **c76fab9e4e4a910170a26dd8ed89a95790c7973d**. Required CI runs **43499475187** (push) and **43499485256** (PR) SUCCESS: **236 Python tests + 66 subtests**, **20 Node tests**, **58 Playwright tests**; Chromium, production build and generated-data freshness PASS. Optional diagnostics **43499485104** SUCCESS for raw-output and CRF raw diagnostic jobs only; no scored benchmark.
+- IPA-gold validator status remains `NOT_READY_NO_ADJUDICATED_GOLD` (zero adjudicated records). `npm install` reports one high-severity vulnerability; no `npm audit fix --force` or dependency upgrade was applied.
+- Registry verified: **73 sources / 126 claims**, unique IDs, all claim source references valid. All 94 Ukrainian candidates remain `PROPOSED / EVIDENCE_LIMITED`; no runtime phonology or output mapping changed.
+- SEAlang remains a potential authorized route to MLC 1993 dictionary entries (metadata says it is based on that dictionary and the interface supports IPA queries/display), but direct API/page retrieval failed with timeouts/502 and Firecrawl retrieval was unavailable due exhausted connected-service credits. No dictionary entry text or internal record schema was inspected. Next acceptance gate: retrieve actual entries for the MOW lemma leads and establish the exact transcription field before any phonological promotion.
+- Final code/test branch head at verification: `c76fab9e4e4a910170a26dd8ed89a95790c7973d`; PR #147 remains open, draft and mergeable; branch was 386 commits ahead of main and 0 behind. No merge, release, audio use, or runtime behavior change.
+
+## MOW reproducibility and schema-corrected exact-head CI — 2026-11-13
+
+- The MOW-derived claim status was changed from unsupported `DATASET_DERIVED` to schema-supported `ANALYSIS_DEPENDENT`; the scope remains the same orthographic string-match analysis.
+- Required CI on code/test head `c76fab9e4e4a910170a26dd8ed89a95790c7973d`, workflow **43499485256**, completed **SUCCESS**:
+  - Python: **236 passed + 66 subtests passed** (includes MOW generator `--check`, dataset/license guard, crosswalks and schema validation).
+  - Node: **20 passed, 0 failed**.
+  - Playwright: **58 passed**; Chromium install passed.
+  - Production build and generated web-data freshness: PASS.
+  - `npm install`: **1 high-severity vulnerability** remains.
+- Optional diagnostics workflow **43499220654**: both raw-output and CRF-baseline jobs passed. They remain raw diagnostic artifacts, not an accuracy score or evidence for Ukrainian output.
+- The generated MOW pair/coverage files are reproducible from the vendored CC BY 4.0 TSV using the stdlib script; test checks committed artifacts against regenerated output.
+
+## Latest branch state after MOW coverage completion — 2026-11-13
+
+- Final documentation/PR-body checkpoint before this note: branch `research/burmese-medials-g2p-evidence-2026-11-13`, **395 commits ahead of main / 0 behind**; PR #147 **OPEN / DRAFT / mergeable**, 39 changed files. The branch remains unmerged; main is unchanged.
+- Required CI run **43499485256** passed on code/test commit `c76fab9e4e4a910170a26dd8ed89a95790c7973d`: 236 Python + 66 subtests, 20 Node, 58 Playwright; build, generated-data freshness and Chromium installation passed. Optional raw-output + CRF diagnostic jobs both passed in run **43499485104**.
+- The earlier schema failure was only the unsupported claim status `DATASET_DERIVED`; corrected to `ANALYSIS_DEPENDENT`, and the full schema-validation suite passed on the rerun.
+- Registry: **73 sources / 126 claims**, unique IDs, valid CSV widths and all claim-to-source references resolved.
+- Remaining blockers unchanged: inspect primary MLC dictionary/MLCTS source pages; independently adjudicate IPA gold and tone/prosody; resolve one high-severity npm finding. Project remains **PARTIAL PROTOTYPE / NOT RELEASE-READY**.
+
+## SEAlang API request-pattern lead — 2026-11-13
+
+- Added **SEALANG_SHORTCUT_2022** and **CLM-SEALANG-API-REQUEST-PATTERN-001**. A third-party open-source Burmese shortcut constructs dictionary requests using `http://sealang.net/api/api.pl?service=dictionary&lang=burmese&query=<word>`; the source code also distinguishes the dictionary `query` parameter from the Google `text` parameter.
+- This corrects the request template for future attempts, but it does not prove the endpoint is currently available or expose the response schema. Exact request attempts through the web reader still returned 502/inaccessible; Firecrawl could not run because its connected account had exhausted credits. No dictionary entry text was retrieved and no transcription field was adjudicated.
+- Added a regression assertion for the API pattern and its limitation. Registry now contains **74 sources / 127 claims**; all IDs remain unique, CSV widths valid and claim source references resolve.
+- Next access attempt should use the exact lowercase `lang=burmese` parameter and test the endpoint from a permitted browser/client when connectivity is available; do not treat the third-party wrapper as an authoritative API specification.
+
+## R12A secondary phonological crosswalk and final CI — 2026-11-13
+
+- Reviewed the existing 25-row `romanization_rime_r12a_secondary_phonology_crosswalk.csv` against the current R12A public page. It distinguishes the `any`, `any:` and `any.` groups: the ဉ-series is nasalised (IPA values use archiphoneme `N`), while ည်-series has three non-nasal outcomes. It also gives 18 same-value groups, two partial-coverage groups (`ui`, `un`), one unlisted group (`a.`) and the special non-rime `u.` fallback.
+- This strengthens the secondary evidence that the any-series is not a single phonological value, but it does not resolve the MLCTS orthographic collision or replace the MLC primary table. R12A explicitly does not account for vowel reduction and cites secondary phonology sources; no runtime, IPA gold or Ukrainian candidate was changed.
+- Latest code/test head `1f6f6a33c1a7c783e921bcf5edada4f05cfa3c6d`, required CI **43500600771 SUCCESS**: **237 Python + 66 subtests**, **20 Node**, **58 Playwright**; Chromium, build and generated-data freshness passed. `npm install` still reports **1 high-severity vulnerability**.
+- Optional diagnostics **43500600533 SUCCESS**: raw-output and CRF diagnostic jobs passed; not an accuracy benchmark.
+
+## Latest R12A + SEAlang checkpoint — 2026-11-13
+
+- Registry now contains **75 sources / 128 claims**, including the R12A secondary orthography notes and third-party SEAlang API request-pattern source; all IDs are unique, all CSV widths valid and every claim source reference resolves.
+- Branch comparison at this checkpoint: **414 ahead of main / 0 behind**. PR #147 remains **OPEN / DRAFT / mergeable**, unmerged. No main changes or release publication.
+- Required CI on latest code/data commit `1f6f6a33c1a7c783e921bcf5edada4f05cfa3c6d`, run **43500600771**, passed: 237 Python + 66 subtests, 20 Node, 58 Playwright, build and generated-data freshness. Optional raw-output/CRF diagnostics run **43500600533** also passed, diagnostic-only.
+- One high-severity npm vulnerability remains; primary MLC dictionary transcription field and independent IPA gold remain blocked.
+- R12A source and claim are registered as **R12A_BURMESE_ORTHOGRAPHY_2026 / CLM-R12A-RIME-CROSSWALK-2026-001**. Final registry totals after this addition: **75 sources / 128 claims**; source IDs and claim IDs are unique, all claim→source references resolve, and CSV row widths validate.
+
+## MLC 1986 orthography standard — Unicode WG2 corroboration — 2026-11-13
+
+- Added **UNICODE_N2827_MYANMAR_SEMIVOWELS_2004** and claim **CLM-UNICODE-N2827-MLC-MEDIALS-001**. This 2004 national contribution from the Myanmar Unicode and NLP Research Center to ISO/IEC JTC1/SC2/WG2 states that the MLC published *Myanmar Orthography* in October 1986 and that the Ministry of Education prescribed it as the national standard. It describes four basic medial signs and combinations totalling eleven symbols, and explains that medials change pronunciation and are structurally distinct from stacked consonants.
+- This is useful documentary evidence for the structural-analysis stage of the pipeline, but it is not the MLC book itself and contains no MLCTS/IPA rime transcription table. The original 1986 orthography book remains uninspected.
+- Added a regression assertion that protects the structural-only evidence boundary. Registry totals: **76 sources / 129 claims**; IDs unique, CSV widths valid, all claim source references resolve. Exact-head CI pending.
+
+## MLC 1986 primary-book access lead — National Library of Myanmar (2026-11-13)
+
+- Added **MLC_1986_ORTHOGRAPHY_NLMNPT_189** and **CLM-MLC-1986-ORTHOGRAPHY-CATALOG-001**. National Library E-Resources record 189 catalogs *မြန်မာစာလုံးပေါင်းသတ်ပုံကျမ်း*, published by the Myanmar Language Commission in Yangon in 1986, second edition, 292 pages / 23 cm, with a PDF option listed. This aligns with Unicode WG2 N2827's description of the MLC orthography standard published in October 1986.
+- This is a verified catalog locator for the primary book, not access to its contents. The bibliographic page returned 502; no PDF or page image was inspected. Do not infer structural rules or MLCTS/IPA values from the catalog record.
+- Added a regression test to preserve that evidence boundary. Registry now has **77 sources / 130 claims**, unique IDs and valid claim references. CI on test-bearing head `a824fe13c3671b5f02d37c3dc9127ffc460ac1a8` pending.
+- Next step: retrieve the PDF via National Library E-Resources (PDF option) or request an authorized scan, then inspect the title page, preface, medial orthography sections and any phonological/transcription appendix.
+
+## Partial primary scan of the 1986 Myanmar Spelling Dictionary — 2026-11-13
+
+- Added **UNICODE_L2_2010_MLC_SPELLING_1986** and **CLM-UNICODE-L2-2010-MLC-SPELLING-SCAN-001**. Unicode WG2 paper L2/10-360 identifies a *Myanmar Spelling Dictionary* published in 1986 and reproduces an image of original page 1, headed “Characters pronunciation List”, plus images of pages 2-9. The explanatory note says the character pronunciation list corresponds to a Myanmar Language Character Map and discusses sorting.
+- This is the first directly viewable partial scan of a 1986 Myanmar spelling reference found in this pass. It is not a complete book; the visible tables are orthographic character/pronunciation-list material, not an MLCTS/IPA rime table or word-level dictionary entries. Its identity with the MLC *Myanmar Orthography* in N2827 and National Library record 189 remains unconfirmed.
+- The National Library of Myanmar E-Resources catalog record 189 separately lists the MLC 1986 orthography book as a second edition, 292 pages, with a PDF option; the catalog page itself timed out. The Unicode partial scan is a concrete additional source lead but does not clear the primary transcription evidence gate.
+- Added regression assertions for the partial-scan status and non-MLCTS/IPA boundary. Registry totals: **78 sources / 131 claims**; IDs unique, CSV widths valid, and all claim→source references resolve.
+
+## 1986 source access lead and exact-head verification — 2026-11-13
+
+- National Library of Myanmar catalog record 189 lists the MLC 1986 orthography work as a second edition, 292 pages, with a PDF option. Unicode WG2 L2/10-360 separately provides a partial scan of a 1986 *Myanmar Spelling Dictionary* (original pages 1-9, including a “Characters pronunciation List”). Their exact bibliographic identity is not confirmed; the catalog page timed out.
+- The partial scan is orthographic character/pronunciation-list material, not an MLCTS/IPA rime table or word-level dictionary. No transcription field or candidate pronunciation was inferred.
+- Required CI on code/test commit `8e8448b70549062636c3f1c539ee1010f93a86cb`, workflow **43501650235**, completed **SUCCESS**: **241 Python + 66 subtests**, **20 Node**, **58 Playwright**; Chromium, production build and generated-data freshness passed. Optional raw-output/CRF diagnostics **43501650409** passed but are not accuracy scores.
+- Registry: **78 sources / 131 claims**, unique IDs, valid CSV widths and all claim source references resolve. One high-severity npm vulnerability remains; IPA gold is still `NOT_READY_NO_ADJUDICATED_GOLD`.
+- Branch comparison at the preceding checkpoint: **440 ahead / 0 behind**. PR #147 remains open, draft, mergeable and unmerged; main unchanged.
+
+## Final checkpoint — 2026-11-13
+
+- Dedicated branch `research/burmese-medials-g2p-evidence-2026-11-13`: **445 commits ahead of main / 0 behind**. PR **#147** is **OPEN / DRAFT / mergeable**, unmerged; 40 changed files. PR #129 remains untouched (divergent/non-mergeable at last review); PR #146 remains merged. Main and release state unchanged.
+- Latest required CI on code/test head `8e8448b70549062636c3f1c539ee1010f93a86cb`, run **43501650235 SUCCESS**: **241 Python + 66 subtests**, **20 Node**, **58 Playwright**, Chromium, production build and generated-data freshness all passed. Optional diagnostics **43501650409 SUCCESS** (raw-output + CRF; not an accuracy score).
+- Source registries: **78 sources / 131 claims**, all IDs unique, valid row widths, all source references resolve.
+- Remaining blockers: obtain and inspect complete MLC orthography/1993 dictionary contents and identify the exact transcription field; adjudicate the 25 collision groups from primary lexical evidence; build independent IPA gold and validate tone/prosody; resolve one high-severity npm vulnerability. Status remains **PARTIAL PROTOTYPE / NOT RELEASE-READY**.
+
+## Final executable medial-parser test and verification — 2026-11-13
+
+- Added a structural parser regression for all 11 MLC medial forms (four basic signs, five pairs, two triples), based on N2827's orthographic inventory. The test uses a Burmese onset and confirms the medials remain ordered structural modifiers; it explicitly asserts `ipa is None` and `phonology == {}`. This improves orthographic parsing coverage without adding any pronunciation rule.
+- Exact test-bearing code commit **29add5691bee13a544568fb9edec2587e447c44f**; required CI run **43502733106 SUCCESS**: **242 Python tests + 66 subtests**, **20 Node tests**, **58 Playwright tests**, Chromium installation, production build and generated-data freshness all pass.
+- IPA gold remains `NOT_READY_NO_ADJUDICATED_GOLD`; npm install reports one high-severity vulnerability. Optional raw-output/CRF diagnostics last passed on the preceding runtime-identical code head 8e8448b70549062636c3f1c539ee1010f93a86cb; these are raw diagnostics, not accuracy scores.
+- At this code/test checkpoint, branch `research/burmese-medials-g2p-evidence-2026-11-13` was **452 commits ahead / 0 behind**. PR #147 is open, draft, mergeable and unmerged (40 changed files); PR #129 remains open/divergent/non-mergeable and untouched; PR #146 remains merged. Main and release state unchanged.
+- No runtime phonology, Ukrainian candidate, external settings or release artifacts were changed. All 94 Ukrainian candidates remain `PROPOSED / EVIDENCE_LIMITED`. Project remains **PARTIAL PROTOTYPE / NOT RELEASE-READY**.
+
+## MOW lexical-coverage audit and current exact-head checkpoint — 2026-11-13
+
+- Reconciled the previously implemented MOW orthographic coverage work against its generator, generated CSVs and tests; no duplicate dataset or replacement implementation was created.
+- The checked-in generator is `scripts/analyze_mow_orthographic_rime_coverage.py`. It performs exact Unicode `endswith` matching only, retains lemma-to-synset membership, and generates `data/burmese/mow_rime_orthographic_coverage.csv` (50 source-unit rows) plus `data/burmese/mow_rime_orthographic_matches.csv` (508 source-unit/lemma pairs). Tests assert the generator's `--check` mode, all 508 rows are `ORTHOGRAPHIC_SUFFIX_MATCH_ONLY`, and group coverage is 11/25 both units found, 13/25 one unit found, 1/25 neither unit found.
+- Dataset basis: MOW v0.1.3 contains 1,476 `mya:lemma` rows, 1,041 distinct lemma forms and 1,198 distinct synsets. The 508 source-unit/lemma pairs represent 442 distinct lemma strings and 547 synsets. The analysis is useful for lexical orthographic coverage, not pronunciation or syllabification. A suffix match may occur inside a larger orthographic word; absence in this small wordnet does not establish lexical nonexistence.
+- The `um.` group has no suffix match for either member; this is a corpus-coverage observation only. All 25 collision groups remain unresolved at the primary lexical/pronunciation adjudication gate. No Ukrainian output, IPA gold, or runtime phonology was changed.
+- Current PR #147 head: `50a29bb880256fbd0c977bc9dc1f45bb4ad49d2d`; required CI run **43503144848 SUCCESS**: **242 Python tests + 66 subtests**, **20 Node tests**, **58 Playwright tests**, IPA corpus structure validator executed, production build and generated-data freshness passed. The IPA validator reports `NOT_READY_NO_ADJUDICATED_GOLD`; `npm install` still reports **1 high severity vulnerability**. Optional raw-output/CRF diagnostic run **43503144697 SUCCESS**, not an accuracy score.
+- Branch comparison: **455 commits ahead of main / 0 behind**. PR #147 remains **OPEN / DRAFT / mergeable**, unmerged. No merge, release, main-branch write, or external-setting change.
+- Registry remains **78 sources / 131 claims** with unique IDs and valid source references as recorded by the existing registry tests. Project status remains **PARTIAL PROTOTYPE / NOT RELEASE-READY**.
+
+## MOW v0.1.3 lexical orthographic coverage — verified implementation reconciliation (2026-11-13)
+
+- Existing generator `scripts/analyze_mow_orthographic_rime_coverage.py` and generated outputs were inspected and preserved. Exact Unicode suffix matching yields 508 source-unit/lemma pairs over 50 collision source-unit variants; output records explicitly label every match `ORTHOGRAPHIC_SUFFIX_MATCH_ONLY`.
+- Coverage: 11/25 MLCTS collision groups have both source units found in MOW, 13/25 have one, and 1/25 has neither. This measures only MOW's lexical coverage; no pronunciation, phonological rime, syllable segmentation, or equivalence is inferred. The 1,476 lemma rows / 1,041 unique forms / 1,198 synsets are small-resource counts, not a census of Burmese.
+- Exact-head CI on PR #147 head `50a29bb880256fbd0c977bc9dc1f45bb4ad49d2d`, run **43503144848**, passed: 242 Python + 66 subtests, 20 Node, 58 Playwright, production build, generated-data freshness. IPA gold gate remains `NOT_READY_NO_ADJUDICATED_GOLD`; one high-severity npm vulnerability remains.
+- PR #147 remains open/draft/mergeable; branch is 455 ahead / 0 behind. No linguistic candidate or runtime behavior promoted.
+
+## MLC 1978 spelling-book catalogue lead — continuation 2026-11-13
+
+- New source record NDL_MLC_SPELLING_1978_CATALOG records the National Diet Library of Japan catalogue entry for the 1978 MLC Burmese orthography/spelling reference; claim CLM-MLC-SPELLING-BOOK-1978-CATALOG-001 is documentary and explicitly catalogue-only.
+- Allott (1985, p.145) says the MLC spelling book was finally published in 1978 and separately says the Concise Burmese Dictionary appeared in five parts from late 1978 through 1980. This suggests distinct works, but exact title matching remains unverified until title pages are inspected. Do not collapse this record into the Concise Dictionary or infer an MLCTS/IPA field.
+- Added regression test test_mlc_1978_spelling_book_catalog_is_distinguished_from_concise_dictionary. Registry now contains 82 source rows and 132 claim rows; exact-head CI not yet observed. No runtime mapping changed.
+
+## MLC spelling-book access route expansion — 2026-11-13
+
+- CiNii Books NCID BA69415754 gives the 1978 book's physical extent (28, 379 pages, 17 cm) and three Japanese library holdings: Osaka University and two Tokyo University of Foreign Studies locations. Google Books record _V1LAAAAMAAJ lists a 379-page University of Michigan original digitized in 2007, but the visible result is snippet-view metadata, not proof that the entire scan is accessible.
+- Added source CINII_MLC_SPELLING_1978_HOLDINGS and claim CLM-MLC-SPELLING-BOOK-ACCESS-002; test test_mlc_1978_spelling_book_has_concrete_library_and_scan_access_routes. Registry now 80 sources / 133 claims (verified nonblank, unique source IDs). Next step: obtain/inspect actual pages and establish whether the 1978 spelling book contains any transcription or pronunciation material. No runtime behavior changed.
+
+## Work-with-existing-evidence mode — rime crosswalk integrity (2026-11-13)
+
+- Added `tests/test_rime_crosswalk_consistency.py` to connect the three already-present 25-row tables: `romanization_rime_mlcts2_crosswalk.csv`, `romanization_rime_r12a_secondary_phonology_crosswalk.csv`, and `romanization_rime_collision_lexical_audit.csv`.
+- The regression checks require exact shared MLCTS keys and Myanmar source-unit pairs, preserve two-position output alignment, assert the observed R12A comparison distribution (18 same / 3 distinct / 2 partial / 1 absent / 1 special), and assert the lexical evidence distribution (21 unadjudicated / 2 secondary equivalence / 1 secondary conflict / 1 special).
+- Acceptance boundary: cross-table consistency only. MLCTS2 remains vendor-derived, R12A remains secondary descriptive evidence, and the lexical audit remains mostly unadjudicated. This does not prove phonological equivalence or authorize runtime/Ukrainian promotion. CI is pending for commit `f033ade5572889f4f13a8dedfa209699c095f577`.
+
+## Work-with-existing-evidence mode — collision crosswalk verification (2026-11-13)
+
+- Added `tests/test_rime_crosswalk_consistency.py`; it cross-validates the three already-maintained 25-group tables: Mya2Rom MLCTS2 outputs, R12A secondary phonology comparisons, and the lexical collision audit. It enforces matching MLCTS keys/source units, two-value array alignment and evidence-boundary text.
+- The first CI run exposed two overly case/count-specific test expectations. Both were corrected from the actual committed CSV values. Required run **43507606882 SUCCESS** on code commit `de7abaea084515c5ef814575656ede8b83369a6a`: 248 Python + 66 subtests, 20 Node, 58 Playwright, production build and generated-data freshness passed. The optional raw-output/CRF diagnostic workflow also succeeded; it is not an accuracy benchmark. `npm install` still reports one high-severity vulnerability.
+- Existing evidence now gives a useful triage order without new sources: (1) `any`/`any:`/`any.` — both MLCTS2 and R12A distinguish the paired forms; `any` has a secondary-source IPA conflict; (2) `ui` — MLCTS2 distinguishes, R12A only partly covers; (3) `u.` — special/context-dependent, not an ordinary rime; (4) `am`/`um` — secondary equivalence examples, still not primary adjudication. Other groups remain unadjudicated.
+- Do not infer that cross-system agreement proves homophony or MLC policy. No runtime, IPA gold or Ukrainian candidate promotion was made. The next useful coding/research action is to improve text-based lexical comparison around the high-priority `any` and `ui` groups using already registered sources, while keeping source-specific citations and uncertainty.
+
+## Text-only follow-up keys from MOW for priority collision groups — 2026-11-13
+
+Use the existing generated MOW tables rather than waiting for inaccessible primary books. They expose candidate lemmas for text lookup:
+
+- `any`: ဉ် has 6 matches (e.g. `ဥယျာဉ်`, `တိရစ္ဆာန်ဥယျာဉ်`, `ယာဉ်`); ည် has 13 (e.g. `ပြည်`, `မြန်မာပြည်`, `လက်ဖက်ရည်`).
+- `any:`: ဉ်း has 1 (`အကျဉ်း`); ည်း has 6.
+- `any.`: ဉ့် has 0; ည့် has 5.
+- `ui`: ို် has 0; ို has 15 (e.g. `ချို`, `ငို`, `ဆို`, `တို`, `မှို`).
+
+These counts are exact Unicode suffix matches in MOW v0.1.3, not syllable parses. Treat the listed words as search keys for the already-registered text dictionaries/corpora only. A useful next task is to cross-reference these spellings in the existing text resources and capture each entry's exact transcription field/locator where present. Do not assign IPA based on suffix or MLCTS labels.
+
+## Source registry row-count correction — 2026-11-13
+
+Append a correction note: `sources.csv` had three internal blank separator lines. Removed them and added `test_source_registry_has_no_blank_rows_or_duplicate_source_ids`; the actual current registry is 80 unique nonblank source records and 133 claims.
+
+## Source registry hygiene verification — 2026-11-13
+
+- Removed three internal blank separator rows from `data/burmese/sources.csv` and added `test_source_registry_has_no_blank_rows_or_duplicate_source_ids`.
+- Current registry is **80 unique nonblank sources / 133 claims**. Exact code commit `62f59f177b15e2df54ace464056df7932058bffb` passed required CI run **43508294905**: 249 Python + 66 subtests, 20 Node, 58 Playwright, build and generated-data freshness. `npm install` still reports one high-severity vulnerability.
+- Prior 82/132 and 83/133 row counts were inflated by three blank CSV lines; this correction changes no source content or claim content.
+
+## Existing-text lexical checks: Wiktionary examples — 2026-11-13
+
+The MOW candidate lemmas were checked against already-registered Wiktionary text entries; no new inaccessible source was needed. Added three documentary claims to `source_claims.csv` and updated the lexical audit:
+
+- `any`: `ဥယျာဉ်` — `u.yyany`, `/ʔṵjɪ̀ɴ/` or `/ʔújɪ̀ɴ/`; `ပြည်` — `prany`, `/pjì/`. Same MLCTS rime ending, different Wiktionary IPA.
+- `any:`: `အကျဉ်း` — `a.kyany:`, `/ʔət͡ɕɪ́ɴ/`; `နည်း` — `nany:`, `/nɛ́/` or `/ní/` depending on sense.
+- `ui`: `ချို` / `ဆို` / `တို` give one-side examples for `ို`; there are no MOW suffix candidates for `ို်`.
+
+These are secondary lexical transcriptions, not primary MLC adjudication. In particular, the `ui` status is one-side-only, not a claim that the two source units are equivalent or distinct. Updated status distribution: 19 unadjudicated, 2 secondary equivalence, 1 conflict, 1 distinction, 1 one-side-only, 1 special non-rime. Added a parity test requiring the MLCTS2 crosswalk's lexical status to equal the lexical audit's status. CI run **43509339740 SUCCESS**: 251 Python + 66 subtests, 20 Node, 58 Playwright, build and generated-data freshness passed. Registry: **80 sources / 136 claims**.
+
+## Additional lexical evidence for `any.` — 2026-11-13
+
+- Checked text-only Wiktionary entries for `စဉ့်` (MLCTS `cany.`, IPA `/sɪ̰ɴ/`) and `ကြည့်` (MLCTS `krany.`, IPA `/t͡ɕḭ/`). These attest the two orthographic endings ဉ့် and ည့် respectively. `စဉ့်` is not a MOW candidate; `ကြည့်` is.
+- Added claim `CLM-WIKTIONARY-ANY-DOT-WORD-LEVEL-EXAMPLES-001`, updated the 25-group lexical audit and synchronized the MLCTS2 crosswalk status. Added regression assertions for both observed forms and the evidence boundary.
+- Lexical audit now: **18 unadjudicated / 2 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 1 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 137 claims**.
+- This is secondary lexical attestation, not a minimal pair or primary MLC adjudication. No runtime, IPA gold or Ukrainian output changed. Exact-head CI is pending.
+
+## Additional Wiktionary lexical examples for `aung` — 2026-11-13
+
+- Added `ပေါင်` (`paung`, `/pàʊɴ/`, source ending ေါင်) and `တောင်` (`taung`, `/tàʊɴ/`, source ending ောင်) from text-only Wiktionary entries. The onset differs; the rime sequence `/àʊɴ/` matches. `တောင်` is a MOW candidate; `ပေါင်` is not.
+- Added claim `CLM-WIKTIONARY-AUNG-WORD-LEVEL-EXAMPLES-001`, updated the lexical audit and MLCTS2 status parity, and expanded regression coverage.
+- Updated 25-group lexical audit distribution: **17 unadjudicated / 3 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 1 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 138 claims**.
+- This is secondary lexical evidence, not a minimal pair or primary MLC adjudication. No runtime, IPA gold or Ukrainian output changed. Exact-head CI pending.
+
+## Exact-head verification — `any.` and `aung` lexical evidence — 2026-11-13
+
+- Tested code/data snapshot: `eb81bd29e9417ddbd6d541d54fce6d754b0bb8bd`.
+- Required CI run **43513203135 SUCCESS**; duplicate run **43513212043 SUCCESS** on the same SHA. Results: **251 Python + 66 subtests**, **20 Node**, **58 Playwright**; production build, generated-data freshness and Chromium installation passed.
+- Optional Epitran raw-output diagnostic **43513212088 SUCCESS**; diagnostic only, not an accuracy benchmark.
+- IPA-gold validator: `NOT_READY_NO_ADJUDICATED_GOLD` (0 independent adjudicated gold entries); accuracy remains null. `npm install` still reports one high-severity vulnerability.
+- Registry **80 sources / 138 claims**. Collision ledger: **17 unadjudicated / 3 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 1 secondary one-side-only / 1 special non-rime**.
+- Test expectations exposed during this batch were corrected against the final 25-row ledger; the exact final code/data snapshot above passes. No runtime, IPA gold or Ukrainian output promotion.
+
+## Additional lexical evidence for `aung:` — 2026-11-13
+
+- Added MOW-listed `ပေါင်း` (`paung:`, `/páʊɴ/`, ending ေါင်း) and `ကျောင်း` (`kyaung:`, `/t͡ɕáʊɴ/`, ending ောင်း) from text-only Wiktionary entries. Different onsets; same secondary IPA rime sequence `/áʊɴ/`.
+- Added claim `CLM-WIKTIONARY-AUNG-COLON-WORD-LEVEL-EXAMPLES-001`, updated lexical audit and MLCTS2 crosswalk status parity, and expanded regression tests.
+- Current collision distribution: **16 unadjudicated / 4 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 1 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 139 claims**.
+- Secondary evidence only; not a controlled minimal pair or primary MLC adjudication. No runtime, IPA gold or Ukrainian output changed. Exact-head CI pending.
+
+## Additional lexical evidence for `auk` — 2026-11-13
+
+- Added MOW-listed `ပေါက်` (`pauk`, `/paʊʔ/`, ending ေါက်) and `ကျောက်` (`kyauk`, `/t͡ɕaʊʔ/`, ending ောက်) from text-only Wiktionary entries. Different onsets; same secondary IPA rime sequence `/aʊʔ/`.
+- Added claim `CLM-WIKTIONARY-AUK-WORD-LEVEL-EXAMPLES-001`, updated lexical audit and MLCTS2 status parity, and expanded regression tests.
+- Current collision distribution: **15 unadjudicated / 5 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 1 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 140 claims**.
+- Secondary evidence only; not a controlled minimal pair or primary MLC adjudication. No runtime, IPA gold or Ukrainian output changed. Exact-head CI pending.
+
+## Additional lexical evidence for `a`, `a:` and `au` — 2026-11-13
+
+- Added MOW-listed Wiktionary pairs: `အဝါ` (`a.wa`, `/ʔəwà/`) / `အစာ` (`a.ca`, `/ʔəsà/`) for `a`; `ခါး` (`hka:`, `/kʰá/`) / `ကား` (`ka:`, `/ká/`) for `a:`; `ပေါ်` (`pau`, `/pɔ̀/`) / `ကြော်` (`krau`, `/t͡ɕɔ̀/`) for `au`. Each pair has distinct onsets but the same secondary IPA rime.
+- Added three documentary claims; updated lexical audit, MLCTS2 status parity and regression tests. The MOW candidate dataset itself is unchanged.
+- Current collision distribution: **12 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 1 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 143 claims**.
+- Secondary examples only; no controlled minimal pairs or primary MLC adjudication. No runtime, IPA gold or Ukrainian output changed. Exact-head CI pending.
+
+## One-sided lexical evidence for `aung.` — 2026-11-13
+
+- Added MOW-listed `စောင့်` (`caung.`, `/sa̰ʊɴ/`) from text-only Wiktionary; it attests only the ောင့် side. The ေါင့် side remains unobserved.
+- Added claim `CLM-WIKTIONARY-AUNG-DOT-ONE-SIDE-EXAMPLE-001`; updated lexical audit, MLCTS2 status parity and tests.
+- Current collision distribution: **11 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 2 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 144 claims**.
+- One-sided secondary attestation only; no collision adjudication or runtime/IPA gold/Ukrainian output promotion. Exact-head CI pending.
+
+## One-sided lexical examples for `um:` and `un` — 2026-11-13
+
+- Added MOW-listed `နှလုံး` (`hna.lum:`, `/n̥əlóʊɴ/`) for the `ုံး` side of `um:` and `ကုန်` (`kun`, `/kòʊɴ/`) for the `ုန်` side of `un`. Opposite sides remain unobserved.
+- Added claims `CLM-WIKTIONARY-UM-COLON-ONE-SIDE-EXAMPLE-001` and `CLM-WIKTIONARY-UN-ONE-SIDE-EXAMPLE-001`; updated audit/crosswalk parity and regression tests.
+- Current collision distribution: **9 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 4 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 146 claims**.
+- One-sided secondary evidence only; no collision adjudication, IPA gold, runtime or Ukrainian output promotion. Exact-head CI pending.
+
+## One-sided lexical examples for `au:`, `im` and `im.` — 2026-11-13
+
+- Added MOW-listed `ကျော` (`kyau:`, `/t͡ɕɔ́/`) for the ော side of `au:`; `အိမ်` (`im`, `/ʔèɪɴ/`) for ိမ် in `im`; and `စိမ့်` (`cim.`, `/sḛɪɴ/`) for ိမ့် in `im.`. Opposite sides remain unobserved.
+- Added three documentary claims and updated lexical audit, MLCTS2 status parity and regression tests.
+- Current collision distribution: **6 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 7 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 149 claims**.
+- One-sided secondary evidence only; no collision adjudication, IPA gold, runtime or Ukrainian output promotion. Exact-head CI pending.
+
+## Final exact-head verification — 2026-11-13
+
+- Final tested code/data SHA: `62bea5a26012cb1ace4ce11579e17f4a780c3e1e`.
+- Required CI **43516197628 SUCCESS** and duplicate exact-SHA run **43516203122 SUCCESS**: 251 Python + 66 subtests, 20 Node, 58 Playwright; build, generated-data freshness and Chromium installation passed.
+- Optional Epitran raw-output diagnostic **43516203133 SUCCESS**, diagnostic only. IPA gold remains `NOT_READY_NO_ADJUDICATED_GOLD` with 0 independently adjudicated entries; accuracy remains null.
+- npm reports one high-severity vulnerability. No dependency upgrade was made.
+- Final ledger: 25 groups = **6 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 7 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 149 claims**.
+- PR #147 remains OPEN / DRAFT / mergeable; branch is 598 commits ahead and 0 behind `main`. No merge or release performed.
+
+## `am:` one-side lexical evidence — 2026-11-14
+
+- Added Wiktionary attestation `လမ်း` (`lam:`, `/láɴ/`) for the `မ်း` side of the `am:` collision; no MOW lexical example for `ံး` was located.
+- Updated lexical audit, MLCTS2 crosswalk, source claim and regression tests. Status: `SECONDARY_ONE_SIDE_ONLY`, not equivalence.
+- Registry: **80 sources / 150 claims**. Collision ledger: **5 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 8 secondary one-side-only / 1 special non-rime**.
+- Secondary evidence only; no primary MLC, IPA gold, runtime or Ukrainian mapping promotion. Exact-head CI pending.
+
+## Exact-head verification — `am:` lexical evidence — 2026-11-14
+
+- Verified SHA `73bfbd7d82f69bfa0e306d984a40fe2324fc3515`; required CI runs **43519075644 SUCCESS** and **43519083741 SUCCESS**: 251 Python + 66 subtests, 20 Node, 58 Playwright; build, generated-data freshness and Chromium installation passed.
+- Optional Epitran raw-output diagnostic **43519083746 SUCCESS**, not an accuracy benchmark. IPA gold remains `NOT_READY_NO_ADJUDICATED_GOLD` (0 independent gold entries); accuracy is not measurable.
+- `npm install` reports one high-severity vulnerability; no unreviewed dependency upgrade.
+- Ledger: 5 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 2 secondary distinction / 8 secondary one-side-only / 1 special non-rime. Registry 80 sources / 150 claims.
+- No primary MLC, IPA gold, runtime or Ukrainian output promotion.
+
+## `am.` secondary lexical distinction — 2026-11-14
+
+- Wiktionary records `စိမ့်` (`cim.`, `/sḛɪɴ/`, final မ့်) and `ကြံ့` (`kram.`, `/t͡ɕa̰ɴ/`, final ံ့). MOW includes `စိမ့်` and compound `အိန္ဒိယကြံ့` as suffix-match candidates.
+- These secondary transcriptions distinguish the rime realizations and conflict with vendor same-output MLCTS2/IPA. Audit and crosswalk set to `SECONDARY_SOURCE_DISTINCTION`; claim `CLM-WIKTIONARY-AM-DOT-LEXICAL-DISTINCTION-001` registered.
+- Current distribution: 4 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 8 secondary one-side-only / 1 special non-rime. Registry 80 sources / 151 claims.
+- Not a minimal pair or primary MLC adjudication. Runtime, IPA gold and Ukrainian output unchanged. Exact-head CI pending.
+
+## `au.` one-side lexical attestation — 2026-11-14
+
+- Wiktionary `ဝပ်ရှော့` (`waphrau.`, `/waʔʃɔ̰/`) supplies a lexical example for source unit `ော့`; no example for `ေါ့` was located.
+- Audit and MLCTS2 crosswalk updated to `SECONDARY_ONE_SIDE_ONLY`; claim `CLM-WIKTIONARY-AU-DOT-ONE-SIDE-EXAMPLE-001` registered; tests expanded.
+- Distribution: 3 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 9 secondary one-side-only / 1 special non-rime. Registry: 80 sources / 152 claims.
+- One-side secondary evidence only; no runtime or Ukrainian output change. Exact-head CI pending.
+
+## Exact-head verification — `au.` lexical continuation — 2026-11-14
+
+- Verified SHA `ffd08d7ae8e227ee19a86859de00b7d52f456ecf`; required CI **43519887514 SUCCESS**: 251 Python + 66 subtests, 20 Node, 58 Playwright; build, generated-data freshness and Chromium install passed. Duplicate exact-SHA run **43519895530** was still completing.
+- Optional Epitran raw-output diagnostic **43519895542 SUCCESS**, not accuracy benchmark. IPA gold remains `NOT_READY_NO_ADJUDICATED_GOLD`; npm install reports one high-severity vulnerability.
+- Ledger: 3 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 9 secondary one-side-only / 1 special non-rime. Registry 80 sources / 152 claims.
+- No primary MLC, IPA gold, runtime or Ukrainian output promotion.
+
+
+## `um.` one-side secondary lexical attestation — 2026-11-14
+
+- Wiktionary `အုံ့` (`um.`, `/ʔo̰ʊɴ/`) attests the source-unit ending ုံ့. It is **not** in the MOW suffix-match inventory; this is secondary evidence outside MOW. The opposite ending ုမ့် remains unobserved.
+- Added claim `CLM-WIKTIONARY-UM-DOT-ONE-SIDE-EXAMPLE-001`; updated lexical audit, MLCTS2 status parity and regression tests.
+- Distribution: **2 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 10 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 153 claims**.
+- One-side secondary evidence only; no primary MLC adjudication, IPA gold, runtime or Ukrainian output promotion. Exact-head CI pending.
+
+
+## `im:` one-side secondary lexical attestation — 2026-11-14
+
+- Wiktionary `တစ်သဝေမတိမ်း` (`tacsa.wema.tim:`, `/təθwèmətéɪɴ/`) provides a compound-level attestation of final component `တိမ်း`, and MOW independently lists `တိမ်း` for source ending ိမ်း. This is not a standalone pronunciation entry; opposite unit ိံး remains unobserved.
+- Added claim `CLM-WIKTIONARY-IM-COLON-ONE-SIDE-EXAMPLE-001`; updated audit, crosswalk parity and regression tests.
+- Distribution: **1 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime**. Registry: **80 sources / 154 claims**.
+- Secondary compound evidence only; no primary MLC adjudication, IPA gold, runtime or Ukrainian output promotion. Exact-head CI pending.
+
+
+## MOW orthographic suffix overlap — `a.` caution — 2026-11-14
+
+- MOW suffix inventory has one apparent `a.` / `ာ့` match: `ဝပ်ရှော့`. This is only a code-point suffix overlap inside full final sequence `ော့`, not evidence of a standalone `a.` rime.
+- Wiktionary lists `ဝပ်ရှော့` as `waphrau.`, IPA `/waʔʃɔ̰/`; it remains evidence for `au.` only. `a.` stays unadjudicated.
+- Added regression test to prevent the orthographic suffix inventory from being misread as syllable/rime segmentation. Generator behavior unchanged because its declared contract is exact code-point suffix matching only.
+
+
+## Exact-head verification — `im:` / `um.` and MOW suffix guard — 2026-11-14
+
+- Test-bearing SHA `2b1f306b43a8a6c38e626252fb0b0b9c18501e1b`; required CI **43580029898 SUCCESS**: 252 Python + 66 subtests, 20 Node, 58 Playwright; IPA-gold structure validation, production build, generated-web-data freshness and Chromium install passed.
+- A preceding test run failed because one old regression assertion still expected the former distribution (3 unadjudicated / 9 one-side-only). The count assertion was corrected to 1 / 11; the subsequent exact-SHA CI passed.
+- IPA gold remains `NOT_READY_NO_ADJUDICATED_GOLD` (0 independent entries); npm reports one high-severity vulnerability. No dependency update applied.
+- Final lexical ledger: 1 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime. Registry 80 sources / 154 claims.
+- PR #147 remains OPEN / DRAFT / mergeable; branch 667 commits ahead / 0 behind main. No merge or release.
+
+
+## `a.` phonetic context vs spelling-level evidence — 2026-11-14
+
+- Full-text evidence from Mooney & Repetti-Ludlow 2021: one female Yangon speaker; open /a/ has a centralized closed-syllable outcome transcribed [5], with lexical phonetic examples but no Burmese script or MLCTS.
+- Watkins 2001: one Rangoon male consultant; /ma/ and /maʔ/ examples and four-tone inventory, but no orthographic keys for the example words.
+- Both sources are registered as documentary/phonetic evidence. They cannot adjudicate the `a.` source-unit collision (`ါ့` vs `ာ့`) without spelling-to-pronunciation linkage. `a.` remains the only unadjudicated group.
+- The `ဝပ်ရှော့` MOW suffix hit is a raw overlap inside `ော့`, with `waphrau.` / `/waʔʃɔ̰/`; it is retained under `au.` only.
+
+
+## `a.` one-side lexical update — 2026-11-14
+
+- Wiktionary entry `ငါ့` gives IPA `/ŋa̰/`, MLCTS `nga.`, and explicitly identifies a non-lemma familiar/informal induced creaky-tone pronoun form from `ငါ`. Its spelling ends in `ါ့`, the first side of the `a.` collision.
+- This is a real secondary spelling-to-pronunciation example, but it is not a MOW candidate or primary MLC dictionary evidence. No lexical example for `ာ့` was found. Status becomes `SECONDARY_ONE_SIDE_ONLY`, not adjudicated.
+- The MOW `ဝပ်ရှော့` hit remains an overlap inside `ော့` and is counted under `au.` only.
+
+
+## `a.` first-side lexical attestation — 2026-11-14
+
+- Wiktionary's `ငါ့` entry gives `/ŋa̰/`, MLCTS `nga.`, and identifies it as a familiar/informal non-lemma induced creaky-tone form of `ငါ`. The final unit `ါ့` is the first source-unit side of `a.`.
+- Updated `a.` to `SECONDARY_ONE_SIDE_ONLY`. This is secondary lexical evidence, not MOW coverage or primary MLC adjudication; no lexical example for `ာ့` located.
+- Revised 25-group distribution: 0 unadjudicated / 8 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 12 secondary one-side-only / 1 special non-rime. Registry now 80 sources / 157 claims.
+
+
+## `a.` second-side example found — 2026-11-14
+
+- Wiktionary `တာ့တာ` (English borrowing *ta-ta*) has IPA `/ta̰tà/` and MLCTS `ta.ta`; its first syllable `တာ့` supplies the second source-unit side `ာ့` with `/ta̰/`.
+- Together with `ငါ့` `/ŋa̰/`, MLCTS `nga.`, ending `ါ့`, both sides now have secondary lexical examples with matching `/a̰/` rime realization.
+- Not a minimal pair, not primary MLC evidence. `တာ့` is internal to the word, so its absence from the MOW word-final suffix inventory is expected. Status becomes `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime change.
+
+
+## `a.` both-side lexical evidence update — 2026-11-14
+
+- `တာ့တာ` is a Wiktionary Burmese lemma (borrowed interjection), IPA `/ta̰tà/`, MLCTS `ta.ta`; its first syllable `တာ့` supplies the second source unit `ာ့` with `/ta̰/`.
+- Combined with `ငါ့` `/ŋa̰/`, MLCTS `nga.`, source unit `ါ့`, this gives secondary lexical examples on both sides with matching `/a̰/` rime realization. Not a controlled minimal pair or primary MLC adjudication.
+- MOW's word-final suffix scan does not include `တာ့တာ` because `တာ့` is internal to the form; no issue with the scan's declared contract.
+- Current 25-group distribution: 0 unadjudicated / 9 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime. Registry 80 sources / 158 claims.
+
+
+## Final exact-head verification — 2026-11-14
+
+- Final tested code/data HEAD (subsequent closeout commits are documentation-only): `e6d865e1daa191a7ecc9cd5b0025b628cc930310`; required CI run **43581081561 SUCCESS**: 253 Python tests + 66 subtests, 20 Node tests, 58 Playwright tests. IPA-gold structure validation, build, generated-data freshness and Chromium install passed.
+- Optional diagnostic run **43581085495 SUCCESS**. CRF raw output: 100 predictions, 84 source-concordant rows, 0 gold, `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`, accuracy null. Epitran raw output artifact generated; no accuracy score. Do not interpret these as evaluated benchmark results.
+- Gold remains `NOT_READY_NO_ADJUDICATED_GOLD` (0 entries). npm install reports one high-severity vulnerability; no dependency update applied.
+- Current lexical ledger: 0 unadjudicated / 9 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime. Registry 80 sources / 158 claims.
+- PR #147 OPEN / DRAFT / mergeable; branch remains ahead of main with zero commits behind. Not merged.
+
+
+## PR #129 reconciliation and selective port — 2026-11-14
+
+- Inspected all open PRs. PR #129 (`research/burmese-hybrid-benchmarks-reconciled-2026-11-11`, head `d0be0c316fe59f64f1b2f71e484c10d1356dbf3b`) remains OPEN/DRAFT, 53 commits ahead and 17 behind its then-current main base; current GitHub reports it non-mergeable. It is divergent from PR #147 and was not merged or closed.
+- Compared its 21 changed files and ported the useful, non-conflicting work into PR #147: conservative IPA withholding for medials/conjunct/kinzi; explicit candidate-only `HybridBurmeseEngine` and provider adapters; provider provenance/ordering; Google WFST raw-output harness, tests and optional CI job; registry and README/docs updates. Existing current-branch source records for MYG2P, Google WFST and CRF were reused rather than duplicated.
+- `external_backends_used` now reports providers actually attempted; external outputs remain diagnostic candidates and cannot replace the rule-engine IPA. The `myG2P` dictionary is not copied into the repository.
+- PR #129 remains untouched so its owner can review/close it; the port is tracked on PR #147. The deterministic engine remains final authority and no phonological rule or gold label was promoted.
+
+
+## Current exact-head comparator verification — 2026-11-14
+
+- Required CI **43582075261 SUCCESS** on test-bearing SHA `45d3513ad1f6bbbda8d9a97768e493cdda08856d`: **267 Python tests + 68 subtests**, **20 Node tests**, **58 Playwright tests**; production build, generated-data freshness, Chromium install and IPA-gold structure validation passed. `npm install` still reports one high-severity vulnerability.
+- Optional diagnostics **43582075278 SUCCESS** on the same SHA: Google WFST build/symbol checks and 6/6 raw outputs; Epitran 1.35.3 raw output; CRF 100/100 predictions and 84 source-concordant, but zero gold and possible training overlap.
+- Downloaded artifacts were inspected. No output is gold and no accuracy was computed. Google report SHA `88372233d85df73593b030ee0f91aa678fe86fd1c6d5cdc18e7c609b8eefd2c6`; Epitran report SHA `a7d93e0f04b4f4822094a36760c5376cb596db31a710aae4cdcacd14213d0b69`; CRF report SHA `741dc7fa1263e667cb1c51f91f7ee0a24b0bd6c2479d1efafe63798a63d73d20`.
+- Source registry now has **80 sources / 164 claims**; 25 rime groups: **0 unadjudicated / 9 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime**.
+
+
+## Authoritative current handoff — 2026-11-14
+
+This section supersedes all older branch-count, PR-state and CI snapshots above; those entries are historical checkpoints.
+
+- Starting code/test snapshot for this continuation: `20ab71a61c296431776b8a6aed7bbb46ecb01da8` (PR #147 branch). Current test-bearing data/code head: `fd27f481470b5f6a08648cf0dcc25ab8b4a8ecf5`; required CI **43582496619 SUCCESS**: 267 Python tests + 68 subtests, 20 Node tests, 58 Playwright tests, IPA corpus structure check, production build, generated-data freshness and Chromium install. `npm install` reports one high-severity vulnerability.
+- Optional comparator run **43582075278 SUCCESS** on the same implementation: Google Thrax/OpenFst build and symbol checks, 6/6 raw structural-only outputs; Epitran 1.35.3 six raw outputs; CRF 100/100 predictions and 84 source-concordant, but 0 gold and possible train/test overlap. Downloaded artifacts inspected; accuracy is null for all.
+- Latest repository data integrity: **80 sources / 164 claims**, 25 rime groups = **0 unadjudicated / 9 secondary equivalence / 1 conflict / 3 distinctions / 11 one-side-only / 1 special non-rime**. No primary MLC adjudication; independent Yangon IPA gold remains 0.
+- PR #147 is OPEN / DRAFT / mergeable; branch 745 commits ahead / 0 behind `main` at the test-bearing checkpoint. No merge, release or deployment. PR #129 remains OPEN / DRAFT / non-mergeable (53 ahead / 17 behind its base); its compatible work was selectively ported to #147, but PR #129 itself was left untouched. Recent merged PRs #141–#146 are already included because #147 is 0 behind main.
+- Runtime change in this continuation is conservative abstention only: Python IPA withholds medials, conjuncts and kinzi rather than silently omitting them. External candidate API does not run by default and never promotes outputs; RuleBasedBurmeseEngine remains final authority. No new tone, rime or Ukrainian mapping rule was activated.
+- Remaining blockers: primary MLC written-source adjudication; independent Yangon-profile IPA gold and expert annotators; full positional medial/coda/tone/phonation coverage and Python/browser parity; manual accessibility QA; Google WFST dependency hermeticity; commercial deployment/distribution rights for myG2P CC BY-NC-SA 4.0; one npm high-severity vulnerability. The repository remains a PARTIAL PROTOTYPE, not release-ready.
+
+
+## Final exact-head closeout — 2026-11-14
+
+- Final branch tip: `cf7bb590f0acb7929f10832ca80062b83a1b33a2`; PR #147 OPEN / DRAFT / mergeable, 750 ahead / 0 behind `main`; not merged.
+- Required CI **43582678405 SUCCESS** on that exact tip: 267 Python + 68 subtests, 20 Node, 58 Playwright; build, generated-data freshness, Chromium and IPA-gold structure validation passed. One high-severity npm vulnerability remains.
+- Optional diagnostics **43582678434 SUCCESS** on that exact tip: Google WFST 6/6 raw outputs, Epitran six raw outputs, CRF 100/100 predictions / 84 source-concordant. Zero gold, no accuracy. Artifacts inspected; provenance recorded in `sources.csv`, `source_claims.csv` and `external-ipa-renderers.json`.
+- Source registry 80 sources / 164 claims. Rime ledger: 0 unadjudicated / 9 secondary equivalence / 1 conflict / 3 distinctions / 11 one-side-only / 1 special non-rime.
+- PR #129 remains OPEN / DRAFT / non-mergeable and untouched; its compatible implementation was selectively ported into #147. Main unchanged, no release or deployment. Repository remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## Security and install reproducibility closeout — 2026-11-14
+
+Vite `8.3.1` was the high-severity dependency finding. Updated the pinned dev dependency to `8.3.8` and added `npm audit --audit-level=high` to required CI. Exact-head run **43583443880 SUCCESS** on `6b90336171b807f5f17d32e237dda210f7b1a820`: npm audited 19 packages, found **0 vulnerabilities**, and the explicit audit gate passed. This closes the high-severity finding without `npm audit fix --force`.
+
+Install reproducibility is now verified: `package-lock.json` (`lockfileVersion: 3`, 51 package entries) was committed at `35b2649481ac2f8532fdc1ebbf2c123d2abaf1ee`; CI now runs `npm ci` and `npm audit --audit-level=high`.
+
+
+## npm clean-install reproducibility completed — 2026-11-14
+
+A generated npm lockfile from Vite 8.3.8 resolution was validated (`lockfileVersion: 3`, 51 package entries) and committed as `package-lock.json` at commit `35b2649481ac2f8532fdc1ebbf2c123d2abaf1ee`. CI uses `npm ci` and `npm audit --audit-level=high`. Exact-head CI **43583859568 SUCCESS** on `2c17f9843766913c40654c59965a63593b604092`: 267 Python + 68 subtests, 20 Node, 58 Playwright; npm ci, audit, build, generated-data freshness and Chromium passed; 0 vulnerabilities.
+
+
+## Final repository closeout — 2026-11-14
+
+- Test-bearing code/data head `2c17f9843766913c40654c59965a63593b604092`; required CI **43583859568 SUCCESS**: 267 Python + 68 subtests, 20 Node, 58 Playwright; `npm ci`, `npm audit --audit-level=high`, build, generated-data freshness and Chromium passed; 0 vulnerabilities.
+- `package-lock.json` is committed (lockfile v3, 51 package entries); CI now uses `npm ci`. The high-severity Vite advisory is fixed with Vite 8.3.8.
+- IPA gold remains 0 independently adjudicated entries; validator correctly returns `NOT_READY_NO_ADJUDICATED_GOLD`. Primary MLC adjudication remains unavailable. Repository is still a PARTIAL PROTOTYPE, not release-ready.
+
+
+## 2026-11-14 continuation — full-text evidence and dependency security
+
+- Current exact-head test checkpoint before this documentation/data update: `716e65b4fac5b4f2ec782ffacdf9408521503d01`; required CI `43583984697 SUCCESS`: 267 Python + 68 subtests, 20 Node, 58 Playwright; `npm install` and explicit `npm audit --audit-level=high` each reported 0 vulnerabilities. Vite is pinned to 8.3.8.
+- Five additional source claims registered after full-text reads of Hlaing & Mikami 2014, Watkins 2001, and Oo et al. 2020. Hlaing's FST is orthographic only; its grammar has unreconciled M/V multiplicity expressions and no stated reuse license. Watkins is a broad transcription of one Rangoon consultant, not a population-validated gold set. Oo's seed lexicon and SLR80 are not independently adjudicated IPA gold.
+- Rime ledger verified from CSV: 25 groups = 0 unadjudicated / 9 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime. No primary MLC adjudication and no independent IPA gold.
+- Security finding closed. Remaining install reproducibility gap: no committed `package-lock.json`; CI still uses `npm install`, not `npm ci`. A lockfile artifact exists in run 43583094199 but was not ported into the repo.
+- Continue to keep runtime and Ukrainian outputs unchanged until primary lexical evidence and independent adjudication are available.
+
+
+## Correction: npm lockfile state and final test checkpoint — 2026-11-14 12:20 UTC
+
+The preceding continuation note incorrectly stated that no committed npm lockfile existed. This was corrected by inspecting the actual branch: `package-lock.json` is present (lockfileVersion 3, 51 package entries; blob `43c0da9092cc0c63f7ed5f89a11ad5c6039aeb1e`), and the workflow uses `npm ci` plus `npm audit --audit-level=high`. Exact-head required CI **43584975330 SUCCESS** on `58fe38c15f6373948640c89921d818d3be3cafff`: 267 Python + 68 subtests, 20 Node, 58 Playwright; `npm ci` and explicit audit both report **0 vulnerabilities**. Therefore npm install reproducibility and the Vite high-severity advisory are DONE_VERIFIED; do not carry forward the earlier incorrect blocker.
+
+Current source registry after five new claims: **80 sources / 169 claims**. Rime ledger: **0 unadjudicated / 9 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime**. Independent IPA gold remains 0. Repository remains a PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## Exact-head optional diagnostics — 2026-11-14
+
+Optional workflow **43584975335 SUCCESS** on PR head `58fe38c15f6373948640c89921d818d3be3cafff`: Google WFST build/symbol checks and 6/6 structural-only outputs; Epitran 6/6 raw outputs; CRF 100/100 predictions, 84 source-concordant, 0 gold and possible training overlap. All artifacts downloaded and inspected; report/ZIP hashes and exact links recorded in `data/external-ipa-renderers.json` and `source_claims.csv`. All accuracy values remain null; candidates stay disabled by default.
+
+Current branch data checkpoint: 80 sources / 169 claims; 25 rime groups = 0 unadjudicated / 9 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 11 secondary one-side-only / 1 special non-rime. Final required CI on `58fe38c15f6373948640c89921d818d3be3cafff` was `43584975330 SUCCESS` (267 Python + 68 subtests, 20 Node, 58 Playwright; npm ci and audit 0 vulnerabilities). The later source-registry and documentation commits require the latest exact-head CI to finish before final closeout.
+
+
+## `un` lexical ledger extension — 2026-11-14
+
+A secondary Wiktionary appendix directly lists `ဂုဏ်` /ɡòuɴ/ and `ကုန်` /kòuɴ/; the `ဂုဏ်ထူး` compound entry confirms the first component `ဂုဏ်` /ɡòʊɴ/ with MLCTS `gunhtu:`. The `un` group was upgraded to `SECONDARY_SYSTEM_EQUIVALENCE` (not primary adjudication). Regression tests updated. Registry **80 sources / 170 claims**; rime ledger **0 unadjudicated / 10 secondary equivalence / 1 conflict / 3 distinctions / 10 one-side-only / 1 special non-rime**. Exact-head CI is pending for this last evidence/test change.
+
+
+## Exact final checkpoint — 2026-11-14 12:30 UTC
+
+- Branch `research/burmese-medials-g2p-evidence-2026-11-13`, final tested HEAD `1ce829eda10ae5c3b3e4b9772efb434043198a75`; PR #147 OPEN / DRAFT / mergeable, **794 ahead / 0 behind** `main`; no reviews or inline review threads.
+- Required CI **43585743620 SUCCESS** on exact HEAD: **267 Python tests + 68 subtests**, **20 Node**, **58 Playwright**; IPA corpus structural validator, `npm ci`, `npm audit --audit-level=high` (0 vulnerabilities), production build, generated-data freshness and Chromium install all passed.
+- Source registry: **80 sources / 170 claims**. Rime ledger: **25 groups = 0 unadjudicated / 10 secondary equivalence / 1 secondary conflict / 3 secondary distinction / 10 secondary one-side-only / 1 special non-rime**.
+- `un` upgraded to secondary equivalence from `ဂုဏ်` /ɡòuɴ/ (also first component in `ဂုဏ်ထူး`) and `ကုန်` /kòʊɴ`; claim `CLM-WIKTIONARY-UN-SECOND-SIDE-EXAMPLE-001`; tests updated. Not primary MLC adjudication or controlled minimal pair.
+- Required security/install status: Vite 8.3.8, committed `package-lock.json` (lock v3, 51 package entries), CI `npm ci`, audit 0 vulnerabilities — DONE_VERIFIED.
+- PR #129 remains OPEN / DRAFT / non-mergeable (53 ahead / 17 behind `main`), untouched; its compatible changes selectively ported to #147. No merges, releases or deployments.
+- Remaining genuine blockers: primary MLC transcription table/dictionary text not retrieved; independent Yangon-profile expert IPA gold remains 0; complete positional phonology/tone/phonation and Python/browser parity incomplete; manual accessibility QA outstanding; Google WFST dependency references not fully content-address pinned; commercial reuse of myG2P remains blocked by CC BY-NC-SA 4.0. Repository status: **PARTIAL PROTOTYPE — not linguistically release-ready**.
+
+
+## Final verified state — 2026-11-14 12:35 UTC
+
+- Final tested SHA `f1854a75f63281e536f7c661eac1ad19f541833b`; PR #147 OPEN / DRAFT / mergeable, 798 ahead / 0 behind `main`, 61 changed files; no reviews or inline threads. PR #129 remains OPEN / DRAFT / non-mergeable (53 ahead / 17 behind); untouched. No merge/release/deployment.
+- Required CI **43585929068 SUCCESS** on exact SHA: 267 Python tests + 68 subtests, 20 Node, 58 Playwright; IPA structure validation, `npm ci`, high-severity npm audit (0 vulnerabilities), build, generated-data freshness and Chromium install passed.
+- Source registry: 80 sources / 170 claims. Rime ledger: 25 groups = 0 unadjudicated / 10 secondary equivalence / 1 conflict / 3 distinctions / 10 one-side-only / 1 special non-rime.
+- `un` secondary lexical equivalence claim and tests are included. No primary MLC adjudication, no independently adjudicated Yangon IPA gold, no runtime or Ukrainian mapping promotion.
+- Vite 8.3.8, lockfile v3 committed (51 package entries), `npm ci` and zero-vulnerability audit are DONE_VERIFIED.
+- Still blocked/partial: primary MLC dictionary/transcription pages unavailable; independent expert IPA gold and annotators unavailable; positional medial/coda/tone/phonation coverage and Python/browser phonological parity incomplete; manual accessibility QA outstanding; Google WFST dependency transitive pinning not fully hermetic; myG2P commercial reuse blocked by CC BY-NC-SA 4.0. Repository remains **PARTIAL PROTOTYPE, not linguistically release-ready**.
+
+
+## Two additional `au` lexical evidence groups — 2026-11-14
+
+`au:` upgraded using `ပေါ` `/pɔ́/` (MLCTS `pau:`, source ေါ) plus `ကျော` `/t͡ɕɔ́/` (MLCTS `kyau:`, source ော). `au.` upgraded using `ပေါ့` `/pɔ̰/` (MLCTS `pau.`, source ေါ့) plus final syllable `/ʃɔ̰/` of `ဝပ်ရှော့` (MLCTS `waphrau.`, source ော့). Claims `CLM-WIKTIONARY-AU-COLON-SECOND-SIDE-EXAMPLE-001` and `CLM-WIKTIONARY-AU-DOT-SECOND-SIDE-EXAMPLE-001` registered; tests updated. `ပေါ့` is outside the MOW suffix candidate inventory. Secondary evidence only, no controlled minimal pair, no primary MLC adjudication or runtime promotion.
+
+Registry: **80 sources / 172 claims**. Rime ledger: **0 unadjudicated / 12 secondary equivalence / 1 conflict / 3 distinctions / 8 one-side-only / 1 special non-rime**. Required CI **43586334287 SUCCESS** on `dd494662f0c94bcf1f59170fe65ea6cd41199c64`: 267 Python + 68 subtests, 20 Node, 58 Playwright; npm ci and audit 0 vulnerabilities.
+
+
+## Continuation — MLC dictionary access and rime-table evidence (2026-11-14)
+
+- Starting verified branch checkpoint before this continuation: `1312a1fe03e1d9bc3fe551514f0e44ff6e22ff7d`; base `main` was `dc90463bdd734867308f03cb627eb8941efc19d6`. Existing PR #147 was open/draft/mergeable and 812 commits ahead / 0 behind at that checkpoint. Its exact-head required workflow 43586469354 and optional Epitran workflow 43586469388 both completed successfully. This continuation appends evidence and a regression test; it does not merge the PR.
+- Google Books record for the 1996 Dunwoody Press reprint of the MLC 1993 Myanmar-English Dictionary states that the original is from the University of Michigan and that the 635-page item was digitized on 2008-05-15. Only catalog metadata was accessible in this review; no page images, OCR entry, pronunciation key or MLCTS/MLCTS2 table was inspected. Registered as `GOOGLE_BOOKS_MLC1996_DIGITIZED` / `CLM-GOOGLE-BOOKS-MLC1996-DIGITIZATION-001`.
+- SHACHI's independent resource record for the SEAlang Burmese Dictionary states that it contains about 35,000 entries, derives from the MLC 1993 dictionary (1996 Dunwoody Press reprint), supports IPA phonetic search/display, and identifies copyright in the MLC/Dunwoody source. It does not expose record-level fields or prove whether the dictionary's internal representation is MLCTS, MLCTS2 or another schema. Registered as `SHACHI_SEALANG_DICT_2009` / `CLM-SHACHI-SEALANG-MLC-DICT-METADATA-001`.
+- Wiktionary's secondary rhyme table includes `ကိံ` /kèɪɴ/ MLCTS `kim` alongside `ကိမ်`. This is a schematic/table-level example, not a lexical word entry. Registered as `CLM-WIKTIONARY-KI-SECONDARY-RIME-TABLE-001`; it does not change the `im` lexical status or meet the two-sided lexical acceptance criterion.
+- Direct SEAlang dictionary page returned HTTP 502; the historical API URL was inaccessible through the available web retrieval. No MLC dictionary entry or internal export schema was obtained. The primary MLC transcription-table task therefore remains BLOCKED on page-level source access.
+- Registry: **82 sources / 175 claims**. The 25-group lexical audit remains **12 secondary equivalence / 1 secondary conflict / 3 secondary distinctions / 8 secondary one-side-only / 1 special non-rime**. No new primary adjudication, no independent IPA gold, no runtime or Ukrainian mapping promotion.
+- Added `test_mlc_dictionary_access_leads_and_secondary_rime_table_are_not_overstated` to protect the evidence boundary. Required CI **43618679936 SUCCESS** on exact code/test head `9e1a770cfd3d5e4c56264f79e458637f8c9bc1f9`: **268 Python tests + 68 subtests**, **20 Node tests**, **58 Playwright tests**; IPA-gold structure validation, `npm ci`, `npm audit --audit-level=high` (0 vulnerabilities), production build and generated-data freshness passed. Subsequent register/handoff edits are documentation-only. The optional raw-output/CRF/Google-WFST diagnostic workflow is tracked separately and must not be treated as an accuracy benchmark.
+
+
+## Continuation — MLC second edition and phonetic evidence (2026-11-14)
+
+- Added a concrete primary-source access lead: CiNii record BD10832446 lists a 709-page 2nd/revised edition of the 1993 Myanmar-English Dictionary, chief editor Dr Myint Kyi, published by the Department of Myanmar Nationalities' Languages; one copy is held by the University of Tokyo General Library. CiNii/NDL say 2019; a 2023 scholarly bibliography cites 2020. Preserve the date discrepancy. No pages, pronunciation key, MLCTS/IPA field or license for reuse has been inspected.
+- NDL's 2022 bibliographic guide pp.53-59 says the SEAlang Burmese Dictionary is based on the 1993 MLC / 1996 Dunwoody reprint and notes a second edition in 2019. Its sample Burmese words use ALA-LC bibliographic romanization, not phonetic transcription.
+- The 2008 SEAlang project paper shows IPA input and phonetic result display. The screenshot includes /ein/ and /êi/ with house/home senses, but the Burmese headword is not recoverable from text extraction; no lexical row added and no assumption made about stored record format.
+- Hlaing & Thida (2018) supplies two minimal pairs (ပန်း /pan/ vs ဗန်း /ban/; ပန်း /pan/ vs ပုန်း /pon/), but they are onset/vowel contrasts outside the target rime collisions and dialect is unspecified. Win & Takara (2011) supports four formal Standard Myanmar tone categories and F0+duration analysis, with five speakers including two Yangon natives. Mooney & Repetti-Ludlow (2021) lacks Burmese-script headwords/MLCTS in the phonetic examples. None resolves the eight one-sided groups.
+- Registry: 89 sources / 189 claims. Lexical audit remains 12 equivalence / 1 conflict / 3 distinction / 8 one-sided / 1 special non-rime. No new primary MLC adjudication, IPA gold, runtime mapping or Ukrainian candidate.
+- Code/test commit 6b487d31dda78efca218f1f98038f0bb0e0fae57 triggered required CI run 43619590836, which failed one test assertion caused by lowercase/uppercase mismatch in a scope substring. 269 Python tests + 68 subtests passed, 1 failed. Fixed only the assertion in 3b5e55cc8ac45afee6c98cf6999510012669ddf2. The corrected assertion was included in subsequent code/test head bccc8c3c495fdaa20736a104eabc4d0642345ac6; required CI run 43619829840 completed SUCCESS: 270 Python tests + 68 subtests, 20 Node tests, 58 Playwright tests; IPA-gold structure validation, npm ci, high-severity audit (0 vulnerabilities), production build and generated-data freshness passed. Later commits are documentation-only. The previous successful baseline on 9e1a770c... remains valid for that earlier snapshot only.
+- New Undermind continuation file: /analysis/2026-11-14-mlc-dictionary-access.md; deep search /analysis/Burmese MLC lexical transcription and rime contrasts completed 2026-11-14.
+
+
+- Further primary institutional corroboration: the Ministry of Education FY 2018-19 Annual Performance Review Report, p.256, lists “Myanmar-English Dictionary (2019)” as an output of the Department of Myanmar Nationalities' Languages. This reinforces 2019 over the lone 2020 bibliographic variant, while the edition statement/editorial details still require title-page inspection.
+
+
+## Continuation — TUFS MED crosswalk and lexical evidence (2026-11-14)
+
+- Registered Tokyo University of Foreign Studies' Burmese Pronunciation Module. Section 1.3 explicitly identifies the 2019 Myanmar-English Dictionary second edition as MED and compares its own notation with IPA, TUFS's notation, Kato 2019, Ohno 2000 and a Chinese dictionary. The MED column gives rime/tone spellings including -a/-a:/-a., -in/-in:/-in., -ein/-ein:/-ein., -aun/-aun:/-aun. and checked -a' etc. TUFS states its own notation is mainly based on Kato 2019; do not treat its IPA column as a verified MED record export or conflate MED with MLCTS.
+- TUFS describes three tones for open/nasal syllables, final -ɴ nasalization, and checked -ʔ syllables generally falling (some researchers count these as a fourth tone). It supplies Burmese-script lexical examples and IPA.
+- Updated one-sided lexical audit examples for five groups: am: (ကမ်း /káɴ/ on မ်း), aung. (စောင့် /sâuɴ/ on ောင့်), im (သိမ် /t̪èiɴ/ on ိမ်), im: (သိမ်း /t̪éiɴ/ on ိမ်း), im. (သိမ့် /t̪êiɴ/ and စိမ့် /sêiɴ/ on ိမ့်). For စောင့်, TUFS's falling-tone /sâuɴ/ differs from Wiktionary's creaky /sa̰ʊɴ/; preserve the disagreement. No missing source-unit side was found, so all eight statuses remain one-sided. No mapping or Ukrainian candidate promotion.
+- TUFS notes aspirated ချိုင်း /cʰáiɴ/ is regarded as non-lexical by most speakers and absent from MED 2019 although present in Ohno 2000; a voiced /jáiɴ/ form is listed. This is a lexicon coverage/speaker judgment issue, not a rule.
+- Registry **89 sources / 189 claims**.
+- CI run 43620266372 had one test assertion wording failure; corrected in code/test commit 9e0d134a3189a4d57d38de1fa6c0e7b85725d72e. Required CI run **43620353708 SUCCESS**: **271 Python tests + 68 subtests**, **20 Node tests**, **58 Playwright tests**, IPA-gold structure validation, npm ci, npm audit (0 vulnerabilities), production build and generated-data freshness all passed.
+- Optional diagnostics run 43620353669 completed SUCCESS: Epitran, CRF and Google WFST raw-output jobs succeeded. Google WFST returned 6/6 outputs with 0 runtime errors but 0 independent gold (accuracy null). CRF returned 100 predictions, 84 source-concordant, with 0 gold and NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. These are raw-output diagnostics, not accuracy results.
+
+
+## Final execution checkpoint — 2026-11-14
+
+- Repository: ClippyFirst/Burmese-Ukrainian-Phonetic-System-
+- Starting default-branch commit: dc90463bdd734867308f03cb627eb8941efc19d6
+- Starting research-branch head for this continuation: 3d5b3f2b17376e969acabfc9b237ee9d805a71d8
+- Dedicated working branch: research/burmese-medials-g2p-evidence-2026-11-13
+- Code/data/test-bearing head: 9e0d134a3189a4d57d38de1fa6c0e7b85725d72e
+- Latest documentation head before this checkpoint: 4478d4dbaffdc7ab127bc8f2a22f4f543275b880
+- Comparison to main at the checkpoint: 858 commits ahead, 0 behind; merge base remains dc90463bdd734867308f03cb627eb8941efc19d6. main was not changed.
+- Required CI run 43620353708 SUCCESS on the code/test-bearing head: 271 Python tests + 68 subtests, 20 Node tests, 58 Playwright tests; IPA-gold structural validation, npm ci, npm audit --audit-level=high (0 vulnerabilities), production build and generated-data freshness passed.
+- Optional diagnostic run 43620353669 completed SUCCESS across Epitran, CRF and Google Thrax/OpenFst raw-output jobs. Google WFST: 6/6 structural probes produced outputs, 0 runtime errors, independent gold count 0, accuracy null. CRF: 100/100 predictions, 84 source-concordant rows, gold count 0, scoring status NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. These are raw-output diagnostics only, not accuracy benchmarks.
+- Evidence registries: 89 sources / 189 claims; CSV widths/refs/ID uniqueness validated. Collision lexical audit contains 25 groups; 8 target groups remain SECONDARY_ONE_SIDE_ONLY. TUFS examples add evidence only to already-observed sides and expose a secondary transcription disagreement for စောင့်; no mapping was promoted.
+- Open PRs: #147 (research: map Burmese medial and G2P evidence) and #129 (benchmark/hybrid). #147 remains open; no review submissions or inline review threads. #129 remains untouched because its branch is divergent from main (previous comparison: 53 ahead / 17 behind); compatible work already ported to #147 in the earlier continuation.
+- Remaining blockers: obtain permissioned access to the 2019 MED second edition (CiNii/NDL/official Ministry evidence identifies a 709-page copy at University of Tokyo General Library and copies at National Library Myanmar; no entry pages or transcription key inspected); find lexical examples for the missing sides of the eight one-sided groups; expert-adjudicated independent IPA gold; accessibility manual QA; full hermetic pinning for Google WFST dependencies; myG2P commercial deployment/distribution rights (non-commercial research use is permitted under CC BY-NC-SA 4.0).
+- Final classification: PARTIAL PROTOTYPE, not release-ready. Engineering CI is green on the code/test head; linguistic evidence, licensing and independent gold remain incomplete.
+
+
+## Final state addendum — 2026-11-14
+
+- Before this documentation-only addendum, branch head was 5219bd6cfb814f17c63404c90ae20affcd521bd0; comparison to main was 861 ahead / 0 behind, merge base dc90463bdd734867308f03cb627eb8941efc19d6. The main branch remains unchanged.
+- The code/data/test head remains 9e0d134a3189a4d57d38de1fa6c0e7b85725d72e; all later commits in this continuation are documentation-only.
+- Required CI 43620353708 is SUCCESS: 271 Python + 68 subtests, 20 Node, 58 Playwright; IPA-gold structure validation, npm ci, npm audit (0 vulnerabilities), production build and generated-data freshness passed.
+- Optional diagnostic workflow 43620353669 is also complete SUCCESS: Epitran, CRF and Google WFST raw-output jobs succeeded. Google WFST: 6/6 outputs, 0 runtime errors, no independent gold, accuracy null. CRF: 100 predictions, 84 source-concordant, no gold, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. No accuracy claim is made.
+- Final evidence totals: 89 sources / 189 claims; 25 collision groups; eight target groups remain one-sided. No primary MLC entries, independent adjudicated IPA gold or runtime/Ukrainian mapping promotion was obtained.
+- Final status remains PARTIAL PROTOTYPE, not release-ready; next genuine blocker is permissioned page-level access to the 2019 MED second edition and expert lexical/IPA adjudication.
+
+
+## myG2P license scope correction — 2026-11-14
+
+The prior handoff wording treated the myG2P CC BY-NC-SA 4.0 license as a blocker without separating research from commercial use. That was too broad. The upstream repository README explicitly grants non-commercial reuse subject to attribution and ShareAlike; it documents the five-field dataset (Burmese orthography, syllable segmentation, respelling, IPA) and says the lexicon is based mainly on MLC words with extensions for foreign pronunciations.
+
+- **Current non-commercial research:** permitted under the published CC BY-NC-SA 4.0 license; no separate maintainer permission is required for this activity, provided its conditions are followed.
+- **Redistributed derived data:** retain attribution and CC BY-NC-SA-compatible terms.
+- **Commercial deployment/distribution:** not covered; separate permission or removal of the material is required.
+- **Evidence boundary:** myG2P remains secondary research/reference data, not independent adjudicated IPA gold. Its IPA values may be compared and audited, not treated as ground truth.
+- The project owner confirms this is a research project and authorizes the project to proceed on that basis.
+- OpenSLR SLR80 is licensed CC BY-SA 4.0 and has a public transcript index, but actual TSV retrieval failed in this environment; per the owner's instruction, no corpus rows/audio are used or imported until the bytes are accessible. It remains metadata-only.
+- Added CLM-MYG2P-NONCOMMERCIAL-RESEARCH-USE-001 and a regression test. Registry now 91 sources / 192 claims; required CI pending on the new code/test head.
+
+
+## BSD Burmese word-list scan — 2026-11-14
+
+Added an accessible 40,000+ Burmese orthographic word list from dangerchitthu/myanmar-karen-word-lists. Its README states BSD licensing, the line-breaking/spell-checking purpose, and source projects including my-l10n and a SourceForge Myanmar-English dictionary. The exact raw file was retrieved; blob SHA 11fdf476285e242d383d3ca1047138deda3f80eb; license blob SHA 6f46e92f132c607cba418ffbecc9f4a29de25c01. The fetched file contained 41,343 non-comment rows. It provides orthographic strings only, not glosses, syllabification or IPA.
+
+Exact Unicode candidate scan against the eight missing source units:
+- am: (ံး): 483 raw suffix hits, but every hit had a dependent vowel sign immediately before ံး; no exact candidate for the standalone source-unit string was established.
+- aung. (ေါင့်): ခေါင့်, ဒေါင့်; neither was independently verified as a lexical headword. Wiktionary explicitly labels ဒေါင့် as a phonetic respelling of ထောင့်, so it is not a second lexical item for the missing spelling.
+- ui (ို်): ယို် — orthographic candidate only, not independently verified.
+- um: (ုမ်း): ရေခအုမ်း, လစာနှုမ်း — unverified candidate strings, no gloss or pronunciation.
+- im (ိံ), im: (ိံး), im. (ိံ့) and um. (ုမ့်): no suffix matches.
+
+No candidates were promoted to lexical pronunciation evidence. All eight collision statuses remain SECONDARY_ONE_SIDE_ONLY. This word list is a candidate-discovery layer only; suffix matching does not perform Burmese syllabification and no IPA can be inferred from it. The findings are registered as CLM-DANGERCHITTHU-ORTHOGRAPHIC-CANDIDATE-SCAN-001.
+
+
+## Verification — 2026-11-14
+
+The latest code/data/test head for this batch is 0b061ef23132cbfa65e94e6c4307375a2c7e68b9. Required CI run 43622250968 completed SUCCESS:
+- 273 Python tests and 68 Python subtests passed.
+- 20 Node tests passed; 0 failed.
+- 58 Playwright Chromium tests passed.
+- Independent IPA-gold structural validation passed.
+- npm ci, high-severity npm audit (0 vulnerabilities), production build and generated-data freshness check passed.
+
+Optional diagnostic run 43622250978 completed SUCCESS across Epitran, CRF and Google WFST raw-output jobs. Google WFST: 6/6 outputs, 0 runtime errors, independent_gold_count=0, accuracy=null; report SHA-256 0df0f24dd97c0537bcf882c4460ab1f4a3e315b6ece485ef0c6ae9ed22f42c34. CRF: 100/100 predictions, 84 source-concordant rows, gold_count=0, accuracy=null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. These are raw-output diagnostics only, not accuracy benchmarks.
+
+
+## Additional lexical source check — Wiktionary phonetic respelling and myG2P access boundary (2026-11-14)
+
+- Added the Wiktionary entry for ထောင့် as a separate source. It lists ဒေါင့် as a phonetic respelling for a second pronunciation of the same lemma, not as an independent lexical headword. Therefore the BSD wordlist candidate ဒေါင့် does not fill the missing aung. spelling side.
+- Registered CLM-WIKTIONARY-HTAUNG-DAUNG-RESP-001 and linked it from the aung. lexical audit. No collision status changed.
+- myG2P CC BY-NC-SA 4.0 remains permitted for non-commercial research with attribution and ShareAlike. However, the 2.33 MB upstream dictionary file itself could not be retrieved into the current analysis environment: GitHub file retrieval returned no content for the large file, raw download failed, and the hosted scrape reported that the page was too long to process fully. Per the owner's instruction, no partial/truncated query output was treated as evidence and no new myG2P lexical rows were used.
+- Registries now contain 91 sources / 192 claims. The 25-group collision audit remains unchanged in status; all eight target groups remain SECONDARY_ONE_SIDE_ONLY.
+- Latest corrected test run is pending after fixing a test assertion to match the source wording.
+
+
+## Final verification after evidence-boundary test correction — 2026-11-14
+
+- Branch tip at this checkpoint: 70481b4a8e6999402c1e83c6ba5c21337bbb7b09; dedicated branch research/burmese-medials-g2p-evidence-2026-11-13.
+- Starting main: dc90463bdd734867308f03cb627eb8941efc19d6. Branch comparison: 895 commits ahead, 0 behind; main unchanged.
+- Required CI run 43623058823 SUCCESS on the latest branch tip: 273 Python tests + 68 subtests, 20 Node tests, 58 Playwright Chromium tests. IPA-gold structural validation, npm ci, high-severity npm audit (0 vulnerabilities), production build and generated-data freshness passed.
+- Preceding run 43622770676 failed one assertion because the test expected a longer phrase than the registered source scope. Corrected the assertion in test commit b3fd204b192633c1c58580e679ef5549f9af9535; latest required CI passed.
+- Latest optional diagnostic run 43623058728: Epitran and CRF jobs passed; Google WFST job was still in progress at last inspection. Previous optional run 43622250978 completed all three jobs successfully; Google WFST 6/6 outputs, 0 runtime errors, no gold (accuracy null); CRF 100 predictions, 84 source-concordant, no gold and possible training overlap. No accuracy claim.
+- Registries: 91 sources / 192 claims. Collision ledger remains 25 groups; all eight target groups SECONDARY_ONE_SIDE_ONLY. No IPA gold, runtime rule or Ukrainian mapping was promoted.
+- myG2P CC BY-NC-SA 4.0 is permitted for non-commercial research with attribution and ShareAlike, but the 2.33 MB source dictionary bytes were not retrievable in this execution environment; no truncated query output was used.
+- The BSD wordlist scan produced only unverified orthographic leads; Wiktionary confirms ဒေါင့် is a phonetic respelling attached to ထောင့်, not a separate lexical lemma. No missing-side candidate was accepted.
+- Readiness remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## Continuation checkpoint — dictionary dataset lead and current-head verification (2026-11-14)
+
+- Registered the Hugging Face Rickaym/Burmese-Dictionary dataset as a metadata-only research lead: declared MIT license, 19,258 rows, fields word, phonetics, meaning, POS and origin. Its dataset card does not identify the underlying lexicographic source or extraction provenance. The phonetics field is described only as pronunciation (အသံထွက်), and preview examples use Myanmar-script respellings, not IPA.
+- The public dataset-server rows endpoint was accessible. Exactly the first 2,000 of 19,258 rows were retrieved (20 pages × 100); none contained the eight target suffixes. This is NOT a full-dataset scan. Attempts to continue were blocked when the connected Firecrawl account exhausted its credits; no retries were made. No dataset rows or pronunciation values were imported, and no lexical evidence status was promoted.
+- Registered RICKAYM_BURMESE_DICTIONARY_HF_2025 and CLM-RICKAYM-BURMESE-DICT-METADATA-001; added a regression test that preserves the metadata-only / no-IPA / incomplete-scan boundary. Registry totals: 92 sources / 193 claims.
+- Required CI run 43623224122 passed on preceding code/test head 282239402b1cf93a090f258500edcc0eaf909873: 273 Python tests + 68 subtests, 20 Node tests, 58 Playwright Chromium tests; npm ci, npm audit (0 vulnerabilities), production build and generated-data freshness passed. The newly added metadata-only regression test is after that head. No workflow run or commit status was returned for current test head 4aa1b41c37c3f07a0368da413de6a6190fe28fa3; therefore the newest test has NOT yet been CI-verified.
+- Optional diagnostic run 43623224085: Epitran raw-output and CRF baseline jobs passed; Google WFST raw-output job remained in progress at last check. No accuracy result is claimed.
+- Current PR #147 head before this documentation update: 4aa1b41c37c3f07a0368da413de6a6190fe28fa3; branch compare 902 ahead / 0 behind main. PR #147 remains OPEN / DRAFT / mergeable; PR #129 remains untouched. Main unchanged.
+- All eight lexical collision targets remain SECONDARY_ONE_SIDE_ONLY; no IPA gold, phonological rule or Ukrainian mapping was promoted. Overall status remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## Latest handoff reconciliation — 2026-11-14
+
+- Final documentation branch tip: e5c66c6c066bc425938e71716904c4b512ccbcaa. Latest test/data head: 4aa1b41c37c3f07a0368da413de6a6190fe28fa3. Starting main remains dc90463bdd734867308f03cb627eb8941efc19d6; current comparison is 906 commits ahead / 0 behind.
+- Registry integrity rechecked after the metadata-only Burmese dictionary lead: 92 sources / 193 claims; source rows all 7 fields, claim rows all 6 fields; no duplicate IDs and no broken claim-to-source references. All 25 lexical collision groups remain present. Eight target groups remain SECONDARY_ONE_SIDE_ONLY.
+- Required tests run 43623224122 passed on prior test head 282239402b1cf93a090f258500edcc0eaf909873: 273 Python tests + 68 subtests, 20 Node tests, 58 Playwright Chromium tests, npm ci, npm audit with 0 vulnerabilities, production build and generated-data freshness.
+- One additional regression test and its metadata-only source/claim rows were added after that CI head. GitHub returned no workflow run and no commit status for 4aa1b41c37c3f07a0368da413de6a6190fe28fa3 or the final docs-only tip; therefore the newest test remains unverified by CI. Do not report the latest branch tip as fully CI-green.
+- Optional diagnostic run 43623224085 completed SUCCESS: Google WFST 6/6 raw outputs, 0 runtime errors, independent_gold_count=0, accuracy=null (report SHA-256 bb578c92ccc75146a78123098401bdd31e9d07b322588bf0eed5d12bda018466); CRF 100/100 predictions, 84 source-concordant, gold_count=0, accuracy=null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP. These are diagnostics, not accuracy benchmarks.
+- The Rickaym dataset remains metadata-only: 2,000/19,258 rows inspected, no target suffix hit in that partial sample, full scan blocked by exhausted connected-service credits. No rows or phonetics imported. myG2P full dictionary bytes also remain inaccessible; no truncated output used.
+- PR #147 OPEN / DRAFT / mergeable; PR #129 OPEN / DRAFT and untouched; main unchanged; no merge or release. Readiness remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## Full myG2P v2.0 collision scan — 2026-11-14 (supersedes the earlier inaccessible-file checkpoint)
+
+The previously inaccessible upstream file was successfully retrieved by GitHub blob SHA after switching from whole-file path retrieval to the repository blob endpoint. This resolves the earlier access blocker for text-only research. Pinned upstream commit: 54b5c76bb5a87fdbaaeddc1892e6ebd8f97ee225; file blob SHA-1: 0b2735f9a6f7fe28ae94c4baaf323d1db3015c3b; 24,802 five-field rows; 0 malformed rows. The upstream README states CC BY-NC-SA 4.0, says the dictionary is based mainly on MLC dictionary words, and notes extensions for foreign pronunciations. Use remains non-commercial research only, with attribution and ShareAlike; this is secondary evidence, not independent adjudicated IPA gold.
+
+Exact scan used the syllable-segmented orthographic field, not broad word-ending substring guesses:
+- aung. / ေါင့်: 5 component occurrences across five lexical entries — ဒေါင့် in four compounds (IDs 8063–8066) and ခေါင့် in ဖြစ်ခေါင့်ဖြစ်ခဲ (ID 11580). IPA /da̰ʊɴ/ and /kʰa̰ʊɴ/; the rime /a̰ʊɴ/ matches the existing ောင့် example စောင့် /sa̰ʊɴ/. These are compound-internal syllables, not standalone headwords. Status promoted to SECONDARY_SYSTEM_EQUIVALENCE.
+- im / ိံ: 2 component occurrences, တိံ in တာဝတိံသာ and တာဝတိံသာပွဲ (IDs 6840–6841), IPA /dèɪɴ/. Its /eɪɴ/ rime matches the existing ိမ် examples. Status promoted to SECONDARY_SYSTEM_EQUIVALENCE.
+- um: / ုမ်း: 1 component occurrence, ဟုမ်း in ဟုမ်းမရူး (ID 20445), IPA /hóʊɴ/. Its /oʊɴ/ rime matches the existing ုံး example in နှလုံး. Status promoted to SECONDARY_SYSTEM_EQUIVALENCE.
+- am: / ံး: 700 raw syllable suffix hits across 294 headwords, but all 700 were preceded by ု; the actual sequence is ုံး, the other source unit in the um: group. Exact matches for standalone source unit ံး: **0**. The BSD wordlist's 483 suffix hits have the same issue: all are preceded by ု. The earlier filter was correct; these must not be misclassified as am: evidence.
+- No exact syllable matches for im: / ိံး, im. / ိံ့, ui / ို် or um. / ုမ့်.
+
+Final 25-group lexical ledger: **15 SECONDARY_SYSTEM_EQUIVALENCE; 5 SECONDARY_ONE_SIDE_ONLY; 3 SECONDARY_SOURCE_DISTINCTION; 1 SECONDARY_SOURCE_CONFLICT; 1 SPECIAL_NONRIME_CONTEXT_DEPENDENT**. The registry now contains **92 sources / 194 claims**. Added CLM-MYG2P-MLCTS-COLLISION-SCAN-001 and a regression test. No primary MLC adjudication, independent gold, runtime rule, or Ukrainian mapping was promoted.
+
+Latest code/test commit for this batch: 707481df47f8f734afed8e5e4a8ac1d17e334fdd. CI has not yet returned a run/status for this new head; the last verified required CI remains run 43623224122 on earlier head 282239402b1cf93a090f258500edcc0eaf909873 (273 Python + 68 subtests, 20 Node, 58 Playwright; build/freshness/audit passed). Do not describe the newest code/test head as CI-verified until a run is observed.
+
+
+## Latest verified continuation — 2026-11-14
+
+- **Code/data/test head:** 7ca075345cc34067e89e7c3e28da8a331576f37b. Required CI run **43624488248 SUCCESS** on this exact head: **275 Python tests + 68 subtests**, **20 Node tests**, **58 Playwright Chromium tests**; independent IPA-gold structural validation, npm ci, high-severity npm audit (**0 vulnerabilities**), production build and generated-data freshness all passed.
+- Two intermediate CI attempts after the new lexical statuses failed only on stale assertions/counts and acceptance-boundary wording; those were corrected in the crosswalk/test fixtures. The successful run above is the verified final test state for this batch.
+- Full myG2P scan remains as documented above: 24,802 rows, 0 malformed; three secondary system-equivalence promotions (aung., im, um:); five one-sided groups remain. Final 25-group distribution: **15 secondary system-equivalence / 1 secondary-source conflict / 3 secondary-source distinctions / 5 secondary-one-side-only / 1 special non-rime**. Registry: **92 sources / 194 claims**.
+- The latest optional diagnostic run **43624488252** has Epitran raw-output and CRF jobs completed successfully; Google WFST raw-output remains IN_PROGRESS at this checkpoint. Previous completed optional run **43623224085** had Google WFST 6/6 outputs, 0 runtime errors, independent gold 0, accuracy null; CRF 100 predictions, 84 source-concordant, gold 0, accuracy null, possible training overlap. No accuracy claim.
+- Current PR #147 code/test head: 7ca075345cc34067e89e7c3e28da8a331576f37b; branch comparison at this checkpoint: **928 ahead / 0 behind** main. PR #147 remains OPEN / DRAFT / mergeable, 61 changed files, no submitted reviews or review threads. PR #129 remains OPEN / DRAFT, 53 ahead / 17 behind, left untouched. Main unchanged; no merge or release.
+- The Rickaym/Burmese-Dictionary lead remains metadata-only: only the first 2,000/19,258 rows were retrieved; the full suffix scan was not completed after connected-service credits were exhausted. No rows or pronunciation data were imported. This does not affect the full myG2P scan, which was retrieved independently through GitHub's blob endpoint.
+- No primary MLC adjudication, independent expert IPA gold, runtime phonological rule, or Ukrainian mapping was promoted. Readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+
+## Engine continuation — canonical IPA evidence gate (2026-11-14)
+
+**Implementation change:** Python's canonical IPA adapter previously had hard-coded onset/vowel mappings for values whose source registries explicitly label them analysis-dependent. This allowed e.g. စ /s/, ဓ /dʰ/, ီ /iː/, ဲ /ɛ/, ူ /uː/ and ါ /a/ to enter canonical IPA despite the registry status. The adapter now admits only onset and vowel IDs marked established in ipa_onsets.csv / ipa_vowels.csv. Analysis-dependent mappings remain available in the structural/research registry but are withheld from canonical IPA.
+
+**Regression coverage:** tests assert withheld outputs for six analysis-dependent onset/vowel examples; four established control outputs remain; a registry parity test ensures runtime allowlists exactly equal status=established rows. This is a precision/safety improvement, not expanded linguistic coverage. Browser IPA derivation is separate and has not been changed or proven equivalent; Python/browser parity remains PARTIAL.
+
+**CI:** current head ca6c20690094a0cec0e413917e141e1c1fd5e4a7 has required test workflow runs 43629935909 and 43629931025 IN_PROGRESS at checkpoint; no pass is claimed yet. Optional Epitran raw-output run 43629936000 is also IN_PROGRESS. Await exact-head results before marking DONE_VERIFIED.
+
+
+## Cross-runtime canonical IPA evidence gate — 2026-11-14
+
+Extended the evidence-status correction to the browser G2P path. The browser now checks generated ONSETS and VOWELS registry statuses before deriving canonical IPA. This is important because orthographic vowel-sign recognition in vowel_signs.csv is not itself proof that the phonetic value in ipa_vowels.csv is established. If the onset or any vowel value is analysis-dependent, browser IPA is withheld and the syllable status remains ANALYSIS_DEPENDENT rather than being flattened to a generic not-established state. Onset-only provisional hints remain separate from canonical IPA.
+
+Tests cover generated source registry statuses and assert that the browser derivation enforces both onset and vowel gates. Python/browser semantic parity is improved for these evidence statuses, but full cross-runtime parity remains PARTIAL: the browser has a richer independent phonological derivation for medials, codas and vowel combinations, which remains separately unevaluated against expert IPA gold.
+
+Current implementation/test head: 9cb275d8e9f3a5a695761c29da0e3922f555ecad. CI has been triggered by the PR update; record exact-head outcomes before promoting this task to DONE_VERIFIED.
+
+## Engine continuation — browser evidence status and stale end-to-end assertions (2026-11-14)
+
+- Starting tested head for this continuation: `821cfbe945db8529c5765dfc9c1e673653a544f5` (PR #147 branch; earlier run exposed one stale Node assertion). Current code/test head: `9333bdfec405f9fafb36bab42d90965e11f5e155` on `research/burmese-medials-g2p-evidence-2026-11-13`.
+- Repaired the Node test to match the actual two-stage fail-closed onset check. Corrected a browser aggregate-status bug: `ANALYSIS_DEPENDENT` and `UNCERTAIN` are now preserved in `ipaStatus` rather than collapsed to `NOT_ESTABLISHED`.
+- The first full Playwright run then surfaced four old assertions expecting canonical outputs for analysis-dependent onset/vowel entries. Updated those tests to require withheld IPA/Ukrainian output and explicit `IPA: ANALYSIS_DEPENDENT`. No new pronunciation value, phonological rule, IPA gold label or Ukrainian mapping was introduced.
+- **Exact PR-head required CI:** run `43630941796` SUCCESS — 277 Python tests + 68 subtests; package install and gold corpus structural validator PASS; npm audit gate PASS; production build PASS; generated web data freshness PASS; 21 Node tests PASS; 58 Playwright tests PASS.
+- Push-triggered required run `43630938330` was still running at the time this note was written; do not infer its result from the PR run. Optional CRF and Epitran raw-output jobs succeeded on run `43630941801`; Google Thrax/OpenFst build was still in progress. These are diagnostic raw outputs, not accuracy results.
+- PR #147 remains OPEN / DRAFT; main remains unchanged. PR #129 remains OPEN / DRAFT / non-mergeable and untouched. PR #147 remains far ahead of main (950 commits, 0 behind at this checkpoint); no merge or release performed.
+- Readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready: independent expert-adjudicated IPA gold 0, empirical accuracy null, and full Python/browser parity not established.
+
+
+## Continuation — Python/browser structural-status parity — 2026-11-14
+
+- Starting branch head: `e1f9713636c1d1e6718b72f7b7092f193bc9203b`; branch `research/burmese-medials-g2p-evidence-2026-11-13`; main remains `dc90463bdd734867308f03cb627eb8941efc19d6`.
+- Fixed the browser's loss of uncertainty reason for recognized but unimplemented medials, conjuncts and kinzi. Python exposes `phonetic_status=analysis_dependent`; browser now retains `ANALYSIS_DEPENDENT` instead of reducing these cases to `NOT_ESTABLISHED`. IPA and Ukrainian output remain withheld.
+- Extended the existing shared fixture file with `ကြွေ`, `က္ကာ`, `င်္ကာ`; both Python and Playwright suites consume these cases. Tests assert the same conservative IPA/status boundary. No phonological rule, IPA value, gold label or Ukrainian candidate was promoted.
+- Code/test commits: `49806e7eb32c0d78f231c79ea6eaf420cb122191` (browser status); `22f0b95af6fc132fd47dd276e6e9a83c0c233227` (shared fixture); `a8bd52ebe2e269ce280ef33b3e46b85dfeaa5f93` (Python fixture test); `0b0156e1139a6b277ead4a42606b69c31050468d` (browser fixture assertions and stale expectation updates).
+- Exact PR-head required CI run [43638222569](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638222569) SUCCESS on code/test head `0b0156e1139a6b277ead4a42606b69c31050468d`: 278 Python tests + 68 subtests; 21 Node tests; 59 Playwright tests; IPA-gold schema validator executed; npm audit gate reports 0 vulnerabilities; production build, generated-data freshness and Chromium installation passed.
+- Optional diagnostics run `43638222580`: Epitran raw-output job SUCCESS; CRF and Google Thrax/OpenFst jobs were still running at this checkpoint. These remain diagnostic-only and cannot establish accuracy.
+- Ledger: shared structural-status parity is **PARTIAL**; complete Python/browser parsed-object and phonological parity remains TODO/PARTIAL; independent expert-adjudicated IPA gold remains 0 and empirical accuracy null. No audio accessed. PR #147 remains open/draft/unmerged; PR #129 remains untouched/open/draft/non-mergeable; main unchanged. Repository remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+
+## Continuation — canonical coda/prosody evidence gate and Python/browser parity — 2026-11-14
+
+- Extended the browser's conservative canonical IPA boundary to codas, asat, anusvara and prosodic marks. This now matches Python's `_ipa` withholding contract for these structures; the browser marks recognized unresolved structures `ANALYSIS_DEPENDENT`, withholds IPA and emits no Ukrainian candidate.
+- The browser's previous coda/rime-derived canonical outputs for `ပင်`, `ကုန်`, `ကိုက်` and `ကော်` were removed from the accepted path. Their former tests now assert withholding. The underlying experimental derivation code remains behind the gate and is not promoted.
+- Shared `tests/fixtures/shared_unicode_contract.json` now contains seven phonetic-status cases covering medial, conjunct, kinzi, nasal coda, checked coda, asat-conditioned rime and anusvara. Python and Playwright suites consume the same cases.
+- Code/test head `93e9c9283acb757ec7cb0a61d974faecc7e45eff`; exact PR-head required CI [43638560797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638560797) SUCCESS: 278 Python + 68 subtests; 21 Node; 59 Playwright; npm audit 0 vulnerabilities; production build, generated-data freshness and Chromium install passed. Push-triggered duplicate run `43638555772` was still in progress at documentation time.
+- The status-level structural parity gate is improved but remains **PARTIAL**: complete parser-object, syllable-boundary, vowel-combination, prosody and IPA→Ukrainian trace parity are not yet established. No phonological rule, IPA gold label or Ukrainian mapping was added. Independent expert IPA gold remains 0; empirical accuracy null.
+- Readiness remains **PARTIAL PROTOTYPE**. Main unchanged; PR #147 remains open/draft/unmerged; PR #129 remains untouched/open/draft/non-mergeable. No audio accessed.
+
+
+## Continuation — internal kinzi syllable boundary and cross-runtime fixture — 2026-11-14
+
+- Identified a concrete Python/browser structural mismatch in `မင်္ဂလာ`: browser treats internal kinzi as the final nasal of the preceding syllable (`မင်္`) and starts the next onset at `ဂ`; Python had absorbed `ဂ` into the same cluster. Python parser now recognizes internal KINZI as a structural coda and segments the next onset separately.
+- Prefix kinzi remains a different structure and stays attached to its onset. The first implementation incorrectly split prefix-kinzi clusters; required CI run `43638831711` exposed three regressions. Corrected the boundary condition so a split occurs only for internal kinzi, not when the current cluster begins with KINZI. Existing tests were preserved and expanded.
+- Added shared structural fixture `မင်္ဂလာ` with exact expected syllable units `မင်္`, `ဂ`, `လာ`; Python and Playwright tests consume it. Python also asserts internal kinzi position, final nasal code point and structural status. No pronunciation, IPA or Ukrainian mapping was added.
+- Corrected code/test head `e97aaebf43d99e9d21597fba6b35625fb5ca0bd2`; exact PR-head required CI [43638895912](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43638895912) SUCCESS: 280 Python tests + 68 subtests; 21 Node tests; 60 Playwright tests; npm audit 0 vulnerabilities; production build, generated-data freshness and Chromium install passed.
+- Structural kinzi boundary is **DONE_VERIFIED**. General Python/browser syllabification parity remains **PARTIAL**. IPA gold remains 0 and accuracy null. No audio accessed.
+
+
+## Continuation — shared all-medials structural parity contract — 2026-11-14
+
+- Extended the shared fixture file with all 11 medial forms listed by the existing MLC/Unicode structural inventory: four basic signs, five two-medial combinations and two three-medial combinations. The fixture carries ordered structural IDs only, not IPA or Ukrainian values.
+- Python tests assert the expected medial IDs and one orthographic syllable. Playwright tests consume the same JSON fixture and assert the same displayed syllable unit plus `IPA: ANALYSIS_DEPENDENT`; the browser continues to withhold canonical IPA and Ukrainian output for these medials.
+- Exact code/test head `702568dcf2214787938b6964708cb6e7d4d52e92`; required PR-head CI [43639262508](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43639262508) SUCCESS: 280 Python + 68 subtests; 21 Node; 60 Playwright; npm audit 0 vulnerabilities; production build, generated-data freshness and Chromium install passed.
+- This closes the shared structural fixture requirement for the enumerated medial inventory, not phonological parity. Medial phonetic realization, complete parser-state parity and Ukrainian adapter traces remain PARTIAL/BLOCKED pending source-located, profile-matched evidence and independent adjudication. IPA gold remains 0; accuracy null.
+
+## Continuation — unknown Myanmar extension cluster parity — 2026-11-14
+
+- A focused Python/browser audit found a real structural segmentation divergence. Python keeps every Myanmar-block code point inside the current orthographic unit until the next recognized Burmese base consonant; the browser previously split an unrecognized Myanmar extension character immediately because it was absent from PHONETIC_INPUT_CHARS. Thus ကာ + U+AA60 was one Python cluster with an unparsed tail but two browser units. This was a parser-boundary defect, not a phonological disagreement.
+- Updated browser segment() so Myanmar inventory membership no longer controls segmentation. The full Myanmar-block run is retained structurally; parseCluster() then reports an unsupported/uncertain sequence without assigning IPA or Ukrainian output. The recognized-base boundary is retained, so U+AA60 followed by ကာ still yields two units.
+- Added Playwright regressions for both directions: unknown extension after a valid syllable remains attached to that cluster; unknown extension before a valid base remains a separate unsupported unit. Existing Python test test_adjacent_unknown_myanmar_extension_is_preserved_after_valid_syllable supplies the matching Python-side contract.
+- Code commit 003e4db004361b90531990a692980ffb2a4a43c1; browser regression commit b01667abc786b11de455c5f4eb276083d43e64dd. Required CI for the final docs/code head is pending at documentation time; do not mark this DONE_VERIFIED until exact-head PR and push workflows pass.
+- Status: implementation and regression coverage are PARTIAL pending CI. This closes one explicit boundary mismatch only. Full Python/browser parser parity remains PARTIAL: status taxonomies and structural record schemas are not yet represented by a complete shared canonical projection, and the full Myanmar orthographic boundary space is not source-annotated. No IPA labels or Ukrainian mappings were added. Independent adjudicated IPA gold remains 0; empirical accuracy remains null.
+
+## Exact-head verification — unknown Myanmar extension boundary parity — 2026-11-14
+
+- Code/test head: `84b3c792ebd295f0240fd639f6cd0ee22aec8099`. Browser segmentation now retains unknown Myanmar-block code points within the current orthographic unit until the next recognized Burmese base consonant. The shared Unicode contract includes both `ကာ` + U+AA60 (one cluster; uncertain/unparsed tail) and U+AA60 + `ကာ` (unsupported first unit, recognized second syllable).
+- The first exact-head attempt `ed0356cfab274bfe69207e43e104405735c6c79f` failed Playwright (59 passed, 3 failed): one legacy assertion expected the unknown extension to split from the previous Burmese cluster, and two new tests accidentally used literal backslash-u strings instead of the actual code point. Updated the old expectation to the Python structural contract and constructed U+AA60 with `String.fromCodePoint(0xAA60)`. No production behavior was weakened to satisfy tests.
+- Corrected exact-head push workflow [43640773724](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43640773724) SUCCESS; PR workflow [43640779155](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43640779155) SUCCESS: 280 Python tests + 68 subtests, 21 Node tests, 62 Playwright tests; npm audit gate, production build, generated-data freshness, and Chromium install passed.
+- Optional diagnostics [43640779173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43640779173): CRF and Epitran raw-output jobs succeeded; Google WFST raw-output job was still running at this note. These outputs are diagnostics only, not accuracy estimates.
+- Status: **DONE_VERIFIED for this specific Python/browser unknown-extension boundary**. Overall parser parity remains **PARTIAL** because a full shared canonical structural projection/status mapping and a source-annotated orthographic boundary corpus do not yet exist. Independent expert-adjudicated IPA gold remains 0; accuracy remains null. No phonological rules or Ukrainian mappings were introduced.
+
+
+## Continuation — medial-ya contextual ASAT parity — 2026-11-14
+
+- **Finding:** Python's structural parser explicitly consumes ASAT immediately after medial-ya as a contextual coda (`coda.marker=asat`, `orthographic_function=contextual`). The browser previously consumed the same sign only as a generic trailing ASAT flag, losing the structural role. This is a structural representation mismatch, not a pronunciation disagreement.
+- **Implementation:** Browser medial parsing now mirrors the Python ordering: when ASAT immediately follows medial-ya, it records the contextual coda, sets the ASAT flag, and retains a Ukrainian diagnostic note. The behavior is deliberately position-specific; ASAT after another medial is not promoted by this change. Canonical IPA remains withheld because medials are still analysis-dependent.
+- **Shared regression:** Added `ကျ်` to `tests/fixtures/shared_unicode_contract.json`. Python asserts the medial ID and contextual coda fields; Playwright asserts the same orthographic unit, `ANALYSIS_DEPENDENT` status, and diagnostic note.
+- **Exact code/test head:** `9ed49b12b739f6b0cba240e2bdd44e5910f9aa59`.
+- **Required push CI:** run [43641788491](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43641788491) SUCCESS — 280 Python tests + 68 subtests; 21 Node tests; 62 Playwright tests; IPA-gold structural validator executed; npm audit found 0 vulnerabilities; production build, generated-data freshness and Chromium installation passed.
+- PR-triggered exact-head workflow [43641792351](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43641792351) was still running when this note was added; record its terminal result separately. Optional raw-output diagnostic run [43641792365](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43641792365) had Epitran raw-output complete successfully; CRF and Google Thrax/OpenFst jobs were still in progress. These jobs are diagnostics only, not accuracy estimates.
+- **Status: DONE_VERIFIED for the medial-ya contextual-ASAT structural parity case.** Overall Python/browser structural projection and phonological parity remain PARTIAL. Independent expert-adjudicated IPA gold remains 0; empirical accuracy remains null. No phonological rule, IPA value or Ukrainian pronunciation mapping was introduced.
+
+
+## Continuation — Python/browser structural boundary parity — 2026-11-14
+
+### Medial-ya contextual ASAT coda
+
+- Python's parser consumes ASAT immediately after medial-ya as a contextual coda (`coda.marker=asat`, `orthographic_function=contextual`). The browser had retained only a generic ASAT flag. Browser parsing now mirrors the Python position-specific structure and exposes a diagnostic note.
+- Shared fixture `ကျ်` asserts the medial ID and contextual coda in Python; Playwright asserts the same source unit, withheld `ANALYSIS_DEPENDENT` IPA and diagnostic note. ASAT after other medials is not generalized by this change.
+
+### Unsupported controls as boundaries for bare consonants
+
+- Python's standalone-bare-consonant guard tests actual Myanmar phonological neighbours. Browser had treated unsupported C0/C1 control segments as non-Myanmar display units but not as phonological boundaries, so a bare consonant next to DEL or U+009F could follow the contiguous-Myanmar inherent-vowel fallback.
+- Browser now treats `unsupportedControl` segments as boundaries for the standalone-consonant guard while preserving the controls as unsupported input. Shared fixtures cover DEL before `က` and U+009F after `က`; Python and Playwright both assert IPA withholding.
+
+### Exact-head verification
+
+- Final code/test head: `6389cac84344baa6d13940d650846667182a79ee`.
+- Required push workflow [43642080740](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43642080740) SUCCESS; required PR workflow [43642084798](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43642084798) SUCCESS on the exact same head.
+- Results: **281 Python tests + 68 subtests**, **21 Node tests**, **63 Playwright Chromium tests**; independent IPA-gold structural validator executed; npm install/audit found **0 vulnerabilities**; production build, generated-data freshness and Chromium installation passed.
+- These changes improve structural parity only. No IPA pronunciation, phonological rule or Ukrainian mapping was introduced. The independent expert-adjudicated IPA gold set remains empty (0); empirical accuracy remains null.
+- **Task ledger:** medial-ya contextual-ASAT structural case — DONE_VERIFIED; control-delimited bare-consonant withholding parity — DONE_VERIFIED; complete Python/browser structural projection and phonological parity — PARTIAL; profile-matched expert IPA adjudication — BLOCKED pending qualified annotation/evidence.
+- Repository remains a **PARTIAL PROTOTYPE**, not linguistically release-ready. Main remains unchanged; PR #147 remains open/draft/unmerged; PR #129 remains untouched.
+
+
+## Continuation — tone-mark-before-coda structural parity — 2026-11-14
+
+- **Finding:** For the explicit orthographic sequence `ကာ့င်`, the browser's existing canonical-order path recognized a final base+ASAT after a preceding dot-below/visarga mark, but discarded the mark from its structural record. Python retained the tone mark but left the following final base+ASAT unparsed. This was a parser representation mismatch; the sequence is used as a structural regression probe, not as lexical or pronunciation gold.
+- **Implementation:** Python now preserves a pre-coda dot-below/visarga as `tone_mark` before recognizing the final base+ASAT coda. Browser now retains the intervening marks in `prosodyMarks` and keeps the coda structure, with an explicit diagnostic note. Both paths continue to withhold canonical IPA and Ukrainian output for the unresolved coda/prosody.
+- **Shared regression:** `tests/fixtures/shared_unicode_contract.json` adds the `ကာ့င်` structural case; Python asserts the dot-below tone-mark record and NGA final-coda record; Playwright asserts the `ANALYSIS_DEPENDENT` state and the diagnostic note that the mark was preserved.
+- **Exact code/test head:** `21acdecbe48736ca6c6c398b9206f785e16b6c83`.
+- **Required push CI:** [43642460709](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43642460709) SUCCESS. Required PR CI: [43642465130](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43642465130) SUCCESS on the same head. Results: **281 Python tests + 68 subtests**, **21 Node tests**, **63 Playwright Chromium tests**; IPA-gold structural validator executed; npm audit found **0 vulnerabilities**; production build, generated-data freshness and Chromium installation passed.
+- **Task ledger:** tone-mark-before-coda structural preservation — DONE_VERIFIED for this regression sequence; complete Python/browser parser-object and phonological parity — PARTIAL; profile-matched expert IPA adjudication — BLOCKED. No pronunciation, phonological rule or Ukrainian mapping was introduced. Independent adjudicated IPA gold remains 0 and empirical accuracy remains null.
+- Repository remains a **PARTIAL PROTOTYPE**, not linguistically release-ready. Main remains unchanged; PR #147 remains open/draft/unmerged; PR #129 remains untouched.
+
+
+## Continuation — shared structural projection and Unicode 17 ordering audit — 2026-11-14
+
+### Implementation
+
+- Added `project_syllable_structure()` to the Python parser and a matching browser `projectStructure()` projection. The browser exposes the projection on each rendered Burmese syllable as a JSON data attribute for inspectable regression tests. This projection is explicitly orthographic/structural; it excludes IPA, Ukrainian candidates and phonetic accuracy claims.
+- Shared fixture `tests/fixtures/shared_unicode_contract.json` now contains **31 structural projection cases**: inherent vowel, all four medials and observed combinations, conjunct, kinzi-final nasal, all nine dependent-vowel signs, contextual ASAT, canonical reordering, unknown Myanmar Extended-A tails and unsupported Myanmar inventory entries.
+- The Unicode 17.0 Table 16-4 audit exposed a Python/browser mismatch: trailing ASAT after a dependent vowel was represented as a contextual coda by Python but only as a boolean flag by the browser. Browser parsing now retains the same contextual coda record. Fixtures cover `ကာ်`, `ကော်`, and the decomposed input `ကာ့်`, which NFC-normalizes to `ကာ့်` (U+1037 dot below before U+103A ASAT).
+- Corrected the source-registry classification of U+AA60 as Myanmar Extended-A, not Extended-B. The Extended-B block is U+A9E0..U+A9FF; Extended-A is U+AA60..U+AA7F.
+
+### Verification
+
+- Code/test head: `3fc08b3384c8aa25212d61f8738a771d27aa41d5`.
+- Push CI [43644035177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644035177) SUCCESS and PR CI [43644039707](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644039707) SUCCESS on the same code/test head.
+- Results: **282 Python tests + 68 subtests**, **21 Node tests**, **64 Playwright Chromium tests**; npm audit reports **0 vulnerabilities**; production build, generated-data freshness and independent IPA-gold structural validator pass.
+- The shared projection is verified for the explicit 31-case contract. It does not establish complete parser-object parity for every possible Myanmar sequence or all language extensions.
+
+### Task ledger and evidence limits
+
+- Shared Python/browser structural projection v1 for 31 explicit cases — **DONE_VERIFIED**.
+- Contextual ASAT coda parity, including Unicode canonical reordering — **DONE_VERIFIED** for the covered forms.
+- Unicode 17 Table 16-4 parser coverage — **PARTIAL**: common Modern Burmese ordering is mapped and adversarially tested; full sequence permutation coverage and other Myanmar-script languages/extensions remain outside the implemented Burmese inventory.
+- Complete Python/browser structural and phonological parity — **PARTIAL**: the projection is a shared selected-field contract, not a proof that all parser internals or G2P rules are identical.
+- Independent IPA annotation/adjudication — **DEFERRED** per project-owner direction on 2026-11-14. Continue with existing published evidence and source registries only. This does not convert proposed rules into gold labels and does not permit an accuracy claim; independent adjudicated IPA gold remains 0 and empirical accuracy remains null.
+- No new phonological realization, IPA mapping or Ukrainian mapping was introduced by this continuation.
+- Repository readiness remains **PARTIAL PROTOTYPE**, not release-ready.
+
+
+## Continuation — terminal optional G2P diagnostic results — 2026-11-14
+
+- Optional workflow [43644381879](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644381879) completed successfully on exact head `c8c7583d8aa335d17c616ca40c3318f5ef7d15d2`. All three jobs passed: pinned CRF baseline, pinned Google Burmese Thrax/OpenFst build + IPA symbol-table invariant + raw-output smoke, and Epitran raw-output.
+- Google Thrax/OpenFst diagnostic: 6/6 structural probes returned outputs; 0 runtime errors; independent gold count 0; accuracy `null`. Report SHA-256: `4cc5260e9def68f4c2a90b84ae0c8ab72fd212129348b37d5b060034a1b91ad9`.
+- CRF diagnostic: 100/100 predictions returned; 84/100 source-concordant rows; gold count 0; scoring status `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; accuracy `null`. This is not a measured accuracy or held-out evaluation.
+- Epitran 1.35.3 raw-output job completed and uploaded its report; no gold-scored evaluation was performed.
+- Uploaded evidence artifacts (available until 2027-02-12 for Google/CRF and 2027-02-12 for Epitran): Google artifact SHA-256 `6315f8ab0b63be26a83f2cd30a2327e65c166e32ebda90c9bc69c5f3afa39399`; CRF `d91d42802ef5ca99c9ab192495a40782a05f8e3eb59801d623c485e111f36817`; Epitran `0574361cfe7b2bc817204debe0608b84f64ddbf68ecfc53299527c1e1fb69696`.
+- **Task ledger:** optional pinned Google FST raw-output build/smoke — DONE_VERIFIED; optional CRF/Epitran diagnostic execution and artifact upload — DONE_VERIFIED; comparative phonetic accuracy, model selection and runtime adoption — PARTIAL/BLOCKED by zero independent IPA gold and possible CRF training overlap. No model was promoted into production and no phonetic accuracy is claimed.
+- This terminal result supersedes the earlier note that run `43644381879` was still in progress. The required CI on the same head remains successful. Repository readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+## Continuation — source-scoped onset/medial evidence matrix — 2026-11-15
+
+- Added data/burmese/onset_cluster_evidence.csv (13 source-linked rows), schemas/onset_cluster_evidence.schema.json, and tests/test_onset_cluster_evidence.py.
+- The matrix separates: obligatory onset and placeless coda claims; Green's C(G) major-syllable template; the minor-syllable-only complex-onset prohibition; foot-initial cluster analysis and reduction; attested /mj/ examples; Ishida's context-conditioned YA/RA/WA/HA descriptions; Hlaing's orthographic medial combinations; and STEDT's separate Written Burmese and historical Rangoon inventories.
+- Crucial negative finding: Green's prohibition on complex onsets in minor syllables is not a global ban. The sequences ကျ and ကြ are not labelled prohibited; Ishida records palatalized velar-conditioned outcomes. The sources inspected do not provide an exhaustive modern Yangon onset × medial × rime legality table.
+- All 13 rows have runtime_status=WITHHELD; this is an evidence inventory, not a new phonological runtime, IPA gold set or Ukrainian mapping.
+- Task ledger: source-backed consonant/medial evidence matrix and source integrity test — DONE_VERIFIED after exact-head CI; exhaustive segmental cluster legality and lexical distribution — PARTIAL; profile-matched phonological runtime rules — PARTIAL/BLOCKED by insufficient source coverage and absent adjudicated IPA.
+- No audio was recorded, no third-party corpus was copied, and no licensing scope was expanded. Main remains unchanged; PR #147 remains the continuation vehicle.
+
+
+## Continuation — cross-source phonology terminology matrix — 2026-11-15
+
+- Added §10 to the vowel × medial × checked-syllable × prosody evidence matrix and marked the corresponding workpack task DONE_VERIFIED at the document/evidence level.
+- The matrix separates tone inventory, checked/killed labels, segmental /ʔ/, creaky phonation, phonemic vowel length, measured duration, consonantal spread-glottis, nasal /N/, glides/medials and source transcription conventions across Green, Watkins, Mooney & Repetti-Ludlow, Duan & Zhu and Repetti-Ludlow.
+- Reconciled stale Duan & Zhu coverage: the full text is now inspected (not merely the abstract); five speakers from Yangon, Taunggyi and the Mandalay region, 89 items and 694 valid tokens are reported; T1/T3 speaker variation is recorded. No audio was accessed. This remains a competing analysis, not project consensus.
+- No tone or phonation rule, IPA mapping or Ukrainian output was enabled. Independent adjudicated IPA gold remains 0.
+
+## Exact-head verification — source-scoped phonology evidence continuation — 2026-11-15
+
+- Code/data/test verification head: 424e27120d51c7d256b1d43b30b6897ea3761f42. After its successful CI, only documentation files were updated; final documentation closeout head: 9215f5bb8c1c110db9d6b0ea3a1216df53fbd5a9. Main remains unchanged; branch is 1042 commits ahead and 0 behind.
+- Added 13 source-linked onset/medial/coda evidence rows, dedicated JSON Schema and integrity tests. The source-backed matrix is explicitly not an exhaustive modern Yangon prohibited-cluster list. Green's minor-syllable complex-onset restriction is scoped to minor syllables; C(G) remains allowed in his major-syllable analysis. Ishida's velar-conditioned palatalization means ကျ/ကြ are not globally marked prohibited.
+- Added cross-source terminology reconciliation covering tone, checked/killed, creaky phonation, phonemic length vs duration, consonantal spread-glottis, /N/, medial/glide distinctions and transcription conventions. Corrected stale Duan & Zhu scope wording: full text inspected, five mixed-region speakers, 89 words/694 valid tokens; no audio accessed.
+- Exact code/data/test-head required CI [43647671663](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671663) SUCCESS: 286 Python tests + 68 subtests, 21 Node tests, 64 Playwright Chromium tests; 0 npm vulnerabilities; production build, generated-data freshness, IPA-gold structure validation and Chromium tests pass.
+- Optional diagnostics [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671628): CRF and Epitran jobs passed; Google FST job was still running at note time. These remain raw-output diagnostics, not accuracy measurements.
+- **Task ledger:** source-backed onset/medial evidence matrix + schema/tests — DONE_VERIFIED; cross-source terminology matrix — DONE_VERIFIED; exhaustive modern Yangon cluster legality and lexical distribution — PARTIAL; profile-matched phonological runtime rules and IPA → Ukrainian mapping — PARTIAL/BLOCKED by incomplete evidence and zero independent IPA gold.
+- No phonological runtime mapping, Ukrainian mapping, corpus import or license change was made. Repository remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+## Terminal optional G2P diagnostic closeout — 2026-11-15
+
+Optional workflow [43647671628](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671628) completed SUCCESS on code/data/test head 424e27120d51c7d256b1d43b30b6897ea3761f42. All three jobs passed: Epitran raw-output, CRF baseline, pinned Google Thrax/OpenFst build + symbol-table invariants + raw-output.
+- Google FST: 6/6 outputs, 0 runtime errors, independent gold 0, accuracy null; report SHA-256 7fec8ba8845c5fe8758155708eb8d32cfa1fa684b46eeaabc7fc8455abae0606.
+- CRF: 100/100 predictions, 84/100 source-concordant, gold 0, accuracy null, NOT_SCORED_POSSIBLE_TRAINING_OVERLAP.
+- Artifacts: Google ID 14134846400, digest ac5cd0b7b00a746d67116fc32831369e555e316d554bedfc34bf6b18378b0949 (expires 2027-02-12); Epitran ID 14134308008, digest 13ae2b78ac2a9b961e1e10231a58f787fb5b11142640997b7a1bf6ff327dc797 (expires 2027-02-12); CRF ID 14135275454, digest dcd9667213ea2c611795a8b3851c7809ea26b853755e6b36291d373e9466ccc0 (expires 2026-12-14).
+- These are raw-output diagnostics only. They do not supply independent IPA gold, accuracy estimates or grounds to promote a backend. This terminal result supersedes the prior in-progress note.
+
+
+## Continuation — source-scoped rime/prosody evidence matrix — 2026-11-15
+
+- Added `data/burmese/rime_prosody_evidence.csv` with 11 source-scoped rows, `schemas/rime_prosody_evidence.schema.json`, `tests/test_rime_prosody_evidence.py`, and seven new claims in `data/burmese/source_claims.csv`.
+- Green 2005 evidence is scoped to its 50-major-rhyme/four-tone analysis: diphthongs are closed-only; /e,o/ are open-only in the cited table; nasal rhymes exclude checked tone; /N/ is represented separately from surface nasalization; vowel length is non-contrastive in the author's moraic analysis.
+- Mooney & Repetti-Ludlow 2021 is recorded as one female native Yangon consultant and restricted experimental targets. The matrix separates open/closed vowel alternations, the authors' tone-independent sonority analysis, isolation vs sentential acoustic cue differences, and nasalized vs oral token observations.
+- All rows remain `WITHHELD`; no phonological runtime rule, IPA value, Ukrainian mapping or gold label was added. The extracted article text is used for claims/locators; project audio was not accessed.
+- Exact-head CI is pending. Keep `BURMESE-RIME-PROSODY-MATRIX-001` PARTIAL until the new test suite and full required workflow pass. The complete lexical Yangon rime grid and independent adjudicated IPA gold remain open blockers.
+
+
+### Source transcription correction
+
+A visual check of Green 2005's printed Table (9) and §2.2 pages resolved an OCR ambiguity. The open-only mid-vowel set is /e, o, ɔ/; /ɛ/ is permitted in open syllables and before /ʔ/, but not before /N/. The rime/prosody matrix now has 12 rows and a dedicated claim/test for this distinction. This is a source-faithful correction only; no runtime rule was enabled.
+
+
+### Verification checkpoint — rime/prosody evidence batch (2026-11-15)
+
+- Final code/data/test head for this batch: `f0c240abde1a1aedefcfcb3f9694311318f91c04`. The new matrix has 12 rows, 16 consistent CSV fields, unique evidence IDs, valid source/claim references, schema-required fields aligned to the CSV header, and all 12 rows explicitly `WITHHELD`.
+- Required CI run `43689485005` on the earlier test head failed with **2 assertion-text mismatches only** in the new test file; 289 tests passed and 68 subtests passed. The test expectations and source wording were corrected, and Green's /ɔ/ vs /ɛ/ distribution was aligned with the printed page image.
+- Latest required exact-head workflow `43689588512` on `f0c240a` is **QUEUED**, not yet passed. Optional diagnostics `43689588524` are also queued. Do not mark the matrix DONE_VERIFIED until exact-head CI succeeds.
+- A local clone/test run was not possible in this session because the container could not resolve github.com. No local test result is claimed.
+- Runtime, IPA and Ukrainian mappings remain unchanged. The full modern Yangon lexical rime grid and independent adjudicated IPA gold remain open.
+
+
+### Final exact-head CI closeout — rime/prosody evidence — 2026-11-15
+
+- Required workflow [43689588512](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588512) **SUCCESS** on code/data/test head `f0c240abde1a1aedefcfcb3f9694311318f91c04`.
+- Python: **291 passed + 68 subtests**; Node: **21 passed**; Playwright Chromium: **64 passed**.
+- npm audit: **0 vulnerabilities**; production build and generated-data freshness passed; IPA-gold structure validator executed successfully but still has zero adjudicated gold.
+- The 12-row source-linked rime/prosody evidence artifact is now `DONE_VERIFIED`. The full modern Yangon lexical rime grid, independent adjudicated IPA gold and runtime phonological coverage remain `PARTIAL/BLOCKED`; no IPA or Ukrainian mapping was promoted.
+
+
+## Optional diagnostic artifact inspection — 2026-11-15 (run 43689588524)
+
+The optional workflow [43689588524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43689588524) has now completed successfully on code/data/test head `f0c240abde1a1aedefcfcb3f9694311318f91c04` (PR merge ref `3c4c5c20bd9d8837d5af53832d69ae4bc9a92c52`). All three jobs completed: CRF baseline, Epitran raw output, and Google Thrax/OpenFst build + symbol-table invariants + raw-output smoke.
+
+- Google Thrax/OpenFst: **6/6** structural probes returned non-empty output; 0 runtime errors; independent gold 0; accuracy `null`; `RAW_OUTPUT_SMOKE_NOT_ACCURACY`. Report SHA-256 `eb9e803bf203e363bcf2eb173e21024798b55678f62bbdd3205bd539f85db0f6`; artifact ID `14152141084`, GitHub artifact digest `sha256:eb9e803bf203e363bcf2eb173e21024798b55678f62bbdd3205bd539f85db0f6`, expires 2027-02-13.
+- CRF: **100/100** predictions; **84/100** source-concordant; gold 0; accuracy `null`; status `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. Model training membership is not established, probe syllabification is supplied rather than evaluated, and source labels are related to the model's myG2P source. Artifact ID `14151244554`, digest `sha256:39e9d49a4f100af0cb1b0e65032ebb76cc1d53c5ef30bba4787968ceec912b91`, expires 2026-12-15.
+- Epitran **1.35.3**: all six structural probes emitted raw output; expected IPA remains empty and all comparisons are unscored. Report records zero eligible verified gold and null exact-match accuracy. Artifact ID `14151438782`, digest `sha256:2ab261cf68a6078f0428575c6d0c8ec2264e640486cb7e98c11a3b585afc68e1`, expires 2027-02-13.
+
+The three ZIP artifacts were downloaded and their JSON payloads inspected. This confirms reproducible build/execution and exposes candidate disagreement, not correctness. Do not calculate an accuracy from source concordance, promote any output to IPA gold, enable an external engine in runtime, or use these results to derive Ukrainian mappings. The optional workflow is now fully closed; the required exact-head CI remains the separate acceptance evidence for the implementation batch.
+
+
+## Accessibility continuation — keyboard navigation and reduced motion — 2026-11-15
+
+Implemented a small, targeted accessibility improvement in the two public HTML entry pages:
+- `index.html` and `system.html` now expose a first-in-tab-order skip link, “Перейти до основного вмісту”, targeting the main landmark. The main landmark has `id="main-content"` and `tabindex="-1"` so fragment navigation can move keyboard focus to it.
+- `src/web/styles.css` reveals the skip link only on keyboard focus, gives it a visible high-contrast focus outline, and retains the existing `prefers-reduced-motion: reduce` override that disables smooth scrolling.
+- `tests/browser/converter.spec.js` adds three Playwright cases: keyboard skip navigation on the converter page, reduced-motion computed scroll behavior, and skip navigation on the methodology page.
+
+Current branch head after these changes: `481c26d6951d4795e16e239f9332c3e42f7d3f44` (1085 ahead / 0 behind main). File-level verification through GitHub confirms both pages contain the skip link and focusable main target, the shared stylesheet contains the focus-only skip-link rule and reduced-motion media query, and the browser suite contains all three regression cases. The required workflow run is not yet exposed for this exact head (commit workflow lookup returned no runs; combined commit status has not been verified as successful). Do not mark this acceptance gate DONE_VERIFIED until hosted CI passes.
+
+**Status:** implementation present; automated regression coverage authored; acceptance **PARTIAL / CI PENDING**. Manual screen-reader, mobile viewport, zoom/reflow and deployed visual QA remain TODO; no claim of WCAG conformance is made. The change does not alter conversion behavior or phonological mappings.
+
+
+## Accessibility verification closeout — 2026-11-15
+
+Required workflow [43690500850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43690500850) completed **SUCCESS** for PR #147 head `a415dc1a89c7d9cf06a78896e3dcab3bb3824004` (GitHub tested merge ref `c559d4d0bbb88c44f7cd64bf199014b26b23d556`). Exact logged outcomes:
+- Python: **291 passed + 68 subtests**.
+- Node: **21 passed, 0 failed**.
+- Playwright Chromium: **67 passed**, including the three new accessibility regressions.
+- IPA-gold validator executed successfully but reports 0 records, 0 annotations and 0 adjudicated records (`NOT_READY_NO_ADJUDICATED_GOLD`).
+- npm audit: **0 vulnerabilities**; production build passed; generated web data freshness passed.
+
+The keyboard skip navigation and reduced-motion browser regressions are now **DONE_VERIFIED** by exact PR-head CI. This is not a full accessibility certification. A static WCAG contrast calculation on selected existing foreground/background pairs found: body 15.43:1, muted body 5.16:1, status text 5.73:1, input hint 4.56:1, warning copy 6.63:1, warning link 8.48:1, primary-button text 6.19:1, focus blue against the main surface 6.81:1. The smallest sampled ratio is 4.56:1; this limited source-color sample is not an automated full-page contrast audit and does not cover every state, overlay, disabled control or rendered pixel.
+
+Manual screen-reader, mobile reflow, 200–400% zoom, deployed visual QA and full-page contrast/state coverage remain **TODO**. No WCAG conformance claim is made. This verification supersedes the prior CI-pending note; the exact tested PR head is `a415dc1`, while the branch may advance with documentation-only closeout commits.
+
+
+## TUFS pronunciation-module rime crosswalk — 2026-11-15
+
+- Added three source-linked, explicitly typed documentary crosswalk rows to `data/burmese/rime_prosody_evidence.csv`: open-vowel, nasal-closed and checked-closed rimes. They record the university module's IPA/TLM/NEB/MED 2019/Ohno/Chinese-dictionary correspondences in Section 1.3, table 2 (open rows 151–172; nasal rows 173–193; checked rows 194–201).
+- The source explicitly warns that pronunciation notation varies with researchers' phonological interpretations. The new rows therefore classify this as `documentary_crosswalk`, not experimental or primary lexical evidence. MED forms such as -a/-a:/-a., -an/-an:/an: and -a' remain distinct from the module's IPA forms and are not assumed to be MLCTS.
+- The three rows preserve the module's distinction between nasalized vowels plus /ɴ/ and checked /ʔ/; its treatment of checked syllables separately from three open/nasal tones is one analytical convention, not project-wide consensus.
+- Added the `documentary_crosswalk` schema enum and a regression test that checks all three categories and their withholding. All 15 rime/prosody rows remain `WITHHELD`; no runtime mapping or generated pronunciation changed.
+- Source: Tokyo University of Foreign Studies, Burmese Pronunciation Module, Section 1.3, https://www.coelang.tufs.ac.jp/mt/my/pmod2/1-3/1.html (accessed 2026-11-15). The page is copyrighted; no source text dataset was copied.
+- Verification at this point: source table visually/textually inspected in the published university module; repository test execution awaits exact-head hosted CI. No local test execution is claimed.
+
+
+## TUFS rime crosswalk verification closeout — 2026-11-15
+
+- The three TUFS crosswalk records are now structurally valid CSV (15 data rows, 16 fields per row), linked to the existing TUFS source and claim, and schema-valid under the new `documentary_crosswalk` evidence type. A direct RFC-4180 field-count check through the fetched branch file confirmed all rows have exactly 16 fields; the regression suite additionally validates every row against the JSON Schema.
+- **Exact-head CI:** PR workflow [43691172177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43691172177) SUCCESS on `673319e267edeca7bf1a4d082fdf17835cfe8ffc`. Results: **292 Python tests + 68 subtests passed**, **21 Node tests passed**, **67 Playwright Chromium tests passed**, npm audit **0 vulnerabilities**, production build passed, generated web-data freshness passed, and independent IPA-gold structure validation completed. The test log reports 0 adjudicated IPA gold remains unchanged; no accuracy is established.
+- Two intermediate CI attempts exposed malformed CSV quoting and overly literal assertions. Both were corrected; the successful exact-head run above includes the final CSV and test changes. Earlier failed attempts are not counted as verification.
+- **BURMESE-RIME-PROSODY-MATRIX-001 — DONE_VERIFIED (source-evidence artifact and exact-head CI):** 15 linked rows, schema, regression tests. **BURMESE-YANGON-RIME-GRID-001 remains PARTIAL**; this is still not a full item-level lexical rime × coda × tone × phonation grid.
+- All 15 rows remain `WITHHELD`. No runtime rules, IPA gold, Ukrainian mappings, or generated pronunciation artifacts changed. Independent adjudicated IPA gold remains 0; empirical accuracy remains null.
+- Branch head at this closeout: `673319e267edeca7bf1a4d082fdf17835cfe8ffc`; PR #147 remains open and draft. Main remains unchanged.
+
+
+## Lexical evidence expansion — MLCTS am. rime — 2026-11-15
+
+A targeted Wiktionary follow-up verified three additional Burmese word entries for the already represented first source-unit side မ့်: ဆိမ့် /sʰḛɪɴ/, နိမ့် /nḛɪɴ/, and လိမ့် /lḛɪɴ/. Alongside the previously recorded စိမ့် /sḛɪɴ/, this gives four secondary word-level entries for မ့်; the opposite source-unit side ံ့ remains represented by ကြံ့ /t͡ɕa̰ɴ/. The lexical audit row and existing claim `CLM-WIKTIONARY-AM-DOT-LEXICAL-DISTINCTION-001` were expanded in place. Added a regression test for all five exact word/IPA/MLCTS observations and the non-promotion boundary. This remains secondary source-level distinction evidence, not a controlled minimal pair or primary MLC adjudication; the broader rime grid and runtime status are unchanged. Exact page locators: Wiktionary entries for [ဆိမ့်](https://en.wiktionary.org/wiki/ဆိမ့်), [နိမ့်](https://en.wiktionary.org/wiki/နိမ့်), [လိမ့်](https://en.wiktionary.org/wiki/လိမ့်), alongside previously recorded [စိမ့်](https://en.wiktionary.org/wiki/စိမ့်) and [ကြံ့](https://en.wiktionary.org/wiki/ကြံ့). Retrieved 2026-11-15.
+
+
+## am. lexical evidence verification closeout — 2026-11-15
+
+- Expanded the existing `am.` lexical audit and claim with three individually inspected Wiktionary entries: ဆိမ့် /sʰḛɪɴ/, နိမ့် /nḛɪɴ/, and လိမ့် /lḛɪɴ/. Together with စိမ့် /sḛɪɴ/, the source-unit side မ့် now has four word-level attestations; the opposite unit ံ့ remains represented by ကြံ့ /t͡ɕa̰ɴ/.
+- Exact page checks: [ဆိမ့်](https://en.wiktionary.org/wiki/ဆိမ့်), [နိမ့်](https://en.wiktionary.org/wiki/နိမ့်), [လိမ့်](https://en.wiktionary.org/wiki/လိမ့်); existing entries [စိမ့်](https://en.wiktionary.org/wiki/စိမ့်) and [ကြံ့](https://en.wiktionary.org/wiki/ကြံ့). These are secondary lexical transcriptions; they do not constitute a controlled minimal pair or primary MLC adjudication.
+- Added a regression test for all five exact Burmese forms, MLCTS values and IPA values, including the no-runtime-promotion boundary.
+- Exact final-head PR CI [43692035411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692035411) SUCCESS on `ed16e0b9efba6780e21608ee04a09b1b9915770e`: **293 Python tests + 68 subtests passed**, **21 Node tests passed**, **67 Playwright Chromium tests passed**, npm audit **0 vulnerabilities**, production build and generated-data freshness passed.
+- The lexical audit remains secondary evidence; all runtime conversion rules and Ukrainian mappings remain unchanged. No adjudicated IPA gold was added and no accuracy claim follows.
+
+
+## Final am. evidence CI and diff hygiene — 2026-11-15
+
+- Rebuilt the two touched CSV files from their pre-change contents and replaced only the targeted `am.` evidence/claim records, preserving all unrelated rows byte-for-byte. The final compare against pre-change head `4196147de0a5735dea8c5e494346e192dd90d26b` shows exactly one changed line in `source_claims.csv` and one changed line in `romanization_rime_collision_lexical_audit.csv`, plus the new regression test and three documentation updates. No runtime or generated files are changed.
+- Exact-head workflow [43692279971](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43692279971) SUCCESS on `74dc298086292bd6cbaeb965eb1a6ad9e1926a74`: **293 Python + 68 subtests**, **21 Node**, **67 Playwright Chromium**, npm audit **0 vulnerabilities**, build and generated-data freshness pass.
+- The subsequent documentation-only commits record this verified code/data head; they do not change executable files or evidence content. Current branch head at documentation update: `74dc298086292bd6cbaeb965eb1a6ad9e1926a74` before these doc-only commits.
+
+
+## Lexical evidence expansion — MLCTS any: rime — 2026-11-15
+
+Wiktionary follow-up added three word-level entries on the `ဉ်း` side: စဉ်း /sɪ́ɴ/ (cany:), ကျဉ်း /t͡ɕɪ́ɴ/ (kyany:), and ဖျဉ်း /pʰjɪ́ɴ/ (hpyany:). Together with existing အကျဉ်း /ʔət͡ɕɪ́ɴ/, this yields four secondary lexical examples for `ဉ်း`; the `ည်း` side remains represented by နည်း /nɛ́/ or /ní/ depending on sense. Updated the existing source claim and lexical audit row in place and added regression coverage for all four first-side examples, the second-side example, and the explicit non-promotion boundary. The records remain secondary lexicographic evidence, not a controlled minimal pair or primary MLC adjudication. No runtime, IPA gold, Ukrainian mapping, or generated pronunciation data changed. Pages inspected 2026-11-15: [စဉ်း](https://en.wiktionary.org/wiki/စဉ်း), [ကျဉ်း](https://en.wiktionary.org/wiki/ကျဉ်း), [ဖျဉ်း](https://en.wiktionary.org/wiki/ဖျဉ်း), [အကျဉ်း](https://en.wiktionary.org/wiki/အကျဉ်း), [နည်း](https://en.wiktionary.org/wiki/နည်း).
+
+
+## Historical spelling lead for MLCTS am: — 2026-11-15
+
+A targeted search found a historical orthographic occurrence of `ကံး` in R. F. St. Andrew St. John, *A Burmese Reader* (1894). The vocabulary note gives English glosses including “day” and “sun”. The preface says the author generally followed Judson spelling and explicitly notes variation among Burmese books. This is therefore recorded as a historical spelling lead only: it supplies no IPA, modern MLCTS form, modern MLC dictionary adjudication, or evidence of present-day Yangon pronunciation. The source registry, source-claim ledger, `am:` audit interpretation and regression test now preserve this distinction. The `am:` row remains `SECONDARY_ONE_SIDE_ONLY`; no runtime or Ukrainian mapping promotion is permitted. Source: https://www.highlightcomputer.com/A%20Burmese%20reader.pdf (1894; inspected 2026-11-15).
+
+
+## Additional secondary component attestation for MLCTS im — 2026-11-15
+
+A Wiktionary entry for the Pali-derived Burmese proper noun `တာဝတိံသာ` provides contributor-supplied IPA `/tàwa̰tèɪɴθà/` and MLCTS `tawa.timsa`; its Burmese spelling contains component `တိံ`, corresponding to the `ိံ` source unit in the `im` collision. The entry cites the Myanmar-English Dictionary (Myanmar Language Commission 1993), but the IPA displayed is Wiktionary's field, not an MLC transcription. This adds secondary lexical corroboration to the existing myG2P component-level records; it does not create a native minimal pair or primary MLC adjudication. The `im` status remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime or Ukrainian mapping promotion. Inspected 2026-11-15: https://en.wiktionary.org/wiki/တာဝတိံသာ.
+
+
+## Myanmar Net lexical corroboration for MLCTS um: — 2026-11-15
+
+Myanmar Net's dictionary index lists the obsolete borrowed proper noun `ဟုမ်းမရူး` (“Home Rule”) and gives the non-IPA respelling `/houn: ma ru:/`. The initial component `ဟုမ်း` contains the `ုမ်း` source unit already found in the myG2P syllable segmentation. This is a separate dictionary-level lexical lead for an English loan compound, not an IPA attestation: the site does not identify its underlying dictionary edition in the search result and the respelling is not IPA. Added source record `SHWE_NET_HOME_RULE_ENTRY`, claim `CLM-SHWE-UM-COLON-LOAN-COMPOUND-001`, audit provenance and regression coverage. The `um:` status remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime or Ukrainian mapping promotion. Source: https://shwe.net/ref/home/dictionary/%E1%80%9F/page/11/ (retrieved 2026-11-15).
+
+
+## 2026-11-15 — aung. evidence-boundary consistency correction
+
+A final cross-check of the existing lexical audit found stale acceptance-boundary wording: the row correctly described myG2P compound-internal attestations for both source units, but later appended text still said the second source unit ေါင့် was “unobserved”. Corrected the boundary in place. The evidence distinction is now explicit: ောင့် has standalone Wiktionary စောင့် /sa̰ʊɴ/; ေါင့် is attested only as segmented components ဒေါင့် /da̰ʊɴ/ in four compounds and ခေါင့် /kʰa̰ʊɴ/ in ဖြစ်ခေါင့်ဖြစ်ခဲ in the pinned myG2P dictionary. Neither component attestation establishes a standalone lexical lemma. The separate TUFS /sâuɴ/ vs Wiktionary /sa̰ʊɴ/ analysis discrepancy for စောင့် remains unresolved. Added regression assertions against stale “unobserved” wording and for the component-only limitation. No evidence status, source claim, runtime, IPA gold, Ukrainian mapping or generated output was promoted or changed.
+
+
+## 2026-11-15 — aung. acceptance wording / regression alignment
+
+The first exact-head CI after the boundary correction exposed two test assertions that required the literal phrases “not primary” and “no runtime”. The revised boundary already contained the substantive restrictions but did not preserve those repository-wide contract phrases. Updated the wording and aligned the assertion. The failed run recorded 295 passed, 68 subtests passed and 2 failed; it is not counted as a passing verification. A new exact-head run is required before this correction is considered verified.
+
+
+## 2026-11-15 — time-scope historical TUFS-only gap statement
+
+A further consistency review found that the original TUFS source claim described a one-day source-only pass but ended with a present-tense statement that all eight then-unattested source units “remain unchanged”. Later source passes had since added secondary component-level evidence for ေါင့်, ိံ and ုမ်း. Reworded the claim to make the 2026-11-14 TUFS-only scope explicit and to defer current statuses to the full evidence ledger. Added a regression test preventing this historical source-pass note from being mistaken for a current status snapshot. This does not change any collision status or pronunciation claim.
+
+
+## 2026-11-15 — final evidence-boundary consistency verification
+
+- Corrected the stale aung. lexical-audit acceptance boundary: the second source unit ေါင့် is attested only as component-level myG2P syllables inside compounds, not as a standalone headword; the separate TUFS/Wiktionary analysis discrepancy for စောင့် remains unresolved.
+- Time-scoped the TUFS-only claim CLM-TUFS-LEXICAL-RIME-EXAMPLES-001 to its 2026-11-14 source pass. Its earlier statement that all eight one-sided statuses “remain unchanged” was stale after later evidence additions for ေါင့်, ိံ and ုမ်း.
+- Added regression tests for both consistency conditions. The intermediate exact-head run on 7590630 failed two assertions because the new boundary did not preserve the repository's literal wording contract; the wording/test alignment was corrected in b0c0bd1 and the full workflow passed.
+- Verified evidence head: 5e10d0c7ed9f737c1ad801d6ee9dc108070bb074. Required workflow [43695743799](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43695743799) SUCCESS (duplicate exact-head workflow [43695747900](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43695747900) also SUCCESS): 298 Python tests + 68 subtests passed, 21 Node tests passed, 67 Playwright Chromium tests passed, npm audit 0 vulnerabilities, production build passed, generated web-data freshness passed, and IPA-gold structure validation completed. Gold remains 0; empirical accuracy remains null.
+- Optional diagnostic workflow [43695747910](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43695747910) at last inspection: CRF baseline and Epitran raw-output jobs SUCCESS; Google Thrax/OpenFst build still in progress. Its live job-log endpoint returned BlobNotFound while running, so no completion is claimed here.
+- No source evidence status, pronunciation rule, runtime behavior, IPA gold, Ukrainian mapping or generated pronunciation output changed. PR #147 remains open/draft; PR #129 remains untouched; main was not modified.
+
+
+## Exact-head verification and optional diagnostics closeout — 2026-11-15
+
+- Current research branch head: `1bc34e6d51c9f3589b66f50636fe9e29301ede7f`; PR #147 remains open and Draft. The branch is 1,138 commits ahead of `main`, 0 behind; `main` remains unchanged. Open PR #129 remains untouched on its separate benchmark branch.
+- Required push CI [43696075472](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696075472) and PR CI [43696078055](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696078055) both SUCCESS on this exact head. Push-job log: 298 Python tests + 68 subtests passed; 21 Node tests passed; 67 Playwright Chromium tests passed; npm audit reported 0 vulnerabilities; production build, generated-data freshness and IPA-gold structural validation completed. IPA gold count remains 0; empirical accuracy remains null.
+- Optional diagnostics [43696078060](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696078060) also SUCCESS on the same head. Google Thrax/OpenFst: 6/6 raw outputs, 0 runtime errors, independent gold 0, accuracy null; artifact ID 14154970133, report SHA-256 `1b7bea9394badbb6944ddccd8f52ad669bb02f19c90c4f38aa406780336aece8`, uploaded archive digest `c2a0e7c6fe481c4c0edd3168f0eb7dd62b1b9a7a86b8412720a3b03b6888e4a1`. CRF: 100/100 predictions, 84 source-concordant, gold 0, accuracy null, explicitly NOT SCORED due possible training overlap; artifact ID 14154556115, archive digest `af7d2ab1ec8530411124c1374ceaebdba680ca3886f3345bfa4b0fa2c77168b0`. Epitran raw output completed; artifact ID 14154307632, report SHA-256 `d94bb99b714318479f5bc5f45cab255425c11216fce57f9f38cc07587ffc9c3b`, archive digest `5718ad092f9116dccc25d90f509f4a29f66d96e3be3d9d3e7a7563aeb9adca55`.
+- This supersedes the earlier 2026-11-15 note that the Google FST job was still running. All three optional diagnostic jobs are now terminal SUCCESS. This is raw-output/build execution evidence only, not phonetic accuracy or production readiness; no candidate engine is promoted.
+- No runtime, generated pronunciation data, IPA gold, or Ukrainian mapping changed in this verification closeout. Overall readiness remains PARTIAL PROTOTYPE.
+
+
+
+## 2026-11-15 — documentation-head CI and diagnostic rerun closeout
+
+- Verified current branch tip before this handoff update: `9fdac2c94872eeb5702e801e1c46ea5e932ff6ae`. The branch is 1,139 commits ahead of `main`, 0 behind; PR #147 remains OPEN / DRAFT / mergeable. PR #129 remains untouched. Main is unchanged.
+- Required push workflow [43696922642](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696922642) completed SUCCESS on that exact branch tip. Job [132759429822](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696922642) confirms: 298 Python tests + 68 subtests passed; 21 Node tests passed; 67 Playwright Chromium tests passed; npm audit found 0 vulnerabilities; production Vite build, generated web-data freshness, and IPA-gold structural validation all completed. The validator's gold count remains zero; empirical accuracy remains null.
+- Optional diagnostic workflow [43696922641](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43696922641) completed SUCCESS on the same branch tip. Google Thrax/OpenFst produced 6/6 raw outputs with 0 runtime errors, independent gold count 0 and accuracy null; report SHA-256 `51a05c235d341d62742a0e73d6db616b616057e3dd4f3d3d32a4346534dba917`, artifact ID 14154897335, archive digest `961b5989e9c037861f7bebd07fa86c6bec2547b69eeff7d6a43facc9c0cc2058`. CRF returned 100/100 predictions, 84 source-concordant rows, gold count 0, accuracy null, and `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; artifact ID 14154871257, archive digest `a7f21f44ca369e5857ae1eb6473128b1c0d4cf39388b405997151eeb7a6252a6`. Epitran raw output completed; report SHA-256 `feb2f188b2426e946eb62bc9c783f6eb85b2e3a699452399577439b5db7c34ba`, artifact ID 14154353595, archive digest `18bbd88f16025d699bf4896eef81ef197b8881612b8f6f27d0d98bbb1f62e7ca`.
+- These diagnostics verify executable output generation and artifact provenance only. They do not establish phonetic correctness, independent generalization, or production suitability. No external engine, pronunciation rule, IPA annotation, Ukrainian mapping, or generated pronunciation data is promoted.
+- This entry supersedes earlier handoff snapshots that predate commit `9fdac2c` and records the workflow run that tested that documentation-only commit. Overall status remains PARTIAL PROTOTYPE, not release-ready.
+
+
+
+## 2026-11-15 — SEAlang live-access probe and primary-record blocker
+
+- Re-inspected the live SEAlang Burmese dictionary page. It identifies its principal source as the Myanmar-English Dictionary (1993, Myanmar Language Commission; 1996 Dunwoody Press reprint, used with permission), reports approximately 35,000 entries, confirms MLC 1986 standard orthography, and exposes an IPA phonetics search field. The live HTML form posts to `https://sealang.net/burmese/search.pl`; the documented 2008 SEAlang Services paper describes a Web API for dictionary lookup and gives an example request shape, but does not by itself establish that the legacy API remains operational today.
+- Tested the live CGI endpoint with ordinary orthographic targets including `ကမ်း`, `သိမ်း`, and `မြန်မာ`, plus a phonetic query. Each returned the server diagnostic `SNARK: could not read ../../ram//.tei` followed by “Nothing found”; this is an infrastructure/backend failure signal, not evidence that the dictionary lacks those entries. The legacy `api.sealang.net` endpoint could not be reached through the available retrieval proxy (ERR_TUNNEL_CONNECTION_FAILED).
+- **BLOCKED — entry-level MLC evidence:** no live dictionary entry, IPA transcription, definition, or export record was retrieved. Do not mark any rime collision resolved or import data from the page's interface metadata. Acceptance requires a functioning record lookup/export or direct inspection of the 1993/1996 dictionary, with exact headword, displayed transcription, query/date and provenance captured. Copyright remains with MLC/Dunwoody Press; retrieval does not grant redistribution rights.
+- Useful primary-source access references: [live SEAlang Burmese Dictionary](https://sealang.net/burmese/dictionary.htm), [dictionary query help](https://sealang.net/help/q-dict.htm), and the archived [SEAlang Services API description](https://www.sealang.net/archives/sealang-2008.pdf). These establish interface/search capability and provenance, not entry-level lexical claims.
+- No registry rows, source claims, IPA labels, runtime rules, Ukrainian mappings or generated outputs changed as a result of this failed access probe.
+
+
+
+## 2026-11-15 — MLC dictionary print-access route discovered
+
+- SEAlang remains blocked at entry level: the live CGI returns `SNARK: could not read ../../ram//.tei`; the legacy API could not be reached through the available retrieval proxy. Do not interpret this as “entry not found”.
+- New bibliographic evidence makes primary-source access actionable. Dunwoody Press currently lists the 1996 reprint of the 1993 MLC *Myanmar English Dictionary* and describes ~35,000 entries in 1986 standard orthography plus a transcription system used as a pronunciation aid for English speakers. This is catalogue metadata, not a sample entry or proof that the transcription is IPA.
+- The National Diet Library of Japan catalogues the 1996 imprint; Cinii records seven Japanese university holdings for the 1993 edition. Cinii also identifies a revised 2019 second edition (709 pages; Burmese headwords with English definitions) and one holding at the University of Tokyo General Library. The 2019 catalogue does not say whether the pronunciation-transcription system is retained.
+- Added source records `MLC1996_REPRINT_CATALOG` and `MLC2019_REVISED_BIB` and documentary claims `CLM-MLC1996-PRONUNCIATION-AID-001` / `CLM-MLC2019-REVISED-EDITION-001`. Updated external corpus/source triage with the access routes and acceptance boundary.
+- Next acceptance step: inspect the 1996 edition's transcription key and sample entries (or confirm field continuity in 2019), record exact page/headword and edition, and determine whether the notation is phonetic/phonemic/orthographic before using it. No entry, IPA value, runtime rule, Ukrainian mapping or gold label was inferred from catalogue metadata.
+- Sources: [Dunwoody Press](https://www.thedunwoodypress.com/product-page/myanmar-english-dictionary), [National Diet Library](https://ndlsearch.ndl.go.jp/en/books/R100000002-I000003254368), [Cinii 1993 holdings](https://ci.nii.ac.jp/ncid/BA24767941), [Cinii 2019 edition](https://ci.nii.ac.jp/ncid/BD10832446). Overall status remains PARTIAL PROTOTYPE.
+
+
+
+## 2026-11-15 — canonical registry count reconciliation after MLC bibliographic additions
+
+A fresh parse of the current branch's canonical CSVs (not historical snapshots) reports **96 source records / 207 source claims / 25 rime-collision groups**. All source IDs and claim IDs are unique; every claim's `source_id` resolves to a registered source. Current rime-group status distribution: **15 SECONDARY_SYSTEM_EQUIVALENCE / 5 SECONDARY_ONE_SIDE_ONLY / 3 SECONDARY_SOURCE_DISTINCTION / 1 SECONDARY_SOURCE_CONFLICT / 1 SPECIAL_NONRIME_CONTEXT_DEPENDENT**. The two new MLC bibliographic source records and two documentary claims are included in those totals. Historical 80/164 or 80/172 counts in earlier entries are time-scoped snapshots, not current totals. This structural parse is not a substitute for the repository's full Python/schema test suite.
+
+
+## 2026-11-15 — current research-head CI and diagnostics closeout
+
+- Current research branch head: `46dff7de598faf5b3b5c64b6664d71594b7db2e3`. PR #147 is OPEN / DRAFT / mergeable; it targets unchanged `main` at `dc90463bdd734867308f03cb627eb8941efc19d6`. Current compare: 1,154 commits ahead, 0 behind; PR reports 75 changed files. This is a PR branch, not a merge or release. PR #129 remains OPEN / DRAFT / non-mergeable and untouched; its separate hybrid-engine changes were not ported. Main remains unchanged.
+- Required PR workflow [43710301855](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43710301855) completed SUCCESS for PR head `46dff7de598faf5b3b5c64b6664d71594b7db2e3`; GitHub executed the PR merge ref `690ebffee749b50f0d1a538e5ed4a7666eb6ce9d` against base `dc90463bdd734867308f03cb627eb8941efc19d6`. Job log confirms 298 Python tests + 68 subtests passed, 21 Node tests passed, and 67 Playwright Chromium tests passed. `npm audit` found 0 vulnerabilities; production Vite build, generated web-data freshness check, Chromium installation and IPA-gold structural validator all completed successfully. The validator still reports 0 adjudicated gold records; this is not an accuracy result.
+- Optional diagnostic workflow [43710301845](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43710301845) completed SUCCESS on the same PR head. Google Thrax/OpenFst: 6/6 raw outputs, 0 runtime errors, independent gold 0, accuracy null; report SHA-256 `a2e0f0412f077d48610c2c657de32fd5f7f411d7c6682b9b4dbf8ca8c7168b8d`, artifact 14160556430. CRF: 100/100 predictions, 84 source-concordant rows, gold 0, accuracy null, `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; artifact 14160147661. Epitran raw-output-only job completed and uploaded artifact 14159923488; report SHA-256 `28fcbee05ad29766a7947e31925650ddb04ca40803a63b86c0a81fd617c3e272`. These are diagnostic execution/provenance only, not phonetic accuracy or promotion evidence.
+- Current canonical registry snapshot remains 96 sources / 207 source claims / 25 rime-collision groups. IDs and claim-to-source references passed the separately recorded structural parse; this does not replace schema validation. No source-level IPA, runtime phonological rule, Ukrainian mapping or generated pronunciation output was added in this closeout.
+- Task ledger: DONE_VERIFIED — hosted engineering CI on the PR merge ref; DONE_VERIFIED — optional diagnostic execution only; PARTIAL — Yangon rime/coda/tone/phonation coverage, surface /N/ realization and Python/browser phonological parity; BLOCKED — independent G2P accuracy because adjudicated IPA gold=0 and SEAlang entry-level lookup fails; TODO — manual accessibility QA (screen reader, mobile, zoom/reflow and comprehensive contrast); DEFERRED — independent IPA annotation, which remains outside the currently authorized scope.
+- Overall readiness remains PARTIAL PROTOTYPE, not linguistically release-ready. No local checkout or local test execution was available; all test evidence above is from hosted GitHub Actions. No merge, release, or main-branch write was performed.
+
+
+## 2026-11-15 — exact current-head verification and ledger reconciliation
+
+- Current dedicated branch tip at this checkpoint: `b4c0d549f96bc9c825cce770a94f9dbc0b470a0a`; base `main` remains `dc90463bdd734867308f03cb627eb8941efc19d6`. PR #147 is OPEN / DRAFT / mergeable, 1,157 commits ahead and 0 behind, with 75 changed files. PR #129 remains OPEN / DRAFT and untouched; its separate hybrid-engine code was not ported. No merge, release, or main-branch write was performed.
+- Required tests workflow [43712553644](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43712553644) completed SUCCESS on this exact PR head. Every job step succeeded: independent IPA-gold structural validator, Python dependency install and pytest, npm ci, high-severity npm audit gate, production build, generated-web-data freshness check, Node tests, Chromium installation, and built-browser Playwright tests. The validator's successful execution does **not** mean gold readiness: adjudicated IPA records remain 0.
+- Optional diagnostic workflow [43712553686](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43712553686) completed SUCCESS; all CRF, raw-output, and Google Thrax/OpenFst jobs and their artifact uploads succeeded. These are diagnostic execution/provenance only. With no independent adjudicated IPA gold, no accuracy or model-promotion claim is made.
+- Canonical registry snapshot remains **96 sources / 207 claims / 25 rime-collision groups**. The separately recorded structural parse found unique source/claim IDs and no broken claim-to-source references; this is not a substitute for schema validation or the full test suite.
+- Task ledger: **DONE_VERIFIED** — hosted engineering CI on exact head; **DONE_VERIFIED** — optional raw diagnostic execution only; **PARTIAL** — Yangon rime/coda/tone/phonation coverage, surface realization of abstract /N/, and Python/browser phonological parity; **BLOCKED** — independent G2P evaluation (0 adjudicated IPA gold) and MLC entry-level evidence (SEAlang backend failure; print dictionary pages not inspected); **TODO** — manual accessibility QA (screen reader, mobile, zoom/reflow, comprehensive contrast); **DEFERRED** — independent IPA annotation remains outside the currently authorized scope.
+- No new phonological rule, IPA label, Ukrainian mapping, or generated pronunciation output was justified by this documentation/CI checkpoint. Overall readiness remains **PARTIAL PROTOTYPE — not linguistically release-ready**. Verification is hosted GitHub Actions; no local checkout or local test execution was available.
+
+
+## 2026-11-15 — PR head CI completed and public status text reconciled
+
+- Exact current branch head before this documentation update: `abb3fb03c024ed55cdfddbd9dc9483b89a31f4b4`; PR #147 remains OPEN / DRAFT / mergeable, 1,158 commits ahead of unchanged `main` and 0 behind. PR #129 remains OPEN / DRAFT / non-mergeable and untouched.
+- Required tests workflow [43720145772](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43720145772) completed SUCCESS. Its steps include independent IPA-gold structure validation, Python pytest, npm install/audit, production build, generated-data freshness, Node tests, Chromium install and built-browser Playwright tests. All steps passed; zero adjudicated IPA gold records remain a data limitation, not a CI failure.
+- Optional diagnostics [43720145675](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43720145675) completed SUCCESS for CRF baseline, raw-output and Google Thrax/OpenFst jobs. Successful raw-output execution is not accuracy evaluation or model-promotion evidence.
+- Updated `index.html` and `system.html` to remove the stale statement that current-branch CI was still running. The public status now links to exact workflow runs, states that the PR branch has not been deployed to GitHub Pages, and retains the zero-gold caveat. Historical merged-commit Pages status remains identified as historical.
+- Existing task ledger remains: DONE_VERIFIED — engineering CI and raw diagnostic execution; PARTIAL — modern Yangon rime/coda/tone/phonation, /N/ surface realization and Python/browser parity; BLOCKED — independent G2P accuracy (0 adjudicated IPA gold) and MLC lexical entry evidence; TODO — manual accessibility QA; DEFERRED — independent IPA annotation.
+- No phonological runtime rules, IPA labels, Ukrainian mappings, or lexical claims were changed. Readiness remains PARTIAL PROTOTYPE, not linguistically release-ready. No deployment, merge, or main-branch write was performed.
+
+
+## 2026-11-15 — Repetti-Ludlow 2023 sonorant phonetics evidence
+
+- Re-inspected the full primary article, Chiara Repetti-Ludlow, “Acoustic correlates of Burmese voiced and voiceless sonorants,” Phonetica 80(6), 433–463, DOI 10.1515/phon-2022-0026. The source was already registered; six new source claims and a six-row machine-readable evidence matrix now expose the findings and limits.
+- The article's inventory summary reports six voiced/voiceless sonorant pairs, but its controlled production study tests only four pairs ([w, l, ŋ, m] and their voiceless counterparts), two tones (high/low), one /a/ nucleus, phrase-medial tokens, and nine speakers. It excludes [n, ɲ] and creaky/killed tones. This is not a complete Yangon phonetic inventory.
+- The study reports a separately identifiable spread-glottis period in 78% of voiceless tokens and no separately segmented SG period in 22%; average SG duration when present was 100.74 ms. Crucially, the non-SG tokens still show voicelessness-related F0 and following-vowel SoE differences. Therefore absence of audible/segmented SG must not be equated with phonological voicing.
+- The study's acoustic results show why a single duration rule is unsafe: the voiced portion of a voiceless sonorant is shorter than voiced sonorants, but adding the SG portion makes the full voiceless sequence longer. The article's LDA reports 86.7% overall internal accuracy but only 5.4% correct classification for non-SG voiceless tokens; neither figure is a project G2P benchmark.
+- Added the sonorant phonetics CSV, JSON Schema and tests; linked six documentary claims to existing source REPETTI2023_BURMESE. All rows are WITHHELD; no IPA gold, Myanmar grapheme mapping, runtime rule or Ukrainian mapping was added. README now links the matrix.
+- Acceptance: source/claim links, schema validation, unique IDs and explicit withholding are tested. The evidence can guide later analysis of voiceless sonorants but cannot by itself resolve Myanmar orthographic correspondences or justify a universal /h/ + sonorant output.
+
+
+## 2026-11-15 — exact-head CI, sonorant evidence and responsive smoke-test closeout
+
+- Verified code/test head before this documentation-only update: `6ab325848adc56ea92bfe2436e71962e6e54a0e1`. PR #147 remains OPEN / DRAFT / mergeable; branch is 1,170 commits ahead and 0 behind unchanged `main` (`dc90463bdd734867308f03cb627eb8941efc19d6`), with 78 changed files. PR #129 remains OPEN / DRAFT / non-mergeable and untouched.
+- Exact-head PR tests [43723178115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43723178115) and push tests [43723171470](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43723171470) completed SUCCESS. Verified job log: 303 Python tests + 68 subtests; 21 Node tests; 68 Playwright tests; npm audit 0 vulnerabilities; production build and generated-data freshness passed.
+- The new Playwright responsive smoke test covers both `index.html` and `system.html` at 320, 375 and 768 CSS px. It verifies no page-level horizontal overflow and that the methodology table retains an inner horizontal scroller at 320 px. The test exposed real overflow in the research notice and methodology page; CSS now allows notice text to shrink/wrap, constrains the table scroller, and contains document overflow. The final exact-head CI passed. This is automated responsive coverage, not a complete accessibility audit.
+- Sonorant evidence: six new documentary claims and six rows in `data/burmese/sonorant_phonetics_evidence.csv`, backed by the already-registered Repetti-Ludlow 2023 article. Schema, source/claim referential links, unique IDs and `WITHHELD` runtime status are tested. Registry now has 96 sources and 213 claims; rime-collision matrix remains 25 groups. All six sonorant evidence rows remain withheld from runtime; no orthographic mapping, IPA gold or Ukrainian mapping was added.
+- Verification history is retained rather than hidden: an initial homepage status edit broke an existing exact-text assertion; the text was corrected. The new mobile smoke test then exposed 320 px overflow on the homepage and methodology table. The CSS fixes and final 68-test Playwright pass are on the verified head above.
+- Optional diagnostics [43722971858](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43722971858) completed SUCCESS on the immediately preceding code head `0059d4af`; CRF, raw-output and Thrax/OpenFst jobs succeeded. Exact-head diagnostic run [43723178156](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43723178156) completed SUCCESS with all three jobs (CRF, raw-output, Google Thrax/OpenFst). These are execution/provenance results only; no accuracy or promotion claim is made because adjudicated IPA gold remains 0.
+- Updated public status text to the latest verified code/test head and distinguished CI from deployment. The branch remains undeployed on GitHub Pages. Manual screen-reader testing, full keyboard flow, zoom/reflow beyond the automated viewport smoke test, and comprehensive contrast/state QA remain TODO; automated mobile smoke coverage is now DONE_VERIFIED.
+- Task ledger: DONE_VERIFIED — exact-head engineering CI; DONE_VERIFIED — six-row source-scoped sonorant evidence schema and traceability tests; DONE_VERIFIED — narrow-viewport smoke tests and inner table scrolling; PARTIAL — Yangon rime/coda/tone/phonation coverage, surface `/N/` realization and Python/browser phonological parity; BLOCKED — independent G2P accuracy (0 adjudicated IPA gold) and MLC lexical entry evidence (SEAlang backend failure; print dictionary pages not inspected); TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation remains outside the authorized scope.
+- Overall readiness remains PARTIAL PROTOTYPE, not linguistically release-ready. No merge, deployment, release, or `main`-branch write was performed.
+
+
+## 2026-11-15 — documentation-head CI confirmation
+
+- The documentation/status-only follow-up commit `fae584bea5ac580a535ce8c97c7c10c4a7d3f2cd` also passed exact-head PR tests [43723405031](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43723405031) and push tests [43723400788](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43723400788): 303 Python tests + 68 subtests, 21 Node tests, 68 Playwright tests, npm audit 0 vulnerabilities, production build and generated-data freshness all passed. This confirms the final documentation state does not break the verified build.
+
+
+## 2026-11-15 — ICPhS 2023 phrase-position sonorant evidence
+
+- Added a separately registered primary source, Chiara Repetti-Ludlow, “Acoustic Correlates and Contrast Maintenance in Burmese Voiceless Sonorants,” ICPhS 2023 proceedings paper 104 (https://www.internationalphoneticassociation.org/icphs-proceedings/ICPhS2023/full_papers/104.pdf). Do not conflate this study with the same author's separate Phonetica 2023 article (DOI 10.1515/phon-2022-0026): the ICPhS paper reports 79% preaspiration, while the Phonetica study reports 78% separately identifiable spread-glottis periods.
+- Added four documentary claims and four evidence rows. The ICPhS design covers four sonorant pairs, high/low tones, /a/, three phrase positions, nine speakers and 144 target phrases. Its key result is position-conditioned cue reweighting: following-vowel SoE distinguishes voicing in phrase-initial/medial but not phrase-final position, where HNR gains importance after final-vowel devoicing. The paper does not report loss of the underlying voicing contrast.
+- Added schema enum values and regression tests for the restricted study scope, the distinct 79% rate, phrase-final cue reweighting and non-transferability of internal LDA percentages. All evidence rows remain WITHHELD; no IPA, grapheme mapping, Ukrainian mapping or runtime behavior changed.
+- Registry checkpoint after this addition: 97 sources, 217 documentary claims, 10 sonorant evidence rows; rime/collision groups remain 25. This is a documentary evidence expansion, not full phonological coverage or a gold corpus.
+
+
+## 2026-11-15 — phrase-position sonorant evidence and final test reconciliation
+
+- Independent primary-source inspection of the full ICPhS 2023 proceedings paper 104 by Repetti-Ludlow added a separate source record `ICPH2023_BURMESE_SONORANTS`, four documentary claims and four structured evidence rows. The paper's restricted design is four sonorant pairs, high/low tones, /a/, three phrase positions, nine speakers and 144 target phrases. It reports preaspiration in 79% of voiceless-sonorant tokens, with phrase-conditioned cue reweighting: following-vowel SoE differentiates voicing initially/medially but not finally, where HNR becomes more important after final-vowel devoicing. This is a distinct experiment from the same author's Phonetica 2023 paper, whose separately segmented spread-glottis period occurs in 78% of tokens. The 79% and 78% figures are not pooled.
+- The internal LDA results in the ICPhS paper (84% initial; 87% medial and final) are explicitly marked as paper-specific internal classification, not project G2P accuracy. No classifier scores are promoted to project metrics.
+- Final evidence registry checkpoint: **97 sources / 217 documentary claims / 10 sonorant evidence rows / 25 rime-collision groups**. All ten sonorant rows are `WITHHELD`; no runtime rules, IPA labels, Myanmar grapheme mappings or Ukrainian mappings were changed.
+- Test-first correction history: the first test run caught two stale assertions (the previous six-row count and an over-specific phrase in the new cue-reweighting assertion). Both were corrected. The corrected exact-head commit `0738bc0058a48fdea6e4e05b43240c2be9ef7bbe` passed push workflow [43728402206](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43728402206): **307 Python tests + 68 subtests, 21 Node tests, 68 Playwright tests**, npm audit 0 vulnerabilities, production build, generated-data freshness and built-browser tests all SUCCESS. The exact-head PR workflow [43728408272](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43728408272) and optional diagnostics [43728408324](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43728408324) were still running at this documentation checkpoint; do not mark them successful until their terminal results are inspected.
+- Current branch checkpoint: `0738bc0058a48fdea6e4e05b43240c2be9ef7bbe`; PR #147 remains OPEN / DRAFT; branch is 1,176 commits ahead and 0 behind `main`. No merge, release, deployment or main-branch write was performed.
+- Research consequence: voiceless-sonorant phonetic evidence is now better conditioned by phrasal position, but the study's limited segment/tone/vowel inventory prevents generalizing these patterns to all Burmese syllables. Readiness remains PARTIAL PROTOTYPE; independent adjudicated IPA gold remains 0.
+
+
+## 2026-11-15 — exact-head optional diagnostics completed (80a56aca)
+
+- Re-ran and inspected optional diagnostics on exact branch HEAD `80a56aca4ce8a870e7f927457397b8cc5f4e51e3`, workflow [43728555011](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43728555011): all three jobs completed SUCCESS — Epitran raw output, pinned CRF baseline, and Google Burmese Thrax/OpenFst raw output. The Google FST build, IPA symbol-table uniqueness/currentness checks and six-probe smoke run all passed.
+- Diagnostic interpretation remains strictly non-evaluative: Google FST returned 6/6 outputs with 0 runtime errors but `independent_gold_count=0` and `accuracy=null`; CRF returned 100/100 predictions and 84/100 source-concordant rows but `gold_count=0`, `accuracy=null`, `scoring_status=NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. Epitran raw-output generation completed and its report was uploaded; none of these outputs establishes transcription accuracy or authorizes production promotion.
+- Exact-head engineering CI on the same commit also passed: push workflow [43728550185](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43728550185) and PR workflow [43728555022](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43728555022) SUCCESS. Push job logs show 307 Python tests + 68 subtests, 21 Node tests, 68 Playwright tests, npm audit 0 vulnerabilities, production build, generated-data freshness and IPA-gold structural validation all successful.
+- Ledger update: DONE_VERIFIED — exact-head optional diagnostic execution/build/smoke gates; BLOCKED — empirical G2P scoring and engine comparison because independent adjudicated IPA gold count remains zero (and CRF probe has possible training overlap). The diagnostic engines remain research-only.
+- Branch remains `research/burmese-medials-g2p-evidence-2026-11-13`; this is a documentation-only checkpoint. Readiness remains PARTIAL PROTOTYPE. No runtime rules, IPA annotations, mappings, merge, deployment, release or `main` write were made.
+
+
+## 2026-11-15 — exact latest-head diagnostics and CI (4392c260)
+
+- Exact branch-head required tests workflow [43730553035](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43730553035) completed SUCCESS on `4392c2607c9489b20c26435a1a98e88fc3f149c4`: 307 Python tests + 68 subtests; 21 Node tests (0 failures); 68 Playwright Chromium tests; npm audit 0 vulnerabilities in both package trees; IPA-gold structural validator, production build and generated-data freshness passed.
+- Exact-head optional diagnostic workflow [43730553089](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43730553089) completed SUCCESS for all three jobs. Epitran raw-output report SHA-256 `4d1fe487182b8f23cdf05b6285a38b8c3bca24ac24a47f4a76e0d46c717bdd02`; CRF: 100/100 predictions, 84/100 source-concordant, `gold_count=0`, `accuracy=null`, `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; Google Thrax/OpenFst: 6/6 outputs, 0 runtime errors, `independent_gold_count=0`, `accuracy=null`, report SHA-256 `89690711a9b38ffc72895e73dae41e4b88c890257bacfc805576c1cdfa618058`. Artifact IDs: Epitran `14167599905`, CRF `14168550164`, Google FST `14168291361`.
+- These outcomes verify diagnostic execution only. They do not provide independent accuracy evidence, do not resolve potential CRF training overlap, and do not authorize any engine for production. IPA-gold validator reports zero adjudicated records / `NOT_READY_NO_ADJUDICATED_GOLD`.
+- Ledger: DONE_VERIFIED — exact-head required engineering CI and optional diagnostic execution/build/smoke gates. BLOCKED — empirical G2P scoring until independent expert-adjudicated IPA gold is populated and overlap-free evaluation is defined. Repository remains PARTIAL PROTOTYPE, not linguistically release-ready.
+- No runtime rule, IPA annotation, Ukrainian mapping, merge, release, deployment or `main` change was made.
+
+
+## 2026-11-15 — Waxman (2018) secondary characterization of MED transcription
+
+- Registered Nathan A. Waxman's conference abstract “The Myanmar English Dictionary (MED) at 25: Trends in Burmese Lexicography for the Anglophone World” (13th International Burma Studies Conference, 2018, p.49) as `WAXMAN2018_MED_AT_25`, with one documentary claim `CLM-WAXMAN2018-MED-TRANSCRIPTION-CHARACTER-001`.
+- The abstract characterizes the 1993 MED transcription system as novel and arguably more phonologically transparent, channeling tonal graphemic elements of Burmese script. This adds a secondary description of the dictionary's design intent, but does not reveal the notation key, exact tonal symbols, lexical entries, or whether its transcription is IPA, MLCTS2, or another system. The full paper and dictionary pages were not inspected. Do not treat this as an implementation specification or as evidence that the MED notation is identical to IPA/MLCTS2.
+- Added a regression test asserting source/claim linkage and the secondary-only, non-operational evidence boundary. No runtime rule, IPA label, Ukrainian mapping or gold annotation changed.
+- Source: https://www.centerforburmastudies.com/uploads/5/2/1/8/52185987/abstracts_template_final_draft_7-30.pdf (conference abstract, p.49).
+
+
+## 2026-11-15 — Waxman source registration and exact-head verification (23983ab8)
+
+- Added one secondary conference-abstract source and one documentary claim for Nathan A. Waxman (2018), “The Myanmar English Dictionary (MED) at 25: Trends in Burmese Lexicography for the Anglophone World,” p.49. The claim is limited to the abstract's characterization of the MED transcription as relatively phonologically transparent and reflective of tonal graphemic elements. The full paper, notation key and dictionary entries were not inspected; this is not an IPA, MLCTS2 or runtime specification.
+- Added a regression test for source/claim referential integrity and the non-operational evidence boundary. The first two test attempts exposed only case-sensitive wording mismatches in the new test assertions; both assertions were corrected to match the registered source wording. No production code or linguistic claim was weakened to make the test pass.
+- Exact PR merge-ref tests [43731256990](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256990) completed SUCCESS on PR head `23983ab8ade692e1795039dd114c352dddee16ef`: **308 Python tests + 68 subtests**, **21 Node tests**, **68 Playwright Chromium tests**, npm audit 0 vulnerabilities in both package trees, IPA-gold structural validation, production build and generated-data freshness all passed. Validator still reports 0 adjudicated gold records / `NOT_READY_NO_ADJUDICATED_GOLD`.
+- Structural registry parse on the same branch found **98 sources / 218 claims**, unique IDs, consistent CSV widths, no broken claim→source references, **15 rime/prosody evidence rows** and **25 rime-collision groups**. This structural parse supplements but does not replace the passing pytest/schema gates.
+- Optional diagnostics [43731256987](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256987): Epitran raw-output and CRF jobs completed SUCCESS; CRF returned 100/100 predictions and 84/100 source-concordant rows, but `gold_count=0`, `accuracy=null`, and `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. Google Thrax/OpenFst build was still in progress at this checkpoint; do not mark that job complete until its terminal status and smoke report are inspected.
+- Task ledger: DONE_VERIFIED — source/claim registration and regression guard; DONE_VERIFIED — exact-head engineering CI; PARTIAL — full Yangon lexical rime/coda/tone/phonation grid, /N/ surface realization and Python/browser parity; BLOCKED — independent G2P accuracy (0 adjudicated IPA gold) and MLC entry-level transcription evidence (SEAlang backend failure; physical dictionary pages not inspected); TODO — manual screen-reader/mobile/zoom/contrast accessibility QA; DEFERRED — independent IPA annotation remains outside current authorized scope.
+- No runtime phonology, IPA labels, Ukrainian mappings, gold annotations, merge, deployment, release or `main` write occurred. Overall readiness remains PARTIAL PROTOTYPE, not linguistically release-ready.
+
+
+## 2026-11-15 — final optional diagnostics on Waxman test head (23983ab8)
+
+- Follow-up to the in-progress note above: optional workflow [43731256987](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256987) completed SUCCESS for all three jobs on PR head `23983ab8ade692e1795039dd114c352dddee16ef`.
+- Epitran 1.35.3 raw-output report SHA-256 `b695085d4c4528411576f2362b5d13740e6fc06b82afbe380e018b89b9a5ace5`, artifact `14168731263`.
+- CRF returned 100/100 predictions and 84/100 source-concordant rows; `gold_count=0`, `accuracy=null`, `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; artifact `14168446496`.
+- Google Burmese Thrax/OpenFst built successfully; all IPA symbol-table invariant checks passed; 6/6 structural-only probes produced outputs with 0 runtime errors; `independent_gold_count=0`, `accuracy=null`; report SHA-256 `c86d41b71a02c4d51f3cf5e432926e5d6993e9dff608426c745fd335e0e63296`, artifact `14168621272`.
+- These are successful build/raw-output diagnostics only. They do not establish accuracy or production readiness. Independent adjudicated IPA gold remains zero; CRF overlap remains unresolved.
+- Required exact-head tests workflow [43731256990](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43731256990) SUCCESS: 308 Python tests + 68 subtests, 21 Node tests, 68 Playwright tests, npm audit 0 vulnerabilities, build and generated-data freshness pass.
+
+
+## 2026-11-15 — MLC dictionary access trail refined (SHACHI / TIL)
+
+- New access evidence narrows the MLC dictionary blocker. SHACHI metadata for the SEAlang Library Burmese Dictionary describes an approximately 35,000-entry resource based on the 1993 MLC Myanmar-English Dictionary (1996 Dunwoody Press reprint), says the source was used with permission, and describes IPA sound-based lookup. The linked SEAlang endpoint timed out during this check. SHACHI metadata is not the underlying data, does not grant this repository reuse rights, and does not prove that the resource's outputs are adjudicated IPA.
+- TIL's Romabama material contains many lexical examples cited to specific MEDict pages. A TIL note says MEDict itself provides a pronunciation guide in a non-phonetic-alphabet script. The displayed TIL forms are in the TIL author's Romabama conventions; they are not verified reproductions of the MLC notation. Treat them only as secondary lexical leads for primary-page cross-checking.
+- Dunwoody Press catalogue confirms the MED's 1993 publication, about 35,000 entries and a pronunciation transcription aid; WHO Myanmar Library catalogue records a 635-page copy as available in its holdings. Neither means the project has inspected the physical pages.
+- Ledger refinement: PARTIAL — discoverable secondary MED-linked lexical index and access routes; BLOCKED — primary MLC notation key / original entries, SEAlang content access and independent reuse-rights verification. No source rows or lexical data were added because no primary notation key, entry image or reusable dataset was obtained.
+- Sources: https://shachi.org/resources/3949 ; https://www.tuninst.net/RBM-TYPEWRITER/von01.htm ; https://www.tuninst.net/HUMAN-VOICE/HV-indx.htm ; https://www.thedunwoodypress.com/product-page/myanmar-english-dictionary ; https://kohammr.searo.who.int/bib/487
+- No runtime, IPA gold, Ukrainian mapping, licensing decision, merge, deployment or release change occurred. Readiness remains PARTIAL PROTOTYPE.
+
+
+## 2026-11-15 — continuation checkpoint after MLC access review
+
+- Final commit SHA is recorded in the PR head and final session report; this handoff avoids a self-referential SHA that would become stale when the file itself is committed.
+- PR #147: OPEN / DRAFT; the latest GitHub metadata reports `mergeable: false` (recheck after GitHub recalculates); head is the dedicated research branch; 0 commits behind `main`, 78 changed files at this snapshot. No reviews or review threads are present. PR #129 remains OPEN / DRAFT / non-mergeable and was not modified.
+- Main remains the base; no merge, deployment, release or main-branch write occurred.
+- The required CI result for this exact documentation head is **not verified**: the combined commit-status endpoint returned no statuses, and the PR-triggered workflow lookup returned no runs for this head. Prior successful exact-head CI on code-bearing commit `23983ab8ade692e1795039dd114c352dddee16ef` remains valid for that code/test snapshot only; it must not be represented as a test run on this later documentation head.
+- The current docs-only changes refine the MLC dictionary access evidence and remove duplicate validation sentences from `system.html`. No runtime or data files, source registries, IPA labels, gold annotations or Ukrainian mappings changed in this continuation.
+- Remaining acceptance blockers: primary MED notation key and page-located entries plus independent rights review; independent adjudicated IPA gold and overlap-free scoring; complete Yangon vowel/rime/coda/tone/phonation coverage; Python/browser parity against independent gold; manual screen-reader, zoom, contrast and focus QA.
+- Overall status remains **PARTIAL PROTOTYPE / NOT LINGUISTICALLY RELEASE-READY**.
+
+## 2026-11-15 — Mya2Rom secondary identification of MED transcription variant
+
+- Found a high-value secondary source: the Mya2Rom README explicitly distinguishes orthographic MLCTS from modified/phonetic MLCTS2 and says the modified version is used by the Myanmar Language Commission in its Myanmar-English Dictionary and by SEAlang. This is the strongest explicit identification found so far for the MED's transcription family, but it is not a primary MLC notation key or inspected dictionary entry.
+- Reconciled the finding with the already registered and vendored source MYA2ROM044 and its existing MLCTS2 / MLCTS-vs-MLCTS2 / limitations claims. No duplicate source or claim was retained. Added a regression test over the existing registry records.
+- The same README documents major romanizer limitations: no schwa or voicing-sandhi modelling; incomplete stacked-letter/asat handling; alternate pronunciations omitted; Pali/Sanskrit exceptions. Its IPA mode is Wikipedia-style. Treat it as a secondary comparator, not a gold IPA engine.
+- The repository declares CC-BY-SA-4.0. No code/tables were copied; no license compatibility decision for this project's own distribution was made.
+- No phonology runtime, IPA gold, Ukrainian mapping or production output changed. Primary MLC notation-key verification and independent gold remain blocked.
+
+## 2026-11-15 — Mya2Rom registry-boundary test and exact-head CI
+
+- Added regression test over the already-existing MYA2ROM044 source and documentary claims to assert that orthographic MLCTS and modified MLCTS2 remain distinct, that MLCTS2 is not conflated with the separate IPA mode, and that the documented romanizer limitations remain visible in the evidence registry. No duplicate source/claim row remains.
+- Exact-head workflow [43733991562](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43733991562) SUCCESS on code/test commit b27a5d3fce31df66ef3dab8296019a7796953468: **309 Python tests + 68 subtests**, **21 Node tests**, **68 Playwright Chromium tests**, production build, generated-data freshness and npm audit (0 vulnerabilities) all passed.
+- The IPA gold validator correctly remains NOT_READY_NO_ADJUDICATED_GOLD (0 adjudicated records). Passing engineering CI does not change linguistic readiness. Manual assistive-technology QA and independent IPA annotation remain unresolved/outside scope.
+
+## 2026-11-15 — Mya2Rom source reconciliation and final verification checkpoint
+
+- The MED-related Mya2Rom statement was reconciled against the repository's existing vendored source MYA2ROM044 and existing claims CLM-MYA2ROM-SEALANG-MLCTS2-001, CLM-MYA2ROM-MLCTS-VS-MLCTS2-001 and CLM-MYA2ROM-LIMITATIONS-001. No duplicate source/claim records were retained.
+- Added a regression test over those existing records. It checks that orthographic MLCTS remains distinct from MLCTS2, MLCTS2 is not conflated with the separate IPA mode, and the documented limitations remain part of the evidence boundary.
+- Exact-head workflow [43734174785](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43734174785) SUCCESS on code-and-documentation head 6e7de3255e982e6065c9875fc5cab14db295c7cc: **309 Python tests + 68 subtests**, **21 Node tests**, **68 Playwright Chromium tests**, production build, generated-data freshness and npm audit (0 vulnerabilities) all passed.
+- IPA gold validator remains NOT_READY_NO_ADJUDICATED_GOLD with 0 adjudicated records. This CI result verifies engineering contracts, not linguistic accuracy. The MLC primary notation key and independent lexical gold remain blocked.
+- No runtime, IPA labels, gold annotations, Ukrainian mappings, deployment, release, merge or main write occurred. Readiness remains PARTIAL PROTOTYPE.
+
+
+## 2026-11-15 — exact latest-head CI and public status reconciliation (`8e95ff21`)
+
+- Re-fetched the research branch ref and confirmed exact HEAD `8e95ff211cea94bf6d16c3acc1387b109de92fe4`; PR #147 remains OPEN / DRAFT / mergeable against `main`. PR #129 remains OPEN / DRAFT / non-mergeable and was left untouched. `main` is unchanged.
+- Required exact-head workflow [43734367695](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43734367695) completed SUCCESS on this exact SHA. Inspected job logs: **309 Python tests + 68 subtests**, **21 Node tests**, **68 Playwright Chromium tests**; both npm audit checks reported 0 vulnerabilities; production build, generated-data freshness and Chromium browser suite passed. IPA-gold structural validation executed but still reports 0 adjudicated records / `NOT_READY_NO_ADJUDICATED_GOLD`.
+- Reviewed the browser test suite and both public HTML pages. Existing automated accessibility-related coverage includes keyboard skip-navigation on both pages, focusable main content, and no page-level horizontal overflow at 320/375/768 px; CSS provides visible focus outlines. These checks do **not** verify screen-reader announcements, contrast compliance, touch target quality on real devices, or manual focus order. Manual accessibility QA remains TODO.
+- Corrected stale branch-verification claims in `index.html` and `system.html`: they now cite the exact verified HEAD/workflow and distinguish automated keyboard/responsive checks from manual assistive-technology QA. No linguistic/runtime behavior changed.
+- Independent adjudicated IPA gold remains 0; empirical G2P accuracy remains null. Primary MED notation key/page-located entries, full Yangon lexical coverage, /N/ surface realization and parity against independent gold remain unresolved. Repository readiness remains PARTIAL PROTOTYPE, not linguistically release-ready.
+- This continuation is documentation-only. No runtime mappings, IPA annotations, Ukrainian candidates, source evidence, branch protection, deployment, release, merge or `main` write were changed.

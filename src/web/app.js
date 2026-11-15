@@ -1,4 +1,4 @@
-import { ONSETS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
+import { ONSETS, VOWELS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
 import { renderUkrainian } from "./ukrainian-adapter.js";
 import { renderMlctsText } from "./romanization-ukrainian.js";
 
@@ -25,7 +25,6 @@ const NASAL_CODAS=new Set(["င","န","မ","ည"]);
 const CHECKED_CODAS=new Set(["က","ခ","ဂ","ဃ","စ","ဆ","ဇ","ဈ","တ","ထ","ဒ","ဓ","ပ","ဖ","ဗ","ဘ"]);
 const MEDIAL_CHARS=new Set(Object.keys(MEDIALS)), VOWEL_CHARS=new Set(Object.keys(SIGNS)), BASE=new Set(Object.keys(ONSETS));
 const ROMANIZATION_SUPPORTED_CHARS=new Set(ROMANIZATION_SUPPORTED), ROMANIZATION_BASE_CHARS=new Set(ROMANIZATION_BASES);
-const PHONETIC_INPUT_CHARS=new Set([...BASE,...VOWEL_CHARS,...MEDIAL_CHARS,ASAT,VIRAMA,"့","း"]);
 const STATUS_RANK={ESTABLISHED:0,WELL_SUPPORTED:1,PROPOSED:2,ANALYSIS_DEPENDENT:3,PROVISIONAL:4,NOT_ESTABLISHED:5,UNSUPPORTED:6,UNCERTAIN:7};
 function aggregateStatus(statuses,emptyStatus="NOT_ESTABLISHED"){
   if(!statuses.length)return emptyStatus;
@@ -94,13 +93,14 @@ function segment(text){
       out.push({raw:s.slice(start,i),nonMyanmar:true});continue;
     }
     const start=i;let prev=String.fromCodePoint(s.codePointAt(i));i+=widthAt(s,i);
-    if(!PHONETIC_INPUT_CHARS.has(prev)){
-      out.push({raw:prev,nonMyanmar:false});
-      continue;
-    }
+    // Match Python's structural segmentation: once inside a Myanmar run,
+    // retain every Myanmar-block code point in the current orthographic unit.
+    // Inventory support is a parser concern, not a segmentation boundary;
+    // otherwise an unknown extension letter after a valid syllable is split
+    // into a synthetic standalone token in the browser but attached as an
+    // unparsed tail in Python.
     while(i<s.length&&isMyanmarTextAt(s,i)){
       const ch=String.fromCodePoint(s.codePointAt(i));
-      if(!PHONETIC_INPUT_CHARS.has(ch))break;
       const isCodaBase=BASE.has(ch)&&s[i+ch.length]===ASAT;
       const followsKinzi=s.slice(Math.max(start,i-3),i)===KINZI;
       const startsWithKinzi=s.slice(start,i).startsWith(KINZI);
@@ -113,17 +113,57 @@ function segment(text){
   return out;
 }
 
+function projectStructure(sy){
+  const coda=sy.coda&&typeof sy.coda==="object"
+    ? {character:sy.coda.character||null,marker:sy.coda.marker||null,orthographic_function:sy.coda.orthographic_function||null}
+    : sy.coda
+      ? {character:sy.coda,marker:sy.asat?"asat":null,orthographic_function:sy.kinziCoda?"kinzi_final_nasal":"final_consonant"}
+      : null;
+  const mark=sy.prosodyMarks.find(x=>x==="့"||x==="း");
+  const vowelIds={
+    "MYANMAR VOWEL SIGN E":"e","MYANMAR VOWEL SIGN I":"i",
+    "MYANMAR VOWEL SIGN II":"ii","MYANMAR VOWEL SIGN AI":"ai",
+    "MYANMAR VOWEL SIGN U":"u","MYANMAR VOWEL SIGN UU":"uu",
+    "MYANMAR VOWEL SIGN TALL AA":"tall_aa","MYANMAR VOWEL SIGN AA":"aa",
+    "MYANMAR SIGN ANUSVARA":"anusvara"
+  };
+  return {
+    raw:sy.raw,
+    codepoints:Array.from(sy.raw,ch=>"U+"+ch.codePointAt(0).toString(16).toUpperCase().padStart(4,"0")),
+    onset:sy.onset||null,
+    kinzi:Boolean(sy.kinzi||sy.kinziCoda),
+    conjunct:[...sy.conjunct],
+    medials:sy.medials.map(m=>MEDIALS[m]?.id||null),
+    vowel_signs:sy.vowels.map(v=>vowelIds[SIGNS[v]?.unicode_name]||null),
+    inherent_vowel_status:sy.onset?(sy.vowels.length?"overridden":"present_or_contextually_suppressed"):null,
+    coda,
+    tone_mark:mark==="့"?"dot_below":mark==="း"?"visarga":null,
+    analysis_status:sy.structureStatus||"established"
+  };
+}
+
 function parseCluster(raw,withholdBareInherent=false){
   const sy={raw,onset:null,kinzi:false,conjunct:[],medials:[],vowels:[],asat:false,status:"ESTABLISHED",ipa:null,uk:null,notes:[],prosodyMarks:[]};
   let i=0;
   if(raw.startsWith(KINZI)){sy.kinzi=true;i=3;}
-  if(i>=raw.length||!BASE.has(raw[i])){sy.status="UNSUPPORTED";sy.notes.push("Не вдалося визначити початкову приголосну.");return sy;}
+  if(i>=raw.length||!BASE.has(raw[i])){sy.status="UNSUPPORTED";sy.structureStatus="unsupported_or_malformed";sy.structure=projectStructure(sy);sy.notes.push("Не вдалося визначити початкову приголосну.");return sy;}
   sy.onset=raw[i++];
   while(i<raw.length&&raw[i]===VIRAMA){
     if(i+1<raw.length&&BASE.has(raw[i+1])){sy.conjunct.push(raw[i+1]);i+=2;}
     else{sy.status="UNCERTAIN";sy.notes.push("Неповна послідовність virama.");break;}
   }
-  while(i<raw.length&&MEDIAL_CHARS.has(raw[i]))sy.medials.push(raw[i++]);
+  while(i<raw.length&&MEDIAL_CHARS.has(raw[i])){
+    const medial=raw[i++];
+    sy.medials.push(medial);
+    // Python records ASAT immediately after medial-ya as a contextual coda.
+    // Preserve that structural distinction instead of flattening it to a tail mark.
+    if(i<raw.length&&raw[i]===ASAT&&MEDIALS[medial]?.id==="medial_ya"){
+      sy.coda={marker:"asat",codepoint:"U+103A",orthographic_function:"contextual"};
+      sy.asat=true;
+      i++;
+      sy.notes.push("Знак asat після medial ya збережено як контекстну фіналь.");
+    }
+  }
   // Dependent vowels belong to the preceding linguistic syllable; a following
   // kinzi is its final /ŋ/, even though the Unicode sequence is stored before
   // the next written base consonant.
@@ -136,25 +176,36 @@ function parseCluster(raw,withholdBareInherent=false){
   // Read these tail marks without changing the underlying syllable analysis.
   if(!sy.coda){
     let j=i;
-    while(j<raw.length&&(raw[j]==="ံ"||raw[j]==="့"||raw[j]==="း"))j++;
+    const marks=[];
+    while(j<raw.length&&(raw[j]==="ံ"||raw[j]==="့"||raw[j]==="း"))marks.push(raw[j++]);
     if(j+1<raw.length&&BASE.has(raw[j])&&raw[j+1]===ASAT){
       sy.coda=raw[j];i=j+2;sy.asat=true;
-      sy.notes.push("Канонічний порядок знаків нормалізовано перед визначенням фіналі.");
+      // Do not lose the tone/prosody marks that precede the final consonant.
+      sy.prosodyMarks.push(...marks);
+      if(marks.length)sy.status="ANALYSIS_DEPENDENT";
+      sy.notes.push("Канонічний порядок знаків збережено перед визначенням фіналі.");
     }
   }
   while(i<raw.length){
-    if(raw[i]===ASAT){sy.asat=true;i++;continue;}
+    if(raw[i]===ASAT){sy.asat=true;if(!sy.coda)sy.coda={marker:"asat",codepoint:"U+103A",orthographic_function:"contextual"};i++;continue;}
     if(raw[i]==="ံ"||raw[i]==="့"||raw[i]==="း"){sy.prosodyMarks.push(raw[i]);sy.status="ANALYSIS_DEPENDENT";i++;continue;}
     sy.status="UNCERTAIN";sy.notes.push("Нерозібраний знак "+raw[i++]);
   }
   // Keep repeated diagnostics deterministic and readable.
   sy.notes=[...new Set(sy.notes)];
+  sy.structureStatus=sy.status==="UNSUPPORTED"?"unsupported_or_malformed":sy.status==="UNCERTAIN"?"partially_unparsed":"established";
+  sy.structure=projectStructure(sy);
   const isolatedBare=withholdBareInherent&&!sy.vowels.length&&!sy.coda&&!sy.asat&&!sy.medials.length&&!sy.conjunct.length&&!sy.kinzi&&!sy.prosodyMarks.length;
   // Match the Python rule engine: medials, conjuncts and kinzi are parsed
   // structurally but remain outside the validated IPA rule inventory.
   const unsupportedStructure=sy.kinzi||sy.kinziCoda||sy.medials.length>0||sy.conjunct.length>0;
-  sy.ipa=isolatedBare||unsupportedStructure?null:deriveIpa(sy);
-  if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status="NOT_ESTABLISHED";
+  // Python's canonical IPA adapter withholds codas, asat, anusvara and
+  // prosodic marks until their selected-profile surface realizations are
+  // adjudicated. Keep the browser boundary equally conservative.
+  const unsupportedRime=Boolean(sy.coda||sy.asat||sy.prosodyMarks.length||sy.vowels.some(sign=>SIGNS[sign]?.unicode_name==="MYANMAR SIGN ANUSVARA"));
+  const evidenceIncomplete=unsupportedStructure||unsupportedRime;
+  sy.ipa=isolatedBare||evidenceIncomplete?null:deriveIpa(sy);
+  if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=evidenceIncomplete?"ANALYSIS_DEPENDENT":"NOT_ESTABLISHED";
   sy.uk=sy.status==="ESTABLISHED"&&sy.ipa?renderUkrainian(sy.ipa):{text:"",status:"NOT_ESTABLISHED",parts:[],prosody:[],unsupported:sy.raw};
   // Separate onset-only preview: never derive Ukrainian directly from Myanmar
   // graphemes and never guess the vowel, coda, medial, kinzi or tone.
@@ -175,7 +226,28 @@ function parseCluster(raw,withholdBareInherent=false){
 }
 
 function deriveIpa(sy){
-  const onset=ONSETS[sy.onset];if(!onset)return null;
+  const onset=ONSETS[sy.onset];
+  // The canonical browser IPA path must obey the same source-registry evidence
+  // gate as Python. A graphemic sign can be established orthographically while
+  // its phonetic realization remains analysis-dependent.
+  if(!onset)return null;
+  if(onset.status!=="established"){sy.status="ANALYSIS_DEPENDENT";return null;}
+  const vowelIdsByName={
+    "MYANMAR VOWEL SIGN E":"e",
+    "MYANMAR VOWEL SIGN I":"i",
+    "MYANMAR VOWEL SIGN II":"ii",
+    "MYANMAR VOWEL SIGN AI":"ai",
+    "MYANMAR VOWEL SIGN U":"u",
+    "MYANMAR VOWEL SIGN UU":"uu",
+    "MYANMAR VOWEL SIGN TALL AA":"tall_aa",
+    "MYANMAR VOWEL SIGN AA":"aa",
+    "MYANMAR SIGN ANUSVARA":"anusvara",
+  };
+  if(sy.vowels.some(sign=>{
+    const name=SIGNS[sign]?.unicode_name;
+    const id=vowelIdsByName[name];
+    return !id||VOWELS[id]?.status!=="established";
+  })){sy.status="ANALYSIS_DEPENDENT";return null;}
   // The browser parser can recognize anusvara structurally, but its contextual
   // nasal/coda realization is not yet adjudicated. Match the Python adapter's
   // fail-closed boundary rather than mapping the sign to a bare vowel.
@@ -278,13 +350,18 @@ function isStandaloneBareConsonant(segments,index){
   const previous=segments[index-1],next=segments[index+1];
   // Do not apply the single-token guard to adjacent Myanmar clusters: those
   // remain on the existing contextual path until separately adjudicated.
-  return (!previous||previous.nonMyanmar)&&(!next||next.nonMyanmar);
+  // Unsupported controls are preserved as explicit invalid segments, but
+  // they are still boundaries (not Myanmar phonological neighbours), matching
+  // Python's _is_myanmar_phonological_char() check.
+  const leftBoundary=!previous||previous.nonMyanmar||previous.unsupportedControl;
+  const rightBoundary=!next||next.nonMyanmar||next.unsupportedControl;
+  return leftBoundary&&rightBoundary;
 }
 function convert(text){
   const normalized=normalize(text),segments=segment(normalized);
   const parsed=segments.map((s,index)=>s.nonMyanmar?s:parseCluster(s.raw,isStandaloneBareConsonant(segments,index))),myanmar=parsed.filter(s=>!s.nonMyanmar);
   const ipaText=parsed.map(s=>s.nonMyanmar?s.raw:(s.ipa||"?")).join(""),ukText=parsed.map(s=>s.nonMyanmar?s.raw:(s.uk&&(STATUS_RANK[s.uk.status]??4)<STATUS_RANK.NOT_ESTABLISHED?s.uk.text:"⟦"+s.raw+"⟧")).join("");
-  const ipaStatus=aggregateStatus(myanmar.map(s=>s.ipa?s.status:(s.status==="UNSUPPORTED"?"UNSUPPORTED":"NOT_ESTABLISHED")),myanmar.length?"ESTABLISHED":"UNSUPPORTED");
+  const ipaStatus=aggregateStatus(myanmar.map(s=>s.ipa?s.status:(["UNSUPPORTED","ANALYSIS_DEPENDENT","UNCERTAIN"].includes(s.status)?s.status:"NOT_ESTABLISHED")),myanmar.length?"ESTABLISHED":"UNSUPPORTED");
   const ukStatus=aggregateStatus(myanmar.map(s=>s.uk?.status||"NOT_ESTABLISHED"),myanmar.length?"ESTABLISHED":"UNSUPPORTED");
   const status=aggregateStatus([ipaStatus,ukStatus],myanmar.length?"ESTABLISHED":"UNSUPPORTED");
   return{input:text,normalized,ipa:ipaText,uk:ukText,status,ipaStatus,ukStatus,segments:parsed};
@@ -319,6 +396,7 @@ function render(){
       syllables.append(row);return;
     }
     syllableNumber+=1;
+    row.dataset.structure=JSON.stringify(s.structure);
     const head=document.createElement("strong");head.textContent=String(syllableNumber).padStart(2,"0")+"  "+s.raw;
     const detail=document.createElement("span");const shownStatus=s.provisionalStatus|| (s.uk?.status&&s.uk.status!=="ESTABLISHED"?s.status+" / передача: "+s.uk.status:s.status);detail.textContent=(s.ipa||"IPA не встановлено")+" → "+(s.uk?.text||"—")+" · "+shownStatus;row.append(head,detail);
     if(s.provisionalIpa){const preview=document.createElement("small");preview.textContent="Попередня підказка: "+s.provisionalIpa+" → "+s.provisionalUk+" [PROVISIONAL]";row.append(preview);}

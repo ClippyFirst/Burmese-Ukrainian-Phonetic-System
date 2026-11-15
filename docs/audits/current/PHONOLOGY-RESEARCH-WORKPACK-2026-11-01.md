@@ -32,9 +32,9 @@
 
 ## Execution order
 
-- [ ] Map current parser behavior against Unicode 17 Table 16-4 and add adversarial orthographic sequence fixtures.
-- [ ] Build a source-backed consonant/medial inventory and prohibited-cluster table.
-- [ ] Reconcile Green (1995), Mooney & Repetti-Ludlow (2021), Watkins and current phonetic studies in a terminology matrix.
+- [ ] Map current parser behavior against Unicode 17 Table 16-4 and add adversarial orthographic sequence fixtures. **PARTIAL as of 2026-11-14:** common Modern Burmese ordering, all four medials, conjunct/kinzi, dependent vowels, contextual ASAT and canonical ASAT/dot-below reordering are covered by the shared 31-case Python/browser structural projection. Remaining work: full valid/invalid sequence permutation coverage and language-extension cases; see the 2026-11-14 continuation in the master execution handoff.
+- [x] Build a source-backed consonant/medial inventory and prohibited-cluster table. **DONE_VERIFIED (source-scoped evidence matrix, 2026-11-15):** `data/burmese/onset_cluster_evidence.csv` contains 13 source-linked rows with a JSON Schema and integrity tests. It distinguishes Green's major/minor onset constraints, foot-initial cluster analysis and reduction processes from Ishida's modern YA/RA/WA/HA descriptions and STEDT historical inventories. All rows remain runtime-withheld; this is not a complete legal-cluster generator.
+- [x] Reconcile Green (1995), Mooney & Repetti-Ludlow (2021), Watkins and current phonetic studies in a terminology matrix. **DONE_VERIFIED (2026-11-15):** added §10 to the vowel × medial × prosody evidence matrix, separating tone, checked/killed, creaky voice, vowel length/duration, consonant spread-glottis, nasal /N/, glides/medials and transcription conventions. Four- vs eight-tone accounts remain separate.
 - [ ] Complete vowel × coda × major/minor × tone/phonation coverage, with separate phonemic and phonetic columns.
 - [ ] Record audio/elicitation with profile, speaker, style and rights metadata; independently annotate IPA and acoustic cues.
 - [ ] Adjudicate the relationship between checked coda, glottalization, creaky phonation and tone before changing the runtime.
@@ -63,7 +63,7 @@ Mooney & Repetti-Ludlow (2021), [open CC BY 4.0 article](https://doi.org/10.3765
 
 ### Newer register/tone proposal — unresolved
 
-Duan & Zhu (2025), [publisher record and abstract](https://doi.org/10.1075/lali.00203.dua), propose eight tones divided across modal and lower/breathy registers, splitting the traditional four categories into eight. The publisher abstract confirms this is a peer-reviewed competing analysis, but the full article and its underlying acoustic data have not been independently inspected in this checkpoint. Treat it as a live research hypothesis, not an implemented model or a reason to replace Green's four-way account.
+Duan & Zhu (2025), [publisher record](https://doi.org/10.1075/lali.00203.dua), full text inspected: proposes eight yin/yang tone categories across modal and lower/breathy registers. The reported sample is five mixed-region speakers (two Yangon, two Taunggyi, one Mandalay region), 89 words and 694 valid tokens; T1/T3 show speaker variation. No audio was accessed. Treat it as a competing author analysis, not an implemented model or a reason to replace Green's four-way account.
 
 ### Phonation of sonorant consonants is not vowel register
 
@@ -98,3 +98,105 @@ Rights correction: LREC 2020 explicitly states that its in-house speech and segm
 
 
 Green's 50-rhyme table is identified, but the available PDF text extraction corrupts several symbols/tones; the full 50-row inventory is deliberately not transcribed from OCR. Only the readable structural restrictions are recorded until a manual page-image extraction is available.
+
+
+## New source-backed findings — 2026-11-13
+
+- Hlaing (2014) separates phonetic from orthographic syllable structure and lists all eleven medial forms. The final RA+WA+HA row has a prose label typo; the codepoint sequence is U+103C+U+103D+U+103E.
+- Ishida (2026): U+103B/U+103C normally /j/ with velar-conditioned palatalization; U+103D /w/ or /ʊ/; U+103E aspiration/devoicing and selected /ʃ/ fusion. Watkins (2001) warns that /j,w/ may surface as secondary articulation.
+- Green (2002): /mj/ onset examples, placeless /N/ coda realized through preceding-vowel nasalization, and only three tone categories in nasal rhymes. Do not map /N/ automatically to a surface [ɴ].
+- Google Thrax pinned commit a90601024f07ab7e96c911243324e0adeb16da96 is Apache-2.0. Its grammar maps -r/-y to /j/, -w to /w/, reorders -h and contains onset/rime-specific rules.
+- Cross-engine target disagreement: Google raw output m j àɴ; Epitran 1.35.3 raw output məjaɴ for မြန်. Zero gold; both are diagnostics only. CRF 84/100 source-concordant on myG2P-derived sample, zero gold, possible train/test overlap.
+- Acceptance still requires a versioned phonemic-vs-phonetic convention, independent Yangon audio/IPA adjudication, full onset × medial × rime × tone coverage and shared Python/browser phonological fixtures.
+
+
+### Nasal coda and typed IPA representation
+
+Green (2002) treats /N/ as a placeless nasal coda whose realization includes preceding-vowel nasalization and approximate place articulation. Keep the abstract coda and its surface phonetic realization separate. The current IPA gold schema preserves nasalization in the literal value but has no typed nasalization field; decide whether to extend it only after the convention sheet is adjudicated.
+
+
+### UCSY-SC1 audio resource
+
+Mon et al. (2019) describe a 42 h 39 min, 307-speaker corpus with web-news and recorded-conversation domains, 16 kHz mono audio, and 31,114 utterances. It reports four medial signs and nasalized vowels. This is a promising annotation lead, but it is an ASR corpus, not IPA gold. The publisher author-details page lists CC BY-SA 4.0, but the PDF footer says “All rights reserved”; confirm article-level rights. This does not establish the underlying corpus audio's reuse terms; obtain explicit corpus permission before using it.
+
+
+### Romanization vs IPA engine boundary
+
+Mya2Rom 0.4.4 exposes separate ipa, mlcts, mlcts2, simple and simple2 modes. The project runtime uses mlcts, the MLC orthographic transcription; mlcts2 is a more phonetic romanization, still not standardized IPA. Keep this orthographic Latin→Ukrainian path separate from source phonology → IPA → Ukrainian adaptation. The README's /N/ convention and documented limitations are not independent pronunciation gold.
+
+
+## Continuation — shared structural projection and Unicode 17 ordering audit — 2026-11-14
+
+### Implementation
+
+- Added `project_syllable_structure()` to the Python parser and a matching browser `projectStructure()` projection. The browser exposes the projection on each rendered Burmese syllable as a JSON data attribute for inspectable regression tests. This projection is explicitly orthographic/structural; it excludes IPA, Ukrainian candidates and phonetic accuracy claims.
+- Shared fixture `tests/fixtures/shared_unicode_contract.json` now contains **31 structural projection cases**: inherent vowel, all four medials and observed combinations, conjunct, kinzi-final nasal, all nine dependent-vowel signs, contextual ASAT, canonical reordering, unknown Myanmar Extended-A tails and unsupported Myanmar inventory entries.
+- The Unicode 17.0 Table 16-4 audit exposed a Python/browser mismatch: trailing ASAT after a dependent vowel was represented as a contextual coda by Python but only as a boolean flag by the browser. Browser parsing now retains the same contextual coda record. Fixtures cover `ကာ်`, `ကော်`, and the decomposed input `ကာ့်`, which NFC-normalizes to `ကာ့်` (U+1037 dot below before U+103A ASAT).
+- Corrected the source-registry classification of U+AA60 as Myanmar Extended-A, not Extended-B. The Extended-B block is U+A9E0..U+A9FF; Extended-A is U+AA60..U+AA7F.
+
+### Verification
+
+- Code/test head: `3fc08b3384c8aa25212d61f8738a771d27aa41d5`.
+- Push CI [43644035177](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644035177) SUCCESS and PR CI [43644039707](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644039707) SUCCESS on the same code/test head.
+- Results: **282 Python tests + 68 subtests**, **21 Node tests**, **64 Playwright Chromium tests**; npm audit reports **0 vulnerabilities**; production build, generated-data freshness and independent IPA-gold structural validator pass.
+- The shared projection is verified for the explicit 31-case contract. It does not establish complete parser-object parity for every possible Myanmar sequence or all language extensions.
+
+### Task ledger and evidence limits
+
+- Shared Python/browser structural projection v1 for 31 explicit cases — **DONE_VERIFIED**.
+- Contextual ASAT coda parity, including Unicode canonical reordering — **DONE_VERIFIED** for the covered forms.
+- Unicode 17 Table 16-4 parser coverage — **PARTIAL**: common Modern Burmese ordering is mapped and adversarially tested; full sequence permutation coverage and other Myanmar-script languages/extensions remain outside the implemented Burmese inventory.
+- Complete Python/browser structural and phonological parity — **PARTIAL**: the projection is a shared selected-field contract, not a proof that all parser internals or G2P rules are identical.
+- Independent IPA annotation/adjudication — **DEFERRED** per project-owner direction on 2026-11-14. Continue with existing published evidence and source registries only. This does not convert proposed rules into gold labels and does not permit an accuracy claim; independent adjudicated IPA gold remains 0 and empirical accuracy remains null.
+- No new phonological realization, IPA mapping or Ukrainian mapping was introduced by this continuation.
+- Repository readiness remains **PARTIAL PROTOTYPE**, not release-ready.
+
+
+## Continuation — terminal optional G2P diagnostic results — 2026-11-14
+
+- Optional workflow [43644381879](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43644381879) completed successfully on exact head `c8c7583d8aa335d17c616ca40c3318f5ef7d15d2`. All three jobs passed: pinned CRF baseline, pinned Google Burmese Thrax/OpenFst build + IPA symbol-table invariant + raw-output smoke, and Epitran raw-output.
+- Google Thrax/OpenFst diagnostic: 6/6 structural probes returned outputs; 0 runtime errors; independent gold count 0; accuracy `null`. Report SHA-256: `4cc5260e9def68f4c2a90b84ae0c8ab72fd212129348b37d5b060034a1b91ad9`.
+- CRF diagnostic: 100/100 predictions returned; 84/100 source-concordant rows; gold count 0; scoring status `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`; accuracy `null`. This is not a measured accuracy or held-out evaluation.
+- Epitran 1.35.3 raw-output job completed and uploaded its report; no gold-scored evaluation was performed.
+- Uploaded evidence artifacts (available until 2027-02-12 for Google/CRF and 2027-02-12 for Epitran): Google artifact SHA-256 `6315f8ab0b63be26a83f2cd30a2327e65c166e32ebda90c9bc69c5f3afa39399`; CRF `d91d42802ef5ca99c9ab192495a40782a05f8e3eb59801d623c485e111f36817`; Epitran `0574361cfe7b2bc817204debe0608b84f64ddbf68ecfc53299527c1e1fb69696`.
+- **Task ledger:** optional pinned Google FST raw-output build/smoke — DONE_VERIFIED; optional CRF/Epitran diagnostic execution and artifact upload — DONE_VERIFIED; comparative phonetic accuracy, model selection and runtime adoption — PARTIAL/BLOCKED by zero independent IPA gold and possible CRF training overlap. No model was promoted into production and no phonetic accuracy is claimed.
+- This terminal result supersedes the earlier note that run `43644381879` was still in progress. The required CI on the same head remains successful. Repository readiness remains **PARTIAL PROTOTYPE**, not linguistically release-ready.
+
+
+### Source-scoped onset and medial evidence matrix — 2026-11-15
+
+The new `data/burmese/onset_cluster_evidence.csv` records 13 source-linked constraints and descriptive observations. It is deliberately not a binary list of every possible legal/illegal consonant pair:
+
+- Green's major-syllable analysis permits C or C+glide onsets; his minor-syllable analysis excludes complex onsets. The latter is a type-conditioned prohibition, not a global ban on clusters.
+- Green's foot-initial cluster analysis and onset simplification in reducing compounds are prosodic/morphological claims. They cannot be enforced by an orthographic grapheme parser without a prosodic and lexical analysis.
+- Green's /mj/ examples attest a glide-bearing onset but do not identify a unique Unicode medial sign.
+- Ishida's modern descriptive notes distinguish default YA/RA /j/ from velar-conditioned palatalization, WA's /w/ vs /ʊ/ contexts, and HA's aspiration/devoicing or selected /ʃ/ outcomes. These do not justify mechanical segment concatenation.
+- Hlaing's medial combinations are orthographic evidence only. STEDT's Written Burmese and historical Rangoon inventories remain separate source profiles and are not collapsed into a single modern Yangon rule.
+- The matrix uses existing source and claim IDs, a dedicated JSON Schema, and regression tests. Every row has `runtime_status=WITHHELD`; no new IPA or Ukrainian output was enabled.
+
+**Acceptance boundary:** DONE_VERIFIED for the source-linked evidence matrix and its integrity tests; PARTIAL for exhaustive segmental cluster legality, lexical distribution and profile-specific runtime rules. No source inspected in this pass supplies a complete modern onset × medial × rime legality table.
+
+
+### Cross-source phonology terminology reconciliation — 2026-11-15
+
+The evidence matrix now has a dedicated terminology table covering tone, checked/killed, creaky phonation, phonemic vowel length vs measured duration, consonantal spread-glottis, nasal /N/, glides/medials and transcription conventions across Green, Watkins, Mooney & Repetti-Ludlow, Duan & Zhu and Repetti-Ludlow. Key guardrails: (1) checked/killed labels do not collapse the segmental /ʔ/ coda and tone category; (2) Green's non-phonemic predictable vowel length is not the same measure as experimental duration cues; (3) voiceless sonorant spread-glottis is consonantal, not lower/breathy vowel register; (4) /N/, orthographic ASAT and surface nasalization remain distinct; (5) four- and eight-tone analyses are not averaged.
+
+Duan & Zhu's full text is now inspected and the previous abstract-only wording is superseded. Its five-speaker sample is mixed-region (Yangon, Taunggyi, Mandalay region), 89 words / 694 valid tokens; no audio was accessed. The article remains a competing analysis, not project consensus.
+
+### Verification update — 2026-11-15
+
+The source-scoped onset/medial matrix and cross-source terminology table are now present and verified on the exact code/data/test head. Required code/data/test CI [43647671663](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43647671663) passed: 286 Python tests + 68 subtests, 21 Node tests, 64 Playwright Chromium tests, zero npm vulnerabilities, production build, generated-data freshness and IPA-gold structural validator. The evidence matrix is DONE_VERIFIED as a source-linked artifact; exhaustive modern Yangon cluster legality and phonological runtime coverage remain PARTIAL. No IPA or Ukrainian mapping was promoted.
+
+### Optional diagnostics — terminal status
+
+Workflow 43647671628 has now completed successfully on the code/data/test head: Epitran, CRF and pinned Google Thrax/OpenFst all passed. Google returned 6/6 outputs and 0 runtime errors; CRF returned 100/100 predictions with 84 source-concordant rows. Both have zero independent gold and null accuracy; CRF remains unscored due possible training overlap. Artifact IDs/digests and expiry are recorded in the master handoff and execution matrix. No engine was promoted.
+
+
+### Continuation — source-scoped rime and prosody evidence — 2026-11-15
+
+Added an 11-row `data/burmese/rime_prosody_evidence.csv`, JSON Schema and regression suite. The matrix records Green 2005's source-specific open/closed rime restrictions, diphthong/coda distribution, nasal-rhyme tone restriction, placeless /N/ realization and quantity/duration distinction. It also records Mooney & Repetti-Ludlow 2021's open/closed vowel sets, sonority-based centralization/diphthongization analysis, isolation vs sentential tone-cue differences, nasal/oral observations and one-speaker Yangon scope.
+
+The new rows link to seven source claims and all remain `WITHHELD`. This is a source-grounded evidence matrix, not a full lexical rime inventory, IPA gold set, or runtime rule table. Exact-head CI is pending; do not mark DONE_VERIFIED until it passes. No IPA or Ukrainian mapping was promoted.
+
+
+Printed-page verification correction: Green 2005's Table (9) and §2.2 page images resolve the OCR ambiguity. The open-only mid monophthongs are /e, o, ɔ/; /ɛ/ occurs open or before /ʔ/, but not before /N/. Added a separate source claim, evidence row and regression assertion. The evidence matrix now has 12 rows; no runtime mapping was enabled.
