@@ -1,26 +1,58 @@
 /**
- * Static-site hybrid orchestrator. All providers run locally in the browser.
- * The deterministic project result remains canonical. Epitran candidates are
- * computed per parsed segment; Google WFST is run over contiguous Myanmar runs
- * so its word/syllable context is not destroyed by the UI segmenter.
- * External outputs are compared and surfaced, never auto-promoted without
- * independent profile-matched IPA adjudication.
+ * Static-site IPA-first hybrid orchestrator.
+ *
+ * Structural parsing remains upstream. Every pronunciation candidate is kept
+ * as a typed IPA result; only the evidence-gated project result can currently
+ * become canonical. The canonical IPA is then passed through the one Ukrainian
+ * IPA adapter. External engines never vote or silently replace unknowns.
  */
 import { epitranMya } from "./epitran-mya.js";
 import { renderUkrainian } from "./ukrainian-adapter.js";
 import { transduceWfst } from "./wfst-runtime.js";
 import { transduceGoogleBurmese } from "./google-wfst-input.js";
 
-function normalizeCandidate(ipa) { return String(ipa).normalize("NFC").replace(/\s+/gu, ""); }
-
 const STATUS_RANK = {
   ESTABLISHED: 0, WELL_SUPPORTED: 1, PROPOSED: 2, PROVISIONAL: 3,
-  ANALYSIS_DEPENDENT: 4, NOT_ESTABLISHED: 5, UNSUPPORTED: 6,
+  ANALYSIS_DEPENDENT: 4, NOT_ESTABLISHED: 5, UNSUPPORTED: 6, UNCERTAIN: 7,
 };
+const TONE_MARKS = /[\u0300\u0301\u0302\u0303\u0304\u030c]/gu;
+function normalizedIpa(ipa) {
+  return String(ipa || "").normalize("NFD").replace(/[\s.·]/gu, "");
+}
+function segmentalIpa(ipa) {
+  return normalizedIpa(ipa).replace(TONE_MARKS, "");
+}
+function toneSignature(ipa) {
+  return (normalizedIpa(ipa).match(TONE_MARKS) || []).join("");
+}
+export function compareIpaCandidates(left, right) {
+  const a = normalizedIpa(left), b = normalizedIpa(right);
+  if (!a || !b) return { relation: "NOT_COMPARABLE", segmental: "NOT_COMPARABLE", prosody: "NOT_COMPARABLE" };
+  if (a === b) return { relation: "AGREEMENT", segmental: "AGREEMENT", prosody: "AGREEMENT" };
+  if (segmentalIpa(a) === segmentalIpa(b)) {
+    const at = toneSignature(a), bt = toneSignature(b);
+    return {
+      relation: "SEGMENTAL_AGREEMENT_PROSODY_DIFFERENCE",
+      segmental: "AGREEMENT",
+      prosody: !at || !bt ? "TONE_UNDERSPECIFIED_BY_ONE_CANDIDATE" : "TONE_DIVERGENCE",
+    };
+  }
+  return { relation: "DIVERGENCE", segmental: "DIVERGENCE", prosody: "NOT_COMPARABLE" };
+}
 function aggregate(statuses, fallback = "NOT_ESTABLISHED") {
   if (!statuses.length) return fallback;
   return statuses.reduce((worst, item) =>
     (STATUS_RANK[item] ?? 5) > (STATUS_RANK[worst] ?? 0) ? item : worst, "ESTABLISHED");
+}
+function typedCandidate(provider, ipa, status, provenance = {}, profile = "UNSPECIFIED") {
+  return {
+    kind: "IPA_CANDIDATE", notation: "IPA", provider, raw: ipa,
+    normalized: normalizedIpa(ipa), status, profile, provenance,
+  };
+}
+function adaptationFor(ipa) {
+  if (!ipa) return { text: "", status: "NOT_ESTABLISHED", parts: [], prosody: [] };
+  return renderUkrainian(ipa);
 }
 
 export function analyzeHybrid(segments, googleModel = null) {
@@ -31,26 +63,40 @@ export function analyzeHybrid(segments, googleModel = null) {
       && ["ESTABLISHED", "WELL_SUPPORTED"].includes(segment.status);
     const epitran = epitranMya(segment.raw, { tones: true });
     const epitranCandidate = epitran.complete && epitran.ipa ? epitran.ipa : null;
+    const externalCandidates = epitranCandidate ? [{
+      provider: "EPITRAN_PORT", ipa: epitranCandidate,
+      typed: typedCandidate("EPITRAN_PORT", epitranCandidate, "PROVISIONAL",
+        { engine: "Epitran 1.35.3 Burmese mapping port", tones_requested: true }),
+    }] : [];
     const candidateAdaptations = epitranCandidate ? [{
       provider: "EPITRAN_PORT", ipa: epitranCandidate,
-      ukrainian: renderUkrainian(epitranCandidate), status: "PROVISIONAL",
+      ukrainian: adaptationFor(epitranCandidate), status: "PROVISIONAL",
     }] : [];
+    const selectedIpa = deterministicEstablished ? deterministicIpa : null;
+    const selectedAdaptation = adaptationFor(selectedIpa);
     return {
       segment, passthrough: false, deterministicIpa, deterministicStatus: segment.status,
       deterministicEstablished, epitran, epitranCandidate, google: { status: "NOT_RUN", ipa: null },
-      googleCandidate: null, externalCandidates: epitranCandidate
-        ? [{ provider: "EPITRAN_PORT", ipa: epitranCandidate }] : [],
-      candidateAdaptations, agreement: "NOT_COMPARABLE",
-      selectedIpa: deterministicEstablished ? deterministicIpa : null,
+      googleCandidate: null, externalCandidates, candidateAdaptations,
+      selectedIpa,
+      selectedPhoneticResult: selectedIpa
+        ? typedCandidate("PROJECT_RULES", selectedIpa, segment.status,
+          { engine: "project deterministic browser rules", source_status: segment.status })
+        : null,
+      selectedAdaptation,
       selectedSource: deterministicEstablished ? "PROJECT_RULES" : "UNRESOLVED",
-      selectedStatus: deterministicEstablished ? (segment.uk?.status || segment.status) : "NOT_ESTABLISHED",
+      ipaStatus: deterministicEstablished ? segment.status : "NOT_ESTABLISHED",
+      ukrainianStatus: selectedIpa ? selectedAdaptation.status : "NOT_ESTABLISHED",
+      selectedStatus: selectedIpa ? aggregate([segment.status, selectedAdaptation.status]) : "NOT_ESTABLISHED",
+      agreement: "NOT_COMPARABLE", comparison: { relation: "NOT_COMPARABLE" },
+      comparisonScope: "DIALECT_PROFILE_UNVERIFIED",
+      profileStatus: "NOT_ESTABLISHED",
       promotionPolicy: "WITHHELD_PENDING_INDEPENDENT_PROFILE_MATCHED_IPA_GOLD",
     };
   });
 
-  // Invoke Google once per contiguous Myanmar run, preserving context. Its
-  // syllable separator "." is used for per-segment alignment only when counts
-  // match the structural parser; otherwise retain a word-level candidate.
+  // Google is run once per contiguous Myanmar run so its word context survives
+  // UI segmentation. Dot boundaries are used only when counts align exactly.
   for (let start = 0; start < records.length;) {
     if (records[start].passthrough) { start++; continue; }
     let end = start;
@@ -64,10 +110,14 @@ export function analyzeHybrid(segments, googleModel = null) {
           const item = records[index], candidate = pieces[index - start];
           item.google = { ...googleRun, ipa: candidate, alignment: "SYLLABLE_ALIGNED" };
           item.googleCandidate = candidate;
-          item.externalCandidates.push({ provider: "GOOGLE_WFST", ipa: candidate });
+          item.externalCandidates.push({
+            provider: "GOOGLE_WFST", ipa: candidate,
+            typed: typedCandidate("GOOGLE_WFST", candidate, "PROVISIONAL",
+              googleRun.provenance || { engine: "Google Burmese Thrax/OpenFst static model" }),
+          });
           item.candidateAdaptations.push({
             provider: "GOOGLE_WFST", ipa: candidate,
-            ukrainian: renderUkrainian(candidate), status: "PROVISIONAL",
+            ukrainian: adaptationFor(candidate), status: "PROVISIONAL",
           });
         }
       } else {
@@ -86,28 +136,46 @@ export function analyzeHybrid(segments, googleModel = null) {
   for (const item of records) {
     if (item.passthrough) continue;
     const candidates = [
-      item.deterministicEstablished ? item.deterministicIpa : null,
-      ...item.externalCandidates.map((candidate) => candidate.ipa),
-    ].filter(Boolean);
-    item.agreement = candidates.length < 2 ? "NOT_COMPARABLE"
-      : candidates.every((candidate) => normalizeCandidate(candidate) === normalizeCandidate(candidates[0])) ? "AGREEMENT" : "DIVERGENCE";
+      ...(item.deterministicEstablished ? [{ provider: "PROJECT_RULES", ipa: item.deterministicIpa }] : []),
+      ...item.externalCandidates,
+    ].filter((candidate) => candidate.ipa);
+    if (candidates.length < 2) {
+      item.agreement = "NOT_COMPARABLE";
+      item.comparison = { relation: "NOT_COMPARABLE" };
+    } else {
+      const comparisons = candidates.slice(1).map((candidate) =>
+        compareIpaCandidates(candidates[0].ipa, candidate.ipa));
+      item.comparison = comparisons[0];
+      item.agreement = comparisons.every((value) => value.relation === "AGREEMENT")
+        ? "AGREEMENT"
+        : comparisons.some((value) => value.relation === "DIVERGENCE")
+          ? "DIVERGENCE"
+          : comparisons.some((value) => value.relation === "SEGMENTAL_AGREEMENT_PROSODY_DIFFERENCE")
+            ? "SEGMENTAL_AGREEMENT_PROSODY_DIFFERENCE" : "NOT_COMPARABLE";
+    }
   }
 
   const phonetic = records.filter((item) => !item.passthrough);
-  const status = aggregate(phonetic.map((item) => item.selectedStatus), phonetic.length ? "NOT_ESTABLISHED" : "UNSUPPORTED");
+  const ipaStatus = aggregate(phonetic.map((item) => item.ipaStatus),
+    phonetic.length ? "NOT_ESTABLISHED" : "UNSUPPORTED");
+  const ukrainianStatus = aggregate(phonetic.map((item) => item.ukrainianStatus),
+    phonetic.length ? "NOT_ESTABLISHED" : "UNSUPPORTED");
+  const status = aggregate([ipaStatus, ukrainianStatus],
+    phonetic.length ? "NOT_ESTABLISHED" : "UNSUPPORTED");
   const hasGoogle = googleModel?.available === true;
   return {
-    ipa: records.map((item) => item.passthrough ? item.segment.raw : (item.segment.ipa || "?")).join(""),
+    ipa: records.map((item) => item.passthrough ? item.segment.raw : (item.selectedIpa || "?")).join(""),
     uk: records.map((item) => item.passthrough ? item.segment.raw
-      : (item.segment.uk?.text && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN"].includes(item.segment.uk.status)
-        ? item.segment.uk.text : "⟦" + item.segment.raw + "⟧")).join(""),
-    status, records,
+      : (item.selectedIpa && item.selectedAdaptation.text
+        && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN"].includes(item.selectedAdaptation.status)
+        ? item.selectedAdaptation.text : "⟦" + item.segment.raw + "⟧")).join(""),
+    status, ipaStatus, ukrainianStatus, records,
     providers: {
       project: "ACTIVE · conservative deterministic browser rules",
       epitran: "ACTIVE · Epitran 1.35.3 Burmese mapping port · diagnostic candidate",
       google: hasGoogle ? "ACTIVE · local Google Burmese WFST model" : "PENDING_MODEL · browser interpreter is ready; static FST graph not deployed",
     },
-    promotionPolicy: "External candidates remain visible but are not promoted to canonical IPA or Ukrainian output without independent profile-matched gold.",
+    promotionPolicy: "Only established project IPA is canonical; external candidates remain diagnostic until independent profile-matched gold is available.",
     usedExternalFallback: false,
   };
 }
