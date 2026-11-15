@@ -227,3 +227,19 @@ def test_any_colon_collision_has_multiple_lexical_attestations_and_preserves_sou
     claim = claims["CLM-WIKTIONARY-ANY-COLON-WORD-LEVEL-EXAMPLES-001"]
     assert all(word in claim["claim"] for word in ("စဉ်း", "ကျဉ်း", "ဖျဉ်း", "နည်း"))
     assert "primary MLC adjudication" in claim["claim"]
+
+
+def test_am_colon_historical_spelling_lead_is_not_modern_pronunciation_evidence():
+    sources = {row["source_id"]: row for row in read_rows("sources.csv")}
+    claims = {row["claim_id"]: row for row in read_rows("source_claims.csv")}
+    lexical = {row["mlcts"]: row for row in read_rows("romanization_rime_collision_lexical_audit.csv")}
+    source = sources["STJOHN_BURMESE_READER_1894"]
+    claim = claims["CLM-STJOHN-1894-AM-COLON-ORTHOGRAPHIC-ATTESTATION-001"]
+    assert source["year"] == "1894"
+    assert "generally followed the spelling as given by" in source["scope"]
+    assert claim["status"] == "DOCUMENTARY"
+    assert "historical orthographic attestation" in claim["claim"]
+    assert "no IPA pronunciation" in claim["claim"]
+    assert lexical["am:"]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY"
+    assert "St. John (1894)" in lexical["am:"]["interpretation"]
+    assert "not a modern MLC dictionary entry" in lexical["am:"]["interpretation"]

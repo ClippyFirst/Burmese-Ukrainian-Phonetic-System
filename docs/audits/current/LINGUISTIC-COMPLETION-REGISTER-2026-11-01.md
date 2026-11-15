@@ -2436,3 +2436,10 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - Added regression coverage for exact IPA/MLCTS forms and preservation of source-unit distinction.
 - Evidence remains secondary lexicographic transcription, not a controlled minimal pair or primary MLC adjudication. No runtime, IPA gold, Ukrainian mapping or generated data changed.
 - Pages inspected 2026-11-15: Wiktionary entries for စဉ်း, ကျဉ်း, ဖျဉ်း, အကျဉ်း and နည်း.
+
+
+## 2026-11-15 — historical orthographic lead for am:
+
+- Registered R. F. St. Andrew St. John, *A Burmese Reader* (1894), after locating the exact form `ကံး` in a vocabulary note with glosses including day/sun. The preface says the spelling generally follows Judson and acknowledges spelling variation among Burmese books.
+- Added documentary claim `CLM-STJOHN-1894-AM-COLON-ORTHOGRAPHIC-ATTESTATION-001` and updated the existing `am:` audit row with the historical locator and explicit evidence boundary.
+- This is not a modern MLC entry, MLCTS transcription or pronunciation record: no IPA is supplied. `am:` therefore remains `SECONDARY_ONE_SIDE_ONLY`; no runtime, IPA gold or Ukrainian mapping changed.

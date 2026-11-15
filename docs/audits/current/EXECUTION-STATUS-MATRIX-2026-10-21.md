@@ -2569,3 +2569,11 @@ The final data/test head `74dc298086292bd6cbaeb965eb1a6ad9e1926a74` passed workf
 | MLCTS `any:` collision, source units `ဉ်း;ည်း` | Four Wiktionary entries on `ဉ်း`: အကျဉ်း /ʔət͡ɕɪ́ɴ/, စဉ်း /sɪ́ɴ/, ကျဉ်း /t͡ɕɪ́ɴ/, ဖျဉ်း /pʰjɪ́ɴ/; opposite `ည်း` remains နည်း /nɛ́/ or /ní/ | Existing source claim and lexical audit updated; regression test checks all examples and preserves the two source-unit spellings | PARTIAL / secondary lexical evidence only; not a controlled minimal pair or primary MLC adjudication; no runtime/Ukrainian mapping promotion |
 
 The additional attestations expand coverage but do not resolve the primary MLC adjudication requirement.
+
+
+## Historical orthographic lead for am: — 2026-11-15
+
+| Area | Evidence extension | Validation | Status / boundary |
+|---|---|---|---|
+| MLCTS `am:` opposite source unit `ံး` | St. John (1894), *A Burmese Reader*, contains `ကံး` with English glosses including day/sun; preface states spelling generally follows Judson and acknowledges variation among Burmese books | Added source-registry record, documentary claim, audit interpretation and regression guard | PARTIAL / historical spelling only; no IPA, modern MLCTS or MLC adjudication; `am:` remains `SECONDARY_ONE_SIDE_ONLY`; no runtime/Ukrainian promotion |
+
