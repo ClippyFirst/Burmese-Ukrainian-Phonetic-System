@@ -2998,3 +2998,9 @@ A further consistency review found that the original TUFS source claim described
 - Added source records `MLC1996_REPRINT_CATALOG` and `MLC2019_REVISED_BIB` and documentary claims `CLM-MLC1996-PRONUNCIATION-AID-001` / `CLM-MLC2019-REVISED-EDITION-001`. Updated external corpus/source triage with the access routes and acceptance boundary.
 - Next acceptance step: inspect the 1996 edition's transcription key and sample entries (or confirm field continuity in 2019), record exact page/headword and edition, and determine whether the notation is phonetic/phonemic/orthographic before using it. No entry, IPA value, runtime rule, Ukrainian mapping or gold label was inferred from catalogue metadata.
 - Sources: [Dunwoody Press](https://www.thedunwoodypress.com/product-page/myanmar-english-dictionary), [National Diet Library](https://ndlsearch.ndl.go.jp/en/books/R100000002-I000003254368), [Cinii 1993 holdings](https://ci.nii.ac.jp/ncid/BA24767941), [Cinii 2019 edition](https://ci.nii.ac.jp/ncid/BD10832446). Overall status remains PARTIAL PROTOTYPE.
+
+
+
+## 2026-11-15 — canonical registry count reconciliation after MLC bibliographic additions
+
+A fresh parse of the current branch's canonical CSVs (not historical snapshots) reports **96 source records / 207 source claims / 25 rime-collision groups**. All source IDs and claim IDs are unique; every claim's `source_id` resolves to a registered source. Current rime-group status distribution: **15 SECONDARY_SYSTEM_EQUIVALENCE / 5 SECONDARY_ONE_SIDE_ONLY / 3 SECONDARY_SOURCE_DISTINCTION / 1 SECONDARY_SOURCE_CONFLICT / 1 SPECIAL_NONRIME_CONTEXT_DEPENDENT**. The two new MLC bibliographic source records and two documentary claims are included in those totals. Historical 80/164 or 80/172 counts in earlier entries are time-scoped snapshots, not current totals. This structural parse is not a substitute for the repository's full Python/schema test suite.
