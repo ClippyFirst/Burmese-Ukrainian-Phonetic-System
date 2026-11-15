@@ -846,3 +846,32 @@ The paper documents a potentially useful 42 h 39 min / 307-speaker audio corpus,
 - **DONE_VERIFIED (CI):** Python and Node test steps, production build, and Playwright built-site suite completed successfully; Playwright reported 70 passed. Deploy job successfully fetched pages, JS/CSS, Mya2Rom assets and the WFST model.
 - **Still BLOCKED/PARTIAL:** independent profile-matched IPA gold remains 0; dialect profile of upstream Google model is unspecified; Epitran is a narrow mapping/postprocessor port, not full Python/PanPhon; Python/browser parity against independent gold is not established; manual screen-reader/real-device accessibility QA remains outstanding.
 - **Release classification:** deployed research prototype / partial linguistic system. The site is live with a real hybrid browser engine, but it is not a linguistically validated or accuracy-certified transcription engine.
+
+
+## 2026-11-15 — end-to-end IPA-first hybrid correction
+
+Starting default-branch commit: `8aa91f3aa289b18fccd4dee338849b843441c1fc`.
+Work branch: `fix/ipa-first-hybrid-pipeline-2026-11-15`.
+
+### Verified code finding
+
+The previous browser render path called `analyzeHybrid()` but continued to render `convert()`'s pre-hybrid `r.ipa` and `r.uk`. Per-segment diagnostics showed provider candidates, but the orchestrator's selected result was not the source of the main IPA/Ukrainian fields. This was an integration defect, not merely missing linguistic gold.
+
+### Changes on this branch
+
+- `src/web/hybrid-engine.js`: canonical selected IPA is represented as a typed `IPA_CANDIDATE`; the selected IPA is sent through `renderUkrainian()`; IPA and Ukrainian adaptation statuses are separate; unresolved inputs are withheld; external candidates remain provisional and are never voted/promoted.
+- `src/web/app.js`: main output, statuses and per-syllable display now consume the hybrid result; no longer render the old pre-hybrid output as canonical.
+- `tests/web/hybrid-engine.test.mjs`: added tests for the IPA → Ukrainian adapter boundary, unresolved withholding, tone-only differences and unverified dialect profile.
+- `docs/hybrid-engines.md`: records the architecture, scope and research constraints.
+
+### Research interpretation
+
+The 2020 Burmese speech corpus paper describes a Yangon-recorded speech corpus with word-level transcription, but not a phoneme-labelled gold lexicon [Oo20]. Its Google Thrax grammar is an IPA-producing FST and has a defined tone-related vowel inventory; the corpus and grammar must not be conflated. Watkins 2001 describes one Rangoon consultant and four non-reduced tone categories whose correlates include pitch, phonation and length [Wat01]. Hla14's 99.93% figure concerns orthographic syllable segmentation, not phonetic G2P [Hla14]. Thu16's reported MLC dictionary G2P experiments do not grant redistribution rights to the underlying lexical entries [Thu16].
+
+### Verification record
+
+- GitHub default branch at start: `8aa91f3aa289b18fccd4dee338849b843441c1fc`.
+- Feature branch created from `main`.
+- Code/test files updated through GitHub Contents API. Exact-head workflow and runtime tests have not yet been observed; do not mark this work DONE_VERIFIED until CI completes.
+- Local tests were not run because this connector session exposes repository read/write operations but no local checkout/command runner.
+- Remaining genuine blockers: independent profile-matched IPA adjudication (0 records), provider dialect equivalence, full phonological coverage and any source/license permissions not explicitly established.
