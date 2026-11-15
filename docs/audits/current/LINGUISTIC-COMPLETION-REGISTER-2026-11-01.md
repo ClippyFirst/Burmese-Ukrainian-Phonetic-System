@@ -2625,3 +2625,11 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - These outcomes verify diagnostic execution only. They do not provide independent accuracy evidence, do not resolve potential CRF training overlap, and do not authorize any engine for production. IPA-gold validator reports zero adjudicated records / `NOT_READY_NO_ADJUDICATED_GOLD`.
 - Ledger: DONE_VERIFIED — exact-head required engineering CI and optional diagnostic execution/build/smoke gates. BLOCKED — empirical G2P scoring until independent expert-adjudicated IPA gold is populated and overlap-free evaluation is defined. Repository remains PARTIAL PROTOTYPE, not linguistically release-ready.
 - No runtime rule, IPA annotation, Ukrainian mapping, merge, release, deployment or `main` change was made.
+
+
+## 2026-11-15 — Waxman (2018) secondary characterization of MED transcription
+
+- Registered Nathan A. Waxman's conference abstract “The Myanmar English Dictionary (MED) at 25: Trends in Burmese Lexicography for the Anglophone World” (13th International Burma Studies Conference, 2018, p.49) as `WAXMAN2018_MED_AT_25`, with one documentary claim `CLM-WAXMAN2018-MED-TRANSCRIPTION-CHARACTER-001`.
+- The abstract characterizes the 1993 MED transcription system as novel and arguably more phonologically transparent, channeling tonal graphemic elements of Burmese script. This adds a secondary description of the dictionary's design intent, but does not reveal the notation key, exact tonal symbols, lexical entries, or whether its transcription is IPA, MLCTS2, or another system. The full paper and dictionary pages were not inspected. Do not treat this as an implementation specification or as evidence that the MED notation is identical to IPA/MLCTS2.
+- Added a regression test asserting source/claim linkage and the secondary-only, non-operational evidence boundary. No runtime rule, IPA label, Ukrainian mapping or gold annotation changed.
+- Source: https://www.centerforburmastudies.com/uploads/5/2/1/8/52185987/abstracts_template_final_draft_7-30.pdf (conference abstract, p.49).
