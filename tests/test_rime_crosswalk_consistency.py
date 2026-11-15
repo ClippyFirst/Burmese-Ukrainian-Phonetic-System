@@ -243,3 +243,19 @@ def test_am_colon_historical_spelling_lead_is_not_modern_pronunciation_evidence(
     assert lexical["am:"]["evidence_status"] == "SECONDARY_ONE_SIDE_ONLY"
     assert "St. John (1894)" in lexical["am:"]["interpretation"]
     assert "not a modern MLC dictionary entry" in lexical["am:"]["interpretation"]
+
+
+def test_im_collision_pali_component_attestation_preserves_ipa_provenance():
+    rows = {row["mlcts"]: row for row in read_rows("romanization_rime_collision_lexical_audit.csv")}
+    claims = {claim["claim_id"]: claim for claim in read_rows("source_claims.csv")}
+    row = rows["im"]
+    claim = claims["CLM-WIKTIONARY-IM-ANUSVARA-COMPONENT-001"]
+    assert row["evidence_status"] == "SECONDARY_SYSTEM_EQUIVALENCE"
+    assert "တာဝတိံသာ" in row["observed_ipa"]
+    assert "/tàwa̰tèɪɴθà/" in row["observed_ipa"]
+    assert "Pali-derived proper noun" in row["interpretation"]
+    assert "Wiktionary's IPA is contributor-supplied" in row["acceptance_boundary"]
+    assert claim["source_id"] == "MYWIKTIONARY2026"
+    assert claim["status"] == "DOCUMENTARY"
+    assert "not an MLC pronunciation field" in claim["claim"]
+    assert "not a native minimal pair" in claim["claim"]

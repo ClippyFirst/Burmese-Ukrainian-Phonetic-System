@@ -2923,3 +2923,8 @@ Wiktionary follow-up added three word-level entries on the `ဉ်း` side: စ
 ## Historical spelling lead for MLCTS am: — 2026-11-15
 
 A targeted search found a historical orthographic occurrence of `ကံး` in R. F. St. Andrew St. John, *A Burmese Reader* (1894). The vocabulary note gives English glosses including “day” and “sun”. The preface says the author generally followed Judson spelling and explicitly notes variation among Burmese books. This is therefore recorded as a historical spelling lead only: it supplies no IPA, modern MLCTS form, modern MLC dictionary adjudication, or evidence of present-day Yangon pronunciation. The source registry, source-claim ledger, `am:` audit interpretation and regression test now preserve this distinction. The `am:` row remains `SECONDARY_ONE_SIDE_ONLY`; no runtime or Ukrainian mapping promotion is permitted. Source: https://www.highlightcomputer.com/A%20Burmese%20reader.pdf (1894; inspected 2026-11-15).
+
+
+## Additional secondary component attestation for MLCTS im — 2026-11-15
+
+A Wiktionary entry for the Pali-derived Burmese proper noun `တာဝတိံသာ` provides contributor-supplied IPA `/tàwa̰tèɪɴθà/` and MLCTS `tawa.timsa`; its Burmese spelling contains component `တိံ`, corresponding to the `ိံ` source unit in the `im` collision. The entry cites the Myanmar-English Dictionary (Myanmar Language Commission 1993), but the IPA displayed is Wiktionary's field, not an MLC transcription. This adds secondary lexical corroboration to the existing myG2P component-level records; it does not create a native minimal pair or primary MLC adjudication. The `im` status remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime or Ukrainian mapping promotion. Inspected 2026-11-15: https://en.wiktionary.org/wiki/တာဝတိံသာ.

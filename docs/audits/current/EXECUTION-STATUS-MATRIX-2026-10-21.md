@@ -2577,3 +2577,11 @@ The additional attestations expand coverage but do not resolve the primary MLC a
 |---|---|---|---|
 | MLCTS `am:` opposite source unit `ံး` | St. John (1894), *A Burmese Reader*, contains `ကံး` with English glosses including day/sun; preface states spelling generally follows Judson and acknowledges variation among Burmese books | Added source-registry record, documentary claim, audit interpretation and regression guard | PARTIAL / historical spelling only; no IPA, modern MLCTS or MLC adjudication; `am:` remains `SECONDARY_ONE_SIDE_ONLY`; no runtime/Ukrainian promotion |
 
+
+
+## Additional component attestation for im — 2026-11-15
+
+| Area | Evidence extension | Validation | Status / boundary |
+|---|---|---|---|
+| MLCTS `im`, source unit `ိံ` | Wiktionary `တာဝတိံသာ` gives contributor IPA `/tàwa̰tèɪɴθà/`, MLCTS `tawa.timsa`, and cites MLC Myanmar-English Dictionary (1993); the form contains component `တိံ` | Existing `im` row and source-claim ledger extended; regression test preserves component status and IPA provenance | PARTIAL / Pali-derived proper noun; secondary Wiktionary IPA, not MLC IPA; not native minimal pair or primary MLC adjudication; no runtime/Ukrainian promotion |
+

@@ -2443,3 +2443,10 @@ Exact-head closeout: workflow [43689588512](https://github.com/ClippyFirst/Burme
 - Registered R. F. St. Andrew St. John, *A Burmese Reader* (1894), after locating the exact form `ကံး` in a vocabulary note with glosses including day/sun. The preface says the spelling generally follows Judson and acknowledges spelling variation among Burmese books.
 - Added documentary claim `CLM-STJOHN-1894-AM-COLON-ORTHOGRAPHIC-ATTESTATION-001` and updated the existing `am:` audit row with the historical locator and explicit evidence boundary.
 - This is not a modern MLC entry, MLCTS transcription or pronunciation record: no IPA is supplied. `am:` therefore remains `SECONDARY_ONE_SIDE_ONLY`; no runtime, IPA gold or Ukrainian mapping changed.
+
+
+## 2026-11-15 — im collision component attestation
+
+- Added Wiktionary `တာဝတိံသာ` as a secondary lexical attestation for source unit `ိံ` in the `im` collision. The entry gives IPA `/tàwa̰tèɪɴθà/`, MLCTS `tawa.timsa`, and cites the MLC Myanmar-English Dictionary (1993); its spelling contains component `တိံ`.
+- Explicitly attributed IPA to Wiktionary, not MLC. The entry is a Pali-derived proper noun, not a native minimal pair; it supplements but does not replace the existing myG2P component evidence.
+- Added claim `CLM-WIKTIONARY-IM-ANUSVARA-COMPONENT-001`, updated the existing `im` audit row and added regression coverage. Status remains `SECONDARY_SYSTEM_EQUIVALENCE`; no runtime, IPA gold or Ukrainian mapping changed.
