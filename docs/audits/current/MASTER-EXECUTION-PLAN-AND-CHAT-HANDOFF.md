@@ -882,3 +882,20 @@ The 2020 Burmese speech corpus paper describes a Yangon-recorded speech corpus w
 The first IPA-first patch exposed a further semantic issue: a deterministic string such as `ka` can represent only the segmental skeleton while Burmese lexical tone/phonation/quantity remain unresolved. Canonical IPA selection now requires all three: (1) established project segmental IPA, (2) explicit established prosody status, and (3) an explicit profile ID. The browser parser currently supplies no profile-matched lexical tone annotation, so its simple `ka` result is retained as `SEGMENTAL_ONLY`, adapted only as a provisional preview, and withheld from the main output.
 
 This is supported by the scope-limited phonetic evidence: Watkins (2001) describes four non-reduced tone categories for one Rangoon consultant with pitch, phonation and length correlates [Wat01]; Oo et al. (2020) describe tone-related vowel distinctions in the Google Burmese G2P grammar [Oo20]. No lexical gold or dialect equivalence is inferred from either paper.
+
+
+## 2026-11-15 — consolidated IPA-first browser correction
+
+Feature branch: fix/ipa-first-hybrid-pipeline-2026-11-15 (PR #154, Draft). Starting main SHA: 8aa91f3aa289b18fccd4dee338849b843441c1fc.
+
+The actual UI bug was that the browser called analyzeHybrid() but still rendered the older convert() fields. The branch changes the UI to render hybrid.ipa and hybrid.uk, removes parser-side sy.uk and the duplicate pre-hybrid IPA/Ukrainian aggregate, and makes the hybrid orchestrator the only main phonetic output path. Selected typed IPA is sent through the shared Ukrainian adapter. External provider candidates retain provenance and remain provisional; no voting or fallback.
+
+A second safety issue was identified: simple internal strings such as ka may be segmental-only and lack established tone/phonation/quantity and profile information. Canonical selection now requires established segmental status, explicit prosodyStatus and a non-empty profileId; otherwise the project string is retained as a SEGMENTAL_ONLY candidate and the main IPA/Ukrainian result is withheld. The UI explains this and shows the provisional Ukrainian candidate via the IPA adapter.
+
+Tone-aware comparison distinguishes exact agreement, segmental agreement with a tone/prosody difference, and segmental divergence. Raw IPA retains tone marks; the segmental comparison key removes only selected tone diacritics and does not erase length or aspiration. Comparison remains diagnostic because provider dialect profiles are not proven equivalent.
+
+New research records: Gruber 2011 (10 Rangoon-origin listeners, one stimulus speaker; cue integration), Tian 2018 (context-conditioned grammatical induced creaky tone), Dellwo & Jenny 2020 (standard/southern cue-weighting difference, 10 speakers each; abstract only). Added three source claims and three withheld rows to the rime/prosody evidence dataset (18 total). Mooney & Repetti-Ludlow 2021 remains a tone-independent vowel/coda alternation analysis, not a tone decoder. No runtime rules or IPA gold rows were fabricated.
+
+Research search completed: https://app.undermind.ai/projects/c8f82304-2600-4e9c-b038-5e6ce16c84f2?path=%2Fanalysis%2FBurmese%20lexical%20tone%20inference%20and%20profile%20matched%20IPA%20validation. Its summary is metadata/abstract based; the project also inspected full PDFs for Watkins 2001, Oo et al. 2020, Gruber 2011 and Mooney & Repetti-Ludlow 2021. Tian 2018 and Dellwo & Jenny 2020 remain abstract/metadata evidence only.
+
+Verification: Python tests, npm tests, build, generated-data freshness and built-browser Playwright were run in GitHub Actions on successive branch heads. Some earlier heads failed because the new acceptance tests were being migrated and because the main UI still used the pre-hybrid fields; those failures were fixed. Exact latest-head green status must be rechecked before marking DONE_VERIFIED. No local checkout/command runner was available. PR #154 is Draft and not merged; the public GitHub Pages site still runs the deployed main version until merge and deployment.
