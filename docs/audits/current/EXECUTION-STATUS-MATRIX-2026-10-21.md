@@ -2519,3 +2519,12 @@ Implementation head: `481c26d6951d4795e16e239f9332c3e42f7d3f44`. CI is not yet c
 | Full accessibility QA | Existing labels, landmarks, focus-visible styling and live regions retained | Targeted keyboard/reduced-motion tests only | Limited static contrast sample: 8 selected text/focus pairs all ≥4.56:1; not a full-page audit | TODO | Screen reader, keyboard, zoom/reflow, mobile, and full state-by-state contrast checks; record browser/AT versions |
 
 Exact PR head `a415dc1a89c7d9cf06a78896e3dcab3bb3824004`, tested merge ref `c559d4d0bbb88c44f7cd64bf199014b26b23d556`. Required workflow [43690500850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43690500850) SUCCESS: 291 Python + 68 subtests, 21 Node, 67 Playwright Chromium, npm audit 0 vulnerabilities, build and generated-data freshness pass. IPA gold remains zero. No WCAG conformance claim.
+
+
+## Additional source-scoped rime crosswalk — 2026-11-15
+
+| Layer / acceptance gate | Implemented coverage | Tested coverage | Independently validated coverage | Status | Next acceptance criterion |
+|---|---|---|---|---|---|
+| TUFS open/nasal/checked rime crosswalk | Three additional rows in `data/burmese/rime_prosody_evidence.csv`; explicit `documentary_crosswalk` evidence type distinguishes notation correspondence from experimental/source phonology | Regression test asserts separate open, nasal-closed and checked-closed records, MED notation distinction, /ɴ/ vs /ʔ/, and runtime withholding | Published TUFS module Section 1.3 table 2 inspected; university module is a secondary phonetics reference, not direct MED dictionary extraction | PARTIAL / CI PENDING | Exact-head hosted CI; independently adjudicated lexical coverage and source-profile reconciliation remain outstanding |
+
+No runtime or generated data was changed. All 15 rows remain WITHHELD.
