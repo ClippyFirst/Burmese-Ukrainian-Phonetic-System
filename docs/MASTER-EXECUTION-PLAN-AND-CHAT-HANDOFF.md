@@ -2846,3 +2846,15 @@ The optional workflow [43689588524](https://github.com/ClippyFirst/Burmese-Ukrai
 - Epitran **1.35.3**: all six structural probes emitted raw output; expected IPA remains empty and all comparisons are unscored. Report records zero eligible verified gold and null exact-match accuracy. Artifact ID `14151438782`, digest `sha256:2ab261cf68a6078f0428575c6d0c8ec2264e640486cb7e98c11a3b585afc68e1`, expires 2027-02-13.
 
 The three ZIP artifacts were downloaded and their JSON payloads inspected. This confirms reproducible build/execution and exposes candidate disagreement, not correctness. Do not calculate an accuracy from source concordance, promote any output to IPA gold, enable an external engine in runtime, or use these results to derive Ukrainian mappings. The optional workflow is now fully closed; the required exact-head CI remains the separate acceptance evidence for the implementation batch.
+
+
+## Accessibility continuation — keyboard navigation and reduced motion — 2026-11-15
+
+Implemented a small, targeted accessibility improvement in the two public HTML entry pages:
+- `index.html` and `system.html` now expose a first-in-tab-order skip link, “Перейти до основного вмісту”, targeting the main landmark. The main landmark has `id="main-content"` and `tabindex="-1"` so fragment navigation can move keyboard focus to it.
+- `src/web/styles.css` reveals the skip link only on keyboard focus, gives it a visible high-contrast focus outline, and retains the existing `prefers-reduced-motion: reduce` override that disables smooth scrolling.
+- `tests/browser/converter.spec.js` adds three Playwright cases: keyboard skip navigation on the converter page, reduced-motion computed scroll behavior, and skip navigation on the methodology page.
+
+Current branch head after these changes: `481c26d6951d4795e16e239f9332c3e42f7d3f44` (1085 ahead / 0 behind main). File-level verification through GitHub confirms both pages contain the skip link and focusable main target, the shared stylesheet contains the focus-only skip-link rule and reduced-motion media query, and the browser suite contains all three regression cases. The required workflow run is not yet exposed for this exact head (commit workflow lookup returned no runs; combined commit status has not been verified as successful). Do not mark this acceptance gate DONE_VERIFIED until hosted CI passes.
+
+**Status:** implementation present; automated regression coverage authored; acceptance **PARTIAL / CI PENDING**. Manual screen-reader, mobile viewport, zoom/reflow and deployed visual QA remain TODO; no claim of WCAG conformance is made. The change does not alter conversion behavior or phonological mappings.
