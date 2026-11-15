@@ -59,8 +59,20 @@ export function analyzeHybrid(segments, googleModel = null) {
   const records = segments.map((segment) => {
     if (segment.nonMyanmar) return { segment, passthrough: true };
     const deterministicIpa = segment.ipa || null;
+    const prosodyStatus = segment.prosodyStatus || segment.toneStatus || "NOT_ESTABLISHED";
+    const profileId = segment.profileId || null;
+    // A segmental onset+rime string is not complete Burmese IPA without an
+    // established tone/phonation/quantity analysis for an explicit profile.
     const deterministicEstablished = Boolean(deterministicIpa)
-      && ["ESTABLISHED", "WELL_SUPPORTED"].includes(segment.status);
+      && ["ESTABLISHED", "WELL_SUPPORTED"].includes(segment.status)
+      && ["ESTABLISHED", "WELL_SUPPORTED"].includes(prosodyStatus)
+      && Boolean(profileId);
+    const projectCandidate = deterministicIpa ? typedCandidate(
+      "PROJECT_RULES", deterministicIpa,
+      deterministicEstablished ? segment.status : "PARTIAL",
+      { engine: "project deterministic browser rules", prosody_status: prosodyStatus },
+      profileId || "UNSPECIFIED",
+    ) : null;
     const epitran = epitranMya(segment.raw, { tones: true });
     const epitranCandidate = epitran.complete && epitran.ipa ? epitran.ipa : null;
     const externalCandidates = epitranCandidate ? [{
@@ -68,15 +80,23 @@ export function analyzeHybrid(segments, googleModel = null) {
       typed: typedCandidate("EPITRAN_PORT", epitranCandidate, "PROVISIONAL",
         { engine: "Epitran 1.35.3 Burmese mapping port", tones_requested: true }),
     }] : [];
-    const candidateAdaptations = epitranCandidate ? [{
+    const candidateAdaptations = [];
+    if (projectCandidate && !deterministicEstablished) candidateAdaptations.push({
+      provider: "PROJECT_RULES_SEGMENTAL", ipa: deterministicIpa,
+      ukrainian: adaptationFor(deterministicIpa), status: "PROVISIONAL",
+      completeness: "SEGMENTAL_ONLY", reason: "TONE_OR_PROFILE_NOT_ESTABLISHED",
+    });
+    if (epitranCandidate) candidateAdaptations.push({
       provider: "EPITRAN_PORT", ipa: epitranCandidate,
       ukrainian: adaptationFor(epitranCandidate), status: "PROVISIONAL",
-    }] : [];
+    });
     const selectedIpa = deterministicEstablished ? deterministicIpa : null;
     const selectedAdaptation = adaptationFor(selectedIpa);
     return {
       segment, passthrough: false, deterministicIpa, deterministicStatus: segment.status,
-      deterministicEstablished, epitran, epitranCandidate, google: { status: "NOT_RUN", ipa: null },
+      deterministicEstablished, prosodyStatus, profileId, projectCandidate,
+      phoneticCompleteness: deterministicEstablished ? "PROFILE_COMPLETE" : deterministicIpa ? "SEGMENTAL_ONLY" : "UNKNOWN",
+      epitran, epitranCandidate, google: { status: "NOT_RUN", ipa: null },
       googleCandidate: null, externalCandidates, candidateAdaptations,
       selectedIpa,
       selectedPhoneticResult: selectedIpa
@@ -85,12 +105,17 @@ export function analyzeHybrid(segments, googleModel = null) {
         : null,
       selectedAdaptation,
       selectedSource: deterministicEstablished ? "PROJECT_RULES" : "UNRESOLVED",
-      ipaStatus: deterministicEstablished ? segment.status : "NOT_ESTABLISHED",
+      ipaStatus: deterministicEstablished ? segment.status
+        : deterministicIpa ? "ANALYSIS_DEPENDENT"
+          : ["UNSUPPORTED", "UNCERTAIN"].includes(segment.status) ? segment.status : "NOT_ESTABLISHED",
       ukrainianStatus: selectedIpa ? selectedAdaptation.status : "NOT_ESTABLISHED",
       selectedStatus: selectedIpa ? aggregate([segment.status, selectedAdaptation.status]) : "NOT_ESTABLISHED",
       agreement: "NOT_COMPARABLE", comparison: { relation: "NOT_COMPARABLE" },
       comparisonScope: "DIALECT_PROFILE_UNVERIFIED",
       profileStatus: "NOT_ESTABLISHED",
+      selectionReason: deterministicEstablished ? "PROFILE_AND_PROSODY_ESTABLISHED"
+        : deterministicIpa ? "TONE_OR_PROFILE_NOT_ESTABLISHED"
+          : "NO_COMPLETE_PROJECT_IPA",
       promotionPolicy: "WITHHELD_PENDING_INDEPENDENT_PROFILE_MATCHED_IPA_GOLD",
     };
   });
@@ -136,7 +161,7 @@ export function analyzeHybrid(segments, googleModel = null) {
   for (const item of records) {
     if (item.passthrough) continue;
     const candidates = [
-      ...(item.deterministicEstablished ? [{ provider: "PROJECT_RULES", ipa: item.deterministicIpa }] : []),
+      ...(item.projectCandidate ? [{ provider: "PROJECT_RULES", ipa: item.projectCandidate.raw }] : []),
       ...item.externalCandidates,
     ].filter((candidate) => candidate.ipa);
     if (candidates.length < 2) {
