@@ -279,3 +279,13 @@ def test_um_colon_loan_compound_dictionary_lead_is_not_ipa_evidence():
     assert row["evidence_status"] == "SECONDARY_SYSTEM_EQUIVALENCE"
     assert "Myanmar Net" in row["interpretation"]
     assert "not IPA" in row["interpretation"]
+
+
+def test_tufs_lexical_examples_claim_is_time_scoped_not_a_current_status_snapshot():
+    claims = {row["claim_id"]: row for row in read_rows("source_claims.csv")}
+    claim = claims["CLM-TUFS-LEXICAL-RIME-EXAMPLES-001"]["claim"]
+    assert "In this TUFS-only review (2026-11-14)" in claim
+    assert "did not change the then-current status register" in claim
+    assert "Current row statuses are determined by the full evidence ledger" in claim
+    assert "all eight one-sided statuses remain unchanged" not in claim
+

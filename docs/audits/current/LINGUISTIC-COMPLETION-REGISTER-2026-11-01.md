@@ -2467,3 +2467,8 @@ A final cross-check of the existing lexical audit found stale acceptance-boundar
 ## 2026-11-15 — aung. acceptance wording / regression alignment
 
 The first exact-head CI after the boundary correction exposed two test assertions that required the literal phrases “not primary” and “no runtime”. The revised boundary already contained the substantive restrictions but did not preserve those repository-wide contract phrases. Updated the wording and aligned the assertion. The failed run recorded 295 passed, 68 subtests passed and 2 failed; it is not counted as a passing verification. A new exact-head run is required before this correction is considered verified.
+
+
+## 2026-11-15 — time-scope historical TUFS-only gap statement
+
+A further consistency review found that the original TUFS source claim described a one-day source-only pass but ended with a present-tense statement that all eight then-unattested source units “remain unchanged”. Later source passes had since added secondary component-level evidence for ေါင့်, ိံ and ုမ်း. Reworded the claim to make the 2026-11-14 TUFS-only scope explicit and to defer current statuses to the full evidence ledger. Added a regression test preventing this historical source-pass note from being mistaken for a current status snapshot. This does not change any collision status or pronunciation claim.
