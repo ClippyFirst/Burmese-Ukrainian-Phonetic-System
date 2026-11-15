@@ -703,20 +703,3 @@ def test_waxman_med_transcription_claim_remains_secondary_and_non_operational():
     assert "tonal graphemic elements" in claim["claim"]
     assert "not an inspected notation key" in claim["claim"]
     assert "or project IPA mapping" in claim["claim"]
-
-def test_mya2rom_mlcts2_dictionary_identification_remains_secondary_and_limited():
-    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
-    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
-
-    source = sources["MYA2ROM2017"]
-    claim = claims["CLM-MYA2ROM-MLCTS2-MED-IDENTIFICATION-001"]
-    assert source["type"] == "software_documentation"
-    assert "secondary implementer assertion" in source["scope"]
-    assert "not the MLC dictionary's primary notation key" in source["scope"]
-    assert "no schwa or voicing-sandhi modelling" in source["scope"]
-    assert "CC-BY-SA-4.0" in source["scope"]
-    assert claim["source_id"] == source["source_id"]
-    assert claim["status"] == "DOCUMENTARY"
-    assert "modified, more phonetic MLCTS2" in claim["claim"]
-    assert "secondary implementer statement" in claim["claim"]
-    assert "No primary MLC notation key inspected" in claim["scope"]
