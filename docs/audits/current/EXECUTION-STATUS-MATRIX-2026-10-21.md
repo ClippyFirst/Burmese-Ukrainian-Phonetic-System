@@ -2663,3 +2663,9 @@ Diagnostic artifacts: FST 14154897335 (archive SHA-256 `961b5989e9c037861f7bebd0
 | Resolve lexical rime collisions from MLC | No primary lexical examples transcribed or adjudicated | BLOCKED pending page-level evidence and notation-key interpretation |
 
 Source records added: `MLC1996_REPRINT_CATALOG`, `MLC2019_REVISED_BIB`; claims: `CLM-MLC1996-PRONUNCIATION-AID-001`, `CLM-MLC2019-REVISED-EDITION-001`. Catalogue evidence is bibliographic only and does not authorize pronunciation or runtime promotion.
+
+
+
+## 2026-11-15 — live canonical registry totals (supersedes older snapshots)
+
+Current branch CSV parse: **96 sources / 207 claims / 25 rime groups**. Rime distribution: **15 secondary equivalence / 5 secondary one-side-only / 3 secondary distinction / 1 secondary conflict / 1 special non-rime**. All source IDs and claim IDs are unique; every claim references an existing source. Earlier 80-source counts are historical snapshots. This was a structural CSV/reference check, not a full schema or pytest run.
