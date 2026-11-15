@@ -7,7 +7,8 @@ test("hybrid uses established project IPA and keeps Epitran as a comparator", ()
   assert.equal(result.ipa, "kaʊʔ");
   assert.equal(result.records[0].selectedSource, "PROJECT_RULES");
   assert.equal(result.records[0].epitranCandidate, "kaʊʔ");
-  assert.equal(result.status, "ESTABLISHED");
+  assert.equal(result.ipaStatus, "ESTABLISHED");
+  assert.ok(["ESTABLISHED", "WELL_SUPPORTED", "PROPOSED"].includes(result.ukrainianStatus));
 });
 
 test("hybrid exposes Epitran candidate but does not promote it without gold", () => {
