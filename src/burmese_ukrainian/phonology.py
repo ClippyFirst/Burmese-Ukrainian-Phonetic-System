@@ -8,6 +8,7 @@ selected profile has not established.
 from __future__ import annotations
 
 import csv
+import sysconfig
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -52,9 +53,24 @@ def _load_cached(data_dir: str) -> dict[str, dict[str, dict[str, Any]]]:
     }
 
 
+def _default_data_dir() -> Path:
+    """Resolve source-tree data first, then the installed wheel's shared data."""
+    installed = (
+        Path(sysconfig.get_path("data"))
+        / "share"
+        / "burmese-ukrainian-phonetic-system"
+        / "data"
+        / "burmese"
+    )
+    if not (_DEFAULT_DATA_DIR / "ipa_onsets.csv").is_file() and (installed / "ipa_onsets.csv").is_file():
+        return installed
+    return _DEFAULT_DATA_DIR
+
+
 def load_phonology_registry(data_dir: str | Path | None = None) -> dict[str, dict[str, dict[str, Any]]]:
     """Load canonical IPA correspondence registries, optionally from a test fixture directory."""
-    return _load_cached(str(Path(data_dir).resolve() if data_dir is not None else _DEFAULT_DATA_DIR))
+    root = Path(data_dir).resolve() if data_dir is not None else _default_data_dir()
+    return _load_cached(str(root) )
 
 
 def phonologize_syllable(
