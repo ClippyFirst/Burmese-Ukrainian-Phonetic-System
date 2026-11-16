@@ -45,3 +45,8 @@ CONTEXT_DEPENDENT, UNCERTAIN, DISPUTED, NOT_ESTABLISHED, UNSUPPORTED.
 The Python adapter in `src/burmese_ukrainian/ukrainian.py` currently performs exact-IPA lookup only and requires a local checkout of the private `ClippyFirst/Ukrainian-Phonetic-Inventory` repository (`inventory.json` and `data/uk/graphemes.csv`). That canonical repository separately contains target feature vectors and a feature-distance ranking implementation, but the Burmese runtime does not import it and does not produce evidence-backed feature vectors for its source IPA segments.
 
 **Status: PARTIAL exact lookup / BLOCKED feature-distance ranking.** Do not duplicate the canonical target inventory or invent source vectors. Acceptance requires a versioned, consumable target-inventory API/artifact; an explicit source-IPA feature representation with provenance and uncertainty; deterministic candidate scoring that preserves mismatches and rule traces; and Python/browser regression and parity tests.
+
+
+## Runtime consistency update — 2026-11-16
+
+Python and browser now use the same canonical CSV-backed onset/vowel correspondences and return the same typed segmental-IPA contract for the cases in `tests/fixtures/shared_phonology_contract.json`. This is not full parser parity and adds no new pronunciation rules. Medials, codas, checked-syllable realization, nasalization, tone/register/phonation, quantity and dialect-profile adjudication remain incomplete. Independent adjudicated IPA gold remains 0; empirical accuracy remains unmeasured.
