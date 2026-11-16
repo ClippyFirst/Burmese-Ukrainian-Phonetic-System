@@ -59,7 +59,11 @@ export function phonologizeSyllable(syllable) {
 
   const vowelSigns = syllable.vowels || [];
   const vowelIpa = [];
-  if (!vowelSigns.length) {
+  if (vowelSigns.length > 1) {
+    // Multiple established signs do not imply an established vowel
+    // combination; require a separately sourced combination rule.
+    withhold("vowel_combination");
+  } else if (!vowelSigns.length) {
     withhold("inherent_vowel");
   } else {
     for (const sign of vowelSigns) {
