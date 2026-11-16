@@ -1,4 +1,4 @@
-import { ONSETS, VOWELS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
+import { ONSETS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
 import { renderUkrainian } from "./ukrainian-adapter.js";
 import { renderMlctsText } from "./romanization-ukrainian.js";
 import { analyzeHybrid } from "./hybrid-engine.js";
