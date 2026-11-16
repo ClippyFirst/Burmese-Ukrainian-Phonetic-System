@@ -10,6 +10,8 @@ const ukStatus=document.querySelector("#uk-status"), ipaStatus=document.querySel
 const uaRomanization=document.querySelector("#ua-romanization-result"), uaRomanizationStatus=document.querySelector("#ua-romanization-status");
 const modePhonetic=document.querySelector("#mode-phonetic"), modeRomanization=document.querySelector("#mode-romanization"), outputMethodNote=document.querySelector("#output-method-note");
 const hybridProviderResults=document.querySelector("#hybrid-provider-results");
+const hybridCandidatePreviews=document.querySelector("#hybrid-candidate-previews");
+const hybridCandidatePreviewList=document.querySelector("#hybrid-candidate-preview-list");
 let googleWfstModel=null;
 
 function setOutputMode(mode){
@@ -361,7 +363,7 @@ function convert(text){
 
 function render(){
   const text=source.value;count.textContent=[...text].length+" символів";
-  if(!text){empty.hidden=false;results.hidden=true;issues.hidden=true;return;}
+  if(!text){empty.hidden=false;results.hidden=true;issues.hidden=true;hybridCandidatePreviews.hidden=true;hybridCandidatePreviewList.replaceChildren();return;}
   const r=convert(text);const hybrid=analyzeHybrid(r.segments,googleWfstModel);empty.hidden=true;results.hidden=false;uk.textContent=hybrid.uk||"—";ipa.textContent=hybrid.ipa||"—";
   romanization.textContent=typeof window.mya2rom==="function" ? romanizeTextPreservingNonMyanmar(text,window.mya2rom) : "Романізатор не завантажився; результат не сформовано.";
   const uaRomanized=typeof window.mya2rom==="function"
@@ -383,6 +385,26 @@ function render(){
   const providerIntro=document.createElement("p");providerIntro.className="status-line";providerIntro.textContent="Усі провайдери виконуються локально в браузері. Результати не надсилаються на сервер і не голосують між собою.";hybridProviderResults.append(providerIntro);
   const providerStatus=document.createElement("p");providerStatus.className="status-line";providerStatus.textContent="Наш рушій: "+hybrid.providers.project+" · Epitran: "+hybrid.providers.epitran+" · Google WFST: "+hybrid.providers.google;hybridProviderResults.append(providerStatus);
   hybrid.records.forEach((item)=>{if(item.passthrough)return;const row=document.createElement("div");row.className="syllable";const head=document.createElement("strong");const selectionLabel=item.selectedSource==="PROJECT_RULES_SEGMENTAL_PREVIEW"?"сегментний кандидат":"канонічний вибір";head.textContent=item.segment.raw+" · "+selectionLabel+": "+item.selectedSource;const detail=document.createElement("span");const ukrainianCandidates=item.candidateAdaptations.map(candidate=>candidate.provider+" → "+(candidate.ukrainian.text||"—")+" [PROVISIONAL]").join(" · ");detail.textContent="Наші правила: "+(item.deterministicIpa||"не встановлено")+" · Epitran: "+(item.epitranCandidate||"немає повного кандидата")+" · Google WFST: "+(item.googleCandidate||item.googleRunCandidate||item.google.status)+" · повнота: "+item.phoneticCompleteness+" · просодія: "+item.prosodyStatus+" · причина вибору: "+item.selectionReason+" · порівняння: "+item.agreement+(item.comparison?.prosody&&item.comparison.prosody!=="NOT_COMPARABLE"?" ("+item.comparison.prosody+")":"")+" · профіль: "+item.comparisonScope+(ukrainianCandidates?" · українські кандидати: "+ukrainianCandidates:"")+" · "+item.promotionPolicy;row.append(head,detail);hybridProviderResults.append(row);});
+  const previewProviders=["PROJECT_RULES_SEGMENTAL","EPITRAN_PORT","GOOGLE_WFST"];
+  const previewRecords=hybrid.records.filter(item=>!item.passthrough);
+  const availablePreviewProviders=previewProviders.filter(provider=>previewRecords.some(item=>item.candidateAdaptations.some(candidate=>candidate.provider===provider)));
+  hybridCandidatePreviewList.replaceChildren();
+  availablePreviewProviders.forEach(provider=>{
+    const row=document.createElement("div");row.className="candidate-preview";
+    const heading=document.createElement("strong");heading.textContent=provider+" · PROVISIONAL";
+    const value=document.createElement("p");value.className="candidate-preview-value";
+    value.lang="uk";value.textContent=r.segments.map(segment=>{
+      if(segment.nonMyanmar)return segment.raw;
+      const record=hybrid.records.find(item=>item.segment===segment);
+      if(!record)return "⟦"+segment.raw+"⟧";
+      const candidate=record.candidateAdaptations.find(item=>item.provider===provider);
+      const adaptation=candidate?.ukrainian||(provider==="PROJECT_RULES_SEGMENTAL"?record.selectedAdaptation:null);
+      return adaptation?.text||"⟦"+segment.raw+"⟧";
+    }).join("");
+    const note=document.createElement("small");note.textContent="Показано лише там, де цей провайдер повернув адаптований IPA-кандидат; ⟦…⟧ означає відсутність придатного кандидата.";
+    row.append(heading,value,note);hybridCandidatePreviewList.append(row);
+  });
+  hybridCandidatePreviews.hidden=availablePreviewProviders.length===0;
   syllables.replaceChildren();
   let syllableNumber=0;
   r.segments.forEach(s=>{const row=document.createElement("div");row.className="syllable";
