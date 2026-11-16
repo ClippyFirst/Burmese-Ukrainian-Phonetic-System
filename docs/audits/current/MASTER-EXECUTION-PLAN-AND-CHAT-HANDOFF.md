@@ -1,8 +1,8 @@
 # Burmese → Ukrainian: Master Execution Plan and Chat Handoff
 
-Last reviewed: 2026-11-03
+Last reviewed: 2026-11-16
 Repository: https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-
-Default branch used for this review: `main`; the prior audit baseline was `5bc93e81d07d6afbad366c300eae321790b91893`. Later commits added normalization regressions, audit corrections, and an optional evidence-gated G2P benchmark runner; see the dated sections below for the exact revision and CI state.
+Default branch: `main`; latest verified HEAD is recorded in the dated 2026-11-16 checkpoint at the end of this handoff. Earlier audit baselines below are historical and immutable.
 Working title: “Burmese-to-Ukrainian Transcription: Graphemic Analysis and an Evidence-Gated Phonological Model”.
 
 ## Operating rule
@@ -996,3 +996,15 @@ Remaining blockers: 0 independent profile-matched lexical IPA gold; Google/Epitr
 - Issue #85 remains the human IPA pilot gate. Convention approval, two independent annotators, third adjudicator, curator, blind intake and 30 rights-cleared source-located lexeme groups are not complete; no one has been contacted or recruited. Independent annotation remains DEFERRED per owner direction.
 - Ledger: DONE_VERIFIED — exact-main CI and Pages deployment; PARTIAL — phonological coverage, MLCTS primary-source verification, parity against independent gold and accessibility; TODO — full manual screen-reader/device/zoom/reflow/contrast-state QA; BLOCKED — primary MLC notation/entry evidence and reuse rights; DEFERRED — independent IPA annotation and stale PR #129 integration.
 - Independent adjudicated IPA gold remains 0; accuracy remains null. This is a deployed partial research prototype, not linguistically release-ready or WCAG-certified. No runtime, linguistic data, release or production setting changed.
+
+
+## 2026-11-16 — final exact-main verification after PR #164
+
+- **Current default branch:** `main`; exact HEAD `372727de8ea2a2a61570c8dc880433e325230683`. PR [#164](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/164) merged the documentation reconciliation as this commit. No runtime, linguistic-data, IPA-label, Ukrainian-mapping, licensing, or release change was made by PR #164.
+- **DONE_VERIFIED — exact-main engineering CI:** [test workflow 43887822173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43887822173) completed SUCCESS on the exact SHA. Inspected job log: **315 Python tests + 68 subtests**, Node tests, production build, generated-data freshness, npm tests, **71 built-browser Playwright tests**, and both npm audit checks (**0 vulnerabilities**) passed. All 18 configured job steps succeeded.
+- **DONE_VERIFIED — exact-main Pages deployment:** [Pages workflow 43887822197](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43887822197) completed SUCCESS on the exact SHA. All 24 build-job steps and all 4 deploy-job steps succeeded. This includes pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, complete browser input-alphabet check, upstream `thrax_g2p` parity, production build/tests, artifact upload, deployment and live smoke test. The smoke test fetched homepage, `system.html`, built JS/CSS, Mya2Rom assets and Google WFST JSON, then verified `available=true` and `arc_count>0`.
+- **Public deployment:** https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/ — exact deployment version `372727de8ea2a2a61570c8dc880433e325230683` reported successful.
+- **PR reconciliation:** only open PR is [#129](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/129), still a stale divergent draft. It remains untouched: its benchmark/hybrid functionality is already represented and evolved on current main; its old snapshot is not to be merged or cherry-picked blindly.
+- **Research/accessibility boundary unchanged:** independent profile-matched adjudicated IPA gold remains **0**; empirical accuracy remains **null / NOT MEASURED**. Phonological coverage and primary MLC/MLCTS evidence remain incomplete; full manual screen-reader, physical-device/touch-target, zoom/reflow and comprehensive contrast/state QA remain TODO. Independent IPA annotation remains DEFERRED per owner direction; issue #85's human prerequisites are unmet.
+- **Task ledger:** DONE_VERIFIED — exact-main CI, Pages deployment and live smoke for this SHA; PARTIAL — Yangon phonological coverage, MLCTS source conformity and parity against independent gold; BLOCKED — primary MLC notation/entry evidence and item-level reuse rights; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation and stale PR #129 integration.
+- **Readiness:** deployed engineering/research prototype, **not linguistically release-ready** and not WCAG-conformance-certified. Hosted GitHub Actions are the verification evidence; no local checkout/test execution is claimed.
