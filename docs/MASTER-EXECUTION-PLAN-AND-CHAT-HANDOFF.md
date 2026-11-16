@@ -3275,3 +3275,14 @@ This is an architectural transfer from the Lao project, not a port of Lao phonol
 Review the implementation diff and exact-head CI, then integrate it with the exact-main documentation reconciliation. If PR #166 is merged first, retarget the implementation PR to `main`; otherwise keep the PRs separate and do not merge conflicting snapshots blindly. The next substantive engineering milestone is to extend the shared phonology contract only when primary source evidence supports a specific vowel, medial or coda environment. The next linguistic milestone remains independent expert/profile adjudication, not more speculative code.
 
 **Readiness:** improved engineering architecture, still a partial research prototype; not linguistically release-ready and not independently accuracy-validated.
+
+### Final integration checkpoint — 2026-11-16
+
+The implementation is now assembled on the stacked review branch `feat/burmese-lao-architecture-2026-11-16`, final head `4b0217e1b21f8b550492c0268b5f53e1a911a71b`, in [PR #167](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/167). PR #167 is based on the exact-main documentation branch from PR #166 so the code and documentation diffs remain independently reviewable. PR #166 remains open against `main`; neither PR was merged.
+
+Final exact-head evidence:
+- Push workflow [43942806786](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43942806786): SUCCESS — 320 Python tests + 68 subtests; wheel build and canonical registry inclusion; production build; generated-data freshness; 49 Node tests; npm audit 0 vulnerabilities; 73 built-browser Playwright tests.
+- PR test workflow [43942819987](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43942819987): SUCCESS on the same head.
+- PR Pages build [43942820042](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43942820042): SUCCESS — pinned Google Burmese WFST build, symbol-table and input-alphabet checks, upstream `thrax_g2p` parity, site build, browser tests and Pages artifact upload. Deployment was skipped for the PR event; no production deployment occurred.
+
+The shared fixture set additionally verifies that multi-sign vowel sequences are withheld rather than concatenated, and that adjacent bare-consonant placeholders remain incomplete. This is still an engineering/contract improvement only; no new phonological rule, gold entry or accuracy claim was introduced.
