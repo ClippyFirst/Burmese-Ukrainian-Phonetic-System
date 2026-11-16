@@ -595,3 +595,27 @@ test("Burmese textarea placeholder meets WCAG AA text contrast",async({page})=>{
   });
   expect(contrast.ratio,JSON.stringify(contrast)).toBeGreaterThanOrEqual(4.5);
 });
+
+test("browser exposes the same typed phonology boundary as Python", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#source").fill("ကာ");
+  const simple = JSON.parse(await page.locator("#syllables .syllable").first().getAttribute("data-phonology"));
+  expect(simple).toEqual({
+    status: "SEGMENTAL_ONLY",
+    ipa: "ka",
+    segments: [
+      { kind: "onset", source: "က", ipa: "k", status: "established", evidence: ["U18", "GREEN2002"] },
+      { kind: "vowel", source: "aa", ipa: "a", status: "established", evidence: ["U18", "GREEN2002"] }
+    ],
+    unresolved_features: ["tone", "phonation", "quantity", "profile_adjudication"],
+    rule_ids: []
+  });
+
+  for (const [input, feature] of [["ကျာ", "medial"], ["ကတ်", "coda"], ["ကာ့", "prosody"]]) {
+    await page.locator("#source").fill(input);
+    const result = JSON.parse(await page.locator("#syllables .syllable").first().getAttribute("data-phonology"));
+    expect(result.status, input).toBe("NOT_ESTABLISHED");
+    expect(result.ipa, input).toBeNull();
+    expect(result.unresolved_features, input).toContain(feature);
+  }
+});
