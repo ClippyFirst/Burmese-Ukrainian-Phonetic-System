@@ -4,6 +4,9 @@ import { readFileSync } from "node:fs";
 const sharedUnicodeContract = JSON.parse(
   readFileSync(new URL("../fixtures/shared_unicode_contract.json", import.meta.url), "utf8")
 );
+const sharedPhonologyContract = JSON.parse(
+  readFileSync(new URL("../fixtures/shared_phonology_contract.json", import.meta.url), "utf8")
+);
 
 test("service loads with empty state",async({page})=>{await page.goto("/");await expect(page.locator("h1")).toContainText("Бірманський текст");await expect(page.locator("#empty")).toBeVisible();});
 test("example produces result",async({page})=>{await page.goto("/");await page.click("#example");await expect(page.locator("#results")).toBeVisible();await expect(page.locator("#uk")).toBeVisible();await expect(page.locator("#ipa")).toBeVisible();});
@@ -596,26 +599,13 @@ test("Burmese textarea placeholder meets WCAG AA text contrast",async({page})=>{
   expect(contrast.ratio,JSON.stringify(contrast)).toBeGreaterThanOrEqual(4.5);
 });
 
-test("browser exposes the same typed phonology boundary as Python", async ({ page }) => {
+test("browser phonology output matches the shared Python/browser contract", async ({ page }) => {
   await page.goto("/");
-  await page.locator("#source").fill("ကာ");
-  const simple = JSON.parse(await page.locator("#syllables .syllable").first().getAttribute("data-phonology"));
-  expect(simple).toEqual({
-    status: "SEGMENTAL_ONLY",
-    ipa: "ka",
-    segments: [
-      { kind: "onset", source: "က", ipa: "k", status: "established", evidence: ["U18", "GREEN2002"] },
-      { kind: "vowel", source: "aa", ipa: "a", status: "established", evidence: ["U18", "GREEN2002"] }
-    ],
-    unresolved_features: ["tone", "phonation", "quantity", "profile_adjudication"],
-    rule_ids: []
-  });
-
-  for (const [input, feature] of [["ကျာ", "medial"], ["ကတ်", "coda"], ["ကာ့", "prosody"]]) {
-    await page.locator("#source").fill(input);
-    const result = JSON.parse(await page.locator("#syllables .syllable").first().getAttribute("data-phonology"));
-    expect(result.status, input).toBe("NOT_ESTABLISHED");
-    expect(result.ipa, input).toBeNull();
-    expect(result.unresolved_features, input).toContain(feature);
+  for (const fixture of sharedPhonologyContract.cases) {
+    await page.locator("#source").fill(fixture.input);
+    const rows = page.locator("#syllables .syllable[data-phonology]");
+    await expect(rows, fixture.id).toHaveCount(1);
+    const result = JSON.parse(await rows.first().getAttribute("data-phonology"));
+    expect(result, fixture.id).toEqual(fixture.expected);
   }
 });
