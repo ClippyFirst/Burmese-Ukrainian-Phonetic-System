@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "purpose": "Shared Python/browser typed phonology contract. Expected IPA values are the currently registered established segmental subset only; unresolved prosody and structures remain withheld.",
+  "cases": [
+    {
+      "id": "simple-established-cv",
+      "input": "ကာ",
+      "expected": {
+        "status": "SEGMENTAL_ONLY",
+        "ipa": "ka",
+        "segments": [
+          {
+            "kind": "onset",
+            "source": "က",
+            "ipa": "k",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          },
+          {
+            "kind": "vowel",
+            "source": "aa",
+            "ipa": "a",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "unresolved_features": [
+          "tone",
+          "phonation",
+          "quantity",
+          "profile_adjudication"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "ya-medial-withheld",
+      "input": "ကျာ",
+      "expected": {
+        "status": "NOT_ESTABLISHED",
+        "ipa": null,
+        "segments": [
+          {
+            "kind": "onset",
+            "source": "က",
+            "ipa": "k",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          },
+          {
+            "kind": "vowel",
+            "source": "aa",
+            "ipa": "a",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "unresolved_features": [
+          "medial",
+          "tone",
+          "phonation",
+          "quantity",
+          "profile_adjudication"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "checked-coda-withheld",
+      "input": "ကာတ်",
+      "expected": {
+        "status": "NOT_ESTABLISHED",
+        "ipa": null,
+        "segments": [
+          {
+            "kind": "onset",
+            "source": "က",
+            "ipa": "k",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          },
+          {
+            "kind": "vowel",
+            "source": "aa",
+            "ipa": "a",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "unresolved_features": [
+          "coda",
+          "tone",
+          "phonation",
+          "quantity",
+          "profile_adjudication"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "tone-mark-withheld",
+      "input": "ကာ့",
+      "expected": {
+        "status": "NOT_ESTABLISHED",
+        "ipa": null,
+        "segments": [
+          {
+            "kind": "onset",
+            "source": "က",
+            "ipa": "k",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          },
+          {
+            "kind": "vowel",
+            "source": "aa",
+            "ipa": "a",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "unresolved_features": [
+          "prosody",
+          "tone",
+          "phonation",
+          "quantity",
+          "profile_adjudication"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "analysis-dependent-onset-withheld",
+      "input": "စာ",
+      "expected": {
+        "status": "NOT_ESTABLISHED",
+        "ipa": null,
+        "segments": [
+          {
+            "kind": "vowel",
+            "source": "aa",
+            "ipa": "a",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "unresolved_features": [
+          "onset_realization",
+          "tone",
+          "phonation",
+          "quantity",
+          "profile_adjudication"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "analysis-dependent-vowel-withheld",
+      "input": "ကီ",
+      "expected": {
+        "status": "NOT_ESTABLISHED",
+        "ipa": null,
+        "segments": [
+          {
+            "kind": "onset",
+            "source": "က",
+            "ipa": "k",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "unresolved_features": [
+          "vowel_realization",
+          "tone",
+          "phonation",
+          "quantity",
+          "profile_adjudication"
+        ],
+        "rule_ids": []
+      }
+    },
+    {
+      "id": "isolated-bare-consonant-withheld",
+      "input": "က",
+      "expected": {
+        "status": "NOT_ESTABLISHED",
+        "ipa": null,
+        "segments": [
+          {
+            "kind": "onset",
+            "source": "က",
+            "ipa": "k",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "unresolved_features": [
+          "isolated_bare_consonant",
+          "inherent_vowel",
+          "tone",
+          "phonation",
+          "quantity",
+          "profile_adjudication"
+        ],
+        "rule_ids": []
+      }
+    }
+  ]
+}
