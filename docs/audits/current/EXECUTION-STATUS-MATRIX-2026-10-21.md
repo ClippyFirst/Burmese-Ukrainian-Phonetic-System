@@ -3100,3 +3100,18 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 **Non-blocking CI maintenance note:** the Pages build logs warn that `actions/setup-java@v4` and `bazelbuild/setup-bazelisk@v3` target Node.js 20 while the runner forces Node.js 24. The build and all checks passed; update these actions only after confirming supported replacements and rerunning exact-head CI.
 
 **Readiness:** engineering architecture and its declared tests are verified; Burmese phonological coverage remains partial and the independent gold set is empty. This is a research/engineering prototype, not a linguistically release-ready system.
+
+
+## Final CI-maintenance integration — 2026-11-16
+
+| Task / gate | Status | Exact evidence / acceptance boundary |
+|---|---|---|
+| BUR-CI-NODE24-001 — replace deprecated Node 20 Pages actions | DONE_VERIFIED | Pages workflow now pins `actions/setup-java` v6 at `d1374f8ac74474200d16ef8ecee22c7ae7a51880` and `bazel-contrib/setup-bazel` 0.19.1 at `104e3eea9447cdaa4b00d0fb46191a3985d26ab3`; Bazelisk 1.30.0 is pinned. Exact Pages build [43959491968](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43959491968) passed the new action setup and complete build. Upstream `setup-bazelisk` is archived/superseded; setup-java v4 is deprecated. |
+| BUR-CI-EXACT-HEAD-002 — final code-head test workflow | DONE_VERIFIED | [43959491958](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43959491958): 320 Python + 68 subtests; 49 Node; 73 built-browser Playwright; wheel and registry verification; IPA corpus structure validation; build; generated-data freshness; npm audit 0 vulnerabilities. |
+| BUR-CI-WFST-002 — final code-head Pages build | DONE_VERIFIED (build/artifact only) | [43959491968](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43959491968): pinned Google WFST/OpenFst, symbol-table/input alphabet, upstream `thrax_g2p` parity, site build, 73 browser tests and Pages artifact upload passed. Deploy skipped for PR event; no production deployment. |
+| BUR-PR-STACK-002 — current review chain | DONE_VERIFIED (metadata/diff/CI reconciliation) | #166 OPEN / mergeable, 11 ahead / 0 behind main; #167 OPEN / mergeable, stacked 40 ahead / 0 behind #166. Full code-bearing branch at SHA `09a1521b237a5eea99a8188407f43193a479d139` was 51 ahead / 0 behind main. #166 workflows 43940980540 and 43940980498 passed. |
+| BUR-PR-129-STALE-001 — stale benchmark PR | DEFERRED | #129 remains OPEN / DRAFT / non-mergeable; current comparison 53 ahead / 36 behind main, 21 changed files. Its work is superseded/evolved on main; preserve it untouched. |
+
+**Maintenance warning:** Node.js 20 deprecation is resolved. The Pages build emitted one non-fatal GCC `-Wstringop-overflow` warning from the legacy upstream native build; all relevant steps passed. This warning is not a phonological failure.
+
+**Linguistic boundary and readiness:** unchanged. Independent IPA gold=0; empirical accuracy=null. Registry-backed typed IPA and its declared fixtures are verified, but full Burmese phonological coverage remains partial. The repository is a research/engineering prototype, not linguistically release-ready.
