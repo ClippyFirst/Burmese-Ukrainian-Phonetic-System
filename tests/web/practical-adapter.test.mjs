@@ -1,10 +1,23 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { readFileSync } from "node:fs";
 import { PRACTICAL, ONSETS, VOWELS } from "../../src/web/generated/data.js";
 import { renderUkrainian } from "../../src/web/ukrainian-adapter.js";
-const browserEngineSource = readFileSync(new URL("../../src/web/app.js", import.meta.url), "utf8");
-const hybridEngineSource = readFileSync(new URL("../../src/web/hybrid-engine.js", import.meta.url), "utf8");
+import { phonologizeSyllable } from "../../src/web/phonology.js";
+import { analyzeHybrid } from "../../src/web/hybrid-engine.js";
+
+const simpleSyllable = {
+  raw: "ကာ",
+  onset: "က",
+  kinzi: false,
+  conjunct: [],
+  medials: [],
+  vowels: ["ာ"],
+  asat: false,
+  coda: null,
+  prosodyMarks: [],
+  structureStatus: "established",
+  status: "ESTABLISHED",
+};
 
 test("browser adapter covers Ukrainian h/g/x distinctions", () => {
   for (const segment of ["h", "ɦ", "ɡ", "g", "x"]) {
@@ -49,50 +62,48 @@ test("browser adapter omits glottal stop and withholds unknown IPA", () => {
   assert.equal(unknown.text, "");
 });
 
-
-test("browser parser leaves Ukrainian adaptation to the hybrid IPA-first orchestrator", () => {
-  assert.ok(browserEngineSource.includes("const unsupportedStructure=sy.kinzi||sy.kinziCoda||sy.medials.length>0||sy.conjunct.length>0"));
-  assert.ok(!browserEngineSource.includes("sy.uk="));
-  assert.ok(hybridEngineSource.includes("renderUkrainian(ipa)"));
+test("browser phonology stage emits IPA components and leaves Ukrainian adaptation downstream", () => {
+  const phonology = phonologizeSyllable(simpleSyllable);
+  assert.equal(phonology.ipa, "ka");
+  assert.equal(phonology.status, "SEGMENTAL_ONLY");
+  assert.equal(phonology.ukrainian, undefined);
+  assert.equal(renderUkrainian(phonology.ipa).text, "ка");
 });
 
-
-test("browser engine exposes onset-only provisional IPA for unresolved Burmese units", () => {
-  assert.ok(browserEngineSource.includes("sy.provisionalIpa=hint"));
-  assert.ok(browserEngineSource.includes('sy.provisionalUk=adapted.text+"?"'));
-  assert.ok(browserEngineSource.includes('sy.provisionalStatus="PROVISIONAL"'));
-  assert.ok(browserEngineSource.includes('sy.provisionalUnresolvedFeatures=["inherent_vowel"]'));
-  assert.ok(browserEngineSource.includes("ipa.textContent=hybrid.ipa"));
-  assert.ok(browserEngineSource.includes("uk.textContent=hybrid.uk"));
-  assert.ok(browserEngineSource.includes('if(s.provisionalIpa){const preview=document.createElement("small")'));
+test("unresolved bare inherent vowel remains a placeholder, not a completed syllable", () => {
+  const phonology = phonologizeSyllable({ ...simpleSyllable, vowels: [] });
+  assert.equal(phonology.ipa, "k?");
+  assert.equal(phonology.status, "NOT_ESTABLISHED");
+  assert.ok(phonology.unresolved_features.includes("inherent_vowel"));
+  assert.equal(renderUkrainian("k").text, "к");
 });
 
-
-test("browser G2P source registries distinguish orthographic signs from established phonetic values", () => {
+test("source registries distinguish orthographic signs from established phonetic values", () => {
   assert.equal(ONSETS["စ"].status, "analysis_dependent");
   assert.equal(ONSETS["ဓ"].status, "analysis_dependent");
   assert.equal(VOWELS.ai.status, "analysis_dependent");
   assert.equal(VOWELS.ii.status, "analysis_dependent");
   assert.equal(VOWELS.uu.status, "analysis_dependent");
-  assert.ok(browserEngineSource.includes('if(!onset)return null'));
-  assert.ok(browserEngineSource.includes('if(onset.status!=="established"){sy.status="ANALYSIS_DEPENDENT";return null;}'));
-  assert.ok(browserEngineSource.includes('VOWELS[id]?.status!=="established"'));
-  assert.ok(browserEngineSource.includes('sy.status="ANALYSIS_DEPENDENT";return null'));
-  assert.ok(hybridEngineSource.includes('["UNSUPPORTED", "ANALYSIS_DEPENDENT", "UNCERTAIN"].includes(segment.status)'));
-  assert.ok(browserEngineSource.includes('VOWELS, SIGNS'));
+
+  const onset = phonologizeSyllable({ ...simpleSyllable, onset: "စ" });
+  assert.equal(onset.ipa, null);
+  assert.ok(onset.unresolved_features.includes("onset_realization"));
+
+  const vowel = phonologizeSyllable({ ...simpleSyllable, vowels: ["ီ"] });
+  assert.equal(vowel.ipa, null);
+  assert.ok(vowel.unresolved_features.includes("vowel_realization"));
 });
 
-
-test("public phonetic UI renders the hybrid orchestrator result, not the pre-hybrid result", () => {
-  assert.ok(browserEngineSource.includes("uk.textContent=hybrid.uk"));
-  assert.ok(browserEngineSource.includes("ipa.textContent=hybrid.ipa"));
-  assert.ok(browserEngineSource.includes("hybrid.ukrainianStatus"));
-  assert.ok(browserEngineSource.includes("hybrid.ipaStatus"));
-});
-
-test("segmental-only IPA is shown as provisional and does not bypass the IPA adapter", () => {
-  assert.ok(browserEngineSource.includes('item.phoneticCompleteness==="SEGMENTAL_ONLY"'));
-  assert.ok(hybridEngineSource.includes('provider: "PROJECT_RULES_SEGMENTAL"'));
-  assert.ok(hybridEngineSource.includes("adaptationFor(deterministicIpa)"));
-  assert.ok(hybridEngineSource.includes("renderUkrainian(ipa)"));
+test("hybrid orchestrator adapts segmental IPA provisionally and never promotes it to canonical", () => {
+  const result = analyzeHybrid([{
+    raw: "ကာ",
+    ipa: "ka",
+    status: "ESTABLISHED",
+    prosodyStatus: "NOT_ESTABLISHED",
+  }]);
+  const record = result.records[0];
+  assert.equal(record.selectedIpa, null);
+  assert.equal(record.phoneticCompleteness, "SEGMENTAL_ONLY");
+  assert.equal(record.provisionalAdaptation.text, "ка");
+  assert.equal(record.selectedSource, "PROJECT_RULES_SEGMENTAL_PREVIEW");
 });
