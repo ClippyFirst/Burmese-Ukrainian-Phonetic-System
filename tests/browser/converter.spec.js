@@ -583,7 +583,7 @@ test("Google WFST model status is explicit in the browser provider panel",async(
 test("Burmese textarea placeholder meets WCAG AA text contrast",async({page})=>{
   await page.goto("/");
   const contrast=await page.locator("#source").evaluate(el=>{
-    const parse=color=>color.match(/[\\d.]+/g).slice(0,3).map(Number);
+    const parse=color=>color.match(/[\d.]+/g).slice(0,3).map(Number);
     const luminance=color=>{
       const channels=parse(color).map(value=>value/255).map(value=>value<=0.04045?value/12.92:((value+0.055)/1.055)**2.4);
       return 0.2126*channels[0]+0.7152*channels[1]+0.0722*channels[2];
