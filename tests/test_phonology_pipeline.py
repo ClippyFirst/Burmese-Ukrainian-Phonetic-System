@@ -71,3 +71,27 @@ def test_unresolved_medial_coda_and_prosody_remain_explicitly_withheld():
         assert syllable["ipa"] is None, source
         assert feature in syllable["phonology"]["unresolved_features"], source
         assert syllable["phonology"]["status"] == "NOT_ESTABLISHED", source
+
+
+def test_installed_registry_data_is_used_without_a_source_checkout(tmp_path, monkeypatch):
+    import shutil
+    import burmese_ukrainian.phonology as phonology
+
+    installed = (
+        tmp_path
+        / "prefix"
+        / "share"
+        / "burmese-ukrainian-phonetic-system"
+        / "data"
+        / "burmese"
+    )
+    installed.mkdir(parents=True)
+    for name in ("ipa_onsets.csv", "ipa_vowels.csv"):
+        shutil.copyfile(ROOT / "data" / "burmese" / name, installed / name)
+
+    monkeypatch.setattr(phonology, "_DEFAULT_DATA_DIR", tmp_path / "missing-source-tree")
+    monkeypatch.setattr(phonology.sysconfig, "get_path", lambda key: str(tmp_path / "prefix"))
+
+    registry = phonology.load_phonology_registry()
+    assert registry["onsets"]["က"]["ipa"] == "k"
+    assert registry["vowels"]["aa"]["ipa"] == "a"
