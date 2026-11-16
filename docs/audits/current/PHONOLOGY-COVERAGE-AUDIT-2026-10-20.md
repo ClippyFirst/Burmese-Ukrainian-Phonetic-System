@@ -157,3 +157,9 @@ The shared contract fixture exercises:
 Exact implementation-head CI [43940264184](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43940264184) passed 320 Python tests + 68 subtests, wheel registry verification, 48 Node tests, 72 built-browser tests, production build, generated-data freshness and npm audit (0 vulnerabilities).
 
 **Coverage interpretation:** DONE_VERIFIED for the typed registry boundary and the explicit shared fixtures only. PARTIAL for full Python/browser parser and phonological parity. No vowel combination, medial, coda, checked-syllable, tone, register, phonation or quantity rule was added. Independent adjudicated IPA gold remains 0; empirical accuracy remains null. This is not evidence of improved phonetic accuracy or release readiness.
+
+### Final integration verification — 2026-11-16
+
+Final review head `4b0217e1b21f8b550492c0268b5f53e1a911a71b` is available in [PR #167](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/167). Exact-head push and PR test workflows passed: 320 Python tests + 68 subtests, 49 Node tests and 73 built-browser tests. The Python wheel includes the canonical onset/vowel registries. The Pages PR build also passed its pinned Google WFST/OpenFst build, symbol-table checks, upstream CLI parity and built-browser checks; deployment was skipped for the PR event.
+
+The shared cross-runtime contract now explicitly withholds multi-sign vowel sequences unless a dedicated combination rule is sourced, and preserves adjacent bare-consonant placeholders as incomplete. This does not change the linguistic coverage assessment: vowel combinations, medials, codas/checked syllables, nasalization and prosody remain incomplete; independent adjudicated IPA gold remains 0 and empirical accuracy remains null.
