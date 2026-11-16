@@ -16,7 +16,7 @@ jobs:
       - name: Verify installable wheel carries canonical IPA registries
         run: |
           mkdir -p "$RUNNER_TEMP/burmese-wheel"
-          python -m pip wheel --no-deps --no-build-isolation --wheel-dir "$RUNNER_TEMP/burmese-wheel" .
+          python -m pip wheel --no-deps --wheel-dir "$RUNNER_TEMP/burmese-wheel" .
           python scripts/verify_python_wheel.py "$RUNNER_TEMP/burmese-wheel"
       - run: pytest
       - uses: actions/setup-node@v7
