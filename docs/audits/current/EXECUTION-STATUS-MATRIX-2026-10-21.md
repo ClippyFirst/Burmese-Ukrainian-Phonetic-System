@@ -3037,3 +3037,28 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **Local execution limitation:** this session could not clone the public repository because the container could not resolve `github.com` (DNS/network failure). No local test command is claimed. The exact-main hosted GitHub Actions above are verified evidence for `f7f7d41a116c265481bdc17c225a763becab6013`; they are not local execution.
 - **Task ledger:** DONE_VERIFIED — exact-main hosted engineering CI, Pages deployment and deployed-asset smoke; PARTIAL — Yangon phonological coverage, MLCTS primary-source conformity and independent-gold parity; BLOCKED — primary MLC notation/entry evidence and rights verification; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation/pilot and stale PR #129 integration.
 - **Readiness:** deployed engineering/research prototype; **not linguistically release-ready** and not WCAG-conformance-certified. No runtime, linguistic registry, IPA labels, Ukrainian mappings, gold data, license decision, release, or production setting changed in this checkpoint.
+
+
+## 2026-11-16 — Lao-architecture transfer: Burmese registry-backed IPA pipeline
+
+**Implementation branch:** `feat/burmese-registry-phonology-pipeline-2026-11-16`  
+**Verified implementation head:** `826200be9ee4c6a8348c7020a9b976949d28848f`  
+**Exact-head CI:** [workflow 43940264184](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43940264184) — SUCCESS. This was a branch verification only; no production Pages deployment occurred and `main` was not changed.
+
+| Task | Status | Evidence / acceptance boundary |
+|---|---|---|
+| BUR-IPA-REGISTRY-001 — one canonical source for Python/browser segmental correspondences | DONE_VERIFIED | Python loads `data/burmese/ipa_onsets.csv` and `ipa_vowels.csv`; browser generated data comes from those same registries. Python compatibility maps are derived views, not duplicate hand-maintained values. Wheel data-files and installed-path fallback are included. |
+| BUR-IPA-TYPED-001 — inspectable Burmese phonology → IPA stage | DONE_VERIFIED | Python `phonologize_syllable()` and browser `phonologizeSyllable()` return typed onset/vowel components, source evidence, status, unresolved features and rule IDs. The browser's inline derivation block was replaced by the dedicated stage. Ukrainian adaptation remains downstream. |
+| BUR-IPA-SHARED-001 — cross-runtime phonology fixtures | DONE_VERIFIED | `tests/fixtures/shared_phonology_contract.json` is exercised by Python and the built browser for simple CV, medial, checked coda, prosody, analysis-dependent onset/vowel and isolated bare-consonant cases. |
+| BUR-IPA-WHEEL-001 — installed registry availability | DONE_VERIFIED | CI builds a wheel and `scripts/verify_python_wheel.py` verifies both canonical CSV files are packaged. A Python test verifies installed shared-data path resolution without a source checkout. |
+| BUR-CROSSRUNTIME-001 — complete parser/phonological parity | PARTIAL | The shared typed stage and declared fixtures are aligned. Python and browser parsers remain separate; fixture coverage does not establish all-combination parity. |
+| BUR-VOW-001 — full vowel combination derivation | TODO | No new vowel rule was added. Implement only after exact source-backed environments, counterexamples and cross-runtime fixtures are available. |
+| BUR-CODA-001 — coda / checked-syllable surface realization | TODO | Still withheld; orthographic recognition is not a verified surface realization. |
+| BUR-PROS-001 — tone/register/phonation/quantity model | BLOCKED | Competing analyses and profile-specific evidence remain unresolved. Specialist/profile adjudication is required. |
+| BUR-GOLD-001 — independent lexical IPA gold | BLOCKED / DEFERRED | Independent adjudicated Burmese IPA gold remains 0; empirical accuracy remains null. Annotation pilot remains deferred under owner direction and issue #85 prerequisites. |
+
+**Exact-head CI detail:** 320 Python tests + 68 subtests passed; wheel registry inclusion passed; production build and generated-data freshness passed; 48 Node tests passed; npm audit reported 0 vulnerabilities; 72 built-browser Playwright tests passed. Hosted CI is the verification source; no local test execution is claimed.
+
+**Scope boundary:** this continuation changes engineering architecture and inspectability only. It adds no Burmese phonological realization, IPA label, Ukrainian mapping, corpus gold row, dialect claim, third-party asset or license decision. Epitran and Google WFST remain diagnostic candidates. MLCTS remains a separate orthographic route.
+
+**Readiness:** partial research prototype. Better runtime consistency does not establish phonetic accuracy or release readiness.
