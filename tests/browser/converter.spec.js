@@ -609,3 +609,18 @@ test("browser phonology output matches the shared Python/browser contract", asyn
     expect(result, fixture.id).toEqual(fixture.expected);
   }
 });
+
+
+test("adjacent bare Myanmar consonants remain explicitly incomplete", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#source").fill("ကမ");
+  const rows = page.locator("#syllables .syllable[data-phonology]");
+  await expect(rows).toHaveCount(2);
+  const first = JSON.parse(await rows.nth(0).getAttribute("data-phonology"));
+  const second = JSON.parse(await rows.nth(1).getAttribute("data-phonology"));
+  expect(first.status).toBe("NOT_ESTABLISHED");
+  expect(second.status).toBe("NOT_ESTABLISHED");
+  expect(first.ipa).toBe("k?");
+  expect(second.ipa).toBe("m?");
+  await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");
+});
