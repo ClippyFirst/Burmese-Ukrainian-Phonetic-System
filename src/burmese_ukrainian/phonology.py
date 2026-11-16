@@ -137,9 +137,13 @@ def phonologize_syllable(
         segmental_ipa = onset_ipa + "?"
 
     complete_segmental = bool(segmental_ipa) and not blocking
+    # Retain the legacy onset-plus-question-mark diagnostic for adjacent bare
+    # Myanmar consonant clusters. It is explicitly incomplete and is withheld
+    # at isolated-token boundaries by to_ipa().
+    partial_inherent = bool(onset_ipa) and not vowel_signs and blocking == ["inherent_vowel"]
     return {
         "status": "SEGMENTAL_ONLY" if complete_segmental else "NOT_ESTABLISHED",
-        "ipa": segmental_ipa if not blocking else None,
+        "ipa": segmental_ipa if complete_segmental or partial_inherent else None,
         "segments": segments,
         "unresolved_features": unresolved,
         "rule_ids": [],
