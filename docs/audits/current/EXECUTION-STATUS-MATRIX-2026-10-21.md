@@ -2994,3 +2994,20 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **DONE_VERIFIED (post-merge main):** PR #162 squash merge / current main SHA `51268ab92468cc29a60ab27eacbfaad64b42184d`. Main test workflow [43866687391](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43866687391) SUCCESS: 315 Python tests + 68 subtests, 71 Playwright tests, Node tests, build, generated-data freshness and npm audit (0 vulnerabilities). Production Pages workflow [43866687424](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43866687424) SUCCESS: pinned Google WFST build, symbol-table/input-alphabet invariants, upstream `thrax_g2p` parity, build/tests, 71 Playwright tests, Pages artifact `14226731346`, deployment and live HTTP smoke for homepage, methodology page, JS/CSS, Mya2Rom assets and Google WFST JSON (`available=true`, `arc_count>0`).
 - **Accessibility ledger:** DONE_VERIFIED — limited live keyboard/DOM accessibility smoke and homepage placeholder contrast correction with regression test. TODO — full manual screen-reader testing, physical mobile-device/touch-target review, zoom/reflow and comprehensive contrast/state audit. No WCAG conformance claim. A further methodology-page contrast spot-check could not be run in this session because the connected browser service exhausted its daily credits; no results are inferred for that page.
 - **PR #129:** remains open and untouched; stale divergent research branch is not merged. Independent IPA annotation remains DEFERRED per project-owner direction; profile-matched IPA gold remains 0 and accuracy unmeasured. Repository readiness remains deployed partial linguistic/research prototype, not linguistically release-ready.
+
+
+## 2026-11-16 exact-main reconciliation
+
+| Workstream | Status | Current evidence / acceptance boundary |
+|---|---|---|
+| Mainline engineering tests | DONE_VERIFIED | Exact SHA `0f752b172b7c3bcc7f6b88c0204b7f27c9d9b10e`; workflow [43868521807](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43868521807) SUCCESS; configured Python, Node, build, generated-data, npm audit and built-browser checks completed. |
+| GitHub Pages deployment | DONE_VERIFIED | Exact SHA `0f752b172b7c3bcc7f6b88c0204b7f27c9d9b10e`; workflow [43868521797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43868521797) SUCCESS; build, Google WFST checks, deployment and live smoke completed. |
+| Canonical output fail-closed behavior | DONE_VERIFIED | PR #159 and exact-main regression suite prevent provisional segmental candidates from becoming canonical IPA/Ukrainian output. |
+| Homepage placeholder contrast correction | DONE_VERIFIED | PR #162; built-browser test enforces >=4.5:1 for the textarea placeholder. This is not a full-site contrast audit. |
+| Phonological completeness / independent IPA accuracy | PARTIAL | No independently adjudicated profile-matched IPA gold rows; accuracy is null. Tone/phonation, medials, codas, quantity and lexical coverage remain incomplete. |
+| MLC/MLCTS primary-source verification | BLOCKED | Primary MLC notation key and page-located entries plus item-level reuse-rights evidence are not available; Mya2Rom-derived rime rows remain evidence-limited. |
+| Manual accessibility assurance | TODO | Screen-reader session, physical mobile/touch-target review, zoom/reflow and comprehensive contrast/state audit still lack evidence. Limited keyboard/DOM smoke and homepage placeholder test are not substitutes. |
+| Independent IPA pilot | DEFERRED | Issue #85 remains open; owner direction defers independent annotation. Do not create labels or treat structural probes as gold. |
+| PR #129 | DEFERRED | Open draft is stale/non-mergeable; current-main compare is 53 ahead / 34 behind from obsolete merge base. No unique missing feature established; leave untouched. |
+
+**Current main:** `0f752b172b7c3bcc7f6b88c0204b7f27c9d9b10e`. **Readiness:** deployed partial research prototype; not linguistically release-ready. Independent gold = 0; accuracy = null.
