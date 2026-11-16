@@ -95,3 +95,14 @@ def test_installed_registry_data_is_used_without_a_source_checkout(tmp_path, mon
     registry = phonology.load_phonology_registry()
     assert registry["onsets"]["က"]["ipa"] == "k"
     assert registry["vowels"]["aa"]["ipa"] == "a"
+
+
+def test_python_phonology_output_matches_shared_browser_contract():
+    import json
+
+    fixture_path = ROOT / "tests" / "fixtures" / "shared_phonology_contract.json"
+    contract = json.loads(fixture_path.read_text(encoding="utf-8"))
+    for case in contract["cases"]:
+        result = to_ipa(case["input"])
+        assert len(result["syllables"]) == 1, case["id"]
+        assert result["syllables"][0]["phonology"] == case["expected"], case["id"]
