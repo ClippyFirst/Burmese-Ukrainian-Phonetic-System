@@ -2672,3 +2672,13 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Corrected stale branch-verification claims in `index.html` and `system.html`: they now cite the exact verified HEAD/workflow and distinguish automated keyboard/responsive checks from manual assistive-technology QA. No linguistic/runtime behavior changed.
 - Independent adjudicated IPA gold remains 0; empirical G2P accuracy remains null. Primary MED notation key/page-located entries, full Yangon lexical coverage, /N/ surface realization and parity against independent gold remain unresolved. Repository readiness remains PARTIAL PROTOTYPE, not linguistically release-ready.
 - This continuation is documentation-only. No runtime mappings, IPA annotations, Ukrainian candidates, source evidence, branch protection, deployment, release, merge or `main` write were changed.
+
+
+## 2026-11-16 status reconciliation (no new linguistic labels)
+
+- Rechecked current `main` at `0f752b172b7c3bcc7f6b88c0204b7f27c9d9b10e` after PRs #160–#163. Exact-main engineering CI [43868521807](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43868521807) and Pages deployment [43868521797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43868521797) both completed SUCCESS. These runs verify engineering/build/deployment contracts only.
+- No new source-attested IPA, Ukrainian linguistic correspondence, lexical gold row, or adjudication was produced in this continuation. Independent profile-matched adjudicated IPA gold remains **0**; empirical accuracy remains **null / NOT MEASURED**.
+- **PARTIAL:** Yangon lexical rime/coda/tone/phonation and medial coverage; contextual /N/ realization; Python/browser phonological parity against independent references; MLCTS inventory/source conformity.
+- **BLOCKED:** primary MLC notation key and page-located dictionary entries, plus independent reuse-rights verification. Vendor-derived Mya2Rom tables remain evidence-limited and cannot be promoted to primary MLC evidence.
+- **DEFERRED:** independent IPA annotation/pilot remains deferred per project-owner direction. Issue #85 remains open; its prerequisites (approved convention, independent annotators/adjudicator, curator, blind intake, source/rights-cleared sample) are not satisfied. No one has been contacted or recruited.
+- No runtime rules, IPA labels, gold data, Ukrainian mappings or linguistic source claims were changed. Do not treat engineering CI or external-provider agreement as linguistic validation.
