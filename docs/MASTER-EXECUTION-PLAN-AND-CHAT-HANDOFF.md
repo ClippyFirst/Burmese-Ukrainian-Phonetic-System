@@ -3218,3 +3218,60 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 - **Local execution limitation:** this session could not clone the public repository because the container could not resolve `github.com` (DNS/network failure). No local test command is claimed. The exact-main hosted GitHub Actions above are verified evidence for `f7f7d41a116c265481bdc17c225a763becab6013`; they are not local execution.
 - **Task ledger:** DONE_VERIFIED — exact-main hosted engineering CI, Pages deployment and deployed-asset smoke; PARTIAL — Yangon phonological coverage, MLCTS primary-source conformity and independent-gold parity; BLOCKED — primary MLC notation/entry evidence and rights verification; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation/pilot and stale PR #129 integration.
 - **Readiness:** deployed engineering/research prototype; **not linguistically release-ready** and not WCAG-conformance-certified. No runtime, linguistic registry, IPA labels, Ukrainian mappings, gold data, license decision, release, or production setting changed in this checkpoint.
+
+
+## 2026-11-16 — implementation continuation: Lao-style registry-backed Burmese IPA pipeline
+
+### Baseline and branch discipline
+
+- Current default branch at task start: `main`, SHA `f7f7d41a116c265481bdc17c225a763becab6013`.
+- Dedicated implementation branch: `feat/burmese-registry-phonology-pipeline-2026-11-16`.
+- Verified implementation head: `826200be9ee4c6a8348c7020a9b976949d28848f`.
+- Main was not modified. No Pages deployment, release, license decision, linguistic-data promotion or gold-corpus update occurred.
+- Existing documentation reconciliation PR #166 remains separate and open while this implementation is prepared for review. Stale PR #129 remains untouched; its existing divergence/overlap assessment is unchanged.
+
+### Implementation delivered
+
+1. Added `src/burmese_ukrainian/phonology.py` as a registry-backed Python stage. It loads the canonical onset/vowel CSVs, exposes a typed `phonologize_syllable()` result and preserves source evidence and unresolved features.
+2. Refactored `ipa.py` so compatibility maps are derived from the canonical registry and `to_ipa()` exposes the typed per-syllable phonology result. The existing IPA → Ukrainian adapter remains downstream.
+3. Added `src/web/phonology.js` and replaced the browser's large inline IPA derivation block with the same typed stage. The browser exposes the per-syllable contract as inspectable `data-phonology`; the hybrid orchestrator and Ukrainian adapter remain separate.
+4. Added shared executable contract fixtures at `tests/fixtures/shared_phonology_contract.json`. Python API tests and built-browser Playwright tests now exercise the same supported and withheld examples.
+5. Added wheel data-file packaging for the canonical IPA registries, an installed-data fallback in the Python loader, and a CI wheel-content gate.
+6. Replaced brittle browser source-string assertions with behavior tests for the phonology stage and downstream IPA adaptation.
+
+### Verification evidence
+
+Exact implementation-head workflow [43940264184](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43940264184) completed SUCCESS on `826200be9ee4c6a8348c7020a9b976949d28848f`.
+
+- Python: **320 passed**, plus 68 subtests passed.
+- Package: wheel built; both canonical IPA CSV registries verified in the wheel; installed-data path test passed.
+- Browser build: passed.
+- Generated web-data freshness: passed.
+- Node: **48 passed**, 0 failed.
+- npm audit: **0 vulnerabilities**.
+- Built Chromium/Playwright: **72 passed**.
+- No local tests are claimed; the local clone attempt was blocked by DNS/network access, and hosted CI supplied the evidence.
+
+### Task ledger
+
+- **DONE_VERIFIED — BUR-IPA-REGISTRY-001:** Python and browser use the same canonical onset/vowel CSV source.
+- **DONE_VERIFIED — BUR-IPA-TYPED-001:** Python and browser expose the same typed segmental IPA structure, with source evidence and explicit unresolved features.
+- **DONE_VERIFIED — BUR-IPA-SHARED-001:** common fixtures are exercised through both runtimes and the built UI.
+- **DONE_VERIFIED — BUR-IPA-WHEEL-001:** canonical CSV data is packaged in the wheel and verified by CI.
+- **PARTIAL — BUR-CROSSRUNTIME-001:** only declared shared cases are verified; the parsers remain separate and complete phonological parity is not claimed.
+- **TODO — BUR-VOW-001:** full vowel combination derivation remains unimplemented pending source-backed rules and counterexamples.
+- **TODO — BUR-CODA-001:** coda and checked-syllable realization remains withheld.
+- **BLOCKED — BUR-PROS-001:** complete tone/register/phonation/quantity model still requires profile-specific source review and specialist adjudication.
+- **BLOCKED / DEFERRED — BUR-GOLD-001:** independent adjudicated IPA gold remains 0; accuracy remains null. The 30-item pilot remains deferred under owner direction until issue #85 prerequisites are satisfied.
+- **UNCHANGED — MLC/MLCTS rights/source verification:** primary notation key, page-located source entries and item-level reuse rights remain unresolved.
+- **UNCHANGED — manual accessibility:** screen-reader, physical-device/touch-target, zoom/reflow and comprehensive contrast/state QA remain TODO.
+
+### Linguistic and safety boundary
+
+This is an architectural transfer from the Lao project, not a port of Lao phonology. No new Burmese phonological rule, IPA label, Ukrainian correspondence, gold record, dialect claim or third-party pronunciation output was promoted. Segmental `ka` remains partial; tone, phonation, quantity and profile remain unresolved. Epitran and Google WFST remain diagnostic candidates only. MLCTS remains a separate orthographic route.
+
+### Handoff / next action
+
+Review the implementation diff and exact-head CI, then integrate it with the exact-main documentation reconciliation. If PR #166 is merged first, retarget the implementation PR to `main`; otherwise keep the PRs separate and do not merge conflicting snapshots blindly. The next substantive engineering milestone is to extend the shared phonology contract only when primary source evidence supports a specific vowel, medial or coda environment. The next linguistic milestone remains independent expert/profile adjudication, not more speculative code.
+
+**Readiness:** improved engineering architecture, still a partial research prototype; not linguistically release-ready and not independently accuracy-validated.
