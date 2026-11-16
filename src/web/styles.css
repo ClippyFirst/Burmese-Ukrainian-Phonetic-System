@@ -70,6 +70,13 @@ textarea::placeholder{color:#aaa69d}
 [lang="und-fonipa"]{font-family:"Charis SIL","Doulos SIL","DejaVu Sans","Noto Sans",sans-serif;font-feature-settings:"ccmp" 1,"mark" 1,"mkmk" 1;font-synthesis:none;unicode-bidi: isolate;overflow-wrap:anywhere}
 .result-value.ipa{font-size:clamp(1.15rem,2.3vw,1.5rem);font-family:"Charis SIL","Doulos SIL","DejaVu Sans","Noto Sans",sans-serif;font-feature-settings:"ccmp" 1,"mark" 1,"mkmk" 1;font-synthesis:none;unicode-bidi: isolate}
 .status-line{margin:12px 0 0;color:var(--muted);font-size:.82rem;line-height:1.55}
+.candidate-previews{margin-top:18px;padding:16px;border:1px dashed var(--line);background:var(--soft)}
+.candidate-previews h4{margin:0;font-size:.9rem;line-height:1.4}
+.candidate-previews>.status-line{margin:7px 0 12px}
+.candidate-preview{padding:12px 0;border-top:1px solid var(--line)}
+.candidate-preview strong{font:750 .78rem ui-monospace,monospace;letter-spacing:.02em}
+.candidate-preview-value{margin:6px 0;font-size:1.2rem;line-height:1.6;overflow-wrap:anywhere;white-space:pre-wrap}
+.candidate-preview small{color:var(--muted);font-size:.78rem;line-height:1.5}
 .syllables{margin-top:16px;border-top:1px solid var(--line)}
 .syllable{display:grid;grid-template-columns:minmax(90px,140px) minmax(0,1fr);gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.88rem}
 .syllable strong{font-family:ui-monospace,monospace}
