@@ -12,7 +12,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  # Pull-request validation must not occupy/cancel the production Pages queue.
+  # Keep each PR isolated; all main pushes share the production deployment group.
+  group: pages-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
