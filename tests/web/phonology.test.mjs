@@ -41,3 +41,14 @@ test("browser phonology stage preserves medial, coda and prosody blockers", () =
     assert.ok(result.unresolved_features.includes(feature));
   }
 });
+
+
+test("multiple established vowel signs are not concatenated into an invented combination", () => {
+  const result = phonologizeSyllable({ ...established, raw: "ကော", vowels: ["ေ", "ာ"] });
+  assert.equal(result.status, "NOT_ESTABLISHED");
+  assert.equal(result.ipa, null);
+  assert.deepEqual(result.segments, [
+    { kind: "onset", source: "က", ipa: "k", status: "established", evidence: ["U18", "GREEN2002"] },
+  ]);
+  assert.ok(result.unresolved_features.includes("vowel_combination"));
+});
