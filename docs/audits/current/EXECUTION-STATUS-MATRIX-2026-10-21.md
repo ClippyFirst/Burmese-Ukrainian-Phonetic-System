@@ -3057,7 +3057,7 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 | BUR-PROS-001 — tone/register/phonation/quantity model | BLOCKED | Competing analyses and profile-specific evidence remain unresolved. Specialist/profile adjudication is required. |
 | BUR-GOLD-001 — independent lexical IPA gold | BLOCKED / DEFERRED | Independent adjudicated Burmese IPA gold remains 0; empirical accuracy remains null. Annotation pilot remains deferred under owner direction and issue #85 prerequisites. |
 
-**Exact-head CI detail:** 320 Python tests + 68 subtests passed; wheel registry inclusion passed; production build and generated-data freshness passed; 48 Node tests passed; npm audit reported 0 vulnerabilities; 72 built-browser Playwright tests passed. Hosted CI is the verification source; no local test execution is claimed.
+**Exact-head CI detail:** 320 Python tests + 68 subtests passed; wheel registry inclusion passed; production build and generated-data freshness passed; 49 Node tests passed; npm audit reported 0 vulnerabilities; 72 built-browser Playwright tests passed. Hosted CI is the verification source; no local test execution is claimed.
 
 **Scope boundary:** this continuation changes engineering architecture and inspectability only. It adds no Burmese phonological realization, IPA label, Ukrainian mapping, corpus gold row, dialect claim, third-party asset or license decision. Epitran and Google WFST remain diagnostic candidates. MLCTS remains a separate orthographic route.
 
@@ -3066,9 +3066,9 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 ### Final integration PR checkpoint — 2026-11-16
 
 - Final implementation branch: `feat/burmese-lao-architecture-2026-11-16`.
-- Final head: `4b0217e1b21f8b550492c0268b5f53e1a911a71b`.
+- Final head: `cf8ab3d3c13212096dc2d0cd546c451cd026081b`.
 - Review: [PR #167](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/167), stacked on documentation PR #166; both remain open and mergeable. No merge or production deployment was performed.
-- Final exact-head push CI [43942806786](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43942806786) SUCCESS: 320 Python tests + 68 subtests, wheel registry verification, 49 Node tests, 73 built-browser tests, production build, generated-data freshness and npm audit 0 vulnerabilities.
-- PR test CI [43942819987](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43942819987) SUCCESS.
-- Pages PR build [43942820042](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43942820042) SUCCESS including Google WFST/OpenFst build and upstream CLI parity; artifact upload succeeded, deployment was skipped as expected for a PR.
+- Final exact-head PR test CI [43943933652](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933652) SUCCESS: 320 Python tests + 68 subtests, wheel registry verification, 49 Node tests, 73 built-browser tests, production build, generated-data freshness and npm audit 0 vulnerabilities.
+- PR test CI [43943933652](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933652) SUCCESS.
+- Pages PR build [43943933659](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933659) SUCCESS including Google WFST/OpenFst build and upstream CLI parity; artifact upload succeeded, deployment was skipped as expected for a PR.
 - Shared fixtures now also cover unmodelled multi-sign vowel combinations and adjacent bare-consonant placeholders. All statuses and linguistic blockers remain as classified above.
