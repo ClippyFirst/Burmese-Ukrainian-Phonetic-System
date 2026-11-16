@@ -110,8 +110,8 @@ test("segmental IPA without tone and profile evidence is not canonical", () => {
   assert.equal(record.ipaStatus, "ANALYSIS_DEPENDENT");
   assert.equal(record.ukrainianStatus, "PROVISIONAL");
   assert.equal(record.selectionReason, "TONE_OR_PROFILE_NOT_ESTABLISHED");
-  assert.equal(result.ipa, "ka");
-  assert.equal(result.uk, "ка");
+  assert.equal(result.ipa, "?");
+  assert.equal(result.uk, "⟦ကာ⟧");
   assert.equal(record.selectedPhoneticResult, null);
   assert.equal(record.provisionalPhoneticResult.kind, "IPA_CANDIDATE");
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL" && item.ukrainian.text === "ка"));
