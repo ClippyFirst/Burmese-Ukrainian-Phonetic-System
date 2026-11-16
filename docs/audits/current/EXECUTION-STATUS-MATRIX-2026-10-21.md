@@ -3066,10 +3066,10 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 ### Final integration PR checkpoint — 2026-11-16
 
 - Final implementation branch: `feat/burmese-lao-architecture-2026-11-16`.
-- Final review branch head: `5950713f15719f90acdac624c0fcc3b74cc034f4`.
 - Runtime implementation head: `cf8ab3d3c13212096dc2d0cd546c451cd026081b`; later commits in this PR update only the handoff, matrix and audit evidence.
 - Review: [PR #167](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/167), stacked on documentation PR #166; both remain open and mergeable. No merge or production deployment was performed.
 - Runtime-head PR test CI [43943933652](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933652) SUCCESS: 320 Python tests + 68 subtests, wheel registry verification, 49 Node tests, 73 built-browser tests, production build, generated-data freshness and npm audit 0 vulnerabilities.
 - Runtime-head PR test CI [43943933652](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933652) SUCCESS.
 - Pages PR build [43943933659](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933659) SUCCESS including Google WFST/OpenFst build and upstream CLI parity; artifact upload succeeded, deployment was skipped as expected for a PR.
+- Documentation-checkpoint test CI [43946446370](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43946446370) also passed all test/build checks on checkpoint `5950713f15719f90acdac624c0fcc3b74cc034f4`; Pages run [43946446443](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43946446443) was in progress at last inspection. Later commits only corrected evidence text in these documents.
 - Shared fixtures now also cover unmodelled multi-sign vowel combinations and adjacent bare-consonant placeholders. All statuses and linguistic blockers remain as classified above.
