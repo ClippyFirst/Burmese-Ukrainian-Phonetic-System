@@ -556,7 +556,7 @@ test("browser hybrid runs Epitran locally and withholds external candidates from
   await page.locator("#source").fill("မြန်");
   await expect(page.locator("#hybrid-engine-panel")).toBeVisible();
   await expect(page.locator("#hybrid-provider-results")).toContainText("Epitran 1.35.3");
-  await expect(page.locator("#hybrid-provider-results")).toContainText("məjaɴ");await expect(page.locator("#hybrid-candidate-previews")).toBeVisible();await expect(page.locator("#hybrid-candidate-preview-list")).toContainText("EPITRAN_PORT · PROVISIONAL");await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).not.toHaveText("⟦မြန်⟧");await expect(page.locator("#hybrid-candidate-previews")).toContainText("не є підтверджена транскрипція");
+  await expect(page.locator("#hybrid-provider-results")).toContainText("məjaɴ");await expect(page.locator("#hybrid-candidate-previews")).toBeVisible();await expect(page.locator("#hybrid-candidate-preview-list")).toContainText("EPITRAN_PORT · PROVISIONAL");await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).not.toHaveText("⟦မြန်⟧");await expect(page.locator("#hybrid-candidate-previews")).toContainText("а не підтверджена транскрипція");
   await expect(page.locator("#ipa")).toHaveText("?");
   await expect(page.locator("#uk")).toHaveText("⟦မြန်⟧");
   await expect(page.locator("#hybrid-provider-results")).toContainText("WITHHELD_PENDING_INDEPENDENT_PROFILE_MATCHED_IPA_GOLD");
