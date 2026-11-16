@@ -578,3 +578,20 @@ test("Google WFST model status is explicit in the browser provider panel",async(
     await expect(page.locator("#hybrid-provider-results")).not.toContainText("MODEL_NOT_DEPLOYED");
   }
 });
+
+
+test("Burmese textarea placeholder meets WCAG AA text contrast",async({page})=>{
+  await page.goto("/");
+  const contrast=await page.locator("#source").evaluate(el=>{
+    const parse=color=>color.match(/[\d.]+/g).slice(0,3).map(Number);
+    const luminance=color=>{
+      const channels=parse(color).map(value=>value/255).map(value=>value<=0.04045?value/12.92:((value+0.055)/1.055)**2.4);
+      return 0.2126*channels[0]+0.7152*channels[1]+0.0722*channels[2];
+    };
+    const foreground=getComputedStyle(el,"::placeholder").color;
+    const background=getComputedStyle(el.parentElement).backgroundColor;
+    const values=[luminance(foreground),luminance(background)].sort((a,b)=>b-a);
+    return {foreground,background,ratio:(values[0]+0.05)/(values[1]+0.05)};
+  });
+  expect(contrast.ratio,JSON.stringify(contrast)).toBeGreaterThanOrEqual(4.5);
+});
