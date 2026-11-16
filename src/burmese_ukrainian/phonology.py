@@ -123,7 +123,11 @@ def phonologize_syllable(
     vowel = syllable.get("vowel")
     vowel_signs = (vowel or {}).get("signs", [])
     vowel_ipa: list[str] = []
-    if not vowel_signs:
+    if len(vowel_signs) > 1:
+        # A sequence of established signs is not automatically an established
+        # vowel combination. Require a separately sourced combination rule.
+        withhold("vowel_combination")
+    elif not vowel_signs:
         withhold("inherent_vowel")
     else:
         for sign in vowel_signs:
