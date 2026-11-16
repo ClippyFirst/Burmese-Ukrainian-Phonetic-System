@@ -1,7 +1,8 @@
-import { ONSETS, VOWELS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
+import { ONSETS, SIGNS, MEDIALS, ROMANIZATION_SUPPORTED, ROMANIZATION_BASES } from "./generated/data.js";
 import { renderUkrainian } from "./ukrainian-adapter.js";
 import { renderMlctsText } from "./romanization-ukrainian.js";
 import { analyzeHybrid } from "./hybrid-engine.js";
+import { phonologizeSyllable } from "./phonology.js";
 
 const source=document.querySelector("#source"), results=document.querySelector("#results"), empty=document.querySelector("#empty");
 const issues=document.querySelector("#issues"), issueText=document.querySelector("#issue-text"), count=document.querySelector("#count");
@@ -26,8 +27,6 @@ function setOutputMode(mode){
 }
 
 const KINZI="င်္", VIRAMA="္", ASAT="်";
-const NASAL_CODAS=new Set(["င","န","မ","ည"]);
-const CHECKED_CODAS=new Set(["က","ခ","ဂ","ဃ","စ","ဆ","ဇ","ဈ","တ","ထ","ဒ","ဓ","ပ","ဖ","ဗ","ဘ"]);
 const MEDIAL_CHARS=new Set(Object.keys(MEDIALS)), VOWEL_CHARS=new Set(Object.keys(SIGNS)), BASE=new Set(Object.keys(ONSETS));
 const ROMANIZATION_SUPPORTED_CHARS=new Set(ROMANIZATION_SUPPORTED), ROMANIZATION_BASE_CHARS=new Set(ROMANIZATION_BASES);
 function normalize(text){return text.normalize("NFC");}
@@ -195,16 +194,14 @@ function parseCluster(raw,withholdBareInherent=false){
   sy.structureStatus=sy.status==="UNSUPPORTED"?"unsupported_or_malformed":sy.status==="UNCERTAIN"?"partially_unparsed":"established";
   sy.structure=projectStructure(sy);
   const isolatedBare=withholdBareInherent&&!sy.vowels.length&&!sy.coda&&!sy.asat&&!sy.medials.length&&!sy.conjunct.length&&!sy.kinzi&&!sy.prosodyMarks.length;
-  // Match the Python rule engine: medials, conjuncts and kinzi are parsed
-  // structurally but remain outside the validated IPA rule inventory.
-  const unsupportedStructure=sy.kinzi||sy.kinziCoda||sy.medials.length>0||sy.conjunct.length>0;
-  // Python's canonical IPA adapter withholds codas, asat, anusvara and
-  // prosodic marks until their selected-profile surface realizations are
-  // adjudicated. Keep the browser boundary equally conservative.
-  const unsupportedRime=Boolean(sy.coda||sy.asat||sy.prosodyMarks.length||sy.vowels.some(sign=>SIGNS[sign]?.unicode_name==="MYANMAR SIGN ANUSVARA"));
-  const evidenceIncomplete=unsupportedStructure||unsupportedRime;
-  sy.ipa=isolatedBare||evidenceIncomplete?null:deriveIpa(sy);
-  if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=evidenceIncomplete?"ANALYSIS_DEPENDENT":"NOT_ESTABLISHED";
+  sy.phonology=phonologizeSyllable(sy);
+  if(isolatedBare){
+    sy.phonology.ipa=null;
+    sy.phonology.status="NOT_ESTABLISHED";
+    sy.phonology.unresolved_features.unshift("isolated_bare_consonant");
+  }
+  sy.ipa=sy.phonology.ipa;
+  if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=sy.structureStatus!=="established"?"UNCERTAIN":"ANALYSIS_DEPENDENT";
   // Separate onset-only preview: never derive Ukrainian directly from Myanmar
   // graphemes and never guess the vowel, coda, medial, kinzi or tone.
   if(!sy.ipa&&withholdBareInherent&&sy.onset&&ONSETS[sy.onset]?.ipa){
@@ -221,123 +218,6 @@ function parseCluster(raw,withholdBareInherent=false){
     }
   }
   return sy;
-}
-
-function deriveIpa(sy){
-  const onset=ONSETS[sy.onset];
-  // The canonical browser IPA path must obey the same source-registry evidence
-  // gate as Python. A graphemic sign can be established orthographically while
-  // its phonetic realization remains analysis-dependent.
-  if(!onset)return null;
-  if(onset.status!=="established"){sy.status="ANALYSIS_DEPENDENT";return null;}
-  const vowelIdsByName={
-    "MYANMAR VOWEL SIGN E":"e",
-    "MYANMAR VOWEL SIGN I":"i",
-    "MYANMAR VOWEL SIGN II":"ii",
-    "MYANMAR VOWEL SIGN AI":"ai",
-    "MYANMAR VOWEL SIGN U":"u",
-    "MYANMAR VOWEL SIGN UU":"uu",
-    "MYANMAR VOWEL SIGN TALL AA":"tall_aa",
-    "MYANMAR VOWEL SIGN AA":"aa",
-    "MYANMAR SIGN ANUSVARA":"anusvara",
-  };
-  if(sy.vowels.some(sign=>{
-    const name=SIGNS[sign]?.unicode_name;
-    const id=vowelIdsByName[name];
-    return !id||VOWELS[id]?.status!=="established";
-  })){sy.status="ANALYSIS_DEPENDENT";return null;}
-  // The browser parser can recognize anusvara structurally, but its contextual
-  // nasal/coda realization is not yet adjudicated. Match the Python adapter's
-  // fail-closed boundary rather than mapping the sign to a bare vowel.
-  if(sy.vowels.some(sign=>SIGNS[sign]?.unicode_name==="MYANMAR SIGN ANUSVARA"))return null;
-  let initial=onset.ipa;const parts=[];
-  if(sy.kinzi)parts.push("ŋ");
-  const ids=sy.medials.map(m=>MEDIALS[m]?.id).filter(Boolean);
-  const has=key=>ids.includes(key);
-  const coda=sy.coda;
-  // In common Burmese spellings, ည် after a ya/ra-medial onset represents
-  // an /ɪ/-like rime rather than a nasal coda. Likewise, ယ် after the E
-  // vowel sign is part of the rime in forms such as စွယ်, not a final /j/.
-  const iCodaVowel=coda==="ည"&&sy.asat&&(has("medial_ya")||has("medial_ra"))&&!sy.vowels.length;
-  const eYatRime=coda==="ယ"&&sy.asat&&(sy.vowels.some(v=>SIGNS[v]?.unicode_name==="MYANMAR VOWEL SIGN E")||(has("medial_wa")&&!sy.vowels.length));
-  const awVowel=sy.asat&&!coda&&sy.vowels.some(v=>SIGNS[v]?.unicode_name==="MYANMAR VOWEL SIGN E")&&sy.vowels.some(v=>["MYANMAR VOWEL SIGN AA","MYANMAR VOWEL SIGN TALL AA"].includes(SIGNS[v]?.unicode_name));
-  const nasalCoda=!!coda&&NASAL_CODAS.has(coda)&&!iCodaVowel;
-  const checkedCoda=!!coda&&CHECKED_CODAS.has(coda);
-  if(has("medial_ya")||has("medial_ra")){
-    if(initial==="k")initial="tɕ";
-    else if(initial==="kʰ")initial="tɕʰ";
-    else if(initial==="ɡ")initial="dʑ";
-    else if(initial==="ŋ"&&has("medial_ra"))initial="ɲ";
-    else if(initial!=="j"&&initial!=="r")initial+="j";
-  }
-  if(has("medial_ha")){
-    const devoiced={m:"m̥",n:"n̥","ŋ":"ŋ̊","ɲ":"ɲ̥",l:"l̥",w:"ʍ"};
-    if(initial==="j"||initial==="r")initial="ʃ";
-    else if(devoiced[initial])initial=devoiced[initial];
-    else return null;
-  }
-  if(has("medial_wa"))initial+="w";
-  parts.push(initial);
-  const wa=has("medial_wa");
-  const vowelIds=sy.vowels.map(sign=>SIGNS[sign]?.unicode_name).filter(Boolean);
-  const hasV=id=>vowelIds.includes(id);
-  const closed=!!coda||(sy.asat&&!awVowel&&!eYatRime&&!iCodaVowel);
-  let vowel=null;
-  if(iCodaVowel){
-    vowel="ɪ";
-  }else if(eYatRime&&!sy.vowels.length){
-    vowel="ɛ";
-  }else if(hasV("MYANMAR VOWEL SIGN E")&&(hasV("MYANMAR VOWEL SIGN AA")||hasV("MYANMAR VOWEL SIGN TALL AA"))){
-    // ော် is a conventional vowel spelling; its final asat is not a
-    // productive checked coda in this pattern.
-    vowel=awVowel?"ɔ":closed?(nasalCoda||checkedCoda?"aʊ":null):"ɔ";
-  }else if(hasV("MYANMAR VOWEL SIGN E")){
-    if(eYatRime)vowel="ɛ";
-    else if(wa&&closed)vowel=nasalCoda||checkedCoda?"ɛ":null;
-    else vowel="e";
-  }else if(hasV("MYANMAR VOWEL SIGN I")&&hasV("MYANMAR VOWEL SIGN U")){
-    vowel=closed?"aɪ":"o";
-  }else if(hasV("MYANMAR VOWEL SIGN I")){
-    if(wa&&closed)vowel=nasalCoda?"ʊ":checkedCoda?"ɛ":null;
-    else if(checkedCoda)vowel="eɪ";
-    else if(nasalCoda)vowel="ɪ";
-    else vowel="i";
-  }else if(hasV("MYANMAR VOWEL SIGN II")){
-    vowel=closed?"i":"iː";
-  }else if(hasV("MYANMAR VOWEL SIGN U")){
-    if(wa&&closed)vowel="ʊ";
-    else if(closed)vowel="oʊ";
-    else vowel="u";
-  }else if(hasV("MYANMAR VOWEL SIGN UU")){
-    vowel=closed?"oʊ":"uː";
-  }else if(hasV("MYANMAR VOWEL SIGN AI")){
-    vowel="ɛ";
-  }else if(hasV("MYANMAR VOWEL SIGN TALL AA")||hasV("MYANMAR VOWEL SIGN AA")){
-    if(wa&&closed)vowel=nasalCoda?"ʊ":checkedCoda?"ɛ":null;
-    else vowel="a";
-  }else if(hasV("MYANMAR SIGN ANUSVARA")){
-    vowel=nasalCoda?"ɪ":"a";
-  }
-  if(!vowel){
-    if(!sy.vowels.length&&wa&&nasalCoda)vowel="ʊ";
-    else if(!sy.vowels.length&&wa&&checkedCoda)vowel="ɛ";
-    else if(!sy.vowels.length&&!sy.coda&&!sy.asat)vowel="a";
-    else if(sy.kinziCoda&&!sy.vowels.length)vowel="ɪ";
-    else if(!sy.vowels.length&&nasalCoda&&(has("medial_ya")||has("medial_ra")))vowel="a";
-    else if(!sy.vowels.length&&checkedCoda)vowel="a";
-    else if(!sy.vowels.length&&nasalCoda)vowel="ɪ";
-    else return null;
-  }
-  parts.push(vowel);
-  if(coda&&!iCodaVowel&&!eYatRime){
-    if(nasalCoda)parts.push("ɴ");
-    else if(checkedCoda)parts.push("ʔ");
-    else if(coda==="ယ"||coda==="ရ")parts.push("j");
-    else if(coda==="လ")parts.push("l");
-    else if(coda==="ဝ")parts.push("w");
-    else return null;
-  }
-  return parts.join("");
 }
 
 function isStandaloneBareConsonant(segments,index){
@@ -417,6 +297,7 @@ function render(){
     }
     syllableNumber+=1;
     row.dataset.structure=JSON.stringify(s.structure);
+    row.dataset.phonology=JSON.stringify(s.phonology);
     const hybridRecord=hybrid.records.find(item=>item.segment===s);
     const head=document.createElement("strong");head.textContent=String(syllableNumber).padStart(2,"0")+"  "+s.raw;
     const detail=document.createElement("span");detail.textContent=(hybridRecord?.selectedIpa||hybridRecord?.deterministicIpa||"IPA не встановлено")+" → "+(hybridRecord?.selectedAdaptation?.text||hybridRecord?.provisionalAdaptation?.text||"—")+" · IPA: "+(hybridRecord?.ipaStatus||s.status)+" / передача: "+(hybridRecord?.ukrainianStatus||"NOT_ESTABLISHED");row.append(head,detail);
