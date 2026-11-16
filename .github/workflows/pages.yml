@@ -30,11 +30,14 @@ jobs:
           ref: a90601024f07ab7e96c911243324e0adeb16da96
           path: language-resources
           persist-credentials: false
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
           java-version: "17"
-      - uses: bazelbuild/setup-bazelisk@v3
+      - uses: bazel-contrib/setup-bazel@104e3eea9447cdaa4b00d0fb46191a3985d26ab3 # 0.19.1
+        with:
+          bazelisk-version: "1.30.0"
+          module-root: language-resources
       - name: Pin legacy Abseil dependency for reproducible Google WFST build
         working-directory: language-resources
         run: |
