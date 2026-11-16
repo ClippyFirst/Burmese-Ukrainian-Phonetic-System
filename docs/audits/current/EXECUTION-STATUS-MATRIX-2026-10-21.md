@@ -2941,3 +2941,13 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - Optional diagnostic workflow [43769387484](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43769387484) SUCCESS. Google FST 6/6 raw outputs, 0 runtime errors, 3 upstream symbol tests passed; CRF 100 predictions/84 source-concordant, but no gold and NOT_SCORED_POSSIBLE_TRAINING_OVERLAP; Epitran raw output artifact available. All remain diagnostic.
 - Site is live at https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/.
 - Remaining linguistic blockers unchanged: 0 independent profile-matched IPA gold; provider profile equivalence unverified; phonological coverage partial; manual screen-reader/real-device accessibility QA outstanding. Classification remains PARTIAL LINGUISTIC PROTOTYPE, not release-ready.
+
+### 2026-11-16 · Visible provider-specific provisional previews
+
+- PR #156 merged as `6a804901bf1f55fce3559696f73ce9ccc5373642`; source branch `feat/visible-provisional-provider-previews-2026-11-16`.
+- Added a dedicated, visibly labelled PROVISIONAL preview section below canonical Ukrainian output. It assembles provider-specific IPA→Ukrainian candidate adaptations for project segmental rules, Epitran and Google WFST, preserving spaces/non-Myanmar text and marking segments without a candidate as `⟦…⟧`.
+- Canonical IPA/Ukrainian fields are unchanged. External providers do not vote or become canonical; preview is diagnostic and explicitly not confirmed transcription.
+- CI [43833796332](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43833796332) SUCCESS on feature head: 315 Python tests + 68 subtests, 70 built-browser Playwright tests, production build, generated data validation, npm tests and npm audit 0 vulnerabilities. A first test attempt failed only because an assertion expected wording different from the UI copy; corrected and reran the full workflow successfully.
+- PR check [43833807816](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43833807816) SUCCESS. Main merge commit: `6a804901bf1f55fce3559696f73ce9ccc5373642`.
+- GitHub Pages deployment for the merge commit is pending verification at this documentation checkpoint; do not claim this UI change is live until the Pages workflow and smoke test pass.
+- Linguistic blockers remain: independent profile-matched IPA gold count 0; no accuracy score; provider dialect equivalence, tone/phonation/quantity and complex medials/kinzi/conjunct/coda coverage incomplete. Classification remains deployed research prototype, not linguistically release-ready.
