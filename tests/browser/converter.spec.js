@@ -10,7 +10,7 @@ test("example produces result",async({page})=>{await page.goto("/");await page.c
 test("source is preserved and clear works",async({page})=>{await page.goto("/");await page.locator("#source").fill("မြန်မာ ABC 123");await expect(page.locator("#source")).toHaveValue("မြန်မာ ABC 123");await page.click("#clear");await expect(page.locator("#source")).toHaveValue("");await expect(page.locator("#empty")).toBeVisible();});
 test("non-Myanmar material is preserved in output",async({page})=>{await page.goto("/");await page.locator("#source").fill("မြန်မာ ABC 123!");await expect(page.locator("#uk")).toContainText(" ABC 123!");await expect(page.locator("#issues")).toContainText("збережено без змін");});
 test("scientific page is reachable",async({page})=>{await page.goto("/system.html");await expect(page.locator("h1")).toContainText("українське читання");});
-test("evidence status is not overstated",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကာ");await expect(page.locator("#ipa")).toHaveText("ka");await expect(page.locator("#uk")).toHaveText("ка");await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");await expect(page.locator("#uk-status")).toContainText("українська передача: PROVISIONAL");await expect(page.locator("#hybrid-provider-results")).toContainText("сегментний кандидат: PROJECT_RULES_SEGMENTAL_PREVIEW");await expect(page.locator("#hybrid-candidate-previews")).toBeVisible();await expect(page.locator("#hybrid-candidate-previews")).toContainText("PROJECT_RULES_SEGMENTAL · PROVISIONAL");await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText("ка");await expect(page.locator("#hybrid-provider-results")).not.toContainText("канонічний вибір: PROJECT_RULES_SEGMENTAL_PREVIEW");await expect(page.locator("#hybrid-provider-results")).toContainText("DIALECT_PROFILE_UNVERIFIED");const providerDetails=await page.locator("#hybrid-provider-results").innerText();if(providerDetails.includes("Google WFST: ACTIVE")){await expect(page.locator("#hybrid-provider-results")).toContainText("SEGMENTAL_AGREEMENT_PROSODY_DIFFERENCE");await expect(page.locator("#hybrid-provider-results")).toContainText("TONE_UNDERSPECIFIED_BY_ONE_CANDIDATE");}else{await expect(page.locator("#hybrid-provider-results")).toContainText("Google WFST: MODEL_NOT_DEPLOYED");}await expect(page.locator("#issues")).toBeVisible();});
+test("evidence status is not overstated",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကာ");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ကာ⟧");await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");await expect(page.locator("#uk-status")).toContainText("українська передача: PROVISIONAL");await expect(page.locator("#hybrid-provider-results")).toContainText("сегментний кандидат: PROJECT_RULES_SEGMENTAL_PREVIEW");await expect(page.locator("#hybrid-candidate-previews")).toBeVisible();await expect(page.locator("#hybrid-candidate-previews")).toContainText("PROJECT_RULES_SEGMENTAL · PROVISIONAL");await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText("ка");await expect(page.locator("#hybrid-provider-results")).not.toContainText("канонічний вибір: PROJECT_RULES_SEGMENTAL_PREVIEW");await expect(page.locator("#hybrid-provider-results")).toContainText("DIALECT_PROFILE_UNVERIFIED");const providerDetails=await page.locator("#hybrid-provider-results").innerText();if(providerDetails.includes("Google WFST: ACTIVE")){await expect(page.locator("#hybrid-provider-results")).toContainText("SEGMENTAL_AGREEMENT_PROSODY_DIFFERENCE");await expect(page.locator("#hybrid-provider-results")).toContainText("TONE_UNDERSPECIFIED_BY_ONE_CANDIDATE");}else{await expect(page.locator("#hybrid-provider-results")).toContainText("Google WFST: MODEL_NOT_DEPLOYED");}await expect(page.locator("#issues")).toBeVisible();});
 test("pure non-Myanmar input is not presented as a successful Burmese analysis",async({page})=>{await page.goto("/");await page.locator("#source").fill("ABC 123");await expect(page.locator("#uk")).toHaveText("ABC 123");await expect(page.locator("#uk-status")).toContainText("UNSUPPORTED");});
 test("kinzi-containing syllable is withheld rather than guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("င်္ကာ");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toContainText("⟦");await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");});
 test("unsupported palatal medial is withheld instead of guessed",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျား");await expect(page.locator("#ipa")).toHaveText("?");await expect(page.locator("#uk")).toHaveText("⟦ကျား⟧");await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");});
@@ -110,8 +110,9 @@ test("whitespace separators are preserved but do not shift Burmese syllable numb
   const numbered=await page.locator("#syllables .syllable strong").allTextContents();
   expect(numbered).toEqual(["01  ကာ","02  မြန်","03  မာ"]);
   await expect(page.locator("#syllables")).toContainText("пробіл/перенесення рядка збережено без змін");
-  await expect(page.locator("#ipa")).toHaveText("ka ?ma");
-  await expect(page.locator("#uk")).toHaveText("ка ⟦မြန်⟧ма");
+  await expect(page.locator("#ipa")).toHaveText("? ??");
+  await expect(page.locator("#uk")).toContainText("⟦");
+  await expect(page.locator("#uk")).not.toHaveText("ка ⟦မြန်⟧ма");
 });
 
 test("provisional Ukrainian mappings are visible in segment-level evidence status",async({page})=>{
@@ -131,9 +132,10 @@ test("a mixed string keeps the most cautious mapping status in the aggregate",as
 test("open E vowel sign is analyzed and rendered as a provisional Ukrainian candidate",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကေ");
-  await expect(page.locator("#ipa")).toHaveText("ke");
-  await expect(page.locator("#uk")).toHaveText("ке");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ကေ⟧");
   await expect(page.locator("#hybrid-provider-results")).toContainText("PROJECT_RULES_SEGMENTAL → ке [PROVISIONAL]");
+  await expect(page.locator("#hybrid-candidate-previews")).toBeVisible();
   await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
@@ -277,8 +279,9 @@ test("bare consonant bounded by Latin text is withheld even in a multi-token inp
 test("contiguous Myanmar bare clusters retain the existing contextual fallback",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကမ");
-  await expect(page.locator("#ipa")).toHaveText("kama");
-  await expect(page.locator("#uk")).toHaveText("кама");
+  await expect(page.locator("#ipa")).toHaveText("??");
+  await expect(page.locator("#uk")).toContainText("⟦");
+  await expect(page.locator("#uk")).not.toHaveText("кама");
   await expect(page.locator("#issues")).toBeVisible();
 });
 
@@ -466,7 +469,7 @@ test("unknown Myanmar extension letter before a supported onset preserves the on
   const labels=await page.locator("#syllables .syllable strong").allTextContents();
   expect(labels).toEqual(["01  "+unknown,"02  ကာ"]);
   await expect(page.locator("#uk")).toContainText("⟦"+unknown+"⟧");
-  await expect(page.locator("#ipa")).toHaveText("?ka");
+  await expect(page.locator("#ipa")).toHaveText("??");
 });
 
 

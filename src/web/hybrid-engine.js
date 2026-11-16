@@ -197,12 +197,15 @@ export function analyzeHybrid(segments, googleModel = null) {
     phonetic.length ? "NOT_ESTABLISHED" : "UNSUPPORTED");
   const hasGoogle = googleModel?.available === true;
   return {
+    // Public result fields are canonical-only. Segmental and provider candidates
+    // remain available in candidateAdaptations and are rendered in the explicitly
+    // provisional preview panel; they must never leak into the main transcription.
     ipa: records.map((item) => item.passthrough ? item.segment.raw
-      : (item.selectedIpa || item.deterministicIpa || "?")).join(""),
+      : (item.selectedIpa || "?")).join(""),
     uk: records.map((item) => {
       if (item.passthrough) return item.segment.raw;
-      const adaptation = item.selectedAdaptation || item.provisionalAdaptation;
-      return adaptation?.text && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN"].includes(adaptation.status)
+      const adaptation = item.selectedAdaptation;
+      return adaptation?.text && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN", "PROVISIONAL"].includes(adaptation.status)
         ? adaptation.text : "⟦" + item.segment.raw + "⟧";
     }).join(""),
     status, ipaStatus, ukrainianStatus, records,
