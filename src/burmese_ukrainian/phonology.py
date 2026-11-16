@@ -133,7 +133,7 @@ def phonologize_syllable(
 
     # Preserve the legacy onset-plus-placeholder diagnostic for a structurally
     # bare consonant. It is explicitly NOT_ESTABLISHED and cannot become IPA gold.
-    if onset_ipa and not vowel_signs and not blocking:
+    if onset_ipa and not vowel_signs:
         segmental_ipa = onset_ipa + "?"
 
     complete_segmental = bool(segmental_ipa) and not blocking
