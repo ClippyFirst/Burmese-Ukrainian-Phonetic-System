@@ -2788,3 +2788,14 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **BLOCKED:** transitive `picomatch@4.0.7` advisory; acceptance requires a trustworthy fixed release or reviewed compatible replacement, default/capture-mode and nested-extglob regressions, adversarial timeout checks, mandatory audit pass, and full test workflow pass on the exact final head.
 - **Research status unchanged:** independent profile-matched adjudicated IPA gold = 0; accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS source evidence and reuse rights unresolved; manual accessibility QA incomplete; independent IPA annotation DEFERRED. No gold values or pronunciation claims were fabricated.
 - **Readiness:** engineering/research prototype, not linguistically release-ready. This exact-head record supersedes prior pending/stale CI checkpoints.
+
+
+
+## ReDoS candidate reassessment — 2026-11-17
+
+- New upstream v4-line candidates: [picomatch #261](https://github.com/micromatch/picomatch/pull/261) and [#262](https://github.com/micromatch/picomatch/pull/262), both open/unmerged. [#263](https://github.com/micromatch/picomatch/pull/263) targets v2 only.
+- #261 proposes mandatory bounded ambiguity analysis over the generated regex, including final-output checks for wrappers and fail-closed handling of unproven patterns, even with `maxExtglobRecursion: false`. It excludes capture-dependent collapse rewrites and reports 2,009 tests plus adversarial/compatibility coverage. This is the more complete security candidate, but it changes behavior by rejecting some formerly accepted unsafe patterns and is not merged/released.
+- #262 preserves more legacy matching behavior and reports 2,001 tests plus large finite differential/adversarial test sets, but its explicit `maxExtglobRecursion: false` bypass remains. It is not a complete mandatory guard.
+- Both remain proposals, not verified release fixes. Candidate CI was not independently established as green in this inspection. No patch or lockfile change was made.
+- Snyk revocation chatter does not clear GitHub's published GHSA or the repository's failing mandatory npm audit. Upstream issue #247 remains open; the exact project gate still fails on locked `picomatch@4.0.7`.
+- **Status:** BLOCKED pending maintainer-reviewed v4 release/replacement, full compatibility/security review and green exact-head audit + CI. Do not report the advisory as resolved.
