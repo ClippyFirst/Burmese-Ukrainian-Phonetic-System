@@ -3393,3 +3393,17 @@ Hosted CI only; no local checkout or local commands are claimed. Workflow 441814
 No dependency override, downgrade, vendored patch, lockfile fabrication, audit suppression, merge, release or production deployment was performed. No linguistic labels, IPA, Ukrainian mappings, runtime code or generated data changed.
 
 **Readiness:** engineering/research prototype; not release-ready and not linguistically validated. The mandatory security gate and independent phonological evidence remain genuine blockers.
+
+
+## 2026-11-18 continuation — exact PR head
+
+Current branch `fix/finals-registry-schema-2026-11-17` is at `15a82b5bcf5ca7d11d204181517828dca92cc0a9`; PR #168 remains open, unmerged and mergeable, 43 commits ahead / 0 behind `main`, with five changed files.
+
+### Verified hosted checks
+
+- Workflow [44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094): corpus structure validation PASS; Python dependency installation PASS; `pytest` PASS; `npm ci` PASS; mandatory `npm audit --audit-level=high` FAIL; build, generated-data freshness, Node and Playwright steps SKIPPED.
+- Workflow [44181463115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463115): pinned Google Burmese WFST/OpenFst build PASS; IPA symbol-table and browser input-alphabet checks PASS; upstream `thrax_g2p` parity PASS; production build PASS; `npm test` PASS; Chromium install PASS; built-site Playwright PASS; Pages artifact upload PASS; deploy SKIPPED for PR event.
+
+The Pages workflow proves the browser build/test path on the exact current head, but it does not make the mandatory test workflow green. Security remediation remains blocked pending a compatible reviewed/released fix or replacement and full exact-head CI. No dependency bypass, downgrade, vendored patch, merge, release or production deployment was made.
+
+The linguistic blockers remain: independent adjudicated Yangon-profile IPA gold = 0 and accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS evidence and reuse rights unresolved; manual accessibility QA incomplete. Independent IPA annotation remains deferred under prior direction. Repository status: engineering/research prototype, not release-ready or linguistically validated.
