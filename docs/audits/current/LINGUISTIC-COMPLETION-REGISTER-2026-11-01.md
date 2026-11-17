@@ -2776,3 +2776,15 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Current primary advisory mirror records the affected range through `picomatch@4.0.7`, with no fixed version stated; upstream issue [#247](https://github.com/micromatch/picomatch/issues/247) remains open. No safe dependency fix was identified. No patch, override, downgrade, audit suppression or lockfile edit was made.
 - **Acceptance remains BLOCKED:** a reviewed/released v4 fix or independently verified compatible replacement; tests for default and capture modes, nested extglob boundaries, and adversarial timeouts; mandatory audit passes; then full test workflow including build, generated-data, Node and Playwright passes on the exact final code head.
 - No linguistic labels, IPA, Ukrainian mappings, gold-corpus data, runtime code or dependencies changed in this continuation. Independent adjudicated IPA gold remains 0; accuracy unmeasured; linguistic coverage, source/license evidence and manual accessibility QA remain incomplete.
+
+
+
+## Latest exact-head verification — 2026-11-17
+
+- PR [#168](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/168) remains OPEN and mergeable. Branch head: `733b383034120000f817cc877f0062f825f5dd2c`; 31 ahead / 0 behind `main`; five changed files.
+- **DONE_VERIFIED — structural registry work:** five-column `data/burmese/finals.csv` contract and uniqueness regression guard are present; no phonological realization or Ukrainian output is inferred by this repair.
+- **DONE_VERIFIED — exact-head Pages workflow [44175250086](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44175250086):** pinned WFST/OpenFst, IPA symbol table, browser alphabet, upstream parity, production build, Node tests, Playwright and artifact upload passed. PR deploy job skipped; no deployment claim.
+- **PARTIAL / BLOCKED — exact-head test workflow [44175250073](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44175250073):** corpus structure validation, Python test dependency install, pytest and `npm ci` passed; mandatory high-severity npm audit failed. Build, generated-data, Node and Playwright steps skipped in this workflow. The separate Pages workflow does not satisfy or bypass this security gate.
+- **BLOCKED:** transitive `picomatch@4.0.7` advisory; acceptance requires a trustworthy fixed release or reviewed compatible replacement, default/capture-mode and nested-extglob regressions, adversarial timeout checks, mandatory audit pass, and full test workflow pass on the exact final head.
+- **Research status unchanged:** independent profile-matched adjudicated IPA gold = 0; accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS source evidence and reuse rights unresolved; manual accessibility QA incomplete; independent IPA annotation DEFERRED. No gold values or pronunciation claims were fabricated.
+- **Readiness:** engineering/research prototype, not linguistically release-ready. This exact-head record supersedes prior pending/stale CI checkpoints.
