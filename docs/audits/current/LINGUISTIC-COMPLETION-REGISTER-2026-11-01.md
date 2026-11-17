@@ -2807,3 +2807,12 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Lockfile v3 confirms the root declares Vite `8.3.8` only as a devDependency; `picomatch` is not a direct application dependency. Locked `picomatch@4.0.7` is selected by Vite `^4.0.7` and tinyglobby `^4.0.4`; fdir `6.5.0` metadata also permits v4. This limits the current dependency exposure to the build/test toolchain but does not waive the mandatory CI audit.
 - The GitHub-reviewed OSV record updated 2026-11-17 15:56 UTC still identifies versions through 4.0.7 as affected, CVSS 4.0 8.7, with no fixed version. The Snyk-revocation report is specific to that feed and is not a clearing signal for GitHub/npm audit.
 - Dependency manifests and lockfile remain unchanged; security status remains BLOCKED.
+
+
+## Latest exact branch CI evidence — 2026-11-17
+
+- Branch head: `bc9c25dfe5bf30df5e05787144a8af0f9f5e01b0`; 40 commits ahead / 0 behind `main`; five changed files.
+- **DONE_VERIFIED — independent Pages build/browser path:** [workflow 44181463115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463115) passed pinned Google Burmese WFST/OpenFst, IPA symbol-table and browser alphabet checks, upstream `thrax_g2p` parity, production build, Node tests, Chromium, built-site Playwright and Pages artifact upload. Deploy skipped for PR event.
+- **BLOCKED — required test workflow:** [workflow 44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094) passed corpus structure validation, Python dependency install, pytest and `npm ci`, then failed mandatory `npm audit --audit-level=high`. Build, generated-data, Node and Playwright steps skipped.
+- The two workflows provide complementary evidence, not a green full test workflow. Keep security acceptance blocked until a reviewed/released compatible fix or replacement passes mandatory audit and full exact-head CI.
+- No new linguistic evidence was introduced: independently adjudicated IPA gold remains 0; accuracy remains unmeasured. Existing phonology, source/licensing and accessibility blockers remain.
