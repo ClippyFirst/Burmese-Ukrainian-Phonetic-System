@@ -1,6 +1,6 @@
 # Burmese phonology execution status matrix
 
-Updated: 2026-11-16
+Updated: 2026-11-17
 Base branch at start: main (latest visible commit: 81ad16ff252c0e8c59d3e5118b58216e5bad70bf)
 Scope: executable status ledger reconciled with the 2026-10-20 phonology and G2P/licensing audits. This is a continuation register, not a claim of full phonological coverage.
 
@@ -3023,3 +3023,12 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **Research/accessibility boundary unchanged:** independent profile-matched adjudicated IPA gold remains **0**; empirical accuracy remains **null / NOT MEASURED**. Phonological coverage and primary MLC/MLCTS evidence remain incomplete; full manual screen-reader, physical-device/touch-target, zoom/reflow and comprehensive contrast/state QA remain TODO. Independent IPA annotation remains DEFERRED per owner direction; issue #85's human prerequisites are unmet.
 - **Task ledger:** DONE_VERIFIED — exact-main CI, Pages deployment and live smoke for this SHA; PARTIAL — Yangon phonological coverage, MLCTS source conformity and parity against independent gold; BLOCKED — primary MLC notation/entry evidence and item-level reuse rights; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation and stale PR #129 integration.
 - **Readiness:** deployed engineering/research prototype, **not linguistically release-ready** and not WCAG-conformance-certified. Hosted GitHub Actions are the verification evidence; no local checkout/test execution is claimed.
+
+
+## Data-integrity correction — 2026-11-17
+
+| Registry / acceptance gate | Implemented coverage | Tested coverage | Independently validated coverage | Status | Next acceptance criterion |
+|---|---|---|---|---|---|
+| `data/burmese/finals.csv` column contract | Corrected five-column header to distinguish orthographic marker, possible function, phonological interpretation, evidence status and source ID; no linguistic values or rules added | `tests/test_finals_registry.py`; hosted run [44151591432](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44151591432): 317 Python tests + 68 subtests passed, including the new registry tests | Structural CSV/source-reference integrity only; no pronunciation gold | DONE_VERIFIED (bounded data-integrity contract) | Preserve typed distinction among orthographic signs, underlying codas and surface phonetics; full workflow rerun after npm dependency remediation |
+
+**CI qualification for the correction branch:** the same run passed IPA corpus structure validation and pytest, then failed at the npm audit gate because transitive `picomatch` is affected by GHSA-fc5q-39xc-vjpf / CVE-2026-112366. Four high-severity advisories were reported; npm offered only a breaking Vite downgrade, and no patched picomatch release was identified. Build, generated-data, Node and Playwright steps were skipped. This is a dependency/security blocker, not a failure of the finals-registry tests. Do not label the complete workflow green.
