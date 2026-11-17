@@ -3301,3 +3301,42 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 - Current primary advisory mirror records the affected range through `picomatch@4.0.7`, with no fixed version stated; upstream issue [#247](https://github.com/micromatch/picomatch/issues/247) remains open. No safe dependency fix was identified. No patch, override, downgrade, audit suppression or lockfile edit was made.
 - **Acceptance remains BLOCKED:** a reviewed/released v4 fix or independently verified compatible replacement; tests for default and capture modes, nested extglob boundaries, and adversarial timeouts; mandatory audit passes; then full test workflow including build, generated-data, Node and Playwright passes on the exact final code head.
 - No linguistic labels, IPA, Ukrainian mappings, gold-corpus data, runtime code or dependencies changed in this continuation. Independent adjudicated IPA gold remains 0; accuracy unmeasured; linguistic coverage, source/license evidence and manual accessibility QA remain incomplete.
+
+
+
+## Continuation checkpoint — exact PR head verified, 2026-11-17
+
+Repository: `ClippyFirst/Burmese-Ukrainian-Phonetic-System-`
+Branch: `fix/finals-registry-schema-2026-11-17`
+PR: [#168](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/168), OPEN, mergeable, base `main`.
+Head: `733b383034120000f817cc877f0062f825f5dd2c`; compare: 31 commits ahead / 0 behind; five changed files.
+
+### Verified outcomes
+
+- The finals registry header/schema repair and duplicate-marker regression test remain the only code/data scope of this branch; all source rows and evidence statuses were preserved. No pronunciation, IPA, Ukrainian mapping, runtime, generated data or dependencies changed.
+- Exact-head Pages workflow [44175250086](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44175250086) SUCCESS: Google Burmese WFST/OpenFst, IPA symbol table, browser alphabet, upstream `thrax_g2p` parity, production build, Node tests, Chromium, built-site Playwright and artifact upload passed. Deploy job SKIPPED because this was a PR event.
+- Exact-head test workflow [44175250073](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44175250073) FAILURE at required `npm audit --audit-level=high`. Corpus structure validation, Python dependency installation, pytest and `npm ci` passed; build, generated-data freshness, Node and Playwright steps were skipped in this workflow.
+- The successful Pages path is independent evidence for build/browser checks, not a waiver of the required audit gate.
+
+### Current task ledger
+
+- **DONE_VERIFIED:** finals CSV schema repair; registry field/source/status/uniqueness regression checks; Python suite and corpus structure gate on exact head; separate exact-head production build, Node/browser suite and Pages artifact.
+- **BLOCKED:** mandatory high-severity npm audit because the dependency tree resolves affected `picomatch@4.0.7`; no trustworthy fixed v4 release or compatible replacement has been established. Do not downgrade Vite, vendor an unreviewed patch, override, fabricate lock data or suppress audit.
+- **PARTIAL / BLOCKED:** independently adjudicated Yangon-profile IPA gold remains empty (0 entries), accuracy is unmeasured, phonological coverage incomplete, primary MLC/MLCTS evidence and reuse rights unresolved, manual accessibility QA incomplete.
+- **DEFERRED:** independent IPA annotation, as previously directed; prerequisites remain unmet.
+
+### Commands/checks actually run through hosted CI
+
+- Workflow 44175250073: corpus structure validation — PASS; `pip install -e ".[test]"` — PASS; `pytest` — PASS; `npm ci` — PASS; `npm audit --audit-level=high` — FAIL; later build/generated-data/Node/Playwright steps — SKIPPED.
+- Workflow 44175250086: pinned Google WFST/OpenFst build, IPA symbol-table and browser-alphabet checks, upstream parity, `npm run build`, `npm test`, Chromium installation and `npm run test:browser:built` — PASS; Pages artifact upload — PASS; deploy — SKIPPED.
+- No local checkout/tests are claimed. No merge, release or production deployment was performed.
+
+### Next genuine blockers / acceptance criteria
+
+1. Security: upstream reviewed/released picomatch v4 fix or independently reviewed compatible replacement; API and capture semantics verified; nested extglob and adversarial ReDoS timeout tests; mandatory audit green; then complete test workflow green on exact final head.
+2. Linguistic validation: independent expert adjudication of profile-matched lexical IPA with provenance and double annotation; only then report accuracy.
+3. Phonology: evidence-backed completion of rime/coda/checked-syllable, vowel combinations, tone/register/phonation and allophony without promoting restricted findings beyond their source scope.
+4. Sources/licensing: primary MLC/MLCTS source verification, exact scope and redistribution/reuse rights documented.
+5. Accessibility: manual screen-reader, touch-target, zoom/reflow, contrast and state checks recorded with reproducible evidence.
+
+**Readiness:** research/engineering prototype, not linguistically release-ready. This checkpoint supersedes stale workflow-pending and branch-tip statements earlier in this handoff.
