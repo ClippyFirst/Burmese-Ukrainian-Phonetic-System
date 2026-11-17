@@ -2701,3 +2701,12 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 | ID | Status | Evidence | Acceptance boundary |
 |---|---|---|---|
 | BURMESE-FINALS-REGISTRY-CSV-001 | DONE_VERIFIED (CSV structure only) | `data/burmese/finals.csv` header corrected from four columns to five; `tests/test_finals_registry.py` verifies field alignment, source references and evidence-status values. Hosted PR test run [44151973458](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44151973458): pytest passed; the workflow then failed at the separate npm audit gate. | This does not establish any new Burmese coda or final realization. Keep asat, anusvara, visarga, kinzi, abstract /N/, glottal /ʔ/ and surface nasalization distinct. Full CI remains blocked by GHSA-fc5q-39xc-vjpf / CVE-2026-112366 until a safe dependency path is available. Independent IPA gold remains 0. |
+
+
+### Exact-head engineering verification — 2026-11-17
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BURMESE-FINALS-REGISTRY-CSV-001 | DONE_VERIFIED (CSV structure and hosted regression tests) | Exact-head pytest in [44152143092](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44152143092): 317 passed, 68 subtests; IPA corpus structure validation also passed. Exact-head Pages build [44152143185](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44152143185) SUCCESS: Google WFST build/parity, production build, Node tests and built-site Playwright all passed; Pages artifact uploaded (ID 14360401415). | Pages PR preview did not deploy to production. Main test workflow still fails at mandatory npm audit high-severity gate for transitive picomatch. This verifies engineering behavior only; no Burmese coda/final phonetic realization or IPA gold claim is established. |
+
+**Security gate remains BLOCKED:** the exact-head main test run failed only after pytest and `npm ci` at the mandatory high-severity npm advisory check; later steps in that workflow were skipped. Separate Pages workflow confirms the build/test/browser path succeeds when it reaches those steps, but does not resolve the vulnerability or make the required test workflow green. Do not bypass audit or perform an unverified breaking downgrade. Independent profile-matched IPA gold remains 0; accuracy remains null.
