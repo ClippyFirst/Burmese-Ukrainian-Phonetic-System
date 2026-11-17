@@ -3364,3 +3364,32 @@ The project's locked dependency remains unchanged. No audit suppression, downgra
 The committed lockfile v3 shows `picomatch@4.0.7` is **transitive**, not a direct runtime dependency: the root package declares Vite `8.3.8` as a devDependency; Vite and tinyglobby both select picomatch v4, while fdir metadata also permits v4. This makes the currently visible exposure part of the build/test toolchain rather than the declared application runtime dependency graph. It still blocks the mandatory CI security gate.
 
 The GitHub-reviewed advisory mirrored by OSV was updated 2026-11-17 15:56 UTC, continues to mark versions through 4.0.7 affected, rates it CVSS 4.0 8.7, and states no fixed version. A Snyk-specific revocation comment therefore cannot be treated as clearing GitHub's advisory or the project's npm audit result. No package manifest or lockfile changes were made.
+
+
+## Exact latest-head workflow reconciliation — 2026-11-17 (current)
+
+Repository: `ClippyFirst/Burmese-Ukrainian-Phonetic-System-`
+Branch: `fix/finals-registry-schema-2026-11-17`
+PR: [#168](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/168), OPEN, mergeable, base `main`.
+Latest branch head: `bc9c25dfe5bf30df5e05787144a8af0f9f5e01b0`; compare: 40 commits ahead / 0 behind; five changed files.
+
+### Latest exact-head outcomes
+
+- **DONE_VERIFIED — Pages workflow [44181463115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463115):** Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet, upstream `thrax_g2p` parity, production build, Node tests, Chromium installation, built-site Playwright tests and Pages artifact upload all passed. Deploy job skipped because this is a PR event; no production deployment occurred.
+- **BLOCKED — test workflow [44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094):** corpus structure validation, Python dependency installation, pytest and `npm ci` passed; mandatory `npm audit --audit-level=high` failed. Build, generated-data freshness, Node and Playwright steps skipped in this workflow.
+- The independent Pages workflow validates build/browser behavior but does not clear or bypass the mandatory npm audit gate. Do not report the full test workflow as green.
+
+### Final ledger update
+
+- **DONE_VERIFIED:** finals CSV five-column schema repair and registry source/status/field/uniqueness tests; exact-head Python/corpus checks; exact-head production build, Node, built-site Playwright and Pages artifact path.
+- **BLOCKED:** mandatory high-severity npm audit; affected transitive `picomatch@4.0.7` remains unresolved. Acceptance: reviewed/released v4 remediation or independently reviewed compatible replacement; default/capture/nested-extglob/adversarial timeout checks; mandatory audit green; full test workflow green on exact final head.
+- **PARTIAL / BLOCKED:** independent adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS evidence and reuse rights unresolved; manual accessibility QA incomplete.
+- **DEFERRED:** independent IPA annotation remains deferred under prior project direction.
+
+### Commands/checks actually executed
+
+Hosted CI only; no local checkout or local commands are claimed. Workflow 44181463094: corpus structure validation PASS; Python dependency installation PASS; `pytest` PASS; `npm ci` PASS; `npm audit --audit-level=high` FAIL; subsequent build/generated-data/Node/Playwright steps SKIPPED. Workflow 44181463115: WFST/OpenFst and IPA/input-alphabet checks PASS; upstream parity PASS; `npm run build` PASS; `npm test` PASS; Chromium install PASS; `npm run test:browser:built` PASS; Pages artifact upload PASS; deploy SKIPPED.
+
+No dependency override, downgrade, vendored patch, lockfile fabrication, audit suppression, merge, release or production deployment was performed. No linguistic labels, IPA, Ukrainian mappings, runtime code or generated data changed.
+
+**Readiness:** engineering/research prototype; not release-ready and not linguistically validated. The mandatory security gate and independent phonological evidence remain genuine blockers.
