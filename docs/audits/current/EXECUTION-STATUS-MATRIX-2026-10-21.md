@@ -3145,3 +3145,12 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **BLOCKED — test workflow [44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094):** corpus structure validation, Python dependency installation, pytest and `npm ci` passed; mandatory `npm audit --audit-level=high` failed. Build, generated-data freshness, Node and Playwright steps were skipped in this workflow.
 - This exact-head Pages success does not waive the mandatory security gate. No dependency, runtime, pronunciation, IPA, Ukrainian mapping or generated-data changes were made in this continuation. No merge, release or production deploy occurred.
 - Readiness remains PARTIAL: mandatory audit blocked; independent adjudicated Yangon-profile IPA gold = 0 and accuracy unmeasured; phonological coverage, primary MLC/MLCTS evidence and reuse rights, and manual accessibility QA remain incomplete.
+
+
+## Exact latest PR-head verification — 2026-11-18
+
+- Verified branch head: `15a82b5bcf5ca7d11d204181517828dca92cc0a9`; PR #168 remains open, unmerged and mergeable; comparison with `main`: 43 commits ahead / 0 behind, five changed files.
+- **DONE_VERIFIED — Pages workflow [44181463115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463115):** WFST/OpenFst, IPA symbol-table and browser alphabet checks, upstream `thrax_g2p` parity, production build, Node tests, Chromium, built-site Playwright and artifact upload all passed. Deploy skipped because this is a PR event.
+- **BLOCKED — test workflow [44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094):** corpus validation, Python dependency installation, pytest and `npm ci` passed; mandatory `npm audit --audit-level=high` failed. Build, generated-data freshness, Node and Playwright steps were skipped in this workflow.
+- These are complementary results, not a fully green test workflow. No dependency or linguistic changes were made. No merge, release or production deployment occurred.
+- Remaining acceptance blockers are unchanged: compatible reviewed/released `picomatch` remediation and full exact-head security CI; independently adjudicated Yangon-profile IPA gold (currently 0) and accuracy measurement; incomplete phonological coverage; unresolved primary MLC/MLCTS evidence and reuse rights; manual accessibility QA.
