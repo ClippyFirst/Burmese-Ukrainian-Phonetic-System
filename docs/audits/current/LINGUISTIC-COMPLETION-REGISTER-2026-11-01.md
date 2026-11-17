@@ -2799,3 +2799,11 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Both remain proposals, not verified release fixes. Candidate CI was not independently established as green in this inspection. No patch or lockfile change was made.
 - Snyk revocation chatter does not clear GitHub's published GHSA or the repository's failing mandatory npm audit. Upstream issue #247 remains open; the exact project gate still fails on locked `picomatch@4.0.7`.
 - **Status:** BLOCKED pending maintainer-reviewed v4 release/replacement, full compatibility/security review and green exact-head audit + CI. Do not report the advisory as resolved.
+
+
+
+## Dependency graph clarification — 2026-11-17
+
+- Lockfile v3 confirms the root declares Vite `8.3.8` only as a devDependency; `picomatch` is not a direct application dependency. Locked `picomatch@4.0.7` is selected by Vite `^4.0.7` and tinyglobby `^4.0.4`; fdir `6.5.0` metadata also permits v4. This limits the current dependency exposure to the build/test toolchain but does not waive the mandatory CI audit.
+- The GitHub-reviewed OSV record updated 2026-11-17 15:56 UTC still identifies versions through 4.0.7 as affected, CVSS 4.0 8.7, with no fixed version. The Snyk-revocation report is specific to that feed and is not a clearing signal for GitHub/npm audit.
+- Dependency manifests and lockfile remain unchanged; security status remains BLOCKED.
