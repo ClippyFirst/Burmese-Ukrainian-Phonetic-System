@@ -2747,3 +2747,11 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **Release evidence:** npm still lists picomatch 4.0.7 as latest; the GitHub advisory identifies versions through 4.0.7 as affected and lists no patched version. Treat contradictory third-party scanner summaries as insufficient to override the official GitHub Actions audit failure.
 - **Acceptance remains:** await an upstream-reviewed, released fix (or independently review a replacement comprehensively), test adversarial ReDoS cases and API compatibility, then pass mandatory npm audit and full exact-head build/generated-data/Node/Playwright CI.
 - No pronunciation, IPA, Ukrainian mapping, generated data or runtime behavior changed. The duplicate-key test is a registry-integrity guard only.
+
+
+### Upstream patch review details
+
+- PR #237's v4/master patch rewrites a single-branch repeated-star extglob by collapsing the outer quantifier. The inspected patch does not add a capture-mode-specific fallback; because collapsing may change the final repeated capture, its public tests do not establish capture-semantic compatibility. It is not safe to transplant without additional API-level tests.
+- PR #238 uses a narrower literal fallback for leading bare `*`/`?` followed by content. It preserves examples such as `+(*)` and `+(a*)`, but its author explicitly lists `+(*(ab)c)` as an uncovered structurally similar case. Its own upstream test count is not a substitute for testing against this repository's pinned dependency tree.
+- PR #246 contains a more explicit capture-mode fallback and subprocess timeout tests, but targets the separate `v2` branch, not the v4/master dependency used here.
+- Therefore the current dependency path remains **BLOCKED**. Acceptance requires upstream integration/release or a separately reviewed replacement that covers the v4 API, capture semantics, documented nested cases, and adversarial timeout regressions. No one of these open PRs is treated as a security fix.
