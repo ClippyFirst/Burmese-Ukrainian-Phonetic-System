@@ -3356,3 +3356,11 @@ Issue [#247](https://github.com/micromatch/picomatch/issues/247) remains open. A
 **Decision:** neither patch was transplanted. Both are unmerged proposals, and the candidate check-run state was not established as green during this review. #261 is the stronger candidate for mandatory safety, but its behavioral compatibility changes need maintainer review and exact dependency-tree tests before adoption. #262's explicit opt-out is a material residual bypass. Acceptance remains a reviewed/released v4 fix or controlled compatible replacement, default/capture/nested/parser-option/adversarial tests, mandatory audit green, and full exact-head CI green.
 
 The project's locked dependency remains unchanged. No audit suppression, downgrade, override, or unreviewed vendoring was introduced.
+
+
+
+### Dependency exposure clarification
+
+The committed lockfile v3 shows `picomatch@4.0.7` is **transitive**, not a direct runtime dependency: the root package declares Vite `8.3.8` as a devDependency; Vite and tinyglobby both select picomatch v4, while fdir metadata also permits v4. This makes the currently visible exposure part of the build/test toolchain rather than the declared application runtime dependency graph. It still blocks the mandatory CI security gate.
+
+The GitHub-reviewed advisory mirrored by OSV was updated 2026-11-17 15:56 UTC, continues to mark versions through 4.0.7 affected, rates it CVSS 4.0 8.7, and states no fixed version. A Snyk-specific revocation comment therefore cannot be treated as clearing GitHub's advisory or the project's npm audit result. No package manifest or lockfile changes were made.
