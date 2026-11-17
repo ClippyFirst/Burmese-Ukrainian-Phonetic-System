@@ -2694,3 +2694,10 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **Research/accessibility boundary unchanged:** independent profile-matched adjudicated IPA gold remains **0**; empirical accuracy remains **null / NOT MEASURED**. Phonological coverage and primary MLC/MLCTS evidence remain incomplete; full manual screen-reader, physical-device/touch-target, zoom/reflow and comprehensive contrast/state QA remain TODO. Independent IPA annotation remains DEFERRED per owner direction; issue #85's human prerequisites are unmet.
 - **Task ledger:** DONE_VERIFIED — exact-main CI, Pages deployment and live smoke for this SHA; PARTIAL — Yangon phonological coverage, MLCTS source conformity and parity against independent gold; BLOCKED — primary MLC notation/entry evidence and item-level reuse rights; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation and stale PR #129 integration.
 - **Readiness:** deployed engineering/research prototype, **not linguistically release-ready** and not WCAG-conformance-certified. Hosted GitHub Actions are the verification evidence; no local checkout/test execution is claimed.
+
+
+## Registry data-integrity checkpoint — 2026-11-17
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BURMESE-FINALS-REGISTRY-CSV-001 | DONE_VERIFIED (CSV structure only) | `data/burmese/finals.csv` header corrected from four columns to five; `tests/test_finals_registry.py` verifies field alignment, source references and evidence-status values. Hosted PR test run [44151973458](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44151973458): pytest passed; the workflow then failed at the separate npm audit gate. | This does not establish any new Burmese coda or final realization. Keep asat, anusvara, visarga, kinzi, abstract /N/, glottal /ʔ/ and surface nasalization distinct. Full CI remains blocked by GHSA-fc5q-39xc-vjpf / CVE-2026-112366 until a safe dependency path is available. Independent IPA gold remains 0. |
