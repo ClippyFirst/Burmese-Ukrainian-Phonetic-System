@@ -48,6 +48,8 @@ def test_finals_registry_has_aligned_columns_and_source_references():
 
 def test_finals_registry_keeps_orthographic_markers_separate():
     _, rows = _read(DATA / "finals.csv")
+    markers = [row["orthographic_marker"] for row in rows]
+    assert len(markers) == len(set(markers)), "orthographic markers must not be silently overwritten"
     by_marker = {row["orthographic_marker"]: row for row in rows}
 
     assert by_marker["U+103A"]["evidence_status"] == "context_dependent"
