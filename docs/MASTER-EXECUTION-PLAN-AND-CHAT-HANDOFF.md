@@ -3340,3 +3340,19 @@ Head: `733b383034120000f817cc877f0062f825f5dd2c`; compare: 31 commits ahead / 0 
 5. Accessibility: manual screen-reader, touch-target, zoom/reflow, contrast and state checks recorded with reproducible evidence.
 
 **Readiness:** research/engineering prototype, not linguistically release-ready. This checkpoint supersedes stale workflow-pending and branch-tip statements earlier in this handoff.
+
+
+
+## Security continuation — new upstream candidate review (2026-11-17)
+
+The latest upstream search surfaced several new candidate patches, including:
+
+- [picomatch PR #261](https://github.com/micromatch/picomatch/pull/261), open/unmerged, base `master`: the broadest safety proposal found. It adds a bounded ambiguity analyzer over generated regex output, final-output validation where wrappers can introduce repetition, and fail-closed `SyntaxError` for unsafe or unproven repetitions even if `maxExtglobRecursion: false`. It deliberately avoids capture-dependent rewrites. Author-reported validation: 2,009 tests and bounded adversarial subprocesses plus option/parser/capture/language checks. This is not yet independently verified CI or a release. It also introduces intentional compatibility changes: previously accepted unsafe patterns can now throw.
+- [picomatch PR #262](https://github.com/micromatch/picomatch/pull/262), open/unmerged, base `master`: narrower normalization of selected wildcard repetitions, with author-reported 2,001 tests, coverage suite, 3,657,752 finite boolean comparisons and 16 bounded adversarial subprocesses. It preserves more legacy matching, but retains an explicit `maxExtglobRecursion: false` bypass and therefore is not equivalent to #261's mandatory guard.
+- [picomatch PR #263](https://github.com/micromatch/picomatch/pull/263) is based on `v2`, not the v4 line used by this project's dependency tree.
+
+Issue [#247](https://github.com/micromatch/picomatch/issues/247) remains open. Although a commenter noted that the Snyk record seemed revoked, another confirmed the GitHub GHSA publication; our own mandatory `npm audit --audit-level=high` continues to fail against locked `picomatch@4.0.7`. A revocation in one advisory feed is not evidence that the GitHub/npm audit gate is clear.
+
+**Decision:** neither patch was transplanted. Both are unmerged proposals, and the candidate check-run state was not established as green during this review. #261 is the stronger candidate for mandatory safety, but its behavioral compatibility changes need maintainer review and exact dependency-tree tests before adoption. #262's explicit opt-out is a material residual bypass. Acceptance remains a reviewed/released v4 fix or controlled compatible replacement, default/capture/nested/parser-option/adversarial tests, mandatory audit green, and full exact-head CI green.
+
+The project's locked dependency remains unchanged. No audit suppression, downgrade, override, or unreviewed vendoring was introduced.
