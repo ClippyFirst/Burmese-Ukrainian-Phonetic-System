@@ -1,0 +1,279 @@
+"""Unicode-aware Burmese grapheme and syllable parser.
+
+The parser is intentionally structural: it does not infer phonology merely
+because a Myanmar sequence is well-formed orthographically.
+"""
+
+from __future__ import annotations
+
+from dataclasses import asdict
+
+from .model import Syllable
+from .unicode import (
+    BASE_CONSONANTS,
+    KINZI,
+    MEDIALS,
+    SPECIAL,
+    VOWEL_SIGNS,
+    codepoint_name,
+    is_myanmar,
+    normalize_burmese,
+)
+
+
+def _is_unsafe_control(char: str) -> bool:
+    cp = ord(char)
+    return (0x0000 <= cp <= 0x0008 or 0x000B <= cp <= 0x001F
+            or 0x007F <= cp <= 0x009F)
+
+
+def _is_myanmar_text(char: str) -> bool:
+    """Match the browser's Myanmar text boundary, not just Unicode block membership.
+
+    Myanmar digits and punctuation U+1040..U+104B are preserved as ordinary
+    mixed-text separators; Extended-A/B/C letters remain recognized as
+    Myanmar script even when this Burmese inventory cannot pronounce them.
+    """
+    cp = ord(char)
+    return is_myanmar(char) and not 0x1040 <= cp <= 0x104B
+
+
+def segment_graphemes(text: str) -> list[str]:
+    """Segment Myanmar clusters and preserve contiguous mixed-text runs."""
+    s = normalize_burmese(text)
+    out: list[str] = []
+    i = 0
+
+    while i < len(s):
+        if _is_unsafe_control(s[i]):
+            out.append(s[i])
+            i += 1
+            continue
+
+        if not _is_myanmar_text(s[i]):
+            start = i
+            i += 1
+            while (i < len(s) and not _is_unsafe_control(s[i])
+                   and not _is_myanmar_text(s[i])):
+                i += 1
+            out.append(s[start:i])
+            continue
+
+        start = i
+        i += 1
+        while i < len(s) and _is_myanmar_text(s[i]):
+            # A base consonant followed by ASAT is a final of the current syllable,
+            # not the onset of a new syllable. Keep Python aligned with the browser.
+            is_coda_base = (
+                i + 1 < len(s)
+                and s[i] in BASE_CONSONANTS
+                and s[i + 1] == "\u103a"
+            )
+            if (
+                s[i] in BASE_CONSONANTS
+                and not is_coda_base
+                and (
+                    s[i - 1] != "\u1039"
+                    or (s[i - 3 : i] == KINZI and not s[start:i].startswith(KINZI))
+                )
+            ):
+                break
+            i += 1
+        out.append(s[start:i])
+
+    return out
+
+
+def _parse_cluster(cluster: str) -> Syllable:
+    sy = Syllable(raw=cluster, codepoints=[f"U+{ord(c):04X}" for c in cluster])
+    i = 0
+
+    if cluster.startswith(KINZI):
+        sy.kinzi = {
+            "sequence": [f"U+{ord(c):04X}" for c in KINZI],
+            "base": "nga",
+            "phonological_role": "final_nasal",
+        }
+        i = 3
+
+    if i >= len(cluster):
+        sy.analysis.status = "invalid"
+        return sy
+
+    if cluster[i] in BASE_CONSONANTS:
+        ch = cluster[i]
+        sy.onset = {
+            "character": ch,
+            "codepoint": f"U+{ord(ch):04X}",
+            "unicode_name": codepoint_name(ch),
+        }
+        i += 1
+    else:
+        sy.analysis.status = "unsupported_or_malformed"
+        return sy
+
+    while i < len(cluster) and cluster[i] == "\u1039":
+        if i + 1 < len(cluster) and cluster[i + 1] in BASE_CONSONANTS:
+            c = cluster[i + 1]
+            sy.conjunct.append({
+                "character": c,
+                "codepoint": f"U+{ord(c):04X}",
+                "role": "subjoined_consonant",
+            })
+            i += 2
+        else:
+            sy.analysis.status = "invalid"
+            return sy
+
+    while i < len(cluster) and cluster[i] in MEDIALS:
+        medial = MEDIALS[cluster[i]]
+        sy.medials.append(medial)
+        i += 1
+        if i < len(cluster) and cluster[i] == "\u103a" and medial["id"] == "medial_ya":
+            sy.coda = {
+                "marker": "asat",
+                "codepoint": "U+103A",
+                "orthographic_function": "contextual",
+            }
+            i += 1
+
+    vp = []
+    while i < len(cluster) and cluster[i] in VOWEL_SIGNS:
+        vp.append(VOWEL_SIGNS[cluster[i]])
+        i += 1
+
+    if vp:
+        sy.vowel = {"signs": vp, "orthographic_sequence": "".join(x["character"] for x in vp)}
+        sy.inherent_vowel = {"status": "overridden", "reason": "dependent_vowel_sign_present"}
+    else:
+        sy.inherent_vowel = {
+            "status": "present_or_contextually_suppressed",
+            "reason": "no_dependent_vowel_sign",
+        }
+
+    # Kinzi can occur inside the preceding syllable, immediately before the
+    # following written onset. Preserve it as a structural final nasal rather
+    # than absorbing that next onset into the same grapheme cluster.
+    if i + 2 < len(cluster) and cluster[i : i + 3] == KINZI:
+        sy.kinzi = {
+            "sequence": [f"U+{ord(c):04X}" for c in KINZI],
+            "base": "nga",
+            "phonological_role": "final_nasal",
+            "position": "coda",
+        }
+        sy.coda = {
+            "character": "င",
+            "codepoint": "U+1004",
+            "marker": "asat",
+            "asat_codepoint": "U+103A",
+            "orthographic_function": "kinzi_final_nasal",
+        }
+        i += 3
+
+    # Canonical Myanmar ordering can place a tone mark before a written
+    # final consonant. Preserve that mark, then recognize the base+ASAT coda.
+    while i < len(cluster) and cluster[i] in SPECIAL and SPECIAL[cluster[i]] in {"dot_below", "visarga"}:
+        role = SPECIAL[cluster[i]]
+        sy.tone_mark = {"marker": role, "codepoint": f"U+{ord(cluster[i]):04X}"}
+        i += 1
+
+    # A final consonant is written as a base consonant followed by ASAT.
+    # When it follows the syllable onset/medials/vowels, keep it inside this
+    # orthographic syllable as a coda rather than leaving it unparsed.
+    if (
+        i + 1 < len(cluster)
+        and cluster[i] in BASE_CONSONANTS
+        and cluster[i + 1] == "\u103a"
+    ):
+        final = cluster[i]
+        sy.coda = {
+            "character": final,
+            "codepoint": f"U+{ord(final):04X}",
+            "marker": "asat",
+            "asat_codepoint": "U+103A",
+            "orthographic_function": "final_consonant",
+        }
+        i += 2
+
+    while i < len(cluster) and cluster[i] in SPECIAL:
+        role = SPECIAL[cluster[i]]
+        # Virama is only licensed in the immediately parsed conjunct sequence
+        # above. Treating it as a generic trailing special sign would silently
+        # discard a malformed virama after a vowel or medial.
+        if role == "virama":
+            sy.analysis.status = "invalid"
+            return sy
+        if role == "asat":
+            sy.coda = {
+                "marker": "asat",
+                "codepoint": "U+103A",
+                "orthographic_function": "contextual",
+            }
+        elif role in {"dot_below", "visarga"}:
+            sy.tone_mark = {"marker": role, "codepoint": f"U+{ord(cluster[i]):04X}"}
+        i += 1
+
+    if i != len(cluster):
+        sy.analysis.status = "partially_unparsed"
+    return sy
+
+
+def segment_syllables(text: str) -> list[Syllable]:
+    return [_parse_cluster(g) for g in segment_graphemes(text) if g]
+
+
+def _serialize_syllable(syllable: Syllable) -> dict:
+    record = asdict(syllable)
+    record["status"] = syllable.analysis.status
+    return record
+
+
+
+def project_syllable_structure(syllable: dict) -> dict:
+    """Return the shared orthographic projection, excluding phonetic guesses."""
+    onset = syllable.get("onset") or {}
+    kinzi = syllable.get("kinzi") or {}
+    coda = syllable.get("coda") or {}
+    vowel = syllable.get("vowel") or {}
+    tone_mark = syllable.get("tone_mark") or {}
+    return {
+        "raw": syllable.get("raw", ""),
+        "codepoints": list(syllable.get("codepoints", [])),
+        "onset": onset.get("character"),
+        "kinzi": bool(kinzi),
+        "conjunct": [item.get("character") for item in syllable.get("conjunct", [])],
+        "medials": [item.get("id") for item in syllable.get("medials", [])],
+        "vowel_signs": [item.get("id") for item in vowel.get("signs", [])],
+        "inherent_vowel_status": (syllable.get("inherent_vowel") or {}).get("status"),
+        "coda": ({
+            "character": coda.get("character"),
+            "marker": coda.get("marker"),
+            "orthographic_function": coda.get("orthographic_function"),
+        } if coda else None),
+        "tone_mark": tone_mark.get("marker"),
+        "analysis_status": syllable.get("status", "established"),
+    }
+
+
+def parse_burmese(text: str) -> dict:
+    normalized = normalize_burmese(text)
+    # Empty/whitespace-only input is not a successful pronunciation analysis.
+    # Preserve the normalized source string, but return no synthetic graphemes.
+    if not normalized.strip():
+        return {
+            "input": text,
+            "normalized": normalized,
+            "graphemes": [],
+            "syllables": [],
+            "status": "empty_input",
+        }
+    syllables = segment_syllables(normalized)
+    records = [_serialize_syllable(s) for s in syllables]
+    ok = all(s.analysis.status == "established" for s in syllables)
+    return {
+        "input": text,
+        "normalized": normalized,
+        "graphemes": [s.raw for s in syllables],
+        "syllables": records,
+        "status": "ok" if ok else "contains_uncertainty_or_invalid_input",
+    }

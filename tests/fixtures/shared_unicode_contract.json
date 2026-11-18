@@ -1,0 +1,1201 @@
+{
+  "schema_version": 1,
+  "purpose": "Shared regression contract for broad Myanmar Unicode recognition versus supported Burmese inventory. These expectations are structural/status contracts, not phonetic gold data. C0/C1 control characters are not ordinary non-Myanmar passthrough.",
+  "cases": [
+    {
+      "id": "myanmar-extended-c-116d0",
+      "input": "𑛐",
+      "codepoints": [
+        "U+116D0"
+      ],
+      "category": "recognized_myanmar_script_but_unsupported_inventory",
+      "python": {
+        "top_level_status": "contains_uncertainty_or_invalid_input",
+        "syllable_status": "unsupported_or_malformed",
+        "graphemes_preserved": true
+      },
+      "browser": {
+        "uk_status": "UNSUPPORTED",
+        "must_not_report_passthrough": true
+      }
+    },
+    {
+      "id": "myanmar-extended-a-aa60",
+      "input": "ꩠ",
+      "codepoints": [
+        "U+AA60"
+      ],
+      "category": "recognized_myanmar_script_but_unsupported_inventory",
+      "python": {
+        "top_level_status": "contains_uncertainty_or_invalid_input",
+        "syllable_status": "unsupported_or_malformed",
+        "graphemes_preserved": true
+      },
+      "browser": {
+        "uk_status": "UNSUPPORTED",
+        "must_not_report_passthrough": true
+      }
+    },
+    {
+      "id": "del-control-007f",
+      "input": "",
+      "codepoints": [
+        "U+007F"
+      ],
+      "category": "unsupported_unicode_control",
+      "python": {
+        "top_level_status": "contains_uncertainty_or_invalid_input",
+        "syllable_status": "unsupported_or_malformed",
+        "graphemes_preserved": true
+      },
+      "browser": {
+        "uk_status": "UNSUPPORTED",
+        "must_not_report_passthrough": true
+      }
+    },
+    {
+      "id": "c1-control-009f",
+      "input": "",
+      "codepoints": [
+        "U+009F"
+      ],
+      "category": "unsupported_unicode_control",
+      "python": {
+        "top_level_status": "contains_uncertainty_or_invalid_input",
+        "syllable_status": "unsupported_or_malformed",
+        "graphemes_preserved": true
+      },
+      "browser": {
+        "uk_status": "UNSUPPORTED",
+        "must_not_report_passthrough": true
+      }
+    }
+  ],
+  "phonetic_status_cases": [
+    {
+      "id": "medial-ra-wa-withheld",
+      "input": "ကြွေ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "recognized medials have no profile-adjudicated realization"
+    },
+    {
+      "id": "conjunct-withheld",
+      "input": "က္ကာ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "recognized stacked consonant has no profile-adjudicated realization"
+    },
+    {
+      "id": "kinzi-withheld",
+      "input": "င်္ကာ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "recognized kinzi has no profile-adjudicated realization"
+    },
+    {
+      "id": "nasal-coda-withheld",
+      "input": "ပင်",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "nasal coda surface realization is not adjudicated"
+    },
+    {
+      "id": "checked-coda-withheld",
+      "input": "ကိုက်",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "checked coda and vowel combination are not adjudicated"
+    },
+    {
+      "id": "asat-rime-withheld",
+      "input": "ကော်",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "asat-conditioned rime is not adjudicated"
+    },
+    {
+      "id": "anusvara-withheld",
+      "input": "ကံ",
+      "expected_python_phonetic_status": "analysis_dependent",
+      "expected_browser_ipa_status": "ANALYSIS_DEPENDENT",
+      "reason": "anusvara realization remains contextual and unresolved"
+    }
+  ],
+  "structural_cases": [
+    {
+      "id": "kinzi-coda-syllable-boundary",
+      "input": "မင်္ဂလာ",
+      "python": {
+        "graphemes": [
+          "မင်္",
+          "ဂ",
+          "လာ"
+        ],
+        "syllable_count": 3,
+        "first_kinzi_position": "coda",
+        "first_coda_character": "င"
+      },
+      "browser": {
+        "syllables": [
+          "မင်္",
+          "ဂ",
+          "လာ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ya",
+      "input": "ကျ",
+      "python": {
+        "graphemes": [
+          "ကျ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra",
+      "input": "ကြ",
+      "python": {
+        "graphemes": [
+          "ကြ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_wa",
+      "input": "ကွ",
+      "python": {
+        "graphemes": [
+          "ကွ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_wa"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကွ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ha",
+      "input": "ကှ",
+      "python": {
+        "graphemes": [
+          "ကှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ya-medial_wa",
+      "input": "ကျွ",
+      "python": {
+        "graphemes": [
+          "ကျွ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya",
+          "medial_wa"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျွ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra-medial_wa",
+      "input": "ကြွ",
+      "python": {
+        "graphemes": [
+          "ကြွ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra",
+          "medial_wa"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြွ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ya-medial_ha",
+      "input": "ကျှ",
+      "python": {
+        "graphemes": [
+          "ကျှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra-medial_ha",
+      "input": "ကြှ",
+      "python": {
+        "graphemes": [
+          "ကြှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_wa-medial_ha",
+      "input": "ကွှ",
+      "python": {
+        "graphemes": [
+          "ကွှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_wa",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကွှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ya-medial_wa-medial_ha",
+      "input": "ကျွှ",
+      "python": {
+        "graphemes": [
+          "ကျွှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya",
+          "medial_wa",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကျွှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "mlc-medials-medial_ra-medial_wa-medial_ha",
+      "input": "ကြွှ",
+      "python": {
+        "graphemes": [
+          "ကြွှ"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ra",
+          "medial_wa",
+          "medial_ha"
+        ]
+      },
+      "browser": {
+        "syllables": [
+          "ကြွှ"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT"
+      }
+    },
+    {
+      "id": "unknown-myanmar-extension-after-supported-syllable",
+      "input": "ကာꩠ",
+      "python": {
+        "graphemes": [
+          "ကာꩠ"
+        ],
+        "syllable_count": 1,
+        "first_status": "partially_unparsed"
+      },
+      "browser": {
+        "syllables": [
+          "ကာꩠ"
+        ],
+        "first_ipa_status": "UNCERTAIN"
+      }
+    },
+    {
+      "id": "unknown-myanmar-extension-before-supported-onset",
+      "input": "ꩠကာ",
+      "python": {
+        "graphemes": [
+          "ꩠ",
+          "ကာ"
+        ],
+        "syllable_count": 2,
+        "first_status": "unsupported_or_malformed"
+      },
+      "browser": {
+        "syllables": [
+          "ꩠ",
+          "ကာ"
+        ],
+        "first_ipa_status": "UNSUPPORTED"
+      }
+    },
+    {
+      "id": "medial-ya-contextual-asat-coda",
+      "input": "ကျ်",
+      "python": {
+        "graphemes": [
+          "ကျ်"
+        ],
+        "syllable_count": 1,
+        "medials": [
+          "medial_ya"
+        ],
+        "coda_marker": "asat",
+        "coda_orthographic_function": "contextual"
+      },
+      "browser": {
+        "syllables": [
+          "ကျ်"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT",
+        "first_note": "Знак asat після medial ya збережено як контекстну фіналь."
+      }
+    },
+    {
+      "id": "tone-mark-before-asat-coda",
+      "input": "ကာ့င်",
+      "python": {
+        "graphemes": [
+          "ကာ့င်"
+        ],
+        "syllable_count": 1,
+        "tone_mark_marker": "dot_below",
+        "coda_character": "င",
+        "coda_orthographic_function": "final_consonant"
+      },
+      "browser": {
+        "syllables": [
+          "ကာ့င်"
+        ],
+        "first_ipa_status": "ANALYSIS_DEPENDENT",
+        "first_note": "Канонічний порядок знаків збережено перед визначенням фіналі."
+      }
+    }
+  ],
+  "bare_consonant_boundary_cases": [
+    {
+      "id": "bare-consonant-after-del-control",
+      "input": "က",
+      "python": {
+        "bare_consonant_index": 1,
+        "ipa": null
+      },
+      "browser": {
+        "ipa": "??"
+      }
+    },
+    {
+      "id": "bare-consonant-before-c1-control",
+      "input": "က",
+      "python": {
+        "bare_consonant_index": 0,
+        "ipa": null
+      },
+      "browser": {
+        "ipa": "??"
+      }
+    }
+  ],
+  "structural_projection_cases": [
+    {
+      "id": "plain-aa",
+      "input": "ကာ",
+      "python_projection": {
+        "raw": "ကာ",
+        "codepoints": [
+          "U+1000",
+          "U+102C"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-contextual-asat",
+      "input": "ကျ်",
+      "python_projection": {
+        "raw": "ကျ်",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "tone-mark-before-final-coda",
+      "input": "ကာ့င်",
+      "python_projection": {
+        "raw": "ကာ့င်",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+1037",
+          "U+1004",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": "င",
+          "marker": "asat",
+          "orthographic_function": "final_consonant"
+        },
+        "tone_mark": "dot_below",
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "unknown-extended-a-tail",
+      "input": "ကာꩠ",
+      "python_projection": {
+        "raw": "ကာꩠ",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+AA60"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "partially_unparsed"
+      }
+    },
+    {
+      "id": "unsupported-extended-a",
+      "input": "ꩠ",
+      "python_projection": {
+        "raw": "ꩠ",
+        "codepoints": [
+          "U+AA60"
+        ],
+        "onset": null,
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": null,
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "unsupported_or_malformed"
+      }
+    },
+    {
+      "id": "bare-inherent-vowel",
+      "input": "က",
+      "python_projection": {
+        "raw": "က",
+        "codepoints": [
+          "U+1000"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "conjunct-subjoined-ka",
+      "input": "က္က",
+      "python_projection": {
+        "raw": "က္က",
+        "codepoints": [
+          "U+1000",
+          "U+1039",
+          "U+1000"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [
+          "က"
+        ],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "kinzi-final-nasal",
+      "input": "မင်္",
+      "python_projection": {
+        "raw": "မင်္",
+        "codepoints": [
+          "U+1019",
+          "U+1004",
+          "U+103A",
+          "U+1039"
+        ],
+        "onset": "မ",
+        "kinzi": true,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": {
+          "character": "င",
+          "marker": "asat",
+          "orthographic_function": "kinzi_final_nasal"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya",
+      "input": "ကျ",
+      "python_projection": {
+        "raw": "ကျ",
+        "codepoints": [
+          "U+1000",
+          "U+103B"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra",
+      "input": "ကြ",
+      "python_projection": {
+        "raw": "ကြ",
+        "codepoints": [
+          "U+1000",
+          "U+103C"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-wa",
+      "input": "ကွ",
+      "python_projection": {
+        "raw": "ကွ",
+        "codepoints": [
+          "U+1000",
+          "U+103D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_wa"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ha",
+      "input": "ကှ",
+      "python_projection": {
+        "raw": "ကှ",
+        "codepoints": [
+          "U+1000",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-wa",
+      "input": "ကျွ",
+      "python_projection": {
+        "raw": "ကျွ",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya",
+          "medial_wa"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra-wa",
+      "input": "ကြွ",
+      "python_projection": {
+        "raw": "ကြွ",
+        "codepoints": [
+          "U+1000",
+          "U+103C",
+          "U+103D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra",
+          "medial_wa"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-ha",
+      "input": "ကျှ",
+      "python_projection": {
+        "raw": "ကျှ",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra-ha",
+      "input": "ကြှ",
+      "python_projection": {
+        "raw": "ကြှ",
+        "codepoints": [
+          "U+1000",
+          "U+103C",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-wa-ha",
+      "input": "ကွှ",
+      "python_projection": {
+        "raw": "ကွှ",
+        "codepoints": [
+          "U+1000",
+          "U+103D",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_wa",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ya-wa-ha",
+      "input": "ကျွှ",
+      "python_projection": {
+        "raw": "ကျွှ",
+        "codepoints": [
+          "U+1000",
+          "U+103B",
+          "U+103D",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ya",
+          "medial_wa",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "medial-ra-wa-ha",
+      "input": "ကြွှ",
+      "python_projection": {
+        "raw": "ကြွှ",
+        "codepoints": [
+          "U+1000",
+          "U+103C",
+          "U+103D",
+          "U+103E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [
+          "medial_ra",
+          "medial_wa",
+          "medial_ha"
+        ],
+        "vowel_signs": [],
+        "inherent_vowel_status": "present_or_contextually_suppressed",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-e",
+      "input": "ကေ",
+      "python_projection": {
+        "raw": "ကေ",
+        "codepoints": [
+          "U+1000",
+          "U+1031"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "e"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-i",
+      "input": "ကိ",
+      "python_projection": {
+        "raw": "ကိ",
+        "codepoints": [
+          "U+1000",
+          "U+102D"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "i"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-ii",
+      "input": "ကီ",
+      "python_projection": {
+        "raw": "ကီ",
+        "codepoints": [
+          "U+1000",
+          "U+102E"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "ii"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-ai",
+      "input": "ကဲ",
+      "python_projection": {
+        "raw": "ကဲ",
+        "codepoints": [
+          "U+1000",
+          "U+1032"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "ai"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-u",
+      "input": "ကု",
+      "python_projection": {
+        "raw": "ကု",
+        "codepoints": [
+          "U+1000",
+          "U+102F"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "u"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-uu",
+      "input": "ကူ",
+      "python_projection": {
+        "raw": "ကူ",
+        "codepoints": [
+          "U+1000",
+          "U+1030"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "uu"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-tall_aa",
+      "input": "ကါ",
+      "python_projection": {
+        "raw": "ကါ",
+        "codepoints": [
+          "U+1000",
+          "U+102B"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "tall_aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-aa",
+      "input": "ကာ",
+      "python_projection": {
+        "raw": "ကာ",
+        "codepoints": [
+          "U+1000",
+          "U+102C"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "vowel-anusvara",
+      "input": "ကံ",
+      "python_projection": {
+        "raw": "ကံ",
+        "codepoints": [
+          "U+1000",
+          "U+1036"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "anusvara"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": null,
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "tall-aa-with-asat-contextual-coda",
+      "input": "ကာ်",
+      "python_projection": {
+        "raw": "ကာ်",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "e-aa-asat-contextual-coda",
+      "input": "ကော်",
+      "python_projection": {
+        "raw": "ကော်",
+        "codepoints": [
+          "U+1000",
+          "U+1031",
+          "U+102C",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "e",
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": null,
+        "analysis_status": "established"
+      }
+    },
+    {
+      "id": "canonical-asat-after-dot-below",
+      "input": "ကာ့်",
+      "python_projection": {
+        "raw": "ကာ့်",
+        "codepoints": [
+          "U+1000",
+          "U+102C",
+          "U+1037",
+          "U+103A"
+        ],
+        "onset": "က",
+        "kinzi": false,
+        "conjunct": [],
+        "medials": [],
+        "vowel_signs": [
+          "aa"
+        ],
+        "inherent_vowel_status": "overridden",
+        "coda": {
+          "character": null,
+          "marker": "asat",
+          "orthographic_function": "contextual"
+        },
+        "tone_mark": "dot_below",
+        "analysis_status": "established"
+      }
+    }
+  ]
+}

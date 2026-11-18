@@ -1,0 +1,215 @@
+# Repository reconstruction and audit — 2026-10-05
+
+## Scope
+
+This audit reconstructs the repository as it exists on the current main
+history. The initial commit contained only a one-line README; the subsequent
+research scaffold was built between 2026-10-02 and 2026-10-04.
+
+## Classification
+
+| Area | Classification | Finding | Action |
+|---|---|---|---|
+| README | CORE / DOCUMENTATION | Current project identity and scope | Revise only where implementation diverges |
+| src/burmese_ukrainian/ | IMPLEMENTATION | Current code, but several modules are conservative scaffolds | Keep; harden contracts before adding features |
+| data/burmese/ | RESEARCH EVIDENCE / SUPPORTING DATA | Source-derived inventories and comparative tables | Keep; establish authoritative roles |
+| docs/ | DOCUMENTATION | Current methodology plus comparative audit | Keep; reconcile terminology |
+| schemas/ | SUPPORTING DATA | Useful but previously inconsistent with runtime serialization | Corrected |
+| tests/ | VALIDATION | Small regression suite; not a complete linguistic benchmark | Keep and expand |
+| benchmark/ | VALIDATION | Structural seed cases only | Keep; do not call it a gold corpus |
+| .github/workflows/ | ENGINEERING | CI definition exists | Keep; execution status must be verified separately |
+| temporary/legacy directories | HISTORICAL / OBSOLETE | No such layer was found in the reconstructed history | No archive migration required |
+
+## Key technical findings
+
+1. The parser returned dataclass instances inside JSON-like dictionaries,
+   while tests expected nested dictionaries.
+2. The syllable schema required a top-level status that the runtime did not
+   expose.
+3. data/burmese/phonotactics.csv had a six-field data row against a
+   five-column header.
+4. src/burmese_ukrainian/ukrainian.py contained a hardcoded seed mapping
+   despite the repository documenting the Ukrainian inventory as an external
+   dependency.
+5. The current IPA layer is explicitly partial and must not be described as a
+   complete Burmese phonetic engine.
+6. The practical mapping tables are currently proposal data, not a validated
+   Ukrainian standard.
+
+## Research-integrity findings
+
+- Russian Burmese practical transcription has a strong bibliographic basis,
+  including Epstein (1959) and the 1978 USSR instruction.
+- Serbian and Bulgarian entries must remain methodological/research-gap
+  records rather than being presented as established Burmese-specific systems.
+- Project decisions such as /h/ → г and /ɯ/ → и remain analysis-dependent
+  or proposal-level decisions and must not be upgraded to established facts.
+
+## Audit policy
+
+Potentially unique research evidence is preserved. No destructive deletion is
+performed merely because a file is old, small, generated-looking, or awkwardly
+named.
+
+The repository currently contains no separate historical corpus that requires
+archiving. If later history reveals a unique rejected analysis, it should be
+moved to research/historical/ or research/decisions/ rather than deleted.
+
+
+## External IPA and benchmark audit — 2026-10-24
+
+- The malformed-parse guard and fail-closed benchmark gold-provenance gate are on main; an ADJUDICATED row without non-empty IPA, source_id or profile now stops scoring instead of silently changing the denominator.
+- Epitran 1.35.3 ran successfully on 6 Burmese probes with 0 runtime errors in [run 40121355875](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/40121355875). This verifies execution only. Epitran upstream explicitly flags Burmese support as limited due to orthographic ambiguity.
+- Independent gold count is 0; accuracy is null. Inherent vowels, medials, coda/phonation and tone conventions still require a source-located, independently adjudicated corpus. External systems remain optional and disabled in production.
+- Latest smoke artifact ZIP SHA-256: `28c05acec1658a4002dce200a059026a2b14395a5c5f0232b2a449f620e7e424`; durable report and registry are aligned to this run.
+
+
+## Final dual-method and GitHub Pages audit — 2026-10-31
+
+- PR #54 selects orthographic MLCTS (not MLCTS2) for the romanization route and adds the exact Myanmar sample regression: MLCTS mrui. versus MLCTS2 mjou.
+- PR #54 adds a machine-readable onset crosswalk for all 35 source consonant/onset graphemes, with source locators, Ukrainian candidate/status and tests. This is not the full MLCTS syllable/rime inventory.
+- PR #55 adds separate phonetic and romanization tabs. The phonetic tab remains IPA-first. The romanization tab shows MLCTS plus an explicit PARTIAL Ukrainian crosswalk state; it never falls back to IPA or phonetic Ukrainian output.
+- PR #56 ports the necessary production asset fix from stale PR #48: both Mya2Rom browser assets are copied into Vite public output; Vite builds both index.html and system.html; Playwright tests the built preview.
+- PR #48 was closed as superseded after the relevant changes were ported. PR #53 (visual styling only) remains open and untouched; its branch was not merged because it is separate from the functional method and Pages work.
+- Main commit: fff943db823ae5ca0f4fed50b572cc75cb743f84.
+- Main tests workflow [41231199684](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41231199684) passed: pytest 63 passed / 29 subtests passed; npm build; generated-data drift check; Node 3/3; Playwright 48 passed against production Vite preview.
+- GitHub Pages deployment [41231199596](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41231199596) succeeded at https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/ and deployed the main commit above.
+- Remaining: MLCTS onset table is DONE_VERIFIED, but vowel/medial/coda/kinzi/asat/numeral/punctuation coverage is PARTIAL; the MLCTS → Ukrainian syllable adapter is TODO; phonetic coverage and independent lexical gold remain research-limited. The repository is a research prototype, not a validated production standard.
+
+ 
+### Responsive layout merge — 2026-10-31
+
+- PR #62 merged as `78f56512f59bbfa6fc881ccd35e34c4bf1fff7b1`; 36 CSS override lines added to `src/web/styles.css`.
+- Exact-head CI [41234651088](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41234651088) passed pytest, Vite build, generated-data drift, Node tests, and Playwright against the built artifact.
+- Existing IPA typography and method-switch styles were preserved. PR #53 remains open/unmerged because its branch is diverged and its older stylesheet snapshot was not safe to merge wholesale.
+- Original MLC publication, complete MLCTS syllable inventory, MLCTS → Ukrainian syllable adapter, and adjudicated phonetic gold remain open. This is UI verification only; no new Pages deployment is claimed here.
+
+
+### Primary-source boundary clarification — 2026-10-31
+
+- Located the Library of Congress 2011 *Burmese Romanization Table*. It is explicitly an ALA-LC table, not the MLC/MLCTS source, so it must not be used to validate the project's MLCTS rows. Its medial, conjunct, final, tone-mark, punctuation, numeral and word-division conventions are a distinct system.
+- The SIL catalogue endpoint referenced in secondary metadata returned HTTP 403; the original MLC publication remains unavailable. The 94-row Mya2Rom-derived rime inventory is still a vendor implementation inventory with parity tests, not primary-source verification.
+- No MLCTS-to-Ukrainian candidate, IPA form, or source permission was added on the basis of this search.
+
+
+### Browser output integrity regression — 2026-10-31
+
+- PR #64 merged as `d0b7f6351a4151b974ec9ee379f81f7a06da9613`.
+- Before the fix, unsupported Myanmar `ꩠ` was present in analysis/status but silently absent from the Ukrainian output (`ကာ ꩠ` rendered as `ка `). The browser output now shows `⟦ꩠ⟧`; unresolved and partially mapped units remain visible as source markers rather than being silently omitted.
+- The contextual initial `/j/` + vowel rule now grades the combined Ukrainian target as one unit; `/juː/ → ю` remains covered by the existing browser test.
+- Exact-head CI [41238825573](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41238825573) passed pytest 64 + 29 subtests, Node 4/4, Vite build, generated-data drift check, and Playwright 50/50. The full greeting sentence is reconstructed exactly from rendered source-unit rows.
+- This verifies source preservation and output honesty, not full phonetic accuracy. Independent lexical IPA gold remains 0 verified entries; MLCTS → Ukrainian syllable adapter and original MLC primary source remain incomplete/blocked.
+- Pages deployment [41238926334](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41238926334) completed successfully and deployed `d0b7f6351a4151b974ec9ee379f81f7a06da9613` at https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/. Main verification [41238926148](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41238926148) passed.
+
+
+### Diverged layout PR reconciliation — 2026-10-31
+
+- Rechecked open PR #53 (`design/burmese-layout-20261030`) against current main `d0b7f6351a4151b974ec9ee379f81f7a06da9613`: branch is diverged, 5 commits ahead and 11 behind (merge base `272da3970c0e8791c5bc5406cc4289e2c841eeef`). Its only changed files are `index.html`, `system.html`, and a wholesale replacement of `src/web/styles.css`; it contains no engine fix or unique regression test.
+- The required responsive behavior was already ported as focused overrides in PR #62 (`78f56512f59bbfa6fc881ccd35e34c4bf1fff7b1`) and verified. The older stylesheet replacement is not safe to merge wholesale because it would replace current IPA typography and method-switch styling.
+- PR #53 remains open and untouched. No unique code or test from it was ported in this pass.
+
+## Burmese full-sentence romanization and source-preservation fix — 2026-10-31
+
+- PR #68 merged as \`9075b6e1f8384cc9ae71fe75f12a0b6cc699db15\`; exact-head workflow [41240518900](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41240518900) passed the full configured suite.
+- PR #69 merged as \`b6ce024a26bef44c76744aa231b52de551c12c16\`; exact-head workflow [41241791556](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41241791556) passed Python tests, Vite build, generated-data drift, Node tests and Playwright: **52 passed**.
+- Root cause: the browser app's Myanmar-script predicate classified U+1040–1049 numerals and U+104A–104B punctuation as romanizable script. Passing them to Mya2Rom caused source loss. The fix preserves those code points and romanizes only contiguous Myanmar text runs, preserving adjacent Latin text and separators.
+- Browser regressions cover the four-stop greeting and mixed text with \`ABC\`, \`၁၂၃\`, Myanmar comma \`၊\` and sentence stop \`။\`, in phonetic and MLCTS modes. MLCTS period characters inside romanized forms are not confused with sentence punctuation.
+- This verifies bounded source preservation only. It does not establish complete MLCTS coverage, MLC primary-source conformity, or an MLCTS-to-Ukrainian adapter. The 94-row rime table remains vendor-derived; original MLC source is BLOCKED/EVIDENCE_LIMITED; independent lexical IPA gold remains 0.
+- PR #53 remains open/unmerged and was not changed. At the time of this checkpoint, a deployment after PR #69 was not yet verified. A later check confirmed Pages deployment [41242001050](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41242001050) succeeded with deployed HTML/runtime/vendor-asset smoke tests; see the cross-mode source-integrity checkpoint.
+
+
+### Cross-mode Myanmar source-integrity fix — 2026-10-31
+
+- PR #72 merged as `257db544ccb09bb9b51e5cfdf882b12f5b08b7a2`. It fixes adjacent unsupported Myanmar code points being swallowed by a valid phonetic segment and prevents the MLCTS route from silently dropping characters outside its supported inventory.
+- The MLCTS allowlist is generated from canonical consonant, independent-vowel, dependent-sign, medial, asat and virama inventories plus explicitly supported vendor tone/special symbols. U+1040–1049 digits and U+104A–104B punctuation are preserved as non-romanized text; unsupported Myanmar code points and orphan signs remain visible as `⟦source⟧` markers.
+- Exact-head CI [41243831142](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41243831142) and [41243825927](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41243825927) passed: pytest 64 + 29 subtests, Node, production build, generated-data reproducibility, and Playwright 53/53 against the built artifact.
+- The earlier PR #69 deployment is verified: [41242001050](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41242001050) succeeded with deployed-site/runtime-asset smoke checks. PR #72 post-merge Quality [41244193538](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41244193538) passed pytest 64 + 29 subtests, Node tests, production build, generated-data check and Playwright 53/53. Pages deployment [41244193576](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41244193576) succeeded, including the deployed-site/runtime-asset smoke test; main commit `257db544ccb09bb9b51e5cfdf882b12f5b08b7a2` is live at https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/.
+- This is bounded source-preservation evidence, not full Unicode or MLCTS standard coverage. The original MLC publication remains BLOCKED/EVIDENCE_LIMITED, the 94-row vendor-derived rime inventory remains PARTIAL, MLCTS → Ukrainian remains TODO, and independent lexical IPA gold remains 0. PR #53 remains open and untouched.
+
+
+### Python source-preservation regression — 2026-10-31
+
+- PR #74 merged by squash as `6ec5c6a15af45fce5d993933c3c429d8e9a82c79`; it adds two Python parser regressions for unsupported Myanmar Extended-A adjacency and exact mixed-sentence reconstruction (Burmese, Latin, ASCII digits, Burmese digits and Myanmar punctuation).
+- Exact PR-head CI [41244535813](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41244535813) passed pytest, production build, generated-data drift check, Node tests and Playwright against the built artifact.
+- Post-merge exact-main tests [41245969998](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41245969998) and Pages deployment [41245969938](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41245969938) were queued at the time of this update; no post-merge success is claimed until their conclusions are inspected.
+- This closes a bounded Python source-preservation test gap only. It does not add pronunciation evidence; independent lexical IPA gold remains 0, and MLCTS → Ukrainian remains TODO.
+
+
+### Post-merge verification correction — 2026-10-31
+
+- PR #74 exact-main tests [41245969998](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41245969998) and Pages deployment [41245969938](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41245969938) succeeded on `6ec5c6a15af45fce5d993933c3c429d8e9a82c79`, including the deployed-site/runtime smoke test.
+- Documentation PR #75 merged as `48bb45cf2a5c6cc95057fecacdfbc6e852b760b1`; exact-head tests [41246079334](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41246079334) passed. Post-merge main tests [41246294703](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41246294703) and Pages [41246294821](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41246294821) were in progress when this note was prepared.
+
+
+### Final main verification correction — 2026-10-31
+
+- Main SHA `48bb45cf2a5c6cc95057fecacdfbc6e852b760b1` passed exact-main tests [41246294703](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41246294703) and Pages deployment [41246294821](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41246294821), including deployed-site/runtime smoke test. The prior in-progress status has been superseded.
+
+
+## Whole-message adversarial regression — 2026-11-01
+
+- Added PR [#77](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/77), merged as `7a85219f67082ca3d225a31d79429068719349c6`.
+- New test `test_python_parser_preserves_multiline_mixed_script_adversarial_input` exercises a single message containing supported Burmese syllables on both sides of an unsupported Myanmar-script character, tab, Latin identifier, ASCII digits, CRLF, Myanmar digits and punctuation, U+200B, emoji and Arabic-script text.
+- The contract checks exact reconstruction through both grapheme and syllable source records; the unsupported Khamti/Extended-C code point remains explicitly unsupported and valid neighboring Burmese syllables remain structurally established.
+- Exact PR-head CI [41289738055](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41289738055) passed: pytest, production build, generated-web-data drift check, Node tests, Playwright install and built-browser tests.
+- This is a source-integrity/structural probe, not an IPA gold row. Independent lexical IPA gold remains 0; phonological accuracy remains NOT MEASURED.
+
+
+## Python/browser whole-message parity — 2026-11-01
+
+- PR [#78](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/78) merged as `a137274d90579bde6aedefee4068942f93e9c00f`.
+- Added a built-browser Playwright regression for the same difficult mixed message as the Python source-integrity test: Burmese syllables around unsupported Myanmar Extended-C, Latin identifier, tab, CRLF, Myanmar digits and punctuation, U+200B, emoji and Arabic script.
+- The browser test checks that the textarea preserves its content under the platform's standard CRLF→LF value canonicalization, that rendered syllable source records reconstruct that browser-normalized input, and that unsupported Myanmar material remains visible with aggregate UNSUPPORTED status while foreign text and digits remain visible.
+- Exact PR-head workflow [41290257958](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/41290257958) passed pytest, production build, generated-web-data drift, Node tests, Playwright installation and all built-browser tests.
+- Together with PR #77, this establishes Python and browser whole-message source-integrity coverage. It still does not establish independent IPA gold or phonological accuracy.
+
+
+## Current-head reconciliation — 2026-11-01
+
+- Audit baseline: `4ddb9d3f10427275ce75c7ae73270468d3721106`; exact-main CI: tests 41326473323; Pages 41326473352; latest check completed successfully.
+- The canonical gold TSV currently has a header only. Independent adjudicated IPA gold = 0; accuracy is not measured and must remain null.
+- Current language-specific unresolved tasks and acceptance criteria are recorded in [LINGUISTIC-COMPLETION-REGISTER-2026-11-01.md](audits/current/LINGUISTIC-COMPLETION-REGISTER-2026-11-01.md). This register does not replace historical audit evidence.
+- CI success is limited to configured engineering checks. It does not establish expert phonetic correctness, production readiness, manual accessibility QA or rights to redistribute third-party assets.
+
+
+## Independent IPA gold corpus audit — 2026-11-01
+
+The repository now has a standard-library JSONL validator, five versioned JSON Schemas, a source-license registry, independent annotation/adjudication records, deterministic split manifests, a typed IPA export into the existing benchmark and a tag/manual gold release gate. The corpus files remain empty and `gold.tsv` remains header-only. This is infrastructure completion, not scientific completion: independent expert gold=0, accuracy=null, and production readiness remains blocked.
+
+Blind annotation cannot be guaranteed in a public Git repository. Two submissions must be collected separately in a controlled channel and merged only after both are locked. Every future source still requires a human-verified license/permission locator; a registry entry is not itself a grant of rights.
+
+
+## 2026-11-01 closeout
+
+The independent IPA gold-corpus implementation and Burmese evidence matrix are in [PR #84](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/84). PR CI passed 121 Python tests + 31 subtests, four generated-data/web tests, 54 built-browser tests, production build and generated-data drift checks; optional Epitran diagnostic passed. The LREC 2020 speech/segmentation corpora are not public domain and were not imported. Independent gold remains 0. Main was not changed. Legacy PR #53 remains untouched.
+
+
+## MLCTS romanization implementation audit — mainline 2026-11-12
+
+The orthographic route is integrated for the inventoried source data: Burmese source clusters → MLCTS romanization → separate Ukrainian orthographic adapter. The 35-row onset and 94-row vendor-derived rime tables have Ukrainian candidates. PR #141 integrated the runtime and PR #142 records its mainline verification. Current `main` is `718dc4b2c1424651b32bc63b0202f5d08a067bc7`; tests [43228612973](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43228612973) and Pages [43228612998](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43228612998) passed.
+
+Acceptance remains PARTIAL: the 94-row rime inventory is derived from vendored Mya2Rom and has not been independently verified against the original Myanmar Language Commission publication. Unsupported legal structures remain visibly withheld rather than guessed. Vendor attribution and CC-BY-SA-4.0 notice remain in place; component-level provenance/licensing review remains open. MLCTS is orthographic, not IPA. Draft G2P PR #129 remains open and untouched. Independent expert-adjudicated IPA gold remains 0; accuracy remains null.
+
+
+## Burmese MLCTS / MLCTS2 source-scope correction — 2026-11-12
+
+Review of the vendored Mya2Rom README reveals a critical profile distinction: `mlcts` is described as the MLC-created orthographic transcription system, while `mlcts2` is the more phonetic modification used by the MLC for its Myanmar-English Dictionary and by SEAlang. The project's runtime explicitly requests `mlcts`, so the dictionary cannot be used as direct verification of the current rime inventory without reconciling those profiles. The 1993 MLC *Myanmar-English Dictionary* is bibliographically located; accessible SHACHI metadata states the source material is copyright 1993 MLC / 1996 Dunwoody Press. The primary tables and permission to reproduce/derive them remain unavailable. Source registry now records both the MLC dictionary locator (`MLC1993DICT_BIB`) and Mya2Rom 0.4.4 README/software (`MYA2ROM044`). Mya2Rom's own README also lists stacked-letter, asat, sandhi, alternate-pronunciation and Pali/Sanskrit limitations. No runtime or mapping change was made. `MYA-ROM-MATRIX-001` remains PARTIAL; all 94 vendor-derived rime rows remain EVIDENCE_LIMITED. Sources: https://github.com/myanmaropenwordnet/mya2rom; https://shachi.org/resources/3949.
+
+
+## MLCTS/MLCTS2 profile reconciliation closeout — 2026-11-12
+
+PR #144 merged as `690266b72979df2758e89992e635b2e39ad95196`. Source registry now records `MLC1993DICT_BIB` and `MYA2ROM044`; matrix, audit and handoff clarify that the application requests Mya2Rom `mlcts`, not `mlcts2`. Mya2Rom describes `mlcts` as orthographic MLC transcription and `mlcts2` as a more phonetic variant used by the MLC dictionary/SEAlang. The MLC 1993 dictionary is bibliographically located, but accessible metadata records source copyright; original table access and reuse permission remain unresolved. Exact PR-head tests [43276549749] and optional diagnostics [43276549453] passed. Mainline tests [43276744574], Pages/deployed-site smoke [43276744563], and optional diagnostics [43276745850] passed. No runtime, romanization output, or candidate mapping changed. The 94 rime inventory remains vendor-derived/EVIDENCE_LIMITED and `MYA-ROM-MATRIX-001` remains PARTIAL.
+
+
+## 2026-11-16 — exact-main continuation after PR #165
+
+- **Baseline:** default branch `main`, starting HEAD `f7f7d41a116c265481bdc17c225a763becab6013`. PR [#165](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/165) merged the prior documentation checkpoint; no code or linguistic data changed in that merge.
+- **DONE_VERIFIED — exact-main engineering CI:** [workflow 43911104561](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43911104561) SUCCESS on exact SHA `f7f7d41a116c265481bdc17c225a763becab6013`. Job log confirms **315 Python tests + 68 subtests passed**, **71 built-browser Playwright tests passed**, npm build and unit tests passed, generated web data was current, and both npm audit checks reported **0 vulnerabilities**. All configured test-job steps completed successfully.
+- **DONE_VERIFIED — exact-main Pages deployment:** [workflow 43911104576](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43911104576) SUCCESS on the same SHA. The build job completed all 24 steps: pinned Google Burmese WFST/OpenFst build, symbol-table invariants, complete input-alphabet validation, browser/upstream `thrax_g2p` parity, production build, Node/browser tests and artifact upload. The deploy job completed all 4 steps, including deployment and live HTTP smoke for homepage, `system.html`, JS/CSS, Mya2Rom assets and Google WFST JSON (`available=true`, `arc_count>0`).
+- **Public deployment:** https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/ — Pages workflow reports successful deployment for exact SHA `f7f7d41a116c265481bdc17c225a763becab6013`.
+- **PR/branch reconciliation:** recent PRs #146–#165 are merged. The only open PR remains [#129](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/129), OPEN / DRAFT / non-mergeable. Fresh comparison with current main: **DIVERGED, 53 commits ahead / 36 behind**, merge base `fab39881259df94be93634088a75667a13059cfc`, 21 changed files. Its benchmark/hybrid work is already represented and further evolved on main; do not merge or cherry-pick its stale snapshot. Leave PR and branch untouched.
+- **Open human dependency:** [issue #85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85) remains open. The versioned IPA convention, two qualified independent annotators, third adjudicator, curator, blind intake, 30 source-located rights-cleared lexeme groups and double annotation are not complete. No one has been contacted or recruited. Independent annotation remains **DEFERRED** under owner direction.
+- **Research and rights status:** independent profile-matched adjudicated IPA gold = **0**; empirical accuracy = **null / NOT MEASURED**. Yangon phonological coverage and cross-runtime parity against independent gold remain **PARTIAL**. Exact-IPA lookup through the Ukrainian inventory adapter is **PARTIAL**; feature-distance ranking remains **BLOCKED** because the canonical target inventory is private, the current adapter requires a local inventory checkout, and the Burmese source IPA layer has no evidence-backed feature-vector adapter. Acceptance requires a versioned consumable target-inventory contract plus sourced/tested source-IPA vectors and deterministic ranking. Primary MLC notation/entry evidence and item-level reuse-rights verification remain **BLOCKED**. Full manual screen-reader, physical-device/touch-target, zoom/reflow and comprehensive contrast/state QA remain **TODO**. No WCAG conformance claim.
+- **Local execution limitation:** this session could not clone the public repository because the container could not resolve `github.com` (DNS/network failure). No local test command is claimed. The exact-main hosted GitHub Actions above are verified evidence for `f7f7d41a116c265481bdc17c225a763becab6013`; they are not local execution.
+- **Task ledger:** DONE_VERIFIED — exact-main hosted engineering CI, Pages deployment and deployed-asset smoke; PARTIAL — Yangon phonological coverage, MLCTS primary-source conformity and independent-gold parity; BLOCKED — primary MLC notation/entry evidence and rights verification; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation/pilot and stale PR #129 integration.
+- **Readiness:** deployed engineering/research prototype; **not linguistically release-ready** and not WCAG-conformance-certified. No runtime, linguistic registry, IPA labels, Ukrainian mappings, gold data, license decision, release, or production setting changed in this checkpoint.

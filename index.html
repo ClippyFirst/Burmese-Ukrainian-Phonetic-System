@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+<meta name="description" content="Бірманський текст → практична українська транскрипція з IPA та поясненням системи.">
+<title>မြန်မာ / УКРАЇНСЬКА</title>
+<link rel="stylesheet" href="./src/web/styles.css?v=20261102-responsive-ui">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
+<main id="main-content" class="shell" tabindex="-1">
+<header class="site-header">
+  <div class="topline">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">မြ</span><span>မြန်မာ / УКРАЇНСЬКА</span></a>
+    <span class="local"><i aria-hidden="true"></i> працює локально</span>
+  </div>
+  <div class="hero">
+    <p class="eyebrow">Практична транскрипція</p>
+    <h1>Бірманський текст, <em>українське читання.</em></h1>
+    <p class="subtitle">Введіть текст бірманською — отримайте українську практичну транскрипцію, IPA та пояснення того, як сформовано результат.</p>
+  </div>
+  <nav class="nav" aria-label="Основна навігація"><a class="active" aria-current="page" href="./">Сервіс</a><a href="./system.html">Методологія</a></nav>
+  <section class="issues research-notice" aria-label="Статус дослідження"><span aria-hidden="true">!</span><div><strong>Дослідницький прототип · публікацію перевірено 16.11.2026</strong><p>GitHub Pages автоматично публікує гілку <code>main</code>; актуальний результат розгортання доступний у <a href="https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions">GitHub Actions</a>. У браузері працює гібрид: власні правила, порт Epitran 1.35.3 та локальна Google Burmese WFST-модель; результати провайдерів показуються окремо, а не голосують. Основний результат проходить IPA-first конвеєр: канонічний IPA допускається лише за встановлених сегментної, просодичної та профільної основи; сегментні підказки без тону/профілю лишаються PROVISIONAL і не підміняють результат. Окремо показуються цілісні попередні українські варіанти від кожного провайдера; вони позначені PROVISIONAL, а непідтримані сегменти залишаються в ⟦…⟧. Незалежного лексичного IPA gold corpus ще немає: 0 ад’юдикованих записів, емпірична точність не вимірюється. Відповідники /h/ → г, /ɡ/ (ASCII /g/) → ґ та /x/ → х є проєктною політикою. Медалі, кінзі та кон’юнкти можуть розпізнаватися структурно, але їхня IPA/українська реалізація лишається неповною. <a href="./system.html#validation-status">Перевірити стан і межі →</a></p></div></section>
+</header>
+
+<section class="workspace" aria-labelledby="input-heading">
+  <div class="bar"><div class="section-title"><span class="section-number">A</span><div><p class="kicker">Вхід</p><h2 id="input-heading">Бірманський текст</h2></div></div><span id="count" class="count">0 символів</span></div>
+  <label class="sr-only" for="source">Введіть бірманський текст</label>
+  <div class="input-frame"><textarea id="source" rows="7" spellcheck="false" lang="my" placeholder="ဥပမာ — မြန်မာ"></textarea><div class="input-hint"><span>Unicode Myanmar</span><span>локальна обробка</span></div></div>
+  <div class="controls">
+    <button id="example" class="button primary" type="button">Приклад ↗</button>
+    <button id="clear" class="button secondary" type="button">Очистити</button>
+    <a class="button secondary" href="./system.html">Про систему ↗</a>
+  </div>
+</section>
+
+<section id="empty" class="empty" aria-live="polite"><span class="empty-glyph" aria-hidden="true">မြ</span><div><strong>Тут з’явиться результат</strong><span>Вставте бірманський текст або відкрийте приклад, щоб почати.</span></div></section>
+
+<section id="results" class="results" hidden aria-labelledby="results-heading">
+  <div class="bar"><div class="section-title"><span class="section-number">B</span><div><p class="kicker">Вихід</p><h2 id="results-heading">Результати</h2></div></div><span class="result-note">оберіть метод</span></div>
+  <div class="method-switch" role="group" aria-label="Метод українського запису">
+    <button id="mode-phonetic" class="method-button is-active" type="button" aria-pressed="true">Фонетичний</button>
+    <button id="mode-romanization" class="method-button" type="button" aria-pressed="false">За романізацією</button>
+  </div>
+  <p id="output-method-note" class="method-note" aria-live="polite">Гібридний режим у браузері: власні правила + Epitran + локальна Google WFST-модель → IPA-кандидати й українські адаптації. Кандидати PROVISIONAL; жодних серверних API.</p>
+
+  <article id="hybrid-engine-panel" class="result-card" data-method-panel="phonetic">
+    <div class="result-meta"><span class="result-index">HYBRID</span><div><h3>Гібридні провайдери</h3><p>Паралельні кандидати, джерело вибору та явна невизначеність.</p></div></div>
+    <div id="hybrid-provider-results" class="syllables"></div>
+  </article>
+
+  <article id="romanization-panel" class="result-card" data-method-panel="romanization">
+    <div class="result-meta"><span class="result-index">01</span><div><h3>Романізація · MLCTS</h3><p>Орфографічна система Myanmar Language Commission; окремо від IPA й українського результату.</p></div><button class="copy" data-copy="romanization" type="button">Копіювати</button></div>
+    <p id="romanization" class="result-value" lang="en"></p>
+    <div id="romanization-status" class="status-line">Mya2Rom 0.4.4 · MLCTS (орфографічний профіль).</div>
+  </article>
+
+  <article id="ua-romanization-panel" class="result-card" data-method-panel="romanization">
+    <div class="result-meta"><span class="result-index">02</span><div><h3>Українська за романізацією</h3><p>Окрема орфографічна матриця, не IPA-адаптація.</p></div></div>
+    <p id="ua-romanization-result" class="result-value">Очікує на ввід бірманського тексту</p>
+    <div id="ua-romanization-status" class="status-line">MLCTS → українська: окрема складова адаптація; непідтримані послідовності показуються як ⟦…⟧. Рими походять із vendor-інвентарю Mya2Rom (EVIDENCE_LIMITED).</div>
+    <p class="unit-note"><a href="https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/blob/main/docs/romanization-to-ukrainian-matrix.md">Переглянути таблицю відповідників і статуси доказовості ↗</a></p>
+  </article>
+
+  <article id="ipa-panel" class="result-card" data-method-panel="phonetic">
+    <div class="result-meta"><span class="result-index">03</span><div><h3>IPA</h3><p>Фонетичний / фонологічний шар, наскільки його встановлено для конкретного сегмента.</p></div><button class="copy" data-copy="ipa" type="button">Копіювати</button></div>
+    <p id="ipa" class="result-value ipa" lang="und-fonipa"></p>
+    <div id="ipa-status" class="status-line"></div>
+  </article>
+
+  <article id="ua-panel" class="result-card primary-result" data-method-panel="phonetic">
+    <div class="result-meta"><span class="result-index">04</span><div><h3>Українська практична транскрипція</h3><p>Авторська система, побудована від аналізу вимови, а не від прямої заміни знаків.</p></div><button class="copy" data-copy="uk" type="button">Копіювати</button></div>
+    <p id="uk" class="result-value" lang="uk"></p>
+    <div id="uk-status" class="status-line"></div>
+    <section id="hybrid-candidate-previews" class="candidate-previews" aria-label="Попередні варіанти від гібридних провайдерів" hidden>
+      <h4>Попередні варіанти провайдерів · PROVISIONAL</h4>
+      <p class="status-line">Це окремі діагностичні адаптації IPA-кандидатів, а не підтверджена транскрипція. Непідтримані сегменти залишено в дужках; провайдери не голосують і не замінюють канонічний результат.</p>
+      <div id="hybrid-candidate-preview-list"></div>
+    </section>
+  </article>
+
+  <article id="structure-panel" class="result-card" data-method-panel="phonetic">
+    <div class="result-meta"><span class="result-index">05</span><div><h3>Структурний аналіз</h3><p>Як Unicode-послідовність розібрана на бірманські графемні кластери.</p></div></div>
+    <div id="syllables" class="syllables"></div>
+  </article>
+</section>
+
+<section id="issues" class="issues" data-method-panel="phonetic" hidden aria-live="polite"><span aria-hidden="true">!</span><div><strong>Потребує уваги</strong><p id="issue-text"></p></div></section>
+
+<section class="feedback">
+  <div><p class="kicker">Методологія</p><h2>Це не переклад і не механічна кирилізація.</h2><p>Російська практична традиція використовується як контрольний історичний шар. Кінцеве рішення формується за українською фонетикою, орфографією та зафіксованою в репозиторії доказовою політикою.</p></div>
+  <a class="button primary" href="./system.html">Читати пояснення системи ↗</a>
+</section>
+
+<footer class="footer"><div><strong>မြန်မာ / УКРАЇНСЬКА</strong><span>Дослідницький інструмент практичної передачі бірманської мови українською.</span></div><div><span>© 2026 Vitalii Tkachuk · ClippyFirst</span><a href="https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-" target="_blank" rel="noreferrer">GitHub ↗</a></div></footer>
+<p id="live" class="sr-only" aria-live="polite"></p>
+</main>
+<script src="./vendor/mya2rom/romanisations.js"></script>
+<script src="./vendor/mya2rom/mya2rom.js"></script>
+<script type="module" src="./src/web/app.js"></script>
+</body>
+</html>
