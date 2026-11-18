@@ -3532,3 +3532,10 @@ The three overlapping canonical documents were retained from #168 as the more re
 Verification evidence before integration: PR #168 exact HEAD `52f836246e6a5f1b3eb129007a6607d59ecbf985` — required tests run [44294768524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44294768524) FAIL at mandatory high-severity npm audit after corpus validation, Python install, pytest and npm ci passed; Pages run [44294768404](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44294768404) SUCCESS through build, Node and Playwright; deploy skipped. These are source-branch results, not verification of this integration branch.
 
 No merge, retarget, release or production deployment was performed. The integration branch requires fresh exact-head CI, conflict review, and review of the ported documentation before it can be proposed for merge.
+## Integration PR tracking — 2026-11-18
+
+Draft PR [#169](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/169) consolidates the PR #166 non-overlapping documentation port with PR #168's finals-registry repair and reconciled canonical documents. Branch: `integration/reconcile-pr166-pr168-2026-11-18`. The current branch head before this handoff-only commit is `d6dcb74cca47073074f5219b691f5db501d0d393`.
+
+GitHub reports the draft PR as mergeable, but exact-head CI has not yet been observed and no review has been recorded. Do not merge while draft or before exact-head tests/build/browser/security checks pass. PR #167 remains separate and stacked on #166; no runtime implementation from #167 has been ported.
+
+No local tests were run in this connector session. The source #168 test workflow fails at the mandatory npm high-severity audit; its Pages workflow succeeds. The integration branch requires its own fresh CI evidence. The advisory is not suppressed, and no dependency workaround was applied.
