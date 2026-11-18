@@ -3267,3 +3267,5 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 | Manual accessibility QA | TODO | Screen reader, touch targets, zoom/reflow, contrast and state behavior remain unverified. |
 
 Integration branch: `integration/reconcile-pr166-pr168-2026-11-18`, created from #168 HEAD `52f836246e6a5f1b3eb129007a6607d59ecbf985`. No tests have yet been run on the integration branch. Do not label this branch release-ready.
+
+PR #169 was opened as a draft against `main` for this reconciliation. Its initial exact HEAD was `72f19934e8dc563edc322e4078d2aeefc78f4d40`; GitHub reported mergeable, but no exact-head workflow runs or combined statuses were present while it remained draft. The PR must not be merged until it receives exact-head CI and review.
