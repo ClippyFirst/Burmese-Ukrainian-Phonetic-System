@@ -3543,3 +3543,15 @@ The latest documentation-only integration tip has now completed all four applica
 | Blind intake | TODO | Protocol specifies separate locked submissions and independent adjudication. | Private intake dry-run; no public PR/shared repo used as blind channel. |
 
 This update adds preparation scaffolding only. Gold JSONL remains empty; no IPA labels or accuracy score were created.
+
+
+## Exact final-tip CI closeout — 2026-11-18 (`ed7d5905bfcd1b21e2b19724de4468045ce79b3e`)
+
+GitHub Actions job metadata was re-polled after the earlier pending update. All four configured workflows now have completed jobs on this exact commit:
+
+- **DONE_VERIFIED — PR Tests [44396077489](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396077489): SUCCESS.** Corpus structure validation, Python install, wheel registry verification, pytest, npm ci, high-severity npm audit, production build, generated-data freshness, Node tests, Chromium installation and built-site Playwright all passed. The job had no failed or skipped test steps.
+- **DONE_VERIFIED — Push Tests [44396061046](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396061046): SUCCESS** on the same exact SHA; all configured steps passed.
+- **DONE_VERIFIED — Pages artifact build [44396077232](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396077232): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser alphabet parity, static model export, upstream `thrax_g2p` parity, production build, Node/browser tests and Pages artifact upload passed. Deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44396077439](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396077439): SUCCESS** across raw-output comparator, CRF baseline and Google WFST raw-output jobs. These remain diagnostic outputs only, not independent gold or accuracy evidence.
+
+The exact-head engineering CI gate is therefore green on `ed7d5905bfcd1b21e2b19724de4468045ce79b3e`. PR #171 remains OPEN/DRAFT/mergeable/unmerged; no review submissions or inline review threads were returned by GitHub at this check. No merge, release, force-push, branch deletion or production deployment occurred. Linguistic acceptance is unchanged: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; expert convention approval, qualified annotators/adjudicator/curator, rights-cleared attested items and private blind intake remain blockers; full phonological coverage and manual accessibility QA remain incomplete. Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
