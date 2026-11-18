@@ -83,7 +83,7 @@ Exact code/test head: `9333bdfec405f9fafb36bab42d90965e11f5e155`. Required PR CI
 
 The public browser phonetic mode is the repository's own deterministic JavaScript rule path in `src/web/app.js`, followed by `src/web/ukrainian-adapter.js`. The public browser's MLCTS mode is a separate path: vendored Mya2Rom 0.4.4 produces romanization, and the project adapter maps that output to Ukrainian. This mode is not IPA.
 
-The optional Python `HybridBurmeseEngine` in `src/burmese_ukrainian/hybrid.py` is a research wrapper for explicit external candidate collection. It is not the production site's engine and never promotes candidate outputs automatically. Browser and Python deterministic implementations are separate and full cross-runtime phonological parity remains PARTIAL.
+The optional Python `HybridBurmeseEngine` in `src/burmese_ukrainian/hybrid.py` is a research wrapper for explicit external candidate collection. It is not the production site's engine and never promotes candidate outputs automatically. Browser and Python still use separate parsers and runtime implementations, but the registry-backed phonology stage now shares the same canonical onset/vowel CSVs and typed IPA result contract. Shared fixtures verify only the enumerated simple and withheld cases; full parser and phonological parity remains PARTIAL.
 
 
 ## IPA candidate versus canonical full pronunciation — 2026-11-15
@@ -96,3 +96,10 @@ A deterministic string such as `ka` can be a useful segmental candidate without 
 - `canonical_ipa=None` and `canonical_ukrainian=None` until prosody/profile adjudication.
 
 The Ukrainian string may still be shown as a PROVISIONAL candidate, but it is not canonical. The browser follows the same semantic distinction. This preserves useful partial output without overstating tone, phonation, quantity or dialect certainty.
+
+
+## Registry-backed typed phonology stage — 2026-11-16
+
+Python `phonologize_syllable()` and browser `phonologizeSyllable()` now consume the canonical IPA onset/vowel registries and emit matching typed segmental results. Each result carries source segment IDs, IPA values, registry status, source evidence, unresolved features and an explicit completeness state. The browser's previous inline derivation block was replaced by this stage; Ukrainian adaptation remains downstream in the hybrid IPA-first orchestrator.
+
+The shared contract is exercised by `tests/fixtures/shared_phonology_contract.json` through both the Python API and built browser UI. It covers the currently accepted simple CV subset and explicitly withheld medial, coda, prosody, analysis-dependent onset/vowel and isolated inherent-vowel cases. No new phonological mapping was introduced. Independent IPA gold remains 0; accuracy remains null.
