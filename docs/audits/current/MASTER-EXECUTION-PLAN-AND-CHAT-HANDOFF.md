@@ -1181,3 +1181,11 @@ The latest documentation-only integration tip has now completed all four applica
 - **Task ledger:** all four configured engineering workflows are DONE_VERIFIED on exact HEAD `86c5f4f...`; the prior exact-head documentation-only commit `86c5f4f...` is the verified tip. This closeout note itself is being added as a documentation-only follow-up and will require its own CI run before its SHA is marked verified.
 - **Remaining blockers unchanged:** independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS source evidence and reuse rights incomplete; full phonological coverage partial; manual accessibility QA TODO; independent annotation deferred pending qualified annotators and rights-cleared data.
 - PR #171 remains OPEN/DRAFT/unmerged. No release, merge, force-push, branch deletion or production deployment occurred. Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## IPA gold pilot preparation — 2026-11-18
+
+- **DONE_VERIFIED (preparatory documentation only):** added `docs/ipa-convention-sheet-draft.md`, a structured specialist decision draft derived from the existing gold-collection playbook and typed IPA schema. It makes profile, transcription kind, prosody/phonation, vowels, syllable boundaries, medials, codas, uncertainty and schema-fit decisions explicit.
+- **BLOCKED — linguistic approval:** draft is intentionally not approved and supplies no IPA labels or selected disputed analyses. The pilot cannot start until the profile/convention is approved by a qualified reviewer, two independent annotators and a separate adjudicator are confirmed, source/item rights are checked, and a private blind-intake dry-run passes.
+- Existing Issue [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85) remains the human recruitment and pilot coordination tracker. No external contact or recruitment was performed.
+- No runtime rule, dataset, gold record, benchmark score or accuracy claim was added. This work only reduces the preparation/documentation ambiguity; scientific readiness remains blocked.
