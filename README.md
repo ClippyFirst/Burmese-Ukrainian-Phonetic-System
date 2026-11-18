@@ -84,7 +84,7 @@ git diff --exit-code -- src/web/generated/data.js
 Structural Burmese parsing is available directly through the Python package.
 The generic ipa_to_ukrainian() adapter intentionally requires a local checkout of the canonical ClippyFirst/Ukrainian-Phonetic-Inventory repository; the Burmese repository does not vendor or duplicate that generic inventory. Without it, that generic adapter returns inventory_unavailable.
 
-For the language-specific practical system, use transcribe_ipa(). It uses the repository's provenance-bearing data/burmese/ukrainian_practical.csv and data/burmese/practical_rules.csv tables. RuleBasedBurmeseEngine.analyze() exposes the segmental IPA candidate and post-IPA Ukrainian candidate, plus separate ipa_status, phonetic_completeness, prosody_status, profile_status, canonical_ipa and canonical_ukrainian fields. A segmental-only IPA string is not reported as canonical full pronunciation. Unknown IPA segments withhold the complete practical string.
+For the language-specific practical system, use transcribe_ipa(). It uses the repository's provenance-bearing data/burmese/ukrainian_practical.csv and data/burmese/practical_rules.csv tables. RuleBasedBurmeseEngine.analyze() exposes separate graphemic_status, phonology_status, ipa_status and ukrainian_status fields, alongside the segmental IPA candidate, post-IPA Ukrainian candidate, phonetic_completeness, prosody_status, profile_status, canonical_ipa and canonical_ukrainian fields. The browser exposes the same layer dimensions as graphemicStatus, phonologyStatus, ipaStatus and ukrainianStatus. A segmental-only IPA string is not reported as canonical full pronunciation. Unknown IPA segments withhold the complete practical string.
 
 ## Current implementation
 

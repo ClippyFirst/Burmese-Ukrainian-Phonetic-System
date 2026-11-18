@@ -624,3 +624,14 @@ test("adjacent bare Myanmar consonants remain explicitly incomplete", async ({ p
   expect(second.ipa).toBe("m?");
   await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");
 });
+
+
+test("independent analysis layer statuses are visible for a segmental-only candidate", async ({page}) => {
+  await page.goto("/");
+  await page.locator("#source").fill("ကာ");
+  const status = page.locator("#uk-status");
+  await expect(status).toContainText("Графеміка: ESTABLISHED");
+  await expect(status).toContainText("фонологія: SEGMENTAL_ONLY");
+  await expect(status).toContainText("IPA: ANALYSIS_DEPENDENT");
+  await expect(status).toContainText("українська передача: PROVISIONAL");
+});

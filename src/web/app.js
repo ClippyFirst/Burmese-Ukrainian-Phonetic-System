@@ -257,7 +257,7 @@ function render(){
       : uaRomanized.status==="UNSUPPORTED"
         ? "UNSUPPORTED · для цього вводу не знайдено достатніх MLCTS відповідників; оригінальні послідовності залишено видимими."
         : "PASSTHROUGH · аналізованих бірманських складів немає; сторонній текст збережено.";
-  ukStatus.textContent="Загальний статус: "+hybrid.status+" · IPA: "+hybrid.ipaStatus+" · українська передача: "+hybrid.ukrainianStatus+" · IPA-first гібридний оркестратор: активний.";
+  ukStatus.textContent="Графеміка: "+hybrid.graphemicStatus+" · фонологія: "+hybrid.phonologyStatus+" · IPA: "+hybrid.ipaStatus+" · українська передача: "+hybrid.ukrainianStatus+" · загальний статус: "+hybrid.status+" · IPA-first гібридний оркестратор: активний.";
   const hasExternalCandidates=hybrid.records.some(item=>!item.passthrough&&item.externalCandidates.length>0);
   const hasSegmentalOnly=hybrid.records.some(item=>!item.passthrough&&item.phoneticCompleteness==="SEGMENTAL_ONLY");
   ipaStatus.textContent=hasSegmentalOnly?"Сегментний IPA-кандидат є, але тон/фонація/довгота або діалектний профіль не встановлені; тому він не стає канонічним. Українська форма показується лише як PROVISIONAL-кандидат через IPA-адаптер.":hasExternalCandidates?"Канонічне IPA не встановлено без сегментної, просодичної та профільної основи; зовнішні кандидати показані окремо. Тональні розбіжності відділено від сегментних.":"Канонічний IPA не встановлено для частини сегментів; невизначеність не замінюється зовнішніми здогадками.";
