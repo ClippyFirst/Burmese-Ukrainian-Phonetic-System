@@ -1087,3 +1087,10 @@ Remaining blockers: 0 independent profile-matched lexical IPA gold; Google/Epitr
 - PR #171 body now reflects both exact-head outcomes. PR #171 remains OPEN/DRAFT/mergeable, stacked on #168. No merge, dependency workaround, release or production deployment. Main unchanged.
 - Remaining blockers: reviewed/released picomatch remediation plus adversarial/compatibility tests and clean required audit; independently adjudicated Yangon-profile IPA gold (0 records, accuracy unmeasured); incomplete tone/register/medial/rime/coda evidence and primary MLC/MLCTS item-level source/reuse rights; manual screen-reader/physical-device/zoom/reflow/contrast QA. Independent IPA annotation remains DEFERRED per owner scope.
 - Readiness: engineering/research prototype, not release-ready.
+
+## Exact documentation-tip CI closeout — 2026-11-18 (`a0202336e9f88f96039d957bb21b92f0ccdaf93b`)
+
+- Pages [44339640438](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44339640438) **SUCCESS** on exact SHA: pinned WFST/OpenFst, IPA symbol-table and browser alphabet checks, static export, upstream parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed. Deploy skipped for PR event; no production deployment.
+- Tests [44339640388](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44339640388) **FAILURE** on same SHA at required high-severity npm audit (four high findings, including GHSA-fc5q-39xc-vjpf / transitive `picomatch`). Corpus validation, Python install, wheel verification, pytest (322 + 68 subtests) and `npm ci` passed; later build/generated-data/Node/Playwright steps skipped in that job.
+- PR #171 body reconciled. It remains OPEN/DRAFT/unmerged. No override, forced downgrade, fork, patch or audit suppression. Security and linguistic acceptance remain incomplete; research/engineering prototype, not release-ready. Documentation-only descendants do not alter runtime/data/linguistic rules.
+
