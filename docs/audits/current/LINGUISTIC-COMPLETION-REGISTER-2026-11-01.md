@@ -2831,3 +2831,10 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Pages workflow [44185873696](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873696) completed successfully through artifact upload; deployment skipped for PR event.
 - Required test workflow [44185873801](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873801) completed with failure at mandatory high-severity npm audit. Corpus validation, Python dependency install, pytest and `npm ci` passed; subsequent build, generated-data, Node and Playwright steps skipped.
 - These workflow results apply to docs-updated head `748dcea9c82308ec9cd7299de12cb7cfec6f5874`; the test workflow is still not green. Security and linguistic evidence blockers remain unchanged.
+
+
+## Upstream candidate review evidence — 2026-11-18
+
+- Latest public GitHub review state: upstream picomatch PR #261 is open/unmerged with one approval, but the reviewer states they reviewed the diff and did not run it; they identify a compatibility break because previously accepted patterns now throw. PR #262 is open/unmerged with an approval and independent bounded validation (2,001 tests, 1,329,660 selected finite parity comparisons, 35 adversarial deadline cases). Its reviewer explicitly notes that the test corpus is bounded and `maxExtglobRecursion: false` remains an opt-out.
+- #261 appears broader in its fail-closed design but has a documented compatibility concern and no independent test execution in the approval. #262 has stronger independent test evidence but leaves the recursion safeguard opt-out. Neither is a merged/released fix; #263 remains on v2.
+- The latest GitHub-reviewed OSV advisory still marks picomatch through 4.0.7 affected and does not specify a fixed version. Keep the security gate BLOCKED; do not downgrade, suppress or vendor either candidate without a complete compatibility/security review.
