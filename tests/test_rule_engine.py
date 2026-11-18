@@ -127,3 +127,13 @@ def test_api_exposes_independent_graphemic_phonology_ipa_and_ukrainian_statuses(
     empty = engine.analyze("")
     assert empty["graphemic_status"] == "NOT_APPLICABLE"
     assert empty["phonology_status"] == "NOT_APPLICABLE"
+
+
+def test_api_layer_statuses_ignore_non_myanmar_passthrough_text():
+    result = RuleBasedBurmeseEngine().analyze("ကာ hello")
+    assert result["graphemic_status"] == "ESTABLISHED"
+    assert result["phonology_status"] == "SEGMENTAL_ONLY"
+
+    non_myanmar_only = RuleBasedBurmeseEngine().analyze("hello")
+    assert non_myanmar_only["graphemic_status"] == "NOT_APPLICABLE"
+    assert non_myanmar_only["phonology_status"] == "NOT_APPLICABLE"
