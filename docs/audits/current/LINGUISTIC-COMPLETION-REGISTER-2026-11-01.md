@@ -2858,3 +2858,12 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **PENDING at capture:** [Pages workflow 44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still running the pinned WFST/OpenFst build. Do not infer success from earlier heads.
 - The exact lockfile confirms the dependency is dev-only, but main already has the same Vite 8.3.8 → picomatch@4.0.7 tree. The CSV repair PR did not introduce the finding. Official release/npm metadata still list 4.0.7 as latest and the GitHub-reviewed advisory has no fixed version. Keep the security gate blocked; no override, downgrade, vendored patch or suppression.
 - Linguistic status unchanged: independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; phonological coverage and MLC/MLCTS evidence/reuse rights incomplete; manual accessibility QA incomplete. Independent annotation remains DEFERRED.
+
+
+## Final exact code-head evidence — 2026-11-18 (a266e67)
+
+- **DONE_VERIFIED:** [tests workflow 44259714864](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44259714864) passed IPA corpus structure validation, Python dependency installation, pytest and npm ci on exact code head a266e67d94e667dc14bf46aadcb36dc7ceffdf24.
+- **BLOCKED:** the same workflow failed the mandatory npm high-severity audit on four findings for transitive picomatch@4.0.7; subsequent build, generated-data, Node and Playwright steps were skipped.
+- [Pages workflow 44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still in progress on preceding docs head 42f5b135. WFST/OpenFst build, IPA symbol-table validation, browser input alphabet and model export had passed; Node setup was running. Do not attribute this partial result to a266e67.
+- Independent CSV parse confirms four records, five fields each, all source IDs valid against sources.csv, no blank fields, duplicates or out-of-vocabulary evidence statuses. This validates schema integrity only, not phonological interpretation.
+- Final documentation-only commits refreshed the canonical status. No code/data/dependency changes. Security remains BLOCKED; independent IPA gold 0; accuracy unmeasured; other linguistic, source-rights and manual accessibility tasks remain PARTIAL/BLOCKED/TODO as previously recorded.
