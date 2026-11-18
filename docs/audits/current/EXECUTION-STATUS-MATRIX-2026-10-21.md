@@ -3179,3 +3179,13 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **BLOCKED — required tests workflow [44255972550](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44255972550):** IPA corpus structure validation, Python dependency installation, pytest and `npm ci` passed; mandatory `npm audit --audit-level=high` failed. Build, generated-data freshness, Node and Playwright steps skipped.
 - These are complementary workflows; Pages success does not clear the mandatory security gate. No dependency or linguistic change was made. No merge, release or production deployment occurred.
 - Acceptance blockers remain: reviewed/released compatible `picomatch` remediation and full exact-head test CI; independent adjudicated Yangon-profile IPA gold (0; accuracy unmeasured); incomplete phonological coverage; unresolved primary MLC/MLCTS evidence and reuse rights; manual accessibility QA. Independent IPA annotation remains DEFERRED.
+
+
+## Exact-head verification refresh — 2026-11-18 (PR #168, head 42f5b135)
+
+- Exact branch head: 42f5b1353c3d4ce13070554494c70f6fc6a10b90; 55 commits ahead / 0 behind main; five changed files.
+- **DONE_VERIFIED:** corpus structure validation, Python dependency install and pytest passed in [workflow 44258910321](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910321).
+- **BLOCKED:** the same required test workflow failed at npm audit --audit-level=high with four high-severity findings for transitive picomatch@4.0.7; npm audit fix --force proposed breaking Vite downgrade to 6.2.7. Build, generated-data, Node and Playwright steps were skipped. No workaround or dependency change was made.
+- **PENDING at capture:** Pages workflow [44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still building pinned Google WFST/OpenFst; no pass/fail claimed.
+- Lockfile inspection confirms picomatch@4.0.7 is dev-only and already present on main through Vite 8.3.8 and tinyglobby; PR #168 did not introduce it. Official picomatch releases/npm still show 4.0.7 as latest; no verified fixed version found.
+- **Readiness:** still blocked for release by mandatory security CI; linguistic gold remains 0 and accuracy unmeasured. No merge or release.
