@@ -2848,3 +2848,13 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - The security finding is not resolved; Pages success is not a substitute for the mandatory audit. No dependency or linguistic evidence changes were made.
 - Linguistic evidence remains limited: independently adjudicated Yangon-profile IPA gold = 0, accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS evidence and reuse rights unresolved; manual accessibility QA incomplete. Independent IPA annotation remains DEFERRED.
 - **Readiness:** engineering/research prototype, not linguistically release-ready.
+
+
+## Latest exact-head and dependency-state reconciliation — 2026-11-18
+
+- PR #168 exact head 42f5b1353c3d4ce13070554494c70f6fc6a10b90; five changed files; 55 commits ahead / 0 behind main.
+- **DONE_VERIFIED:** IPA corpus structure validation, Python dependency installation and pytest passed on this head in [workflow 44258910321](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910321).
+- **BLOCKED:** mandatory npm audit --audit-level=high failed with four high-severity findings resolving to picomatch@4.0.7 through fdir, tinyglobby and Vite. The audit's --force suggestion would install Vite 6.2.7, a breaking downgrade; it was not applied. Later build/data/Node/Playwright steps were skipped.
+- **PENDING at capture:** [Pages workflow 44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still running the pinned WFST/OpenFst build. Do not infer success from earlier heads.
+- The exact lockfile confirms the dependency is dev-only, but main already has the same Vite 8.3.8 → picomatch@4.0.7 tree. The CSV repair PR did not introduce the finding. Official release/npm metadata still list 4.0.7 as latest and the GitHub-reviewed advisory has no fixed version. Keep the security gate blocked; no override, downgrade, vendored patch or suppression.
+- Linguistic status unchanged: independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; phonological coverage and MLC/MLCTS evidence/reuse rights incomplete; manual accessibility QA incomplete. Independent annotation remains DEFERRED.
