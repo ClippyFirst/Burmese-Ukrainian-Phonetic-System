@@ -3253,3 +3253,17 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 | Assess app-specific threat exposure | PARTIAL | Upstream maintainer/contributor says ReDoS requires attacker-controlled glob pattern, not merely path input. App has no direct npm runtime dependencies and lockfile path is dev/build toolchain. Need prove no untrusted user/content-derived glob reaches picomatch before classifying app exposure; audit gate remains mandatory regardless. |
 | Upstream candidate security coverage | BLOCKED | #268 globstar bypass `+(**/a)b`; #270 timeouts for `+([a]*)b` and `+(@(*a))`; #238 still times out on `+(*)`; #273 finite equivalence only/no independent review; #264 downstream Windows parity does not prove security. Acceptance: maintainer-reviewed/released fix plus adversarial and compatibility tests, then clean audit/full CI. |
 | Exact-head test evidence | PARTIAL | Python 317 passed + 68 subtests; IPA gold validation explicitly reports 0 adjudicated records. Audit failure prevents build/generated-data/Node/Playwright steps in required Tests workflow. Pages workflow separately SUCCESS. |
+
+## Integration reconciliation checkpoint — 2026-11-18
+
+| Work item | Status | Evidence / acceptance |
+|---|---|---|
+| Port non-overlapping PR #166 documentation into integration branch | DONE_VERIFIED (port operation) | README; deterministic rule engine; Burmese IPA architecture; Goruut licensing review; secondary audit handoff; phonology coverage; hybrid engines; limitations; repository audit copied from #166 branch. Content still requires human review before merge. |
+| Preserve PR #168 finals CSV schema repair and tests | DONE_VERIFIED (present on branch) | Integration branch starts at exact #168 HEAD `52f836246e6a5f1b3eb129007a6607d59ecbf985`, retaining `data/burmese/finals.csv` and `tests/test_finals_registry.py`. |
+| Reconcile overlapping canonical documents | PARTIAL | #168 versions retained as base; #166 unique Goruut test-only authorization and Ukrainian exact-IPA adapter/feature-ranking blocker recorded in master handoff; complete cross-document consistency review and CI still required. |
+| Integrate PR #167 code | BLOCKED | #167 remains stacked on #166; retarget only after integration branch review and a decision on its documentation base. |
+| Mandatory npm high-severity audit | BLOCKED | Exact #168 source-head run 44294768524 fails at `npm audit`; no released compatible picomatch fix identified. Must pass on integration HEAD. |
+| Linguistic release validation | BLOCKED / PARTIAL | Independent adjudicated Yangon-profile IPA gold = 0; phonological coverage and primary MLC/MLCTS evidence/reuse rights incomplete. |
+| Manual accessibility QA | TODO | Screen reader, touch targets, zoom/reflow, contrast and state behavior remain unverified. |
+
+Integration branch: `integration/reconcile-pr166-pr168-2026-11-18`, created from #168 HEAD `52f836246e6a5f1b3eb129007a6607d59ecbf985`. No tests have yet been run on the integration branch. Do not label this branch release-ready.
