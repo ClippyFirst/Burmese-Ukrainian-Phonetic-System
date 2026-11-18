@@ -2929,3 +2929,5 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **Source rights/coverage:** primary MLC/MLCTS evidence and reuse rights remain incomplete; full phonological coverage is not established.
 
 The integration branch is based on PR #168 HEAD and has not yet received exact-head CI. Documentation port status must not be interpreted as acceptance of the PRs or linguistic release approval.
+
+PR #169 is the draft integration vehicle for the documentation reconciliation and finals-registry repair. Its initial exact HEAD was `72f19934e8dc563edc322e4078d2aeefc78f4d40`; no linguistic labels or mappings were added. Await exact-head engineering CI and review before integration.
