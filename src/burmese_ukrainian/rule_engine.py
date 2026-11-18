@@ -62,6 +62,30 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
     }
 
 
+def _graphemic_layer_status(syllables: list[dict[str, Any]]) -> str:
+    """Summarize orthographic analysis without borrowing phonological certainty."""
+    if not syllables:
+        return "NOT_APPLICABLE"
+    statuses = {item.get("status", "established") for item in syllables}
+    if statuses & {"invalid", "unsupported_or_malformed"}:
+        return "UNSUPPORTED"
+    if statuses != {"established"}:
+        return "PARTIAL"
+    return "ESTABLISHED"
+
+
+def _phonology_layer_status(syllables: list[dict[str, Any]]) -> str:
+    """Report source-side phonological coverage separately from IPA/adaptation."""
+    if not syllables:
+        return "NOT_APPLICABLE"
+    analyses = [item.get("phonology") or {} for item in syllables]
+    if all(item.get("status") == "SEGMENTAL_ONLY" and item.get("ipa") for item in analyses):
+        return "SEGMENTAL_ONLY"
+    if any(item.get("segments") for item in analyses):
+        return "PARTIAL"
+    return "NOT_ESTABLISHED"
+
+
 class RuleBasedBurmeseEngine:
     """Deterministic Myanmar-script phonology for the selected Yangon profile."""
 
@@ -124,6 +148,8 @@ class RuleBasedBurmeseEngine:
             "phonetic_completeness": "SEGMENTAL_ONLY" if segmental_complete else "INCOMPLETE",
             "prosody_status": "not_established",
             "profile_status": "PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED",
+            "graphemic_status": _graphemic_layer_status(syllables),
+            "phonology_status": _phonology_layer_status(syllables),
             "ukrainian": practical_text,
             "ukrainian_status": practical_status,
             "canonical_ukrainian": None,

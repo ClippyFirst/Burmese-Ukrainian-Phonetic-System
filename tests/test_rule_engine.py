@@ -106,3 +106,24 @@ def test_mixed_input_segmental_previews_are_not_labeled_supported():
     assert preview["status"] == "PROVISIONAL_SEGMENTAL_ONLY"
     assert "tone" in preview["unresolved_features"]
     assert "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED" in preview["warnings"]
+
+
+
+def test_api_exposes_independent_graphemic_phonology_ipa_and_ukrainian_statuses():
+    engine = RuleBasedBurmeseEngine()
+
+    segmental = engine.analyze("ကာ")
+    assert segmental["graphemic_status"] == "ESTABLISHED"
+    assert segmental["phonology_status"] == "SEGMENTAL_ONLY"
+    assert segmental["ipa_status"] == "analysis_dependent"
+    assert segmental["ukrainian_status"] == "proposed"
+
+    unresolved = engine.analyze("ကျာ")
+    assert unresolved["graphemic_status"] == "ESTABLISHED"
+    assert unresolved["phonology_status"] == "PARTIAL"
+    assert unresolved["ipa_status"] == "analysis_dependent"
+    assert unresolved["ukrainian_status"] == "not_established"
+
+    empty = engine.analyze("")
+    assert empty["graphemic_status"] == "NOT_APPLICABLE"
+    assert empty["phonology_status"] == "NOT_APPLICABLE"
