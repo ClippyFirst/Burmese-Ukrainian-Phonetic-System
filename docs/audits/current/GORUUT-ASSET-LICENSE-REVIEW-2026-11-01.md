@@ -2,7 +2,7 @@
 
 ## Decision
 
-**Status: BLOCKED for benchmark execution until language-asset licensing is clarified; research-only comparator, not production-approved.** The upstream code license is not sufficient to clear the phonetic lexicon and trained model assets.
+**Status: test-only benchmark execution is authorized by the project owner; production packaging and redistribution remain BLOCKED pending per-language asset license/provenance clarification. Goruut remains a research-only comparator, not production-approved.** The upstream code license is not sufficient to clear the phonetic lexicon and trained model assets.
 
 ## Verified upstream facts
 
@@ -47,3 +47,8 @@ The repository owner explicitly directed that external Goruut assets may be used
 - **Production packaging or redistribution:** not authorized by this instruction and remains outside this test-only scope; asset provenance/rights must be revisited before any bundling, redistribution, or production deployment.
 
 This is a project scope decision, not a legal conclusion about the upstream assets.
+
+
+## Status reconciliation — 2026-11-16
+
+The project-owner instruction recorded below authorizes temporary, test-only execution and comparison of external Goruut assets. Therefore the earlier blanket phrase “blocked for benchmark execution” is superseded. This authorization does **not** grant permission to vendor, redistribute or package the Burmese lexicon/model, and it does not validate phonetic accuracy. Production packaging remains blocked until per-language source provenance and reuse rights are established; promotion into the IPA→Ukrainian runtime additionally requires independent, profile-matched expert gold and phonological review.
