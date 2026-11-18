@@ -162,8 +162,23 @@ def test_analysis_layer_status_schema_validates_python_and_browser_contracts():
     # independent dimensions without coercing them into Python's casing.
     validator.validate({
         "runtime": "browser",
-        "graphemic_status": "ESTABLISHED",
-        "phonology_status": "SEGMENTAL_ONLY",
-        "ipa_status": "ANALYSIS_DEPENDENT",
-        "ukrainian_status": "PROVISIONAL",
+        "graphemicStatus": "ESTABLISHED",
+        "phonologyStatus": "SEGMENTAL_ONLY",
+        "ipaStatus": "ANALYSIS_DEPENDENT",
+        "ukrainianStatus": "PROVISIONAL",
     })
+
+    # Runtime key casing is part of the contract, not an interchangeable alias.
+    try:
+        validator.validate({
+            "runtime": "browser",
+            "graphemic_status": "ESTABLISHED",
+            "phonology_status": "SEGMENTAL_ONLY",
+            "ipa_status": "ANALYSIS_DEPENDENT",
+            "ukrainian_status": "PROVISIONAL",
+        })
+    except Exception as error:
+        from jsonschema import ValidationError
+        assert isinstance(error, ValidationError)
+    else:
+        raise AssertionError("browser schema must reject Python snake_case keys")
