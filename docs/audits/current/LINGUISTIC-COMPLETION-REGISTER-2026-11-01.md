@@ -2896,3 +2896,10 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - New upstream candidates do not clear the blocker. #270's simple collapse optimization has a finite parity claim, but an independent report reproduced timeouts for `+([a]*)b` and `+(@(*a))`; #269 proposes broader literal fallback but has no maintainer review/approval evidence; #267 has no review evidence. All remain open/unmerged, and the official latest release remains 4.0.7. No candidate is adopted.
 - Linguistic state unchanged: independently adjudicated Yangon-profile IPA gold = 0; empirical accuracy unmeasured; phonological coverage and primary MLC/MLCTS evidence/reuse rights incomplete. Manual accessibility QA remains incomplete. Independent IPA annotation remains DEFERRED. No IPA or Ukrainian mappings changed.
 - No runtime/dependency/data change, merge, release or production deployment. This remains an engineering/research prototype, not linguistically validated for release.
+
+
+## 2026-11-18 — exact latest-head Pages result
+
+- Pages workflow [44265321954](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44265321954) completed SUCCESS on PR #168 HEAD `bf1655fb861451289ce5be12f1c4bf89a2cccb41`. Pinned WFST/OpenFst, IPA/browser invariants, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload all passed. Deployment was skipped for the PR event.
+- Required tests workflow [44265321857](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44265321857) on the same SHA still failed at mandatory `npm audit --audit-level=high` after corpus validation, Python install, pytest and `npm ci` passed; subsequent build/generated-data/Node/Playwright steps were skipped.
+- This supersedes the prior checkpoint's statement that Pages run 44265321954 was pending. The dependency/security gate remains BLOCKED; no linguistic evidence or mappings changed.
