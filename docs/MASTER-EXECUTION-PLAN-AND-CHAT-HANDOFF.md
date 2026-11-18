@@ -3414,3 +3414,15 @@ The linguistic blockers remain: independent adjudicated Yangon-profile IPA gold 
 - [Tests workflow 44185873801](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873801): corpus structure validation PASS; Python dependency installation PASS; `pytest` PASS; `npm ci` PASS; mandatory `npm audit --audit-level=high` FAIL; build, generated-data freshness, Node and Playwright steps SKIPPED.
 - [Pages workflow 44185873696](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873696): WFST/OpenFst build and IPA/browser alphabet invariants PASS; upstream parity PASS; production build PASS; Node tests PASS; Chromium install PASS; built-site Playwright PASS; Pages artifact upload PASS; deploy SKIPPED for PR event.
 - PR #168 remains open, unmerged and mergeable; 46 commits ahead / 0 behind `main`; five changed files. No merge, release, production deploy, dependency bypass or linguistic changes. Status remains engineering/research prototype, not release-ready; npm audit and independent phonological/source/accessibility evidence remain blockers.
+
+
+### Updated upstream remediation triage — 2026-11-18
+
+Current public evidence does not justify changing the lockfile:
+
+- [GHSA-fc5q-39xc-vjpf / CVE-2026-112366](https://osv.dev/vulnerability/GHSA-fc5q-39xc-vjpf): GitHub-reviewed OSV entry continues to mark picomatch through 4.0.7 affected; no fixed version is specified. The upstream [4.0.7 changelog](https://github.com/micromatch/picomatch/blob/master/CHANGELOG.md) does not document a fix for this later single-branch repeated-extglob advisory.
+- [Upstream PR #261](https://github.com/micromatch/picomatch/pull/261): open/unmerged, v4 master line, one approval. The reviewer explicitly did not run the branch and flags a compatibility break: some patterns previously accepted now throw `SyntaxError`. Author-reported 2,009 tests are not independently verified.
+- [Upstream PR #262](https://github.com/micromatch/picomatch/pull/262): open/unmerged, v4 master line, one approval and independent reviewer evidence of 2,001 tests, 1,329,660 selected finite parity comparisons, and 35 bounded adversarial deadline cases. The reviewer explicitly limits the conclusion: finite corpus only, fallback can alter semantics for complex patterns, and `maxExtglobRecursion: false` remains an opt-out.
+- [Upstream PR #263](https://github.com/micromatch/picomatch/pull/263) targets v2, not this v4 dependency.
+
+No candidate is merged or released. #261 and #262 were not transplanted: neither currently satisfies both the compatibility and unconditional security acceptance criteria. Continue to require a maintainer-approved/released v4 remediation or an independently reviewed replacement, followed by mandatory npm audit and complete CI on the exact project head. No downgrade, lockfile override, vendored patch or audit suppression.
