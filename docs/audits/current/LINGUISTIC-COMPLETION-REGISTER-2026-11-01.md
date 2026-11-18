@@ -3121,3 +3121,12 @@ The latest documentation-only integration tip has now completed all four applica
 - **Task ledger:** all four configured engineering workflows are DONE_VERIFIED on exact HEAD `86c5f4f...`; the prior exact-head documentation-only commit `86c5f4f...` is the verified tip. This closeout note itself is being added as a documentation-only follow-up and will require its own CI run before its SHA is marked verified.
 - **Remaining blockers unchanged:** independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS source evidence and reuse rights incomplete; full phonological coverage partial; manual accessibility QA TODO; independent annotation deferred pending qualified annotators and rights-cleared data.
 - PR #171 remains OPEN/DRAFT/unmerged. No release, merge, force-push, branch deletion or production deployment occurred. Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Convention approval and gold pilot gate — 2026-11-18
+
+- **DONE_VERIFIED (documentation draft only):** `docs/ipa-convention-sheet-draft.md` captures the specialist decisions required before annotation and maps them to existing typed IPA fields.
+- **BLOCKED:** no approved convention version, no confirmed expert panel, no two independent annotators, no separate adjudicator and no curator approval record.
+- **BLOCKED:** source/item-level rights and exact locator review must precede the 30-item sample.
+- **TODO:** private blind-intake dry-run and sample selection after the preceding gates pass.
+- No labels, inferred IPA, model-derived gold, runtime phonology or benchmark accuracy were added. The draft must not be treated as approved guidance.
