@@ -3517,3 +3517,18 @@ These workflows are complementary, not a green required test workflow. The locke
 - Same job: IPA gold validation = 0 records / 0 annotations / 0 adjudicated; `NOT_READY_NO_ADJUDICATED_GOLD`; pytest 317 passed and 68 subtests passed. Required Tests stops at audit, so build/generated-data/Node/Playwright are skipped there. Separate Pages workflow passes on this PR HEAD.
 - Candidate re-triage: #268 has an independent globstar bypass timeout `+(**/a)b`; #270 has independent timeout reports for `+([a]*)b` and `+(@(*a))`; #238 still times out on `+(*)` despite approvals; #273 has broad finite equivalence claims but no independent review and not full adversarial scope. #264 has downstream Windows compatibility evidence (133 client and 18 distribution files unchanged) but that does not prove security and no review is recorded. No candidate meets both broad security and compatibility review criteria; latest release remains 4.0.7.
 - No dependency override, Vite downgrade, vendored patch, audit suppression, source change or merge. PR #168 remains open. Readiness remains prototype; independent IPA gold = 0, accuracy unmeasured.
+
+## PR #166 / #168 documentation reconciliation — 2026-11-18
+
+An integration branch `integration/reconcile-pr166-pr168-2026-11-18` was created from PR #168 exact HEAD `52f836246e6a5f1b3eb129007a6607d59ecbf985`. The following non-overlapping documentation changes from PR #166 were ported without changing runtime code or linguistic data: README, deterministic rule-engine documentation, Burmese IPA architecture note, Goruut asset/license review, the secondary audit handoff, phonology coverage audit, hybrid-engine notes, limitations, and repository audit. The PR #168 CSV schema repair and its tests remain present on the integration branch.
+
+The three overlapping canonical documents were retained from #168 as the more recent evidence baseline and supplemented with #166's unique findings rather than replaced wholesale:
+
+- Goruut: project-owner authorization permits temporary test-only benchmark execution; production packaging and redistribution remain blocked pending per-language asset provenance and rights.
+- Ukrainian adaptation: current adapter supports exact-IPA lookup only. Feature-distance ranking remains BLOCKED until the private canonical Ukrainian target inventory and a sourced source-IPA feature representation have a consumable contract.
+- Burmese IPA architecture: retain the typed, registry-backed IPA boundary and Python/browser shared contract; unresolved medials, codas, prosody and other unsupported features remain explicitly withheld, not guessed.
+- #166's original instruction to merge it before retargeting #167 is superseded: #166 and #168 diverged from main and overlap in these three canonical documents. PR #167 remains stacked on #166 and is not yet retargeted.
+
+Verification evidence before integration: PR #168 exact HEAD `52f836246e6a5f1b3eb129007a6607d59ecbf985` — required tests run [44294768524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44294768524) FAIL at mandatory high-severity npm audit after corpus validation, Python install, pytest and npm ci passed; Pages run [44294768404](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44294768404) SUCCESS through build, Node and Playwright; deploy skipped. These are source-branch results, not verification of this integration branch.
+
+No merge, retarget, release or production deployment was performed. The integration branch requires fresh exact-head CI, conflict review, and review of the ported documentation before it can be proposed for merge.
