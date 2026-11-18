@@ -3073,3 +3073,10 @@ The latest documentation-only integration tip has now completed all four applica
 - GitHub run metadata confirms all four run IDs above target exact `head_sha` `98e2b301fe1aa12d6f2b930fb9d9908317738040`. The canonical branch head at this verification was the same SHA.
 - **Task ledger:** required Tests, push Tests, package/corpus validation, security audit, build, generated-data check, Node/browser tests, Pages artifact build and optional diagnostic execution are DONE_VERIFIED on this exact tip. Linguistic acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS evidence and reuse rights incomplete; phonological coverage partial; manual accessibility QA TODO; independent annotation DEFERRED.
 - PR #171 remains OPEN/DRAFT/unmerged. No merge, production deployment, release, force-push or branch deletion occurred. **Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.**
+
+
+## Independent API layer-status contract — 2026-11-18
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-012 | DONE_VERIFIED | Python/browser API now expose separate graphemic, source-phonology, IPA and Ukrainian-adaptation statuses. Added `schemas/analysis-layer-status.schema.json`; schema tests validate Python and browser enum variants; runtime tests cover established segmental, partial medial, unsupported, empty and mixed-script cases. Implementation commit `c607cca53d63f3d4fd606e328010b25eef0b601d`; PR Tests [44389661155](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389661155) and push Tests [44389647797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389647797) SUCCESS (324 pytest + 68 subtests; 73 Playwright; npm audit 0 vulnerabilities). | API status metadata only; it does not establish phonetic completeness, add gold entries or measure accuracy. Independent adjudicated Yangon IPA gold remains 0. |

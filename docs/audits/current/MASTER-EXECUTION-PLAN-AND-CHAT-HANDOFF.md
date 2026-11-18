@@ -1,13 +1,13 @@
 # Burmese → Ukrainian: Master Execution Plan and Chat Handoff
 
-Last reviewed: 2026-11-16
+Last reviewed: 2026-11-18
 Repository: https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-
-Default branch: `main`; latest verified HEAD is recorded in the dated 2026-11-16 checkpoint at the end of this handoff. Earlier audit baselines below are historical and immutable.
+Default branch: `main` at `f7f7d41a116c265481bdc17c225a763becab6013`. Active integration candidate: `integration/burmese-ipa-finals-2026-11-18`, tracked by open draft PR #171 and stacked on PR #168's finals-registry branch. The candidate is not merged; historical audit baselines below remain historical.
 Working title: “Burmese-to-Ukrainian Transcription: Graphemic Analysis and an Evidence-Gated Phonological Model”.
 
 ## Operating rule
 
-Do not describe the current implementation as a complete phonetic transcription engine. The inspected `ipa.py` contains a small, direct onset/vowel seed map and emits `?` for absent vowel analysis; its output status is `conservative_partial` or `analysis_dependent`. The parser is explicitly structural. The repository is currently best described as a **structural graphemic/syllabic parser with a conservative partial IPA seed layer and a separate practical Ukrainian correspondence layer**. This is not yet a complete phonological analysis or surface-phonetic transcription model.
+Do not describe the implementation as a complete phonetic transcription engine. The Python and browser runtimes now consume the same canonical CSV onset/vowel registries through typed phonology stages and a shared contract fixture. They emit only the established segmental subset and withhold unresolved medials, conjuncts, vowel combinations, codas, tone, phonation, quantity and profile claims. The parsers remain separate implementations. The repository is a **structural graphemic/syllabic parser with a registry-backed, evidence-gated segmental IPA layer and a separate IPA-to-Ukrainian adapter**; it is not a complete surface-phonetic transcription model.
 
 ## Latest verified repository evidence
 
@@ -40,9 +40,9 @@ Historical context (not reverified against current branch): on 2026-10-09, prior
 | 5. Tone | TODO | Model contains tone/prosody slots; README says competing analyses are retained. No complete tone derivation should be claimed. |
 | 6. Phonation contrasts | TODO | No complete evidence-gated implementation verified. |
 | 7. Allophony/contextual realization | TODO | No complete phonological-rule engine verified. |
-| 8. IPA | IN_PROGRESS | Python `ipa.py` is a small onset+vowel seed mapper; browser `src/web/app.js` has a separate, more elaborate hand-written contextual IPA derivation. These runtimes do not share one authoritative phonology engine and may disagree. Neither is a validated complete surface-phonetic system. |
-| 9. Ukrainian adaptation | IN_PROGRESS | Separate table-driven layer exists with explicit uncertain/not-established outcomes. Its inputs must be validated IPA, not guessed values; test independent from IPA. |
-| 10. Unknown/ambiguous/unsupported inputs | IN_PROGRESS | Parser has malformed/unsupported states; practical layer returns `not_established` for unmapped IPA. Ensure all APIs consistently preserve unknowns and never present placeholders as confident output. |
+| 8. IPA | IN_PROGRESS | Python and browser use the same CSV-derived onset/vowel registries through typed phonology adapters and `tests/fixtures/shared_phonology_contract.json`; only the established segmental subset is emitted. Parsers remain separate, and unresolved structures/prosody are withheld. No independent gold or complete surface-phonetic coverage exists. |
+| 9. Ukrainian adaptation | IN_PROGRESS | A separate IPA-to-Ukrainian adapter is used after the typed IPA boundary; candidate/provisional and unknown outcomes remain explicit. Inventory and lexical coverage are incomplete. |
+| 10. Unknown/ambiguous/unsupported inputs | IN_PROGRESS | Python and browser APIs expose independent graphemic, phonology, IPA and Ukrainian status fields; uncertainty is preserved and unsupported output is withheld. Broader entry-point parity and adversarial coverage remain open. |
 | 11. Sources, tests, docs, UI, CI, deployment | IN_PROGRESS | `docs/references.md`, `data/burmese/sources.csv`, and `data/burmese/source_claims.csv` exist; `CITATION.cff` exists with `NOASSERTION` while licensing remains unresolved. Latest pre-handoff commit passed Python, Node and browser CI; latest Pages build and deployment succeeded. The current handoff-only commit's new workflow runs are in progress. Public page response has not been independently verified. |
 
 ## Prioritized task registry
@@ -57,7 +57,7 @@ Statuses allowed: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE_VERIFIED`, `DEFERRED`,
 ### Stage A — scientifically honest research prototype
 - **BUR-010 — IN_PROGRESS — P0 — Harden Unicode and grapheme segmentation.** Test NFC/NFD equivalence, Myanmar block boundaries, mixed-script text, punctuation, malformed virama, reordered marks and adversarial cluster sequences. Acceptance: no crashes or silent deletion; stable, documented segmentation; regressions for each confirmed bug. Depends on BUR-001.
 - **BUR-011 — IN_PROGRESS — P0 — Validate kinzi/medial/conjunct parsing.** Build independent fixtures for all four medials, kinzi, subjoined consonants, legal and malformed mark sequences. Acceptance: structural fields and diagnostics match explicit fixture expectations. Depends on BUR-010.
-- **BUR-012 — TODO — P0 — Make analysis layers and confidence explicit in API output.** Distinguish graphemic status, phonological status, IPA status and Ukrainian adaptation status; no successful build or parse implies phonological certainty. Acceptance: schema/tests demonstrate independent status fields and uncertainty propagation. Depends on BUR-010.
+- **BUR-012 — DONE_VERIFIED — P0 — Make analysis layers and confidence explicit in API output.** Python and browser now expose independent graphemic, source-phonology, IPA and Ukrainian-adaptation status fields; a shared JSON Schema constrains both runtime contracts, and tests cover established segmental, partial, unsupported, empty and mixed-text cases. Exact-head CI on implementation commit `c607cca` passed PR Tests and push Tests (324 pytest + 68 subtests; 73 Playwright); no pronunciation coverage or accuracy is implied. Depends on BUR-010.
 - **BUR-013 — TODO — P1 — Create an independent adversarial regression corpus.** Include `ကေ`, `ကော်`, `ကြည်`, `စွယ်`, `မြန်`, `ယူ`, all medials, kinzi, vowel combinations, codas, tone marks, mixed scripts, loanwords, names, malformed inputs. Every expected phonetic output needs a source and confidence; structural-only cases must be labeled as such. Depends on BUR-010/BUR-011.
 - **BUR-014 — TODO — P1 — Keep IPA explicitly partial and evidence-gated.** Unsupported sequences return unknown/analysis-dependent rather than plausible invented IPA. Acceptance: rule table ties each implemented mapping to source, scope, confidence, counterexamples/limits and tests. Depends on BUR-012.
 - **BUR-015 — TODO — P1 — Audit Ukrainian adaptation independently.** Validate each IPA-to-Ukrainian correspondence as a target-language policy; retain hypotheses such as /h/ → г and /ɯ/ → и as hypotheses unless evidence supports them. Acceptance: table-driven tests cover mapped, uncertain and unknown inputs. Depends on BUR-014.
@@ -93,7 +93,7 @@ Statuses allowed: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE_VERIFIED`, `DEFERRED`,
 
 ## Exact next step
 
-BUR-001 is now `DONE_VERIFIED` for repository/tree/workflow discovery and remote CI baseline. Next: inspect the two separate runtime paths (Python library vs browser engine), then add shared golden/adversarial fixtures so both paths have comparable, explicitly scoped expected outputs. Do not claim phonetic completeness or merge old divergent branches wholesale.
+BUR-001 is `DONE_VERIFIED` for repository/tree/workflow discovery and remote CI baseline. BUR-012 is now `DONE_VERIFIED` for the independent API layer-status contract. Next: continue BUR-013's adversarial structural regression corpus and BUR-017's primary-source/rights work; expected phonetic outputs remain empty unless supported by exact source locators and independent review. Do not claim phonetic completeness or merge old divergent branches wholesale.
 
 
 ## Audit cycle 2026-10-20 — verified baseline and branch reconciliation
@@ -1134,3 +1134,11 @@ The latest documentation-only integration tip has now completed all four applica
 - GitHub run metadata confirms all four run IDs above target exact `head_sha` `98e2b301fe1aa12d6f2b930fb9d9908317738040`. The canonical branch head at this verification was the same SHA.
 - **Task ledger:** required Tests, push Tests, package/corpus validation, security audit, build, generated-data check, Node/browser tests, Pages artifact build and optional diagnostic execution are DONE_VERIFIED on this exact tip. Linguistic acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS evidence and reuse rights incomplete; phonological coverage partial; manual accessibility QA TODO; independent annotation DEFERRED.
 - PR #171 remains OPEN/DRAFT/unmerged. No merge, production deployment, release, force-push or branch deletion occurred. **Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.**
+
+
+## API layer-status contract — 2026-11-18
+
+- **BUR-012 — DONE_VERIFIED.** Added `graphemic_status` / `graphemicStatus` and `phonology_status` / `phonologyStatus` alongside the existing independent IPA and Ukrainian status fields. The Python aggregate excludes non-Myanmar passthrough runs, matching the browser's Myanmar-unit boundary.
+- Added `schemas/analysis-layer-status.schema.json` with runtime-specific status enums and schema validation in `tests/test_schema_validation.py`. Python and browser tests cover established segmental output, a structurally valid but phonologically partial medial case, unsupported structure, empty input and mixed-script passthrough.
+- Implementation commit: `c607cca53d63f3d4fd606e328010b25eef0b601d`. Exact PR Tests [44389661155](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389661155) and push Tests [44389647797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389647797) succeeded: **324 pytest + 68 subtests, 73 built-site Playwright tests**, npm audit 0 vulnerabilities, build and generated-data checks passed. Optional diagnostics [44389661175](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389661175) succeeded in all three jobs; raw-output only, not gold.
+- The layer-status contract does not add any phonological rule or IPA gold. Independently adjudicated Yangon IPA gold remains 0; accuracy remains unmeasured; source rights, full phonological coverage and manual accessibility QA remain open.

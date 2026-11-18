@@ -6,6 +6,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 
 from burmese_ukrainian import parse_burmese
+from burmese_ukrainian.rule_engine import RuleBasedBurmeseEngine
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -139,3 +140,30 @@ def test_unicode_corpus_rows_have_exact_section_locators_without_claiming_gold()
         assert row["evidence_status"] == "STRUCTURAL_ONLY", row["case_id"]
         assert not row["expected_ipa"].strip(), row["case_id"]
         assert not row["expected_ukrainian"].strip(), row["case_id"]
+
+
+
+def test_analysis_layer_status_schema_validates_python_and_browser_contracts():
+    schema = _load_schema("analysis-layer-status.schema.json")
+    validator = Draft202012Validator(schema)
+    engine = RuleBasedBurmeseEngine()
+
+    for source in ("ကာ", "ကျာ", ""):
+        result = engine.analyze(source)
+        validator.validate({
+            "runtime": "python",
+            "graphemic_status": result["graphemic_status"],
+            "phonology_status": result["phonology_status"],
+            "ipa_status": result["ipa_status"],
+            "ukrainian_status": result["ukrainian_status"],
+        })
+
+    # Browser status enums are intentionally uppercase; validate the same
+    # independent dimensions without coercing them into Python's casing.
+    validator.validate({
+        "runtime": "browser",
+        "graphemic_status": "ESTABLISHED",
+        "phonology_status": "SEGMENTAL_ONLY",
+        "ipa_status": "ANALYSIS_DEPENDENT",
+        "ukrainian_status": "PROVISIONAL",
+    })

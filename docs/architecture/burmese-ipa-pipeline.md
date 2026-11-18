@@ -33,6 +33,22 @@ Both `phonologize_syllable()` in Python and `phonologizeSyllable()` in the brows
 
 The contract is deliberately not a declaration of complete pronunciation. Tone, phonation, quantity and profile adjudication remain unresolved even for a simple segmental candidate such as `ka`.
 
+
+## Independent API layer statuses
+
+The engine APIs expose the status of each transformation layer independently. Python uses snake_case keys; the browser uses camelCase keys:
+
+| Layer | Python | Browser | Meaning |
+|---|---|---|---|
+| Graphemic analysis | `graphemic_status` | `graphemicStatus` | `ESTABLISHED` when all Myanmar units parse; `PARTIAL` for partially parsed units; `UNSUPPORTED` for malformed/unsupported Myanmar units; `NOT_APPLICABLE` when there are no Myanmar phonological units |
+| Source phonology | `phonology_status` | `phonologyStatus` | `SEGMENTAL_ONLY` for the currently established segmental subset; `PARTIAL` when some sourced components exist but required structure is withheld; `NOT_ESTABLISHED` when no source-backed phonological component is available; `NOT_APPLICABLE` when no Myanmar phonological units are present |
+| IPA candidate | `ipa_status` | `ipaStatus` | Whether the typed IPA result is established, analysis-dependent, unsupported or withheld |
+| Ukrainian adaptation | `ukrainian_status` | `ukrainianStatus` | Status of the IPA-to-Ukrainian target adaptation, not of source-side pronunciation |
+
+These dimensions are deliberately not collapsed. A well-formed graphemic parse does not establish phonology; a `SEGMENTAL_ONLY` result is not complete surface IPA; an analysis-dependent IPA candidate does not become canonical merely because the Ukrainian adapter can render it. Mixed-script passthrough text is excluded from the graphemic/phonology aggregate.
+
+`schemas/analysis-layer-status.schema.json` defines the allowed status combinations for the Python and browser API contracts. Python and browser regression tests cover established segmental, partially withheld, unsupported and empty-input cases.
+
 ## Fail-closed boundaries
 
 The current stage does not infer realizations for:
