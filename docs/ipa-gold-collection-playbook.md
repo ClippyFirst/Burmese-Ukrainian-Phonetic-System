@@ -177,3 +177,8 @@ Additional specialist leads improve the reviewer/referral shortlist, but do not 
 ## Nasal coda convention decision — 2026-11-13
 
 Green (2002) analyzes Burmese coda /N/ as placeless and describes preceding-vowel nasalization plus approximate place realization. The current typed IPA schema preserves the literal IPA value, IPA kind, syllable boundaries, tone, vowel length and phonation, but has no dedicated nasalization field. Annotators must preserve nasalization in the literal IPA value and state whether they are recording phonemic /N/ or a surface phonetic realization. Do not rewrite /N/ as [ɴ] by default. A typed nasalization schema field is deferred until the expert-approved convention sheet decides whether it is needed.
+
+
+## Versioned convention decision draft — 2026-11-18
+
+A structured [Burmese IPA convention-sheet draft](ipa-convention-sheet-draft.md) now turns the playbook's approval topics into explicit specialist decisions (profile/task, IPA kind, tone/register/phonation, vowels/length, syllable boundaries, medials, codas, uncertainty and schema fit). It is explicitly **DRAFT FOR SPECIALIST REVIEW — NOT APPROVED FOR ANNOTATION**. It contains no IPA labels and selects no disputed phonological analysis. The gold pilot remains blocked until qualified specialist approval, recruitment, rights checks and blind-intake dry-run are complete.
