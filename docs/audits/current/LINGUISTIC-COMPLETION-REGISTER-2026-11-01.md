@@ -2878,3 +2878,11 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Upstream picomatch #262 now has an APPROVED independent review and finite regression evidence (2,001 tests, 1,329,660 parity comparisons, 35 bounded adversarial cases); the reviewer explicitly notes finite tests are not a universal proof and the opt-out remains. #261 also has an APPROVED review. Both are still unmerged; official latest release remains 4.0.7. No safe released remediation exists yet.
 - Linguistic state is unchanged: independently adjudicated Yangon-profile IPA gold = 0; empirical accuracy remains unmeasured; phonological coverage and primary MLC/MLCTS evidence/reuse rights remain incomplete. Manual accessibility QA remains incomplete. Independent IPA annotation remains DEFERRED. No IPA or Ukrainian mappings were added or changed.
 - No runtime/dependency/data change, merge, release or production deployment. This repository remains an engineering/research prototype, not linguistically validated for release.
+
+
+## 2026-11-18 — dependency gate recheck
+
+- On current PR documentation HEAD `47fc51e0ae60b81584d39560d7871570c0baaaa3`, test workflow [44261797858](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44261797858) again passed corpus structure validation, Python install, pytest and npm ci, then failed mandatory npm audit; subsequent build/generated-data/Node/Playwright steps were skipped. Pages build/browser success was on prior code-bearing HEAD `2efbf870...`.
+- Lockfile confirms picomatch 4.0.7 is a dev-only transitive dependency through Vite 8.3.8 and tinyglobby 0.2.17.
+- Upstream #261 has one approval but no reported GitHub check runs/status contexts; #262 has one approval and a separate independent COMMENTED finite validation (2,001 tests, 1,329,660 comparisons, 35 bounded adversarial cases). #262 explicitly retains an opt-out and compatibility fallback boundary. Both remain open/unmerged; no official patched release.
+- Linguistic state unchanged: independent adjudicated Yangon-profile IPA gold = 0; empirical accuracy unmeasured; source rights and coverage incomplete. No linguistic data or mapping changed.
