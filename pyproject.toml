@@ -19,3 +19,9 @@ where = ["src"]
 
 [project.optional-dependencies]
 test = ["pytest>=8", "jsonschema>=4.23,<5"]
+
+[tool.setuptools.data-files]
+"share/burmese-ukrainian-phonetic-system/data/burmese" = [
+  "data/burmese/ipa_onsets.csv",
+  "data/burmese/ipa_vowels.csv",
+]
