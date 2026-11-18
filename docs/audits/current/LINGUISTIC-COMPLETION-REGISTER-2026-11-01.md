@@ -2918,3 +2918,14 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Threat model: upstream discussion says pattern must be attacker-controlled for ReDoS; path-only control is insufficient. Current package is dev/build tooling with no direct npm runtime deps, but application exposure is not declared absent until glob inputs are traced. This nuance does not waive the repository's mandatory audit policy.
 - Candidate gaps: #268 bypass `+(**/a)b`; #270 bypasses `+([a]*)b` and `+(@(*a))`; #238 leaves `+(*)` vulnerable; #273 has finite parity evidence but no independent review; #264 has Windows downstream compatibility evidence only, not security proof. No released fix; latest official version 4.0.7.
 - No unsafe dependency workaround or code changes. Prototype only; no adjudicated gold, accuracy unmeasured.
+
+## Integration evidence and preserved linguistic boundaries — 2026-11-18
+
+- **DONE_VERIFIED (documentation port only):** PR #166's non-overlapping licensing, architecture, limitations and audit documents were copied to the integration branch. This does not constitute linguistic verification or rights clearance.
+- **Goruut rights — PARTIAL/BLOCKED:** test-only benchmark execution is authorized by the project owner; production packaging and redistribution remain blocked pending per-language asset provenance and rights.
+- **Ukrainian adapter — PARTIAL/BLOCKED:** exact-IPA lookup is implemented; feature-distance ranking is not available until the private canonical target inventory and a sourced source-IPA feature representation have a consumable contract.
+- **Burmese IPA pipeline — engineering boundary preserved:** the registry-backed typed IPA result remains the adapter boundary. Unsupported medial/coda/prosodic features remain withheld; no new IPA labels or Ukrainian mappings were introduced by this documentation reconciliation.
+- **Gold and accuracy:** independently adjudicated Yangon-profile IPA gold remains 0; empirical accuracy remains unmeasured. MLCTS and orthographic/diagnostic outputs are not promoted to IPA gold.
+- **Source rights/coverage:** primary MLC/MLCTS evidence and reuse rights remain incomplete; full phonological coverage is not established.
+
+The integration branch is based on PR #168 HEAD and has not yet received exact-head CI. Documentation port status must not be interpreted as acceptance of the PRs or linguistic release approval.
