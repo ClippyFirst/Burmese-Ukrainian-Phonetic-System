@@ -142,3 +142,10 @@ The new source-linked claims for Gruber 2011, Tian 2018 and Dellwo & Jenny 2020 
 The evidence makes three distinctions operationally important: (1) lexical tone perception uses interacting phonation, F0 and duration cues rather than one universal cue; (2) grammatical induced creaky tone can depend on syntax, pragmatic factors and prosodic-word context; (3) standard and southern Burmese differ in cue weighting. The browser's `prosodyStatus` must therefore mean that the relevant prosodic dimensions and context have been established for the named profile, not merely that a vowel/consonant string was produced. A profile label alone is insufficient.
 
 Mooney & Repetti-Ludlow's vowel alternation account remains tone-independent in the analyzed environments; do not conflate coda-conditioned vowel alternation with tone assignment.
+
+
+### 2026-11-16 — shared registry-backed typed IPA boundary
+
+The browser no longer keeps its source IPA derivation as a large inline app function. It calls `src/web/phonology.js`, which consumes the generated onset/vowel registries and returns the same typed segmental contract as Python `phonologize_syllable()`. The Python compatibility tables are derived from the same canonical CSV files. A shared fixture file is exercised by both runtimes, including the built browser.
+
+This closes a source-table duplication and observability gap, not the Burmese phonology gaps themselves. Medials, codas, checked syllables, nasalization, tone/register/phonation, quantity and profile adjudication remain withheld. External candidates remain diagnostic and independent adjudicated IPA gold remains 0.

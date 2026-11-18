@@ -1,66 +1,32 @@
 from .parser import parse_burmese
+from .phonology import load_phonology_registry, phonologize_syllable
 from .unicode import BASE_CONSONANTS, KINZI, MEDIALS, SPECIAL, VOWEL_SIGNS
 
+
+# Compatibility views are derived from the canonical CSV registries. The
+# browser generator reads those same files; neither runtime owns a second
+# hand-maintained copy of source IPA correspondences.
+_DEFAULT_REGISTRY = load_phonology_registry()
 ONSET_IPA = {
-    "က": "k", "ခ": "kʰ", "ဂ": "ɡ", "ဃ": "ɡ", "င": "ŋ",
-    "စ": "s", "ဆ": "sʰ", "ဇ": "z", "ဈ": "z", "ဉ": "ɲ", "ည": "ɲ",
-    "တ": "t", "ထ": "tʰ", "ဒ": "d", "ဓ": "dʰ", "န": "n",
-    "ပ": "p", "ဖ": "pʰ", "ဗ": "b", "ဘ": "bʰ", "မ": "m",
-    "ယ": "j", "ရ": "ɹ", "လ": "l", "ဝ": "w", "သ": "θ",
-    "ဟ": "h", "ဠ": "l", "အ": "ʔ",
+    character: row["ipa"]
+    for character, row in _DEFAULT_REGISTRY["onsets"].items()
+    if row.get("ipa")
 }
-# Only entries explicitly marked "established" in ipa_vowels.csv may enter
-# canonical IPA. The other values remain visible in the structural parser and
-# provisional/research layers, but are not silently promoted by this adapter.
 ESTABLISHED_ONSETS = {
-    "က", "ခ", "ဂ", "င", "တ", "ထ", "ဒ", "န", "ပ", "ဖ", "ဗ", "မ",
-    "ယ", "လ", "ဝ", "ဟ",
+    character
+    for character, row in _DEFAULT_REGISTRY["onsets"].items()
+    if row.get("status") == "established" and row.get("ipa")
 }
 VOWEL_IPA = {
-    "e": "e", "i": "i", "u": "u", "aa": "a",
+    identifier: row["ipa"]
+    for identifier, row in _DEFAULT_REGISTRY["vowels"].items()
+    if row.get("status") == "established" and row.get("ipa")
 }
 
 
-def _ipa(s):
-    # Parser diagnostics are part of the phonetic boundary: never turn a
-    # partially consumed or malformed grapheme cluster into a plausible IPA
-    # string merely because its initial consonant and vowel happen to map.
-    if s.get("status") != "established":
-        return None
-
-    # Medials, stacked consonants and kinzi are parsed structurally but do
-    # not yet have profile-adjudicated IPA realizations in this adapter.
-    # Withhold the whole syllable rather than silently omitting these segments.
-    if s.get("medials") or s.get("conjunct") or s.get("kinzi"):
-        return None
-
-    # Coda/asat and prosodic marks are parsed structurally but do not yet have
-    # an evidence-backed surface-IPA realization in this adapter. Withhold the
-    # whole syllable rather than silently dropping contrastive material.
-    if s.get("coda") or s.get("tone_mark"):
-        return None
-
-    onset = s.get("onset", {}).get("character")
-    # ONSET_IPA also contains documented hypotheses for previews. Canonical
-    # output is narrower and follows ipa_onsets.csv status=established.
-    if onset not in ESTABLISHED_ONSETS:
-        return None
-    o = ONSET_IPA.get(onset)
-    if o is None:
-        return None
-    v = s.get("vowel")
-    if not v:
-        return o + "?"
-    # Anusvara is currently only recognized orthographically. Its nasal/coda
-    # realization is contextual and has no evidence-backed IPA mapping here;
-    # do not let the empty placeholder silently delete it from the output.
-    if any(sign.get("id") == "anusvara" for sign in v["signs"]):
-        return None
-
-    vals = [VOWEL_IPA.get(x["id"]) for x in v["signs"]]
-    if any(x is None for x in vals):
-        return None
-    return o + "".join(x for x in vals if x)
+def _ipa(s, registry=None):
+    """Backward-compatible IPA projection of the typed phonology stage."""
+    return phonologize_syllable(s, registry=registry)["ipa"]
 
 
 def _is_myanmar_phonological_char(char: str) -> bool:
@@ -94,15 +60,18 @@ def _standalone_bare_consonant_indices(syllables: list[dict]) -> set[int]:
     return standalone
 
 
-def to_ipa(text: str) -> dict:
+def to_ipa(text: str, registry=None) -> dict:
     result = parse_burmese(text)
-    # A bare consonant bounded as its own token is incomplete input. Do not
-    # let unrelated Latin text or whitespace disable the conservative guard.
-    # Contiguous Myanmar syllables retain the existing contextual fallback
-    # until those inherent-vowel contexts are separately adjudicated.
     bare_isolated = _standalone_bare_consonant_indices(result["syllables"])
     for index, syllable in enumerate(result["syllables"]):
-        syllable["ipa"] = None if index in bare_isolated else _ipa(syllable)
+        phonology = phonologize_syllable(syllable, registry=registry)
+        if index in bare_isolated:
+            phonology["ipa"] = None
+            phonology["status"] = "NOT_ESTABLISHED"
+            if "isolated_bare_consonant" not in phonology["unresolved_features"]:
+                phonology["unresolved_features"].insert(0, "isolated_bare_consonant")
+        syllable["phonology"] = phonology
+        syllable["ipa"] = phonology["ipa"]
         syllable["phonetic_status"] = (
             "conservative_partial" if syllable["ipa"] else "analysis_dependent"
         )
