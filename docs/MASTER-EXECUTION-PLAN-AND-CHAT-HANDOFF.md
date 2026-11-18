@@ -3407,3 +3407,10 @@ Current branch `fix/finals-registry-schema-2026-11-17` is at `15a82b5bcf5ca7d11d
 The Pages workflow proves the browser build/test path on the exact current head, but it does not make the mandatory test workflow green. Security remediation remains blocked pending a compatible reviewed/released fix or replacement and full exact-head CI. No dependency bypass, downgrade, vendored patch, merge, release or production deployment was made.
 
 The linguistic blockers remain: independent adjudicated Yangon-profile IPA gold = 0 and accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS evidence and reuse rights unresolved; manual accessibility QA incomplete. Independent IPA annotation remains deferred under prior direction. Repository status: engineering/research prototype, not release-ready or linguistically validated.
+
+
+### Completed follow-up of the two workflows on head `748dcea9c82308ec9cd7299de12cb7cfec6f5874`
+
+- [Tests workflow 44185873801](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873801): corpus structure validation PASS; Python dependency installation PASS; `pytest` PASS; `npm ci` PASS; mandatory `npm audit --audit-level=high` FAIL; build, generated-data freshness, Node and Playwright steps SKIPPED.
+- [Pages workflow 44185873696](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873696): WFST/OpenFst build and IPA/browser alphabet invariants PASS; upstream parity PASS; production build PASS; Node tests PASS; Chromium install PASS; built-site Playwright PASS; Pages artifact upload PASS; deploy SKIPPED for PR event.
+- PR #168 remains open, unmerged and mergeable; 46 commits ahead / 0 behind `main`; five changed files. No merge, release, production deploy, dependency bypass or linguistic changes. Status remains engineering/research prototype, not release-ready; npm audit and independent phonological/source/accessibility evidence remain blockers.
