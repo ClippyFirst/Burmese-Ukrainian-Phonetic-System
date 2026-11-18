@@ -2886,3 +2886,13 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Lockfile confirms picomatch 4.0.7 is a dev-only transitive dependency through Vite 8.3.8 and tinyglobby 0.2.17.
 - Upstream #261 has one approval but no reported GitHub check runs/status contexts; #262 has one approval and a separate independent COMMENTED finite validation (2,001 tests, 1,329,660 comparisons, 35 bounded adversarial cases). #262 explicitly retains an opt-out and compatibility fallback boundary. Both remain open/unmerged; no official patched release.
 - Linguistic state unchanged: independent adjudicated Yangon-profile IPA gold = 0; empirical accuracy unmeasured; source rights and coverage incomplete. No linguistic data or mapping changed.
+
+
+## Exact latest PR-head CI and upstream ReDoS candidate reassessment — 2026-11-18 10:12 +0200
+
+- PR #168 exact HEAD `47fc51e0ae60b81584d39560d7871570c0baaaa3`, still open/unmerged/mergeable. The five-file diff and code-bearing CSV repair are unchanged; later commits are documentation/evidence updates.
+- **DONE_VERIFIED:** Pages workflow [44261797839](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44261797839) succeeded on this exact HEAD through pinned Burmese WFST/OpenFst, IPA and browser alphabet invariants, upstream parity, production build, Node tests, Chromium, built-site Playwright and artifact upload. Deploy skipped for PR event.
+- **BLOCKED:** required tests workflow [44261797858](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44261797858) passed corpus validation, Python install, pytest and npm ci, then failed mandatory high-severity npm audit on four transitive `picomatch@4.0.7` findings. Build, generated-data, Node and Playwright were skipped in this workflow.
+- New upstream candidates do not clear the blocker. #270's simple collapse optimization has a finite parity claim, but an independent report reproduced timeouts for `+([a]*)b` and `+(@(*a))`; #269 proposes broader literal fallback but has no maintainer review/approval evidence; #267 has no review evidence. All remain open/unmerged, and the official latest release remains 4.0.7. No candidate is adopted.
+- Linguistic state unchanged: independently adjudicated Yangon-profile IPA gold = 0; empirical accuracy unmeasured; phonological coverage and primary MLC/MLCTS evidence/reuse rights incomplete. Manual accessibility QA remains incomplete. Independent IPA annotation remains DEFERRED. No IPA or Ukrainian mappings changed.
+- No runtime/dependency/data change, merge, release or production deployment. This remains an engineering/research prototype, not linguistically validated for release.
