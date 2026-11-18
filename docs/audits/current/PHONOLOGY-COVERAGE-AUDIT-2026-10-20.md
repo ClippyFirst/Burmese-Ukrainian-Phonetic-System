@@ -138,3 +138,22 @@ Exact tested code/data head cda73ccb7fa80a0404fed5a65588ebd690253f94 passed CI 4
 The registries contain 59 sources, 81 claims, 45 medial rows, 30 phonological rules and 7 source-phonemic sandhi cases. Okell (1995) regional and Nishi (1998) historical evidence is source-linked/tested and withheld from runtime. SEAlang interface-level IPA support is confirmed by the 2008 project description, but internal storage vs MLCTS2 remains unresolved. Okell (1969) and Nishi (1976) remain unread primary-source targets.
 
 Text permissions are confirmed; remaining blockers are retrieval/schema and data quality. No audio was used. IPA gold=0; empirical accuracy=null; no runtime rules promoted.
+
+
+### Runtime architecture update — 2026-11-16
+
+The Burmese runtime now follows a clearer staged boundary inspired by the Lao implementation architecture: parser output → registry-backed phonology → typed segmental IPA → completeness/profile gate → Ukrainian adapter. This is an architecture transfer only; no Lao phonological rule or sound value was copied.
+
+Python `phonologize_syllable()` and browser `phonologizeSyllable()` read the same canonical onset/vowel correspondences (Python directly from CSV; browser from generated data) and emit the same typed segmental result. The result preserves source component IDs, IPA values, registry status, source evidence and unresolved features. The browser's previous inline IPA derivation block has been replaced by the dedicated stage. The Python wheel now packages the canonical CSV registries.
+
+The shared contract fixture exercises:
+- established simple CV segmental output;
+- ya-medial withholding;
+- checked-coda withholding;
+- prosodic-marker withholding;
+- analysis-dependent onset and vowel withholding;
+- isolated bare-consonant / inherent-vowel withholding.
+
+Exact implementation-head CI [43940264184](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43940264184) passed 320 Python tests + 68 subtests, wheel registry verification, 48 Node tests, 72 built-browser tests, production build, generated-data freshness and npm audit (0 vulnerabilities).
+
+**Coverage interpretation:** DONE_VERIFIED for the typed registry boundary and the explicit shared fixtures only. PARTIAL for full Python/browser parser and phonological parity. No vowel combination, medial, coda, checked-syllable, tone, register, phonation or quantity rule was added. Independent adjudicated IPA gold remains 0; empirical accuracy remains null. This is not evidence of improved phonetic accuracy or release readiness.
