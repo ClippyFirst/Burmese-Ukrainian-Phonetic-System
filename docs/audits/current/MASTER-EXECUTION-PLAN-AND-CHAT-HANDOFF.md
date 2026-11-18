@@ -1044,3 +1044,10 @@ Remaining blockers: 0 independent profile-matched lexical IPA gold; Google/Epitr
 - **DONE_VERIFIED — older adapter branch reconciled:** `src/burmese_ukrainian/practical.py`, `src/web/ukrainian-adapter.js`, and `data/burmese/ukrainian_practical.csv` on `feat/burmese-ukrainian-practical-adapter-verified-final-2026-11-11` have identical blob SHAs to main. No port needed.
 - **STALE branch not reused:** `feat/burmese-romanization-ukrainian-matrix-completion-2026-11-12` has older `romanization_ukrainian.csv` and `romanization_rimes_inventory.csv` blobs than main; its versions were not copied over newer mainline evidence.
 - **Disposition:** retain the benchmark branch for historical reference; no cherry-pick or new runtime behavior justified by this comparison. No branch deleted or rewritten.
+
+
+## Latest exact-head check after branch reconciliation — 2026-11-18 (`48efdae`)
+
+- Tests PR run [44316293992](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44316293992): **FAILURE** at mandatory high-severity npm audit for GHSA-fc5q-39xc-vjpf / `picomatch@4.0.7`. Corpus-structure validation, Python install, wheel registry verification, pytest, and npm ci succeeded. Build, generated-data, Node and Playwright steps were skipped. No new code or linguistic regression is indicated by this documentation-only change.
+- Pages PR run [44316292337](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44316292337): still **IN_PROGRESS** at last poll; WFST build step was running. Do not report success or deployment until the run completes.
+- Latest branch HEAD at this checkpoint: `3001ae821abb6f1622b36230aa17fc8e39fb6bec` (matrix update); PR #171 remains draft and stacked on #168. `main` remains unchanged at `f7f7d41a116c265481bdc17c225a763becab6013`.
