@@ -3080,3 +3080,20 @@ The latest documentation-only integration tip has now completed all four applica
 | ID | Status | Evidence | Acceptance boundary |
 |---|---|---|---|
 | BUR-012 | DONE_VERIFIED | Python/browser API now expose separate graphemic, source-phonology, IPA and Ukrainian-adaptation statuses. Added `schemas/analysis-layer-status.schema.json`; schema tests validate Python and browser enum variants; runtime tests cover established segmental, partial medial, unsupported, empty and mixed-script cases. Implementation commit `c607cca53d63f3d4fd606e328010b25eef0b601d`; PR Tests [44389661155](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389661155) and push Tests [44389647797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389647797) SUCCESS (324 pytest + 68 subtests; 73 Playwright; npm audit 0 vulnerabilities). | API status metadata only; it does not establish phonetic completeness, add gold entries or measure accuracy. Independent adjudicated Yangon IPA gold remains 0. |
+
+
+## Structural, UI and exact-head acceptance closeout — 2026-11-18
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-010 | DONE_VERIFIED | Canonical-equivalence, Unicode block/inventory, mixed-script, punctuation, controls, malformed virama, reordered-mark and assigned-letter/mark losslessness fixtures in Python and browser; exact-head CI [44392021017](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392021017) SUCCESS (325 pytest + 68 subtests; 74 Playwright). | Bounded Unicode/structural contract only; annotated differential corpus remains partial. |
+| BUR-011 | DONE_VERIFIED | All four medials, five pairs, two triples, kinzi, conjunct/subjoined consonants, coda and malformed mark-order fixtures; shared Python/browser structural tests on exact head `ea37329`. | Structural parser acceptance only; no medial/kinzi/conjunct pronunciation claim. |
+| BUR-012 | DONE_VERIFIED | Separate graphemic, phonology, IPA and Ukrainian adaptation status fields, runtime-specific JSON Schema and regression tests. | API uncertainty contract only; no added phonological coverage. |
+| BUR-016 | DONE_VERIFIED | README and UI research notice document prototype scope; UI exposes independent layer statuses and Playwright asserts the segmental-only provisional case. | Manual assistive-technology, keyboard, zoom/reflow and mobile QA remains TODO. |
+
+### Exact code/UI CI evidence — 2026-11-18
+
+- PR Tests [44392021017](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392021017) and push Tests [44392004315](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392004315): SUCCESS on exact head `ea37329ae4a3ba59442a3a61e56210e7b971e8b2`; 325 pytest, 68 subtests, 74 Playwright, npm audit 0 vulnerabilities.
+- Pages build [44392020805](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392020805): SUCCESS; Pages artifact uploaded; deploy skipped for PR event.
+- Optional diagnostics [44392020840](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392020840): SUCCESS; raw-output reproducibility only.
+- Research boundary unchanged: independent adjudicated Yangon IPA gold = 0; accuracy unmeasured; source rights and full phonological coverage incomplete.
