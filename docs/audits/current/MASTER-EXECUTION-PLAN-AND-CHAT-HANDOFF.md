@@ -1094,3 +1094,8 @@ Remaining blockers: 0 independent profile-matched lexical IPA gold; Google/Epitr
 - Tests [44339640388](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44339640388) **FAILURE** on same SHA at required high-severity npm audit (four high findings, including GHSA-fc5q-39xc-vjpf / transitive `picomatch`). Corpus validation, Python install, wheel verification, pytest (322 + 68 subtests) and `npm ci` passed; later build/generated-data/Node/Playwright steps skipped in that job.
 - PR #171 body reconciled. It remains OPEN/DRAFT/unmerged. No override, forced downgrade, fork, patch or audit suppression. Security and linguistic acceptance remain incomplete; research/engineering prototype, not release-ready. Documentation-only descendants do not alter runtime/data/linguistic rules.
 
+## 2026-11-18 — additional MLC dictionary access route (metadata only)
+
+- Added CiNii Books NCID BA24767941 as `CINII_MLC1993_DICT_HOLDINGS` in the source registry and claim `CLM-MLC-DICT-1993-CINII-HOLDINGS-001`. CiNii identifies the 1993 MLC Myanmar-English Dictionary (xxiii, 635, iii pages) and lists seven Japanese library holdings: Osaka University, Kyoto University, GRIPS, Tokyo University of Foreign Studies, Nagaoka University of Technology, IDE-JETRO and Hitotsubashi University. Source: https://ci.nii.ac.jp/ncid/BA24767941.
+- **Evidence boundary:** catalogue metadata only. No physical/digital copy was accessed; no entry, transcription key, MLCTS/IPA column or reusable content inspected. Do not treat this as phonological evidence or change runtime. It is a concrete retrieval route for future primary-source review, not closure of the MLC source-content/rights blocker.
+
