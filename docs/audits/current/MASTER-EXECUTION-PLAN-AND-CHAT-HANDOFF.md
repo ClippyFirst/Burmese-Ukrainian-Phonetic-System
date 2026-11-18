@@ -1107,3 +1107,9 @@ Remaining blockers: 0 independent profile-matched lexical IPA gold; Google/Epitr
 - Pinned CRFsuite v2 returned predictions for 100 deterministic source-attested myG2P rows; 84 were source-concordant. Gold = 0 and accuracy = null. The probe supplies syllable boundaries, exact model training membership is unknown, and train/test overlap is possible; concordance is diagnostic only. myG2P is CC BY-NC-SA 4.0 and used test-only; no data/model entries copied into repository runtime or gold.
 - **Interpretation:** all three optional diagnostics executed successfully, but none supplies independent validation or supports an accuracy claim. Keep linguistic acceptance BLOCKED/PARTIAL.
 
+## Exact PR-head CI closeout — 2026-11-18 (`7f551df93b53fe775bd9a10d75445653eca827b9`)
+
+- **DONE_VERIFIED — Pages [44353665074](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44353665074): SUCCESS** on exact PR head. WFST/OpenFst build, IPA symbol-table and browser alphabet checks, static export, upstream parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed; deploy skipped for PR event.
+- **BLOCKED — Tests [44353666294](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44353666294): FAILURE** at mandatory high-severity npm audit after corpus validation, Python install, wheel verification, pytest (322 + 68 subtests) and `npm ci` passed. Build/generated-data/Node/Playwright steps skipped in this job.
+- Optional raw-output diagnostics [44353665567](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44353665567) succeeded, with independent gold = 0 and accuracy null for Epitran, Google WFST and CRF. No accuracy claim.
+
