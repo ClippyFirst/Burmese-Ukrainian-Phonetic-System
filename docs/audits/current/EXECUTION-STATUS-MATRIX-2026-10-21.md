@@ -3531,3 +3531,15 @@ The latest documentation-only integration tip has now completed all four applica
 - **Task ledger:** all four configured engineering workflows are DONE_VERIFIED on exact HEAD `86c5f4f...`; the prior exact-head documentation-only commit `86c5f4f...` is the verified tip. This closeout note itself is being added as a documentation-only follow-up and will require its own CI run before its SHA is marked verified.
 - **Remaining blockers unchanged:** independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS source evidence and reuse rights incomplete; full phonological coverage partial; manual accessibility QA TODO; independent annotation deferred pending qualified annotators and rights-cleared data.
 - PR #171 remains OPEN/DRAFT/unmerged. No release, merge, force-push, branch deletion or production deployment occurred. Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## IPA gold pilot preparation update — 2026-11-18
+
+| Work item | Status | Evidence | Remaining acceptance |
+|---|---|---|---|
+| Convention-sheet preparation | DONE_VERIFIED (draft only) | `docs/ipa-convention-sheet-draft.md` records unresolved specialist decisions and maps them to the existing IPA schema and collection protocol. | Specialist approval; do not annotate against this draft. |
+| Expert approval and recruitment | BLOCKED | Issue [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85) identifies prospective leads and required roles; no one is confirmed or contacted. | Approved versioned convention, two qualified independent annotators, independent adjudicator and non-annotating curator. |
+| 30-item pilot selection | BLOCKED | Existing playbook defines coverage goals and source/rights requirements. | Exact attested lexemes, source locators, profile fit and item-level rights evidence; no Cartesian-product synthetic items. |
+| Blind intake | TODO | Protocol specifies separate locked submissions and independent adjudication. | Private intake dry-run; no public PR/shared repo used as blind channel. |
+
+This update adds preparation scaffolding only. Gold JSONL remains empty; no IPA labels or accuracy score were created.
