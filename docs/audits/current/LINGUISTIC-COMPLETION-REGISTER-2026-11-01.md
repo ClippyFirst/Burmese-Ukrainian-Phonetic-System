@@ -2910,3 +2910,11 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - On exact HEAD `4d1bc99c17474fa08cb5d6133a27808c250a8012`, Pages workflow [44276827871](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827871) completed SUCCESS through pinned WFST/OpenFst, IPA/browser invariants, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload; deploy skipped for PR event.
 - Required tests workflow [44276827920](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827920) completed FAILURE: corpus validation, Python install, pytest and npm ci passed; mandatory npm audit failed; remaining build/generated-data/Node/Playwright steps skipped.
 - The prior note that Pages run 44276827871 was pending is superseded by this completion evidence. PR #168 remains open/unmerged/mergeable. Dependency security blocker and linguistic evidence limitations remain unresolved; no code or phonological data changed.
+
+
+## 2026-11-18 security follow-up
+
+- Required Tests log [44281804397](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44281804397) shows 4 high audit instances of one GHSA-fc5q-39xc-vjpf on transitive `picomatch@4.0.7` via `fdir` / `tinyglobby` / Vite 8.3.8. `npm audit fix --force` would downgrade Vite to 6.2.7; rejected as a breaking workaround. Python 317 tests + 68 subtests pass; independent IPA gold validation reports 0 records/annotations/adjudicated. Audit gate skips remaining build/data/Node/Playwright steps.
+- Threat model: upstream discussion says pattern must be attacker-controlled for ReDoS; path-only control is insufficient. Current package is dev/build tooling with no direct npm runtime deps, but application exposure is not declared absent until glob inputs are traced. This nuance does not waive the repository's mandatory audit policy.
+- Candidate gaps: #268 bypass `+(**/a)b`; #270 bypasses `+([a]*)b` and `+(@(*a))`; #238 leaves `+(*)` vulnerable; #273 has finite parity evidence but no independent review; #264 has Windows downstream compatibility evidence only, not security proof. No released fix; latest official version 4.0.7.
+- No unsafe dependency workaround or code changes. Prototype only; no adjudicated gold, accuracy unmeasured.

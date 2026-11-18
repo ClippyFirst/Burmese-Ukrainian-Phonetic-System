@@ -3243,3 +3243,13 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **DONE_VERIFIED — Pages workflow [44276827871](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827871):** SUCCESS on this exact SHA. Pinned WFST/OpenFst, IPA symbol-table/browser alphabet, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload passed. Deploy skipped for PR event.
 - **BLOCKED — required tests workflow [44276827920](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827920):** corpus validation, Python install, pytest and npm ci passed; mandatory high-severity npm audit failed; build/generated-data/Node/Playwright skipped in this workflow. Same transitive `picomatch@4.0.7` security gate; no verified compatible fix/release.
 - This exact SHA has a successful Pages build/browser path but is not CI-green. No dependency workaround, merge, release or production deployment.
+
+
+## 2026-11-18 follow-up security evidence
+
+| Task | Status | Evidence / acceptance |
+|---|---|---|
+| Determine exact npm audit cause | DONE_VERIFIED | Job log [44281804397](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44281804397): four high findings are instances of GHSA-fc5q-39xc-vjpf against one transitive `picomatch@4.0.7` via fdir/tinyglobby/Vite 8.3.8. Force fix downgrades Vite to 6.2.7 (breaking); rejected. |
+| Assess app-specific threat exposure | PARTIAL | Upstream maintainer/contributor says ReDoS requires attacker-controlled glob pattern, not merely path input. App has no direct npm runtime dependencies and lockfile path is dev/build toolchain. Need prove no untrusted user/content-derived glob reaches picomatch before classifying app exposure; audit gate remains mandatory regardless. |
+| Upstream candidate security coverage | BLOCKED | #268 globstar bypass `+(**/a)b`; #270 timeouts for `+([a]*)b` and `+(@(*a))`; #238 still times out on `+(*)`; #273 finite equivalence only/no independent review; #264 downstream Windows parity does not prove security. Acceptance: maintainer-reviewed/released fix plus adversarial and compatibility tests, then clean audit/full CI. |
+| Exact-head test evidence | PARTIAL | Python 317 passed + 68 subtests; IPA gold validation explicitly reports 0 adjudicated records. Audit failure prevents build/generated-data/Node/Playwright steps in required Tests workflow. Pages workflow separately SUCCESS. |
