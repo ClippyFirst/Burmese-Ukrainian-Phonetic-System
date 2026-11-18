@@ -3154,3 +3154,11 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **BLOCKED — test workflow [44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094):** corpus validation, Python dependency installation, pytest and `npm ci` passed; mandatory `npm audit --audit-level=high` failed. Build, generated-data freshness, Node and Playwright steps were skipped in this workflow.
 - These are complementary results, not a fully green test workflow. No dependency or linguistic changes were made. No merge, release or production deployment occurred.
 - Remaining acceptance blockers are unchanged: compatible reviewed/released `picomatch` remediation and full exact-head security CI; independently adjudicated Yangon-profile IPA gold (currently 0) and accuracy measurement; incomplete phonological coverage; unresolved primary MLC/MLCTS evidence and reuse rights; manual accessibility QA.
+
+
+## Finalized CI results on documentation-updated head — 2026-11-18
+
+- Current head at verification: `748dcea9c82308ec9cd7299de12cb7cfec6f5874`; PR #168 open, unmerged, mergeable; 46 commits ahead / 0 behind `main`; five changed files.
+- **DONE_VERIFIED — Pages workflow [44185873696](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873696):** WFST/OpenFst, IPA and browser alphabet checks, upstream parity, production build, Node tests, Chromium, built-site Playwright and artifact upload all passed; deploy skipped for PR event.
+- **BLOCKED — required test workflow [44185873801](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873801):** corpus validation, Python install, pytest and `npm ci` passed; mandatory `npm audit --audit-level=high` failed; later build/generated-data/Node/Playwright steps skipped.
+- Pages success confirms the independent browser pipeline on this head but does not satisfy the mandatory security gate. No runtime, dependency or linguistic changes made.
