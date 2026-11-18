@@ -2838,3 +2838,13 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Latest public GitHub review state: upstream picomatch PR #261 is open/unmerged with one approval, but the reviewer states they reviewed the diff and did not run it; they identify a compatibility break because previously accepted patterns now throw. PR #262 is open/unmerged with an approval and independent bounded validation (2,001 tests, 1,329,660 selected finite parity comparisons, 35 adversarial deadline cases). Its reviewer explicitly notes that the test corpus is bounded and `maxExtglobRecursion: false` remains an opt-out.
 - #261 appears broader in its fail-closed design but has a documented compatibility concern and no independent test execution in the approval. #262 has stronger independent test evidence but leaves the recursion safeguard opt-out. Neither is a merged/released fix; #263 remains on v2.
 - The latest GitHub-reviewed OSV advisory still marks picomatch through 4.0.7 affected and does not specify a fixed version. Keep the security gate BLOCKED; do not downgrade, suppress or vendor either candidate without a complete compatibility/security review.
+
+
+## Exact PR-head CI evidence — 2026-11-18 (head 3430b628)
+
+- PR #168 exact head `3430b628a2e35e19ef3fc4306410b68b8fa412f5`; PR remains open/unmerged/mergeable.
+- **DONE_VERIFIED:** Pages workflow [44255972532](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44255972532) passed pinned WFST/OpenFst build, IPA and browser-alphabet invariants, upstream parity, production build, Node tests, Chromium setup, built-site Playwright and artifact upload. Deploy skipped for PR event.
+- **BLOCKED:** tests workflow [44255972550](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44255972550) passed corpus structure validation, Python dependency install, pytest and `npm ci`; mandatory `npm audit --audit-level=high` failed, so subsequent build, generated-data, Node and Playwright steps were skipped.
+- The security finding is not resolved; Pages success is not a substitute for the mandatory audit. No dependency or linguistic evidence changes were made.
+- Linguistic evidence remains limited: independently adjudicated Yangon-profile IPA gold = 0, accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS evidence and reuse rights unresolved; manual accessibility QA incomplete. Independent IPA annotation remains DEFERRED.
+- **Readiness:** engineering/research prototype, not linguistically release-ready.
