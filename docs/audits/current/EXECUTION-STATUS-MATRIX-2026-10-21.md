@@ -3332,3 +3332,9 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **DONE_VERIFIED — older adapter branch reconciled:** `src/burmese_ukrainian/practical.py`, `src/web/ukrainian-adapter.js`, and `data/burmese/ukrainian_practical.csv` on `feat/burmese-ukrainian-practical-adapter-verified-final-2026-11-11` have identical blob SHAs to main. No port needed.
 - **STALE branch not reused:** `feat/burmese-romanization-ukrainian-matrix-completion-2026-11-12` has older `romanization_ukrainian.csv` and `romanization_rimes_inventory.csv` blobs than main; its versions were not copied over newer mainline evidence.
 - **Disposition:** retain the benchmark branch for historical reference; no cherry-pick or new runtime behavior justified by this comparison. No branch deleted or rewritten.
+
+
+## Additional parser-test branch reconciliation — 2026-11-18
+
+- **DONE_VERIFIED — `test/complete-grapheme-accounting-2026-11-12` is superseded in main:** all 9 test function names on that branch are present in `main`'s `tests/test_parser.py`; main additionally contains five later parser tests for asat codas, MLC medial inventory, and kinzi. No test cherry-pick is needed.
+- These are structural/source-preservation tests, not pronunciation or IPA gold. The branch is 2 commits ahead but 122 behind main; its old file must not replace the expanded current suite.
