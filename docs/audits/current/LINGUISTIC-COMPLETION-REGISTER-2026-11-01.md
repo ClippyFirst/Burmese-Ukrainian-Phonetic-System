@@ -2903,3 +2903,10 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - Pages workflow [44265321954](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44265321954) completed SUCCESS on PR #168 HEAD `bf1655fb861451289ce5be12f1c4bf89a2cccb41`. Pinned WFST/OpenFst, IPA/browser invariants, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload all passed. Deployment was skipped for the PR event.
 - Required tests workflow [44265321857](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44265321857) on the same SHA still failed at mandatory `npm audit --audit-level=high` after corpus validation, Python install, pytest and `npm ci` passed; subsequent build/generated-data/Node/Playwright steps were skipped.
 - This supersedes the prior checkpoint's statement that Pages run 44265321954 was pending. The dependency/security gate remains BLOCKED; no linguistic evidence or mappings changed.
+
+
+## 2026-11-18 — final poll of PR documentation tip
+
+- On exact HEAD `4d1bc99c17474fa08cb5d6133a27808c250a8012`, Pages workflow [44276827871](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827871) completed SUCCESS through pinned WFST/OpenFst, IPA/browser invariants, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload; deploy skipped for PR event.
+- Required tests workflow [44276827920](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827920) completed FAILURE: corpus validation, Python install, pytest and npm ci passed; mandatory npm audit failed; remaining build/generated-data/Node/Playwright steps skipped.
+- The prior note that Pages run 44276827871 was pending is superseded by this completion evidence. PR #168 remains open/unmerged/mergeable. Dependency security blocker and linguistic evidence limitations remain unresolved; no code or phonological data changed.
