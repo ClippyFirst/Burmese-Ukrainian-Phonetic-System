@@ -3189,3 +3189,11 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 - **PENDING at capture:** Pages workflow [44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still building pinned Google WFST/OpenFst; no pass/fail claimed.
 - Lockfile inspection confirms picomatch@4.0.7 is dev-only and already present on main through Vite 8.3.8 and tinyglobby; PR #168 did not introduce it. Official picomatch releases/npm still show 4.0.7 as latest; no verified fixed version found.
 - **Readiness:** still blocked for release by mandatory security CI; linguistic gold remains 0 and accuracy unmeasured. No merge or release.
+
+
+## Final follow-up — exact code head a266e67 (2026-11-18)
+
+- Exact code head tested: a266e67d94e667dc14bf46aadcb36dc7ceffdf24. Required tests workflow [44259714864](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44259714864): corpus validation, Python install, pytest and npm ci PASS; mandatory npm audit FAIL on four high-severity picomatch@4.0.7 findings; build, generated-data, Node and Playwright SKIPPED.
+- Pages workflow [44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still running on prior docs head 42f5b135. WFST/OpenFst build, IPA symbol table, browser alphabet and static-model export passed; Node setup remained in progress. Not an exact-head result for a266e67.
+- Independent CSV validation found 4 rows, all 5 columns, all source IDs resolving to U18, no blank/surplus fields, duplicate markers or invalid statuses.
+- Final docs-only commits updated the handoff/matrix/register; no runtime/dependency/phonological changes. Security BLOCKED; not release-ready.
