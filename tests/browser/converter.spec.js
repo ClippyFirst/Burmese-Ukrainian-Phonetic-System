@@ -4,6 +4,9 @@ import { readFileSync } from "node:fs";
 const sharedUnicodeContract = JSON.parse(
   readFileSync(new URL("../fixtures/shared_unicode_contract.json", import.meta.url), "utf8")
 );
+const sharedPhonologyContract = JSON.parse(
+  readFileSync(new URL("../fixtures/shared_phonology_contract.json", import.meta.url), "utf8")
+);
 
 test("service loads with empty state",async({page})=>{await page.goto("/");await expect(page.locator("h1")).toContainText("Бірманський текст");await expect(page.locator("#empty")).toBeVisible();});
 test("example produces result",async({page})=>{await page.goto("/");await page.click("#example");await expect(page.locator("#results")).toBeVisible();await expect(page.locator("#uk")).toBeVisible();await expect(page.locator("#ipa")).toBeVisible();});
@@ -594,4 +597,30 @@ test("Burmese textarea placeholder meets WCAG AA text contrast",async({page})=>{
     return {foreground,background,ratio:(values[0]+0.05)/(values[1]+0.05)};
   });
   expect(contrast.ratio,JSON.stringify(contrast)).toBeGreaterThanOrEqual(4.5);
+});
+
+test("browser phonology output matches the shared Python/browser contract", async ({ page }) => {
+  await page.goto("/");
+  for (const fixture of sharedPhonologyContract.cases) {
+    await page.locator("#source").fill(fixture.input);
+    const rows = page.locator("#syllables .syllable[data-phonology]");
+    await expect(rows, fixture.id).toHaveCount(1);
+    const result = JSON.parse(await rows.first().getAttribute("data-phonology"));
+    expect(result, fixture.id).toEqual(fixture.expected);
+  }
+});
+
+
+test("adjacent bare Myanmar consonants remain explicitly incomplete", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#source").fill("ကမ");
+  const rows = page.locator("#syllables .syllable[data-phonology]");
+  await expect(rows).toHaveCount(2);
+  const first = JSON.parse(await rows.nth(0).getAttribute("data-phonology"));
+  const second = JSON.parse(await rows.nth(1).getAttribute("data-phonology"));
+  expect(first.status).toBe("NOT_ESTABLISHED");
+  expect(second.status).toBe("NOT_ESTABLISHED");
+  expect(first.ipa).toBe("k?");
+  expect(second.ipa).toBe("m?");
+  await expect(page.locator("#uk-status")).toContainText("ANALYSIS_DEPENDENT");
 });
