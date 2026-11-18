@@ -3338,3 +3338,13 @@ Code/test head: `e321e72b610bbe4516570411821702d5597cca9a`; final PR head: `84cd
 
 - **DONE_VERIFIED — `test/complete-grapheme-accounting-2026-11-12` is superseded in main:** all 9 test function names on that branch are present in `main`'s `tests/test_parser.py`; main additionally contains five later parser tests for asat codas, MLC medial inventory, and kinzi. No test cherry-pick is needed.
 - These are structural/source-preservation tests, not pronunciation or IPA gold. The branch is 2 commits ahead but 122 behind main; its old file must not replace the expanded current suite.
+
+
+## Remaining runtime/accessibility branch reconciliation — 2026-11-18
+
+- **DONE_VERIFIED — no code port required from `fix/withhold-segmental-preview-from-canonical-output-2026-11-16`:** `src/web/hybrid-engine.js` and its focused test file have identical blob SHAs to main.
+- **DONE_VERIFIED — no code port required from `feat/romanization-to-ukrainian-runtime-2026-11-12`:** `src/web/romanization-ukrainian.js` has identical blob SHA to main; main's corresponding test file is newer and includes the orthographic-MLCTS-mode assertion absent from the older branch.
+- **DONE_VERIFIED — contrast fix already in main:** `src/web/styles.css` and `tests/browser/converter.spec.js` on `fix/textarea-placeholder-contrast-2026-11-16` match main exactly.
+- **DONE_VERIFIED — onset hint behavior/test superseded:** the branch's provisional /ɲ/ test is present in main; current main registry marks ဉ /ɲ as `analysis_dependent`, while the canonical IPA adapter excludes it from `ESTABLISHED_ONSETS`. No unsupported onset was promoted.
+- **DONE_VERIFIED — whitespace segment numbering branch is older than main's app and browser suite;** no file overwrite or cherry-pick.
+- **Disposition:** these branches contain no missing code/test changes that justify a port onto PR #171. They remain preserved as historical references.
