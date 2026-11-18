@@ -2824,3 +2824,10 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **DONE_VERIFIED — Pages workflow [44181463115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463115):** pinned WFST/OpenFst, IPA and browser alphabet invariants, upstream parity, production build, Node and built-site Playwright tests, and artifact upload passed; deploy skipped for PR event.
 - **BLOCKED — required test workflow [44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094):** corpus validation, Python install, pytest and `npm ci` passed; mandatory high-severity npm audit failed; subsequent build/data/Node/Playwright steps skipped.
 - Do not interpret Pages success as a waiver of the mandatory audit. Linguistic evidence status is unchanged: adjudicated IPA gold = 0; accuracy unmeasured.
+
+
+## Finalized CI results — exact current branch head 748dcea9
+
+- Pages workflow [44185873696](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873696) completed successfully through artifact upload; deployment skipped for PR event.
+- Required test workflow [44185873801](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873801) completed with failure at mandatory high-severity npm audit. Corpus validation, Python dependency install, pytest and `npm ci` passed; subsequent build, generated-data, Node and Playwright steps skipped.
+- These workflow results apply to docs-updated head `748dcea9c82308ec9cd7299de12cb7cfec6f5874`; the test workflow is still not green. Security and linguistic evidence blockers remain unchanged.
