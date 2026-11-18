@@ -3426,3 +3426,17 @@ Current public evidence does not justify changing the lockfile:
 - [Upstream PR #263](https://github.com/micromatch/picomatch/pull/263) targets v2, not this v4 dependency.
 
 No candidate is merged or released. #261 and #262 were not transplanted: neither currently satisfies both the compatibility and unconditional security acceptance criteria. Continue to require a maintainer-approved/released v4 remediation or an independently reviewed replacement, followed by mandatory npm audit and complete CI on the exact project head. No downgrade, lockfile override, vendored patch or audit suppression.
+
+
+## 2026-11-18 continuation — finalized CI on head 3430b628
+
+Current verified PR #168 head at the start of this evidence refresh was `3430b628a2e35e19ef3fc4306410b68b8fa412f5` on `fix/finals-registry-schema-2026-11-17`. PR remains open, unmerged and mergeable; 52 commits ahead / 0 behind `main`, five changed files.
+
+- [Tests workflow 44255972550](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44255972550): IPA corpus structure validation PASS; Python dependency installation PASS; `pytest` PASS; `npm ci` PASS; mandatory `npm audit --audit-level=high` FAIL; build, generated-data freshness, Node and Playwright steps SKIPPED.
+- [Pages workflow 44255972532](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44255972532): pinned Google Burmese WFST/OpenFst build PASS; IPA symbol-table and browser input-alphabet checks PASS; upstream `thrax_g2p` parity PASS; production build PASS; `npm test` PASS; Chromium install PASS; built-site Playwright PASS; Pages artifact upload PASS; deploy SKIPPED for PR event.
+
+These workflows are complementary, not a green required test workflow. The locked transitive `picomatch@4.0.7` security gate remains BLOCKED; no downgrade, override, vendored patch, lockfile fabrication or audit bypass was introduced. No merge, release or production deployment occurred. No new phonological claims, IPA values, Ukrainian mappings or generated artifacts were introduced.
+
+**Task ledger:** DONE_VERIFIED — finals registry schema repair and focused validation; exact-head corpus/Python checks; Pages build/browser path. BLOCKED — mandatory high-severity npm audit pending compatible reviewed/released remediation and complete exact-head CI. PARTIAL — independent adjudicated Yangon-profile IPA gold remains 0 and accuracy unmeasured; phonological coverage, source evidence/reuse rights and manual accessibility QA remain incomplete. DEFERRED — independent IPA annotation remains deferred under prior direction.
+
+**Readiness:** engineering/research prototype, not release-ready and not linguistically validated. No local checkout or local commands are claimed; all verification above is hosted GitHub Actions evidence.
