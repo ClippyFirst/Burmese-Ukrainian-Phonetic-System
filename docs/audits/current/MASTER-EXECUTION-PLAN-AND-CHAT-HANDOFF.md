@@ -1201,3 +1201,16 @@ GitHub Actions job metadata was re-polled after the earlier pending update. All 
 - **DONE_VERIFIED — optional diagnostics [44396077439](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396077439): SUCCESS** across raw-output comparator, CRF baseline and Google WFST raw-output jobs. These remain diagnostic outputs only, not independent gold or accuracy evidence.
 
 The exact-head engineering CI gate is therefore green on `ed7d5905bfcd1b21e2b19724de4468045ce79b3e`. PR #171 remains OPEN/DRAFT/mergeable/unmerged; no review submissions or inline review threads were returned by GitHub at this check. No merge, release, force-push, branch deletion or production deployment occurred. Linguistic acceptance is unchanged: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; expert convention approval, qualified annotators/adjudicator/curator, rights-cleared attested items and private blind intake remain blockers; full phonological coverage and manual accessibility QA remain incomplete. Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Exact latest-head CI closeout — 2026-11-18 (`ca138eb60bc95a2accd2d6bfa3e111b0ce905101`)
+
+All four configured engineering workflows completed successfully on the exact integration tip:
+- PR Tests [44404325558](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404325558): SUCCESS.
+- Push Tests [44404308900](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404308900): SUCCESS.
+- Pages artifact build [44404325607](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404325607): SUCCESS, including pinned Google Burmese Thrax/OpenFst, IPA symbol-table invariants, browser alphabet parity, static export, upstream `thrax_g2p` parity, production build, Node/browser tests and artifact upload. Deploy was SKIPPED for the PR event; no production deployment.
+- Optional diagnostics [44404325554](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404325554): SUCCESS across raw-output comparator, CRF baseline and Google WFST raw-output. These remain diagnostic-only, not independent gold or accuracy evidence.
+
+The integration branch is 148 commits ahead of `main` and 0 behind at this comparison; PR #171 remains OPEN/DRAFT/mergeable/unmerged and is stacked on `fix/finals-registry-schema-2026-11-17`. No rebase, merge, deployment, release, force-push or branch deletion occurred.
+
+Scientific acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, two independent annotators, separate adjudicator, curator, 30 attested items with item-level source locators/rights, and private blind-intake dry-run remain unresolved. Full phonological coverage and manual accessibility QA are incomplete. Research/engineering prototype only; not linguistically release-ready or WCAG-conformance-certified. No runtime, corpus, gold-label or linguistic-rule changes were made in this CI closeout.
