@@ -3603,3 +3603,14 @@ The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6
 Correction: the 11 paths unique to PR #129's changed-file list are not missing from the active #171 integration stack. They are already present in #171's base tree (#168 head a4f730157c837354fbfb8cbadab8b08279e1fc5e) and inherited by #171. The base and #171 copies of src/burmese_ukrainian/hybrid.py and scripts/benchmark_google_fst.py were fetched and compared; supporting registry/docs/tests are also present in the inherited tree. Do not port duplicate files.
 
 PR #129 remains OPEN/DRAFT and diverged (head d0be0c316fe59f64f1b2f71e484c10d1356dbf3b; mergeable=false). Its PR description/comment and PR #171 comment were updated with this correction. No code changes or branch operations were made. Engineering diagnostics remain smoke-only; independent adjudicated IPA gold=0, accuracy unmeasured. This task is DONE_VERIFIED as a repository-tree reconciliation, not as new linguistic validation.
+
+
+## Exact-head engineering CI — 2026-11-19 (`65c823c8d6a2a50f30a73bdf7fec99497a8c4fb2`)
+
+| Work item | Status | Evidence | Boundary |
+|---|---|---|---|
+| Required PR workflow | DONE_VERIFIED | Run 44498785399 SUCCESS; Python install/wheel, pytest, npm install/audit/build, generated-data freshness, Node tests and built-site Playwright all passed. | No linguistic gold/accuracy inference. |
+| Pages build | DONE_VERIFIED | Run 44498785224 SUCCESS; pinned Google WFST/OpenFst, IPA symbol table, browser alphabet parity, static export, upstream parity, production build, Node/browser tests and artifact upload passed. | Deploy job SKIPPED on PR event. |
+| Optional diagnostics | DONE_VERIFIED | Run 44498785171 SUCCESS; Google WFST raw-output, Epitran comparator and CRF baseline jobs passed and uploaded artifacts. | Raw-output diagnostics only; independent gold=0, accuracy=null. |
+
+Exact verified HEAD: `65c823c8d6a2a50f30a73bdf7fec99497a8c4fb2`. Any later commit must be re-verified independently. Research blockers remain unchanged: adjudicated Yangon IPA gold=0, accuracy unmeasured, expert convention approval and rights-cleared annotation pilot unresolved; manual accessibility QA incomplete. Engineering/research prototype only.
