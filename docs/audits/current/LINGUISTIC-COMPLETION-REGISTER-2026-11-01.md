@@ -3183,3 +3183,10 @@ All four configured workflows completed successfully on this exact SHA; run meta
 The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6d7b2fa07`. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changed no runtime, phonology, source data, corpus, gold labels or benchmark methodology.
 
 **Linguistic acceptance remains PARTIAL/BLOCKED:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested pilot items and private blind intake remain unresolved; full phonological coverage and manual accessibility QA remain incomplete. No accuracy claim follows from optional raw-output diagnostics. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Repository integration reconciliation — 2026-11-19
+
+**DONE_VERIFIED — PR #129 stack content reconciliation (tree-level only).** The apparent 11 paths unique to #129's diff are already present in #171's base tree (#168 head a4f730157c837354fbfb8cbadab8b08279e1fc5e) and inherited by #171. Confirmed by fetching the base and #171 copies of hybrid.py and benchmark_google_fst.py, and verifying the associated registry/docs/tests are present in the inherited tree. No duplicate port is required. PR #129 remains OPEN/DRAFT, stale/diverged and mergeable=false; its description/comment and PR #171 comment now state the corrected reconciliation. No merge/rebase/close/source branch mutation occurred.
+
+**Evidence boundary unchanged:** independent adjudicated Yangon IPA gold=0; accuracy unmeasured. External provider priorities are diagnostic ordering only; candidate outputs remain unpromoted. myG2P remains CC BY-NC-SA 4.0 constrained and is not bundled. Google WFST smoke remains raw-output/build evidence only, not pronunciation accuracy. This reconciliation adds no lexical gold or linguistic claims.
