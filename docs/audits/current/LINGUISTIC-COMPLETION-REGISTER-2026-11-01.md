@@ -3190,3 +3190,10 @@ The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6
 **DONE_VERIFIED — PR #129 stack content reconciliation (tree-level only).** The apparent 11 paths unique to #129's diff are already present in #171's base tree (#168 head a4f730157c837354fbfb8cbadab8b08279e1fc5e) and inherited by #171. Confirmed by fetching the base and #171 copies of hybrid.py and benchmark_google_fst.py, and verifying the associated registry/docs/tests are present in the inherited tree. No duplicate port is required. PR #129 remains OPEN/DRAFT, stale/diverged and mergeable=false; its description/comment and PR #171 comment now state the corrected reconciliation. No merge/rebase/close/source branch mutation occurred.
 
 **Evidence boundary unchanged:** independent adjudicated Yangon IPA gold=0; accuracy unmeasured. External provider priorities are diagnostic ordering only; candidate outputs remain unpromoted. myG2P remains CC BY-NC-SA 4.0 constrained and is not bundled. Google WFST smoke remains raw-output/build evidence only, not pronunciation accuracy. This reconciliation adds no lexical gold or linguistic claims.
+
+
+## Engineering CI closeout — 2026-11-19
+
+**DONE_VERIFIED (exact HEAD `65c823c8d6a2a50f30a73bdf7fec99497a8c4fb2`):** PR Tests run 44498785399 SUCCESS; Pages build run 44498785224 SUCCESS; optional diagnostics run 44498785171 SUCCESS. Required Python/package/wheel/pytest, npm install and high-severity audit, production build, generated-data freshness, Node tests, Chromium and built-site Playwright passed. Pages artifact uploaded (57,959 bytes; SHA-256 38af2788bbb4ec9d051d95c29844c8e662f175e939515a393015614eb23ff261); deploy job skipped for PR event. Optional Google WFST/Epitran/CRF outputs are diagnostics only and do not constitute independent gold or accuracy evidence.
+
+**Linguistic acceptance unchanged:** independently adjudicated Yangon-profile IPA gold=0; accuracy unmeasured; expert convention approval, annotators/adjudicator/curator, rights-cleared attested items and blind-intake dry-run remain blocked; full phonological coverage partial; manual accessibility QA TODO. No new gold labels or accuracy claim.
