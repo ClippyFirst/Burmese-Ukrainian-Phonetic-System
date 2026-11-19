@@ -182,3 +182,22 @@ Green (2002) analyzes Burmese coda /N/ as placeless and describes preceding-vowe
 ## Versioned convention decision draft — 2026-11-18
 
 A structured [Burmese IPA convention-sheet draft](ipa-convention-sheet-draft.md) now turns the playbook's approval topics into explicit specialist decisions (profile/task, IPA kind, tone/register/phonation, vowels/length, syllable boundaries, medials, codas, uncertainty and schema fit). It is explicitly **DRAFT FOR SPECIALIST REVIEW — NOT APPROVED FOR ANNOTATION**. It contains no IPA labels and selects no disputed phonological analysis. The gold pilot remains blocked until qualified specialist approval, recruitment, rights checks and blind-intake dry-run are complete.
+
+
+## Green (2002) primary-source recheck — 2026-11-19
+
+Primary PDF inspected: Antony Dubach Green, *Word, Foot, and Syllable Structure in Burmese* (October 2002; revised version of the 1995 Working Papers in Cornell Phonetics Laboratory paper), Rutgers Optimality Archive, https://roa.rutgers.edu/files/551-1002/551-1002-GREEN-0-0.PDF .
+
+Source-level findings (PDF's printed pagination):
+- Section 1.2 (printed pp. 4–5) describes the coda inventory as glottal stop and placeless nasal /N/. Green says /N/ is realized as nasalization on the preceding vowel, with approximate coronal articulation after monophthongs and approximate velar articulation after diphthongs, explicitly attributing that phonetic detail to Bennett & Lehman (1994). Green also says /ʔ/ and /N/ tend to assimilate in place to a following consonant; examples are given in (17), printed pp. 6–7.
+- Table (35), printed p. 13, is titled “The fifty rhymes of major syllables” and is adapted from Thein Tun (1982). It separates nonnasal and nasal rhymes and lists Low, High, Creaky and Checked columns for nonnasal rhymes, but only Low, High and Creaky for nasal rhymes. This is direct evidence within Green's analysis that Checked tone is absent from nasal rhymes; it is not evidence that all dialects or all later analyses must adopt the same representation.
+- Section 2.4 (printed pp. 10–11) independently states that only three tones occur with nasal rhymes and Checked is excluded. This agrees with the organization of table (35).
+- The paper explicitly notes that Burmese transcription conventions vary across authors and says its own transcription is broad and nearly standard IPA (footnote 1, printed p. 2). Preserve Green's forms and tone labels as that author's analytical convention; do not silently normalize them into the project's not-yet-approved convention.
+
+Disposition:
+- The source-table lookup and its central structural claims are now verified against the primary PDF, but the requested full manual transcription of all 50 table cells and independent specialist review are not complete. Keep that work PARTIAL, not DONE_VERIFIED.
+- Do not generate 30 gold items from table (35): it is a rhyme inventory adapted from Thein Tun (1982), not a rights-cleared, item-level lexical source list. Green's examples in (17) are useful source leads, but each underlying lexical entry still needs its own primary locator and rights review.
+- Preserve /N/ as a typed coda/analysis value separately from its context-dependent surface realization. Do not convert every /N/ to [n], [ŋ], or a fixed Ukrainian segment; the source describes nasalization as the usual realization and place assimilation in a following-consonant context.
+- The nasal-rhyme/Checked-tone restriction is a source-specific candidate constraint for expert review, not yet an approved runtime rule or gold-label rule.
+
+The evidence narrows the open task but does not unblock recruitment, convention approval, item-level rights clearance, blind intake, or independent IPA adjudication. Independent gold remains 0 and empirical accuracy remains unmeasured.
