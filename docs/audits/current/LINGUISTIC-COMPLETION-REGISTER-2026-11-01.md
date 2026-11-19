@@ -3226,3 +3226,10 @@ The run metadata identifies the exact same `head_sha` for all three workflows. T
 **Ledger:** source identification and central-claim verification = DONE_VERIFIED as a literature-audit step; complete manual transcription of all 50 table cells and independent specialist review = PARTIAL/TODO; conversion into runtime rules or gold labels = NOT AUTHORIZED. Table (35) is an inventory adapted from Thein Tun (1982), not a rights-cleared lexical item list. Green's examples are source leads, not automatically approved pilot items. /N/ must remain distinct from its context-dependent surface realization; no blanket [n]/[ŋ] mapping is justified.
 
 No runtime, registry, corpus, schema, gold-label, or benchmark changes were made. Independent adjudicated Yangon IPA gold remains 0; accuracy remains unmeasured; expert recruitment, convention approval, item-level rights review and blind intake remain blocked. The engineering/research prototype is not linguistically release-ready.
+
+
+## Green (2002) unresolved nasal-rhyme + Checked-tone input — 2026-11-19
+
+A closer check of section 2.4 (printed pp. 12–13; PDF page 6) adds an important limit to the table (35) observation. Green says nasal-rhyme syllables do not occur with Checked tone, then explicitly considers a hypothetical input combining nasalization with the Checked tone's [+constricted glottis, −tense] feature bundle. He lists several possible outputs (including loss of the c.g. feature, change in tenseness, or deletion of nasalization) and states that there is no independent evidence to rank the relevant faithfulness constraints; the hypothetical output therefore remains unanswerable (PDF lines 234–243).
+
+**Disposition:** record the absence of Checked in Green's nasal-rhyme inventory as a source-specific descriptive generalization only. Do not infer a repair, neutralization, deletion, or surface IPA for a hypothetical nasal+Checked combination; do not encode a runtime rule or gold label from this discussion. This uncertainty is explicit in the primary source, not merely a gap in the project's research. Specialist review and profile-matched evidence remain required.
