@@ -3663,3 +3663,17 @@ A specialist decision draft now exists at [docs/ipa-convention-sheet-draft.md](i
 
 The gold pilot remains blocked pending qualified specialist approval, two independent annotators, a separate adjudicator, curator, item-level source/rights checks and a private blind-intake dry-run. Issue [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85) is the coordination tracker; its protocol links now point to the current integration branch. No person was contacted/recruited, no source material copied, no gold data created and no accuracy claim made.
 
+
+
+## Exact CI closeout — integration tip `6c5190683bce286cfc46c52497cabdc6d7b2fa07` (2026-11-18)
+
+All four configured workflows completed successfully on this exact SHA; run metadata confirms each `head_sha` matches:
+
+- **DONE_VERIFIED — PR Tests [44407661913](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407661913): SUCCESS.** Corpus structure validation, editable Python install, wheel registry verification, pytest, npm install, high-severity npm audit, production build, generated-data freshness, Node tests, Chromium installation and built-site Playwright suite all passed.
+- **DONE_VERIFIED — Push Tests [44407648376](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407648376): SUCCESS** on the same SHA; all configured steps passed, including built-site browser tests.
+- **DONE_VERIFIED — Pages artifact build [44407661700](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407661700): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser-input alphabet parity, static browser-model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed. The deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44407661678](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407661678): SUCCESS.** Pinned Google WFST, CRF baseline and raw-output comparator jobs passed and uploaded outputs/provenance. These are reproducibility/raw-output diagnostics only, not independent gold or accuracy evidence.
+
+The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6d7b2fa07`. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changed no runtime, phonology, source data, corpus, gold labels or benchmark methodology.
+
+**Linguistic acceptance remains PARTIAL/BLOCKED:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested pilot items and private blind intake remain unresolved; full phonological coverage and manual accessibility QA remain incomplete. No accuracy claim follows from optional raw-output diagnostics. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
