@@ -1242,3 +1242,12 @@ All four configured workflows completed successfully on this exact SHA; run meta
 The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6d7b2fa07`. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changed no runtime, phonology, source data, corpus, gold labels or benchmark methodology.
 
 **Linguistic acceptance remains PARTIAL/BLOCKED:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested pilot items and private blind intake remain unresolved; full phonological coverage and manual accessibility QA remain incomplete. No accuracy claim follows from optional raw-output diagnostics. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## PR #129 stack reconciliation — 2026-11-19
+
+The 2026-11-19 audit corrected an earlier changed-file-only comparison. PR #129 has 11 paths unique to its own diff relative to its old base, but those paths are already present in PR #171's base tree (#168 head a4f730157c837354fbfb8cbadab8b08279e1fc5e) and are inherited by the effective #171 tree. Verified by fetching the stack-base and #171 versions of src/burmese_ukrainian/hybrid.py and scripts/benchmark_google_fst.py; the evidence-gated provider API, Google WFST raw-output harness, registry, tests and supporting research docs are already present. Do not port this work again.
+
+PR #129 remains OPEN/DRAFT, head d0be0c316fe59f64f1b2f71e484c10d1356dbf3b, diverged from current main and mergeable=false. Its description and comments were corrected; PR #171 also received an integration note. No merge, rebase, close, force-push or branch deletion occurred.
+
+This reconciliation adds no new linguistic evidence. External candidates remain diagnostic-only; provider priority is not accuracy; myG2P CC BY-NC-SA 4.0 data is not bundled; Google WFST smoke has 0 independent gold and accuracy=null. No code or corpus changes were made in this review.
