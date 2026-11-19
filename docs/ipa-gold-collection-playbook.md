@@ -201,3 +201,10 @@ Disposition:
 - The nasal-rhyme/Checked-tone restriction is a source-specific candidate constraint for expert review, not yet an approved runtime rule or gold-label rule.
 
 The evidence narrows the open task but does not unblock recruitment, convention approval, item-level rights clearance, blind intake, or independent IPA adjudication. Independent gold remains 0 and empirical accuracy remains unmeasured.
+
+
+## Green (2002) unresolved nasal-rhyme + Checked-tone input — 2026-11-19
+
+A closer check of section 2.4 (printed pp. 12–13; PDF page 6) adds an important limit to the table (35) observation. Green says nasal-rhyme syllables do not occur with Checked tone, then explicitly considers a hypothetical input combining nasalization with the Checked tone's [+constricted glottis, −tense] feature bundle. He lists several possible outputs (including loss of the c.g. feature, change in tenseness, or deletion of nasalization) and states that there is no independent evidence to rank the relevant faithfulness constraints; the hypothetical output therefore remains unanswerable (PDF lines 234–243).
+
+**Disposition:** record the absence of Checked in Green's nasal-rhyme inventory as a source-specific descriptive generalization only. Do not infer a repair, neutralization, deletion, or surface IPA for a hypothetical nasal+Checked combination; do not encode a runtime rule or gold label from this discussion. This uncertainty is explicit in the primary source, not merely a gap in the project's research. Specialist review and profile-matched evidence remain required.
