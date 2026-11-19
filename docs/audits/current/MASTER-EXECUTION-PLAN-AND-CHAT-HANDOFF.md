@@ -1251,3 +1251,13 @@ The 2026-11-19 audit corrected an earlier changed-file-only comparison. PR #129 
 PR #129 remains OPEN/DRAFT, head d0be0c316fe59f64f1b2f71e484c10d1356dbf3b, diverged from current main and mergeable=false. Its description and comments were corrected; PR #171 also received an integration note. No merge, rebase, close, force-push or branch deletion occurred.
 
 This reconciliation adds no new linguistic evidence. External candidates remain diagnostic-only; provider priority is not accuracy; myG2P CC BY-NC-SA 4.0 data is not bundled; Google WFST smoke has 0 independent gold and accuracy=null. No code or corpus changes were made in this review.
+
+
+## Exact documentation-tip CI closeout — 2026-11-19 (`65c823c8d6a2a50f30a73bdf7fec99497a8c4fb2`)
+
+All three configured PR workflows completed successfully on this exact HEAD:
+- **DONE_VERIFIED — PR Tests [44498785399](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44498785399): SUCCESS.** Independent IPA gold corpus structure, editable install, wheel registry, pytest, npm ci, high-severity npm audit, production build, generated-data freshness, Node tests, Chromium installation and built-site Playwright all passed.
+- **DONE_VERIFIED — GitHub Pages build [44498785224](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44498785224): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser alphabet parity, static browser model export, upstream thrax_g2p parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed. Artifact github-pages: 57,959 bytes, SHA-256 38af2788bbb4ec9d051d95c29844c8e662f175e939515a393015614eb23ff261. Deploy job was SKIPPED for this PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44498785171](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44498785171): SUCCESS** across Google WFST raw-output, Epitran comparator and CRF baseline. Artifacts: Google WFST 1,976 bytes (SHA-256 feead40a46cc3dab62ff391a8b7014e0d147acc9fd7ccf995397cb497a43b55b); CRF 12,370 bytes (SHA-256 27e3e88589a189eb0707a923cca98257cbc287d698690967ba649ff880ec248c); Epitran 1,701 bytes (SHA-256 e8ea344565058e74f968dd7107a62de7835c43ed8a9fdfbafba0c58ecd990aab). Diagnostic/raw-output only, no independent gold or accuracy evidence.
+
+This closes CI for the documentation reconciliation HEAD only. Subsequent documentation commits require their own exact-head CI. PR #171 remains OPEN/DRAFT; no merge, release, force-push, branch deletion or production deployment.
