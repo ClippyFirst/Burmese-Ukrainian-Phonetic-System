@@ -3596,3 +3596,10 @@ All four configured workflows completed successfully on this exact SHA; run meta
 The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6d7b2fa07`. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changed no runtime, phonology, source data, corpus, gold labels or benchmark methodology.
 
 **Linguistic acceptance remains PARTIAL/BLOCKED:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested pilot items and private blind intake remain unresolved; full phonological coverage and manual accessibility QA remain incomplete. No accuracy claim follows from optional raw-output diagnostics. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## PR #129 stack-tree reconciliation — 2026-11-19
+
+Correction: the 11 paths unique to PR #129's changed-file list are not missing from the active #171 integration stack. They are already present in #171's base tree (#168 head a4f730157c837354fbfb8cbadab8b08279e1fc5e) and inherited by #171. The base and #171 copies of src/burmese_ukrainian/hybrid.py and scripts/benchmark_google_fst.py were fetched and compared; supporting registry/docs/tests are also present in the inherited tree. Do not port duplicate files.
+
+PR #129 remains OPEN/DRAFT and diverged (head d0be0c316fe59f64f1b2f71e484c10d1356dbf3b; mergeable=false). Its PR description/comment and PR #171 comment were updated with this correction. No code changes or branch operations were made. Engineering diagnostics remain smoke-only; independent adjudicated IPA gold=0, accuracy unmeasured. This task is DONE_VERIFIED as a repository-tree reconciliation, not as new linguistic validation.
