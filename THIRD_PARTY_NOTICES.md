@@ -37,9 +37,7 @@ For every external engine, dictionary, model, or copied data set, record: exact 
 - Google Language Resources source revision `a90601024f07ab7e96c911243324e0adeb16da96`, OpenFst `22867ee7b483598a729abe125da2517584a5d010` and Thrax `c65fb3d51f9bd0299503f3289a124f52c3431eeb` are pinned for model generation. The Apache-2.0 license is included at `vendor/google-language-resources/LICENSE.txt`.
 
 
-## Project license scope — 2026-11-21
-
-## Project license and research reuse (2026-11-21)
+## Project license scope and research reuse — 2026-11-21
 
 - Original project software code is licensed under **PolyForm Noncommercial 1.0.0**; see [LICENSE](LICENSE). The license permits noncommercial research, modification and redistribution, and has a separate permission for educational institutions and public research organizations regardless of funding source.
 - Original documentation and explanatory prose are licensed under **CC BY-NC 4.0**; see [LICENSE-DOCS](LICENSE-DOCS).
