@@ -3767,3 +3767,12 @@ Task ledger:
 - No linguistic data, IPA labels, Ukrainian mappings, runtime rules, or generated artifacts were changed.
 
 The dedicated branch is license/noncommercial-research-2026-11-21; this section records the proposal until its PR is reviewed and merged. No release or legal opinion is implied.
+
+
+## Final noncommercial license closeout — 2026-11-21
+
+The owner-authorized noncommercial licensing decision is merged. PR #177 added PolyForm Noncommercial 1.0.0 for original project code, CC BY-NC 4.0 for original documentation, synchronized Python package and CITATION.cff metadata, and reconciled third-party notices and license scope. Merge commit: 3d9789152b251dfa503f36726cc7a89c9835fcb7.
+
+PR-head verification on d4d2498fe8ba9f9f46422e81fff679b5d3bbd5f5: tests run 44826544412 SUCCESS; Pages build run 44826544397 SUCCESS (deploy is skipped for pull_request events). Exact-main tests and Pages/deploy runs on 3d9789152b251dfa503f36726cc7a89c9835fcb7 were queued at the time of this handoff update and must be checked before calling that main SHA fully green.
+
+BURMESE-LICENSE-001 — DONE_VERIFIED for the repository-owned software/docs licensing declarations, scope boundaries, package metadata and PR-head CI. Third-party/source-data rights remain PARTIAL or BLOCKED per item-level evidence; this project license does not authorize redistribution of items with unknown or conflicting rights. No linguistic records, IPA, runtime rules or generated artifacts were changed. The repository remains a linguistically partial research prototype, not release-ready.
