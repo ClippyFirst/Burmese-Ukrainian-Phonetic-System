@@ -3344,3 +3344,8 @@ BURMESE-RESEARCH-DATA-LICENSE-001 — implementation on license branch; PR-head 
 ## Research-data license — merged and verified — 2026-11-21
 
 BURMESE-RESEARCH-DATA-LICENSE-001 — DONE_VERIFIED. PR #179 merged as `c604092088d48bd4c4bf8fcf45cf40ab77705a08`. Original project-authored research datasets, annotations and curated database contributions are covered by CC BY-NC 4.0 in `LICENSE-DATA`, only where contributors hold the rights. README, `THIRD_PARTY_NOTICES.md`, benchmark license registry and gold-corpus docs reflect the scope. PR-head tests and Pages build passed (44829563024, 44829563050); exact-main tests 44830387172 and Pages build/deploy 44830387150 all SUCCESS. Third-party source rights and any non-project contributor rights remain separately unresolved. NC-only material remains ineligible for the commercial/product gold-corpus export gate. No gold rows or IPA labels were added.
+
+
+## Final mainline CI after license closeout — 2026-11-21
+
+Final main SHA `07fcbf92f11cde54ed726a07f0593fd0075e7e09` is fully green: tests 44831787580 SUCCESS and Pages build/deploy 44831787588 SUCCESS. This supersedes the earlier exact-main checkpoint `c604092088d48bd4c4bf8fcf45cf40ab77705a08`. Original research-data licensing remains DONE_VERIFIED; third-party source rights and linguistic release gates remain separate.

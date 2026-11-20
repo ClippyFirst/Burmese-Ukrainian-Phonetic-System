@@ -3765,3 +3765,8 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 - BURMESE-RESEARCH-DATA-LICENSE-001 — DONE_VERIFIED. PR #179 merged as `c604092088d48bd4c4bf8fcf45cf40ab77705a08`; original project-authored datasets, annotations and curated database contributions are licensed CC BY-NC 4.0 under `LICENSE-DATA`, only where project contributors hold the rights. README, `THIRD_PARTY_NOTICES.md`, `data/benchmark/licenses.json` and gold-corpus documentation now distinguish noncommercial research reuse from commercial/product-corpus eligibility.
 - PR-head tests 44829563024 and Pages build 44829563050 SUCCESS. Exact-main tests 44830387172 and Pages build/deploy 44830387150 SUCCESS on `c604092088d48bd4c4bf8fcf45cf40ab77705a08`.
 - Third-party source rights and mixed-source rows remain governed by item-level evidence; unknown/conflicting rights are not cleared by this grant. NC-only records remain excluded from the commercial/product gold-corpus gate. No gold data or IPA labels were added.
+
+
+## Final mainline CI — 2026-11-21
+
+Final main SHA `07fcbf92f11cde54ed726a07f0593fd0075e7e09` is fully verified: tests 44831787580 SUCCESS; Pages build/deploy 44831787588 SUCCESS. This supersedes the previous checkpoint on `c604092088d48bd4c4bf8fcf45cf40ab77705a08`. BURMESE-RESEARCH-DATA-LICENSE-001 remains DONE_VERIFIED. Third-party item-level rights, expert IPA gold pilot and manual accessibility QA remain unresolved; no gold labels or runtime rules were added by the licensing work.
