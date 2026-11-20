@@ -3736,4 +3736,14 @@ The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6
 - Added bounded source record NI2025 and claim CLM-NI25-ONSET-F0-001 from Ni (2025). The study's four Yangon-origin bilingual speakers, /ʔə/+open-/a/ carrier-sentence design and F0-only result are recorded in the research workpack. This is not citation-form IPA or lexical gold and does not change runtime rules.
 - Independent adjudicated gold remains 0; accuracy remains unmeasured. Convention approval, two annotators, separate adjudicator/curator, blind intake and rights-cleared 30-item pilot remain blocked on human and rights dependencies (Issue #85).
 - Manual accessibility QA remains TODO under Issue #173; automated smoke is not WCAG sign-off.
-- This documentation/research branch is not main; merge only after its exact-head CI passes and review confirms the evidence boundaries.
+- This pre-merge branch-status note is superseded by the final merged-main closeout below.
+
+
+## Final merged-main closeout — 2026-11-20 (supersedes the pre-merge checkpoint above)
+
+- Final default-branch commit: [46b9a089d771eb9cf582a4fd24bead656965e9b0](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/commit/46b9a089d771eb9cf582a4fd24bead656965e9b0); PR [#175](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/175) is merged. The earlier c39ee3b checkpoint and “branch is not main” instruction above are historical, superseded states.
+- Exact final-commit Tests [44753083163](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753083163): SUCCESS. Optional Epitran raw-output diagnostics [44753082760](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753082760): SUCCESS.
+- Exact final-commit Pages/deploy [44753082850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753082850): SUCCESS. Both build and deploy jobs passed, including pinned Google Burmese WFST/OpenFst build, IPA symbol-table and browser-alphabet validation, upstream Thrax parity, static model export, Node tests, production build, Playwright, Pages artifact upload/deployment and deployed runtime-asset smoke.
+- PR [#129](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/129) remains open and intentionally untouched: it is divergent historical research work; its benchmark/provider functionality is already represented in the integrated stack. Preserve the branch; owner may decide whether to close it.
+- Human gates remain: gold pilot BLOCKED under [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85); manual accessibility QA TODO under [#173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/173). Independent adjudicated gold=0; empirical accuracy unmeasured. No license was selected because that is an owner decision.
+- Result: engineering/build/deployment verified; linguistically a research prototype, not release-ready. Connector-hosted CI was verified; no local checkout or local test commands were available in this session.
