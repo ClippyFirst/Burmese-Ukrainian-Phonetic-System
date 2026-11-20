@@ -3677,3 +3677,11 @@ All four configured workflows completed successfully on this exact SHA; run meta
 The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6d7b2fa07`. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changed no runtime, phonology, source data, corpus, gold labels or benchmark methodology.
 
 **Linguistic acceptance remains PARTIAL/BLOCKED:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested pilot items and private blind intake remain unresolved; full phonological coverage and manual accessibility QA remain incomplete. No accuracy claim follows from optional raw-output diagnostics. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Mainline architecture document reconciliation — 2026-11-20
+
+- Integrated the root `docs/ARCHITECTURE.md` correction from merged PR #172 (merge commit `2544d3f8528c8ff8ac526843e3963a9fe337312e`) into this IPA-first integration branch, and linked it from README.
+- PR #172 exact head `bf24c1227330751a246a5e81c492df65e332c414`: Tests [44723214246](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214246) SUCCESS (315 Python tests + 68 subtests, 71 built-site Playwright tests, 0 npm vulnerabilities); Pages build [44723214235](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214235) SUCCESS, including WFST/OpenFst, IPA symbol-table/input-alphabet checks, upstream Thrax parity, build and artifact upload. Deploy was skipped for the PR event.
+- The merge commit is included as the second parent of the reconciliation merge commit; no force-push or branch deletion is used.
+- The architecture snapshot intentionally describes the pre-#171 shipped mainline. The registry-backed IPA-first route in this branch remains an integration candidate until this PR is merged; after merge, the architecture snapshot should be updated to reflect the newly shipped route.

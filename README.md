@@ -10,6 +10,8 @@ The practical output is never produced by direct Myanmar-character substitution.
 
 ## Runtime architecture and provenance (important distinction)
 
+See [the runtime architecture and trust-boundary document](docs/ARCHITECTURE.md) for the shipped mainline topology, Python/browser parity limits, IPA/romanization separation and research release gates.
+
 The published site has a **browser-side hybrid diagnostic shell**, not a voting ensemble. It exposes two separate modes:
 
 1. **Phonetic mode (IPA-first hybrid with explicit completeness states):** the browser parser supplies project segmental IPA candidates; the hybrid orchestrator runs these through the same Ukrainian IPA adapter and also collects narrow Epitran 1.35.3 and local Google Burmese Thrax/OpenFst candidates. A segmental string such as ka may be displayed with a Ukrainian candidate, but both are explicitly PARTIAL/PROVISIONAL until tone/phonation/quantity and a named profile are established. Only a fully scoped project IPA may be labeled canonical. The Google grammar is not established as a specific Yangon speaker profile. Provider outputs retain provenance and are never voted or used as fallback; unresolved structures remain withheld. Google is compiled from pinned source during the GitHub Pages build and served as a same-origin static JSON model; no server API receives user input. The Epitran port is not the full Python/PanPhon stack. The Python package and browser still have separate parsers, but both now consume the same CSV-backed onset/vowel registries and emit the same typed segmental-IPA contract. Shared fixtures exercise the same supported and withheld cases in Python and the built browser. Full parser and phonological parity remains PARTIAL.

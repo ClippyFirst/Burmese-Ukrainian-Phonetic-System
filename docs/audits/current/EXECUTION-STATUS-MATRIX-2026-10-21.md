@@ -3674,3 +3674,11 @@ All four configured workflows completed **SUCCESS on the exact same integration 
 - **DONE_VERIFIED — optional diagnostics [44600685511](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44600685511): SUCCESS** across CRF baseline, Google WFST raw-output and raw-output comparator jobs. Artifacts: Epitran 1,705 bytes; Google WFST 1,976 bytes; CRF 12,370 bytes. These are reproducibility/raw-output diagnostics only, not independent gold or accuracy evidence.
 
 The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changes no runtime, source data, corpus, gold labels, schema or benchmark methodology. Independent adjudicated Yangon IPA gold remains 0; accuracy remains unmeasured. Specialist convention approval, qualified annotators/adjudicator/curator, item-level source rights and attested pilot items, blind-intake dry-run, complete phonological coverage and manual accessibility QA remain unresolved. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Root architecture document reconciliation — 2026-11-20
+
+| Work item | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-ARCH-DOC-001 | DONE_VERIFIED | Root `docs/ARCHITECTURE.md` and README link integrated from PR #172. Exact PR head `bf24c1227330751a246a5e81c492df65e332c414`: Tests [44723214246](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214246) SUCCESS (315 Python tests + 68 subtests, 71 Playwright tests, 0 npm vulnerabilities); Pages [44723214235](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214235) SUCCESS (WFST/OpenFst, upstream parity, production build and Pages artifact upload; PR deploy skipped). | Documentation only. The architecture snapshot is explicitly scoped to the pre-#171 mainline; update it after the IPA-first integration is merged. |
+
