@@ -3680,7 +3680,7 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 
 | Work item | Status | Evidence | Acceptance boundary |
 |---|---|---|---|
-| BUR-ARCH-DOC-001 | DONE_VERIFIED | Root `docs/ARCHITECTURE.md` and README link integrated from PR #172. Exact PR head `bf24c1227330751a246a5e81c492df65e332c414`: Tests [44723214246](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214246) SUCCESS (315 Python tests + 68 subtests, 71 Playwright tests, 0 npm vulnerabilities); Pages [44723214235](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214235) SUCCESS (WFST/OpenFst, upstream parity, production build and Pages artifact upload; PR deploy skipped). | Documentation only. The architecture snapshot is explicitly scoped to the pre-#171 mainline; update it after the IPA-first integration is merged. |
+| BUR-ARCH-DOC-001 | DONE_VERIFIED | Root `docs/ARCHITECTURE.md` was rewritten on #171 to document the registry-backed IPA-first Python/browser topology, shared semantic fixtures, canonical CSV registries, IPA adapter boundary and unresolved prosody/profile gates. #172's architecture clarification remains merged on `main`; this #171 update reconciles it with the new runtime. | Documentation only; exact-head CI for the updated #171 candidate is recorded below. |
 
 
 
