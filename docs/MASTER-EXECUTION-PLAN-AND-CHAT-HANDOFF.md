@@ -3216,3 +3216,12 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 - PR #171 remains OPEN/DRAFT and unmerged. PRs #168, #169 and #170 remain open integration dependencies; no branch was deleted, force-updated or merged.
 - No local checkout or local test execution was available in this connector session. The architecture documentation changes require exact-head hosted CI before being marked DONE_VERIFIED.
 - Remaining linguistic gates are unchanged: expert-approved versioned Yangon careful-citation IPA convention; qualified independent annotators and separate adjudicator; non-annotating curator; private blind intake; item-level source rights/locators; at least 30 distinct adjudicated lexeme groups. Independent IPA gold remains 0 and empirical accuracy remains unmeasured.
+
+
+### Architecture documentation exact-head CI closeout — 2026-11-20
+
+- Final verified documentation PR head before this evidence synchronization: `734e1a0795c667b205c09951ad1599a5a618d568`.
+- Tests [44721532152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532152) SUCCESS: Python tests, high-severity npm audit, production build, generated-data freshness, Node tests and 74 built-site Playwright tests.
+- Pages [44721532008](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532008) SUCCESS: pinned Google Burmese WFST/OpenFst, symbol-table and browser-input alphabet checks, upstream parity, production build, Node/browser tests and Pages artifact upload. Deploy was SKIPPED for PR event; no production deployment.
+- `BUR-ARCH-DOC-001` is DONE_VERIFIED for architecture-document accuracy and exact-head engineering CI only. No runtime or linguistic data changed.
+- The subsequent evidence-register synchronization creates a new commit; that new head must receive its own CI before being called green.
