@@ -669,6 +669,7 @@ test("service and methodology pages expose named controls and coherent document 
   await expect(page.getByRole("navigation",{name:"Основна навігація"})).toBeVisible();
   await expect(page.getByRole("main")).toBeVisible();
   await expect(page.getByRole("textbox",{name:"Бірманський текст"})).toBeVisible();
+  await page.locator("#source").fill("မြန်မာ");
   await expect(page.getByRole("group",{name:"Метод українського запису"})).toBeVisible();
   await expect(page.locator('[aria-label="Копіювати IPA"]')).toBeAttached();
 });
