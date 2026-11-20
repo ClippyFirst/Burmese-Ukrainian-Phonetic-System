@@ -3324,3 +3324,8 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | BUR-GOLD-PILOT-001 | BLOCKED | Issue #85; adjudicated IPA gold=0, empirical accuracy unmeasured. | Expert convention, two annotators, adjudicator, curator, blind intake, item-level rights and 30 adjudicated groups. |
 | BUR-MANUAL-A11Y-001 | TODO | Issue #173. | Human assistive-technology and responsive/accessibility audit with remediation evidence. |
 | BUR-LICENSE-OWNER-DECISION | BLOCKED | No repository license; owner decision required. | Owner explicitly selects and approves license. |
+
+
+## Licensing status — 2026-11-21
+
+BURMESE-LICENSE-001 is PARTIAL pending hosted verification and merge. Original code is assigned PolyForm Noncommercial 1.0.0; original docs CC BY-NC 4.0. The software Citation File Format and Python package metadata have been synchronized. The license explicitly excludes third-party components and does not grant blanket rights to research data. Existing item-level source rights, redistribution permissions and any conflicts remain separate gates. This is a noncommercial licensing choice, not an OSI Open Source grant or a claim that the linguistic prototype is release-ready.
