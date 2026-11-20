@@ -643,9 +643,9 @@ test("service and methodology pages expose named controls and coherent document 
     const structure=await page.evaluate(()=>{
       const accessibleName=element=>{
         const labelledBy=element.getAttribute("aria-labelledby");
-        const referenced=labelledBy?labelledBy.split(/\\s+/u).map(id=>document.getElementById(id)?.textContent??"").join(" "):"";
+        const referenced=labelledBy?labelledBy.split(/\s+/u).map(id=>document.getElementById(id)?.textContent??"").join(" "):"";
         const labels=element.labels?Array.from(element.labels).map(label=>label.textContent??"").join(" "):"";
-        return (element.getAttribute("aria-label")||referenced||labels||element.innerText||element.textContent||element.getAttribute("title")||"").replace(/\\s+/gu," ").trim();
+        return (element.getAttribute("aria-label")||referenced||labels||element.innerText||element.textContent||element.getAttribute("title")||"").replace(/\s+/gu," ").trim();
       };
       const controls=Array.from(document.querySelectorAll("button,input,select,textarea"));
       const links=Array.from(document.querySelectorAll("a[href]"));
