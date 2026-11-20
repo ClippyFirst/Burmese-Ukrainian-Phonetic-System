@@ -3747,3 +3747,23 @@ The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6
 - PR [#129](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/129) remains open and intentionally untouched: it is divergent historical research work; its benchmark/provider functionality is already represented in the integrated stack. Preserve the branch; owner may decide whether to close it.
 - Human gates remain: gold pilot BLOCKED under [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85); manual accessibility QA TODO under [#173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/173). Independent adjudicated gold=0; empirical accuracy unmeasured. No license was selected because that is an owner decision.
 - Result: engineering/build/deployment verified; linguistically a research prototype, not release-ready. Connector-hosted CI was verified; no local checkout or local test commands were available in this session.
+
+
+## Owner-authorized noncommercial licensing — 2026-11-21
+
+The repository owner has confirmed that the project purpose is noncommercial research and scientific knowledge-sharing. This supersedes earlier handoff notes that the root-license decision was still awaiting the owner.
+
+- Original project software code: PolyForm Noncommercial 1.0.0 (LICENSE); package metadata now declares SPDX identifier PolyForm-Noncommercial-1.0.0.
+- Original documentation and explanatory prose: CC BY-NC 4.0 (LICENSE-DOCS).
+- CITATION.cff now identifies the software license rather than NOASSERTION.
+- The prior stale README statement that the repository had no project license has been replaced.
+- The project license does not relicense Epitran/MIT, Google Language Resources/Apache-2.0, Mya2Rom/CC BY-SA 4.0, or any other third-party component. Their upstream notices remain controlling.
+- The license does not blanket-license data/; each source-derived observation, corpus, model, dictionary and recording retains its own provenance and rights status. Unknown or conflicting rights remain unresolved and do not authorize redistribution.
+- PolyForm Noncommercial is not OSI-approved Open Source. Commercial use is not granted by these terms.
+
+Task ledger:
+- BURMESE-LICENSE-001 — PARTIAL pending PR CI/merge; scope and metadata implementation is in this branch.
+- Third-party source-rights clearance — PARTIAL/BLOCKED per item-level evidence; this license change does not close those existing research gates.
+- No linguistic data, IPA labels, Ukrainian mappings, runtime rules, or generated artifacts were changed.
+
+The dedicated branch is license/noncommercial-research-2026-11-21; this section records the proposal until its PR is reviewed and merged. No release or legal opinion is implied.

@@ -191,7 +191,7 @@ The Ukrainian system is defensible only when every divergence from Russian can b
 
 **Current measurement:** no independently adjudicated lexical IPA gold entries are verified yet. Word-level IPA accuracy and Ukrainian name-level accuracy are therefore not measured. The six rows in the seed corpus are structural probes only; blank IPA and Ukrainian fields are intentional, not missing results to be inferred.
 
-The repository currently has no root project license. Do not assume the source code or data are licensed for reuse merely because the repository is public. CITATION.cff uses NOASSERTION until the owner chooses a license.
+Original project code and documentation now have separate noncommercial licenses; this does not grant blanket rights to third-party materials or research data. See the [project license and research reuse section](#project-license-and-research-reuse-2026-11-21), [LICENSE](LICENSE), [LICENSE-DOCS](LICENSE-DOCS), and [third-party notices](THIRD_PARTY_NOTICES.md).
 
 ### Optional Epitran baseline
 
@@ -247,3 +247,12 @@ The optional Python `HybridBurmeseEngine` can collect explicitly configured Goog
 ### Rime and prosody evidence
 
 The source-scoped rime × coda × tone × phonation evidence matrix is maintained in `data/burmese/rime_prosody_evidence.csv`, with its JSON Schema and regression tests. Separate voiced/voiceless sonorant evidence from Repetti-Ludlow (2023) is recorded in `data/burmese/sonorant_phonetics_evidence.csv`; it preserves the study's restricted sample and variable spread-glottis realization and remains withheld from runtime. It records Green's source-specific rime restrictions and Mooney & Repetti-Ludlow's restricted Yangon experimental findings without promoting them to runtime pronunciation rules. Every row is withheld from runtime; the matrix is not a lexical IPA gold set.
+
+
+## Project license and research reuse (2026-11-21)
+
+- Original project software code is licensed under **PolyForm Noncommercial 1.0.0**; see [LICENSE](LICENSE). The license permits noncommercial research, modification and redistribution, and has a separate permission for educational institutions and public research organizations regardless of funding source.
+- Original documentation and explanatory prose are licensed under **CC BY-NC 4.0**; see [LICENSE-DOCS](LICENSE-DOCS).
+- These project licenses do **not** apply to third-party software, fonts, models, dictionaries, corpora, recordings, source quotations, or other materials whose rights are held by someone else. Retain each component's own notices and terms.
+- The licenses do not blanket-license the contents of `data/`. Research observations, source-derived records and datasets remain governed by their item-level provenance and rights statements. Where rights are unknown, redistribution and derivative use remain unapproved.
+- PolyForm Noncommercial is not an OSI-approved Open Source license. Commercial use is not granted; contact the rights holder for separate permission.

@@ -3736,3 +3736,11 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | BUR-GOLD-PILOT-001 | BLOCKED | Issue #85; no independent adjudicated gold. | Expert-approved convention, two independent annotators, separate adjudicator/curator, blind intake, item-level rights and 30 adjudicated lexeme groups. |
 | BUR-MANUAL-A11Y-001 | TODO (human QA) | Issue #173. | Human keyboard, screen-reader, zoom/reflow, contrast, touch-target and mobile QA; automated checks are not WCAG sign-off. |
 | BUR-LICENSE-OWNER-DECISION | BLOCKED | Repository has no declared license; no owner instruction to select one. | Owner chooses and approves repository license. |
+
+
+## Licensing decision update — 2026-11-21
+
+- BURMESE-LICENSE-001 — PARTIAL pending PR CI/merge: add PolyForm Noncommercial 1.0.0 for original project code, CC BY-NC 4.0 for original documentation, update package/Citation metadata, and explicitly exclude third-party components and source-specific research data.
+- Owner intent is confirmed: noncommercial research and scientific knowledge-sharing. Commercial use is not granted by the selected terms; PolyForm Noncommercial is not OSI-approved Open Source.
+- Existing Epitran, Google Language Resources, Mya2Rom and other third-party license terms remain unchanged. Dataset/source rights remain item-specific; unknown/conflicting entries are not cleared by the repository's own licenses.
+- No phonological or runtime behavior changed. Acceptance: exact PR-head CI green, license-scope files and metadata reviewed, then merge.
