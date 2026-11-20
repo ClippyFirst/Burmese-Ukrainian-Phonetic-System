@@ -3281,3 +3281,14 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 |---|---|---|---|
 | BUR-ARCH-DOC-002 | DONE_VERIFIED (documentation content; exact-head CI pending) | Root `docs/ARCHITECTURE.md` updated in PR #171 to match the registry-backed Python/browser IPA-first runtime, canonical CSV registries, generated browser data, typed IPA boundary and diagnostic-only external models. | Describes implementation topology, not linguistic completeness. Tone, phonation, quantity, profile adjudication and independent gold remain unresolved. |
 
+
+
+## Final Burmese integration state — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-IPA-FIRST-INTEGRATION-001 | DONE_VERIFIED (engineering) / PARTIAL (linguistic) | PR #171 merged as `a7cd77c30ff039b594536f72219ccd2a497e7dfd`; PR tests [44733556541](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44733556541), push tests [44733544647](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44733544647), Pages [44733556536](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44733556536), post-merge tests [44734426671](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44734426671), post-merge deploy [44734426858](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44734426858) all SUCCESS. | Independent Yangon IPA gold remains 0; accuracy unmeasured. No expert convention approval or 30-item adjudicated pilot. |
+| BUR-PR-STACK-RECONCILIATION-001 | DONE_VERIFIED | PRs #166–#170 closed as superseded after code/data comparison; branches preserved; #129 left open as separate benchmark research. | No deletion/force push. |
+| BUR-GOLD-PILOT-001 | BLOCKED | Issue #85 remains open. | Human specialist/annotation/rights/private-intake dependency. |
+| BUR-MANUAL-A11Y-001 | TODO | Issue #173 opened. | Manual human accessibility review remains outstanding. |
+
