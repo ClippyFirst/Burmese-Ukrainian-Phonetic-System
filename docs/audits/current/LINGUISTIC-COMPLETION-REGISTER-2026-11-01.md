@@ -3308,3 +3308,9 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 |---|---|---|---|
 | BUR-A11Y-AUTO-001 | DONE_VERIFIED | Exact main HEAD `9083ac45d4eaec324aecbea46e587a07613da4d6`: Tests [44737261587](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44737261587) SUCCESS (325 Python + 68 subtests, 75 Playwright, 0 npm vulnerabilities); Pages/deploy [44737261616](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44737261616) SUCCESS with deployed-site smoke. | Automated page semantics, names, landmarks, alt attributes and basic responsive/keyboard checks. Not a manual audit. |
 | BUR-MANUAL-A11Y-001 | TODO | Issue #173 remains open. | Requires a human tester and evidence from screen readers, keyboard-only flow, 200%/400% zoom, contrast, touch targets and mobile devices. No WCAG claim. |
+
+## Ni (2025) onset-voicing / F0 evidence — 2026-11-20
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| CLM-NI25-ONSET-F0-001 | DONE_VERIFIED (source record and bounded claim) / PARTIAL (phonological coverage) | Source NI2025 and claim CLM-NI25-ONSET-F0-001 registered in canonical CSVs; full-text audit records four Yangon-origin bilingual speakers, restricted /ʔə/+open-/a/ carrier-sentence design, F0-only measures, 61.7% onset-voicing prediction and 47.2% High/Low tone prediction. | Does not support independent tone on minor syllables, isolated citation-form IPA, generalization to all Yangon speakers, or a runtime rule. No gold labels or mappings added. |
