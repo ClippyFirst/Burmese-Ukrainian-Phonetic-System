@@ -3726,3 +3726,13 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | BUR-NI25-PROSODY-EVIDENCE-001 | DONE_VERIFIED (source registered and scope audited) | data/burmese/sources.csv (NI2025), data/burmese/source_claims.csv (CLM-NI25-ONSET-F0-001), and this workpack record study design, bounded findings and non-promotion boundary. | Research evidence only. Does not establish Yangon citation-form IPA, independent lexical gold, a general minor-syllable tone rule or runtime phonology. |
 | BUR-GOLD-PILOT-001 | BLOCKED | Issue [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85). | Expert-approved convention, two independent annotators, separate adjudicator and curator, private blind intake, item-level rights and 30 adjudicated lexeme groups. |
 | BUR-MANUAL-A11Y-001 | TODO (human QA) | Issue [#173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/173). | Manual keyboard/screen-reader/zoom/reflow/contrast/mobile review and remediation; automated tests are not WCAG sign-off. |
+
+
+## Final merged-main verification — 2026-11-20
+
+| Work item | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-FINAL-MAIN-CI-2026-11-20 | DONE_VERIFIED | Final main commit [46b9a089d771eb9cf582a4fd24bead656965e9b0](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/commit/46b9a089d771eb9cf582a4fd24bead656965e9b0); PR #175 merged. Tests [44753083163](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753083163), optional Epitran diagnostics [44753082760](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753082760), and Pages/deploy [44753082850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753082850) all SUCCESS. Pages build and deploy jobs both succeeded. | Hosted exact-final-commit verification. No local checkout/tests in this session. |
+| BUR-GOLD-PILOT-001 | BLOCKED | Issue #85; no independent adjudicated gold. | Expert-approved convention, two independent annotators, separate adjudicator/curator, blind intake, item-level rights and 30 adjudicated lexeme groups. |
+| BUR-MANUAL-A11Y-001 | TODO (human QA) | Issue #173. | Human keyboard, screen-reader, zoom/reflow, contrast, touch-target and mobile QA; automated checks are not WCAG sign-off. |
+| BUR-LICENSE-OWNER-DECISION | BLOCKED | Repository has no declared license; no owner instruction to select one. | Owner chooses and approves repository license. |
