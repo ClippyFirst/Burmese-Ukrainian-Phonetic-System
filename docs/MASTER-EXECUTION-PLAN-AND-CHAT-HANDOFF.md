@@ -3204,3 +3204,24 @@ A fresh parse of the current branch's canonical CSVs (not historical snapshots) 
 - **Research/accessibility boundary unchanged:** independent profile-matched adjudicated IPA gold remains **0**; empirical accuracy remains **null / NOT MEASURED**. Phonological coverage and primary MLC/MLCTS evidence remain incomplete; full manual screen-reader, physical-device/touch-target, zoom/reflow and comprehensive contrast/state QA remain TODO. Independent IPA annotation remains DEFERRED per owner direction; issue #85's human prerequisites are unmet.
 - **Task ledger:** DONE_VERIFIED — exact-main CI, Pages deployment and live smoke for this SHA; PARTIAL — Yangon phonological coverage, MLCTS source conformity and parity against independent gold; BLOCKED — primary MLC notation/entry evidence and item-level reuse rights; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation and stale PR #129 integration.
 - **Readiness:** deployed engineering/research prototype, **not linguistically release-ready** and not WCAG-conformance-certified. Hosted GitHub Actions are the verification evidence; no local checkout/test execution is claimed.
+
+
+## Runtime architecture truth alignment — 2026-11-20
+
+- Dedicated branch: `docs/architecture-runtime-truth-2026-11-20`, based on the then-current default-branch HEAD `f7f7d41a116c265481bdc17c225a763becab6013`.
+- Rewrote `docs/ARCHITECTURE.md` to describe the actual shipped mainline: the browser hybrid diagnostic shell, separate Mya2Rom/MLCTS orthographic route, separate Python rule-engine path, explicit non-parity boundary, typed IPA/adapter requirements, data ownership, security and distinct engineering/linguistic gates. Added the README link.
+- No runtime code, pronunciation data, IPA labels, Ukrainian mappings, generated artifacts or benchmark records changed.
+- Current integration PR #171 was rechecked at head `880520ddc3e6e81b837d6ba9e864bc6686329c2c`, based on `fix/finals-registry-schema-2026-11-17` at `a4f730157c837354fbfb8cbadab8b08279e1fc5e`. It is 184 commits ahead / 0 behind main by ancestry; its comparison against its declared base is 104 commits ahead / 0 behind. The code diff against main is 37 paths. Do not merge the stacked PR blindly or describe its IPA-first changes as mainline until the stack is reconciled.
+- Exact PR-head workflows observed on `880520d`: Tests [44603890674](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44603890674) SUCCESS; Pages [44603890753](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44603890753) SUCCESS; optional Epitran diagnostics [44603890695](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44603890695) SUCCESS. These are PR-head results, not mainline results; optional diagnostics are not gold or accuracy evidence.
+- PR #171 remains OPEN/DRAFT and unmerged; its base was retargeted to `main` on 2026-11-20 after comparing its complete 37-path diff. It is now 184 commits ahead / 0 behind main and GitHub reports it mergeable. PRs #168, #169 and #170 remain open and untouched as superseded/overlapping candidates pending owner review; no branch was deleted or force-updated, and no PR was merged.
+- No local checkout or local test execution was available in this connector session. The architecture documentation changes require exact-head hosted CI before being marked DONE_VERIFIED.
+- Remaining linguistic gates are unchanged: expert-approved versioned Yangon careful-citation IPA convention; qualified independent annotators and separate adjudicator; non-annotating curator; private blind intake; item-level source rights/locators; at least 30 distinct adjudicated lexeme groups. Independent IPA gold remains 0 and empirical accuracy remains unmeasured.
+
+
+### Architecture documentation exact-head CI closeout — 2026-11-20
+
+- Final verified documentation PR head before this evidence synchronization: `734e1a0795c667b205c09951ad1599a5a618d568`.
+- Tests [44721532152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532152) SUCCESS: Python tests, high-severity npm audit, production build, generated-data freshness, Node tests and 74 built-site Playwright tests.
+- Pages [44721532008](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532008) SUCCESS: pinned Google Burmese WFST/OpenFst, symbol-table and browser-input alphabet checks, upstream parity, production build, Node/browser tests and Pages artifact upload. Deploy was SKIPPED for PR event; no production deployment.
+- `BUR-ARCH-DOC-001` is DONE_VERIFIED for architecture-document accuracy and exact-head engineering CI only. No runtime or linguistic data changed.
+- The subsequent evidence-register synchronization creates a new commit; that new head must receive its own CI before being called green.
