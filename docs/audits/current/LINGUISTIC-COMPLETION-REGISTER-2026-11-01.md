@@ -3314,3 +3314,13 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | ID | Status | Evidence | Acceptance boundary |
 |---|---|---|---|
 | CLM-NI25-ONSET-F0-001 | DONE_VERIFIED (source record and bounded claim) / PARTIAL (phonological coverage) | Source NI2025 and claim CLM-NI25-ONSET-F0-001 registered in canonical CSVs; full-text audit records four Yangon-origin bilingual speakers, restricted /ʔə/+open-/a/ carrier-sentence design, F0-only measures, 61.7% onset-voicing prediction and 47.2% High/Low tone prediction. | Does not support independent tone on minor syllables, isolated citation-form IPA, generalization to all Yangon speakers, or a runtime rule. No gold labels or mappings added. |
+
+
+## Final merged-main engineering verification — 2026-11-20
+
+| Task | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-FINAL-MAIN-CI-2026-11-20 | DONE_VERIFIED | Final main [46b9a089d771eb9cf582a4fd24bead656965e9b0](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/commit/46b9a089d771eb9cf582a4fd24bead656965e9b0), PR #175 merged. Tests [44753083163](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753083163), Epitran diagnostics [44753082760](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753082760), Pages/deploy [44753082850](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44753082850): SUCCESS. | Engineering and deployment only; gold and human accessibility gates remain open. |
+| BUR-GOLD-PILOT-001 | BLOCKED | Issue #85; adjudicated IPA gold=0, empirical accuracy unmeasured. | Expert convention, two annotators, adjudicator, curator, blind intake, item-level rights and 30 adjudicated groups. |
+| BUR-MANUAL-A11Y-001 | TODO | Issue #173. | Human assistive-technology and responsive/accessibility audit with remediation evidence. |
+| BUR-LICENSE-OWNER-DECISION | BLOCKED | No repository license; owner decision required. | Owner explicitly selects and approves license. |
