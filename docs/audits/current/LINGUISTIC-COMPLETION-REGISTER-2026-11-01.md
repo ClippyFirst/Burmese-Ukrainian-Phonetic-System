@@ -2694,3 +2694,12 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **Research/accessibility boundary unchanged:** independent profile-matched adjudicated IPA gold remains **0**; empirical accuracy remains **null / NOT MEASURED**. Phonological coverage and primary MLC/MLCTS evidence remain incomplete; full manual screen-reader, physical-device/touch-target, zoom/reflow and comprehensive contrast/state QA remain TODO. Independent IPA annotation remains DEFERRED per owner direction; issue #85's human prerequisites are unmet.
 - **Task ledger:** DONE_VERIFIED — exact-main CI, Pages deployment and live smoke for this SHA; PARTIAL — Yangon phonological coverage, MLCTS source conformity and parity against independent gold; BLOCKED — primary MLC notation/entry evidence and item-level reuse rights; TODO — remaining manual accessibility QA; DEFERRED — independent IPA annotation and stale PR #129 integration.
 - **Readiness:** deployed engineering/research prototype, **not linguistically release-ready** and not WCAG-conformance-certified. Hosted GitHub Actions are the verification evidence; no local checkout/test execution is claimed.
+
+
+## Architecture documentation alignment — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-ARCH-DOC-001 | DONE_VERIFIED | PR #172 head `734e1a0795c667b205c09951ad1599a5a618d568`: Tests [44721532152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532152) SUCCESS; Pages build/artifact [44721532008](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532008) SUCCESS. | Architecture documentation only; no runtime/phonological coverage change. Evidence synchronization creates a subsequent docs-only head requiring its own CI. |
+
+The architecture doc now distinguishes current-main browser/Python paths, MLCTS orthographic romanization, IPA adapter boundary, generated-data ownership, and engineering versus linguistic release gates. Independent Yangon IPA gold remains 0; empirical accuracy remains unmeasured.
