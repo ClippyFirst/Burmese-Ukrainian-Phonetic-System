@@ -3301,3 +3301,10 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | BUR-PR129-RECONCILIATION-001 | DEFERRED | PR #129 is divergent (53 ahead / 42 behind; mergeable=false). Rechecked 21 changed paths; remaining branch versions are stale relative to main, and its Google WFST/Epitran benchmark components are already present. | Leave open as historical context pending owner close decision; do not merge/rebase or delete branch. |
 | BUR-GOLD-PILOT-001 | BLOCKED | Issue #85. Independent adjudicated Yangon IPA gold=0; accuracy null. | Requires specialist-approved convention, qualified annotation/adjudication/curation, private blind intake and rights-cleared pilot. |
 | BUR-MANUAL-A11Y-001 | TODO | Issue #173. | Manual accessibility QA has not been performed. |
+
+## Automated accessibility smoke — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-A11Y-AUTO-001 | DONE_VERIFIED | Exact main HEAD `9083ac45d4eaec324aecbea46e587a07613da4d6`: Tests [44737261587](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44737261587) SUCCESS (325 Python + 68 subtests, 75 Playwright, 0 npm vulnerabilities); Pages/deploy [44737261616](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44737261616) SUCCESS with deployed-site smoke. | Automated page semantics, names, landmarks, alt attributes and basic responsive/keyboard checks. Not a manual audit. |
+| BUR-MANUAL-A11Y-001 | TODO | Issue #173 remains open. | Requires a human tester and evidence from screen readers, keyboard-only flow, 200%/400% zoom, contrast, touch targets and mobile devices. No WCAG claim. |

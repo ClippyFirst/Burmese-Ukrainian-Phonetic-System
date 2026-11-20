@@ -3710,3 +3710,10 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | BUR-PR129-RECONCILIATION-001 | DEFERRED (historical divergent PR) | PR #129 remains 53 ahead / 42 behind and mergeable=false. All 21 paths compared; optional Epitran workflow, Google WFST benchmark script and test are identical to main, while other paths are older/different versions of code/docs already represented in main. A current-state comment is recorded on PR #129. | Do not merge/rebase stale branch; owner may close it as historical context. No branch deletion. |
 | BUR-GOLD-PILOT-001 | BLOCKED (human/source-rights dependency) | Issue [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85). | Approved convention, two independent annotators, adjudicator, curator, blind intake and 30 rights-cleared adjudicated lexeme groups. |
 | BUR-MANUAL-A11Y-001 | TODO (human QA) | Issue [#173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/173). | Manual keyboard/screen-reader/zoom/reflow/contrast/mobile review and retest. |
+
+## Automated accessibility smoke — 2026-11-20
+
+| Work item | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-A11Y-AUTO-001 | DONE_VERIFIED (automated smoke only) | Main HEAD `9083ac45d4eaec324aecbea46e587a07613da4d6`: Tests [44737261587](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44737261587) SUCCESS (325 Python + 68 subtests; 75 Playwright; npm audit 0 vulnerabilities); Pages/deploy [44737261616](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44737261616) SUCCESS including deployed-site/runtime-asset smoke. | Automated semantics/named controls/links, landmarks, image alt, skip navigation, keyboard, reduced motion, narrow reflow and placeholder contrast only. Does not replace manual assistive-technology or WCAG review. |
+| BUR-MANUAL-A11Y-001 | TODO (human QA) | Issue [#173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/173). | Complete keyboard-only end-to-end, screen-reader, 200%/400% zoom, contrast, touch-target and mobile/device evidence; remediate and retest. |
