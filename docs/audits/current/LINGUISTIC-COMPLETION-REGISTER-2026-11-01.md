@@ -3273,3 +3273,11 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 |---|---|---|---|
 | BUR-IPA-FIRST-INTEGRATION-001 | PARTIAL (engineering verified; merge/release and linguistic acceptance pending) | Exact head `9d39110ca5f7e30f6449e1975633f79f7421a429`: PR Tests [44724860279](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860279) SUCCESS; Push Tests [44724850117](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724850117) SUCCESS; Pages artifact [44724860172](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860172) SUCCESS; optional diagnostics [44724860152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860152) SUCCESS. | Engineering contract and tests are green; no independent adjudicated IPA gold, no empirical accuracy score, and no complete prosodic/phonological inventory. PR #171 remains draft/unmerged pending owner review. |
 
+
+
+## Burmese IPA-first architecture documentation reconciliation — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-ARCH-DOC-002 | DONE_VERIFIED (documentation content; exact-head CI pending) | Root `docs/ARCHITECTURE.md` updated in PR #171 to match the registry-backed Python/browser IPA-first runtime, canonical CSV registries, generated browser data, typed IPA boundary and diagnostic-only external models. | Describes implementation topology, not linguistic completeness. Tone, phonation, quantity, profile adjudication and independent gold remain unresolved. |
+
