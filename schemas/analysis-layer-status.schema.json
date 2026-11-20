@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BurmeseAnalysisLayerStatuses",
+  "type": "object",
+  "required": ["runtime"],
+  "properties": {
+    "runtime": { "enum": ["python", "browser"] }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "runtime": { "const": "python" } } },
+      "then": {
+        "required": ["graphemic_status", "phonology_status", "ipa_status", "ukrainian_status"],
+        "properties": {
+          "graphemic_status": {
+            "enum": ["ESTABLISHED", "PARTIAL", "UNSUPPORTED", "NOT_APPLICABLE"]
+          },
+          "phonology_status": {
+            "enum": ["SEGMENTAL_ONLY", "PARTIAL", "NOT_ESTABLISHED", "NOT_APPLICABLE"]
+          },
+          "ipa_status": { "enum": ["analysis_dependent", "not_established"] },
+          "ukrainian_status": {
+            "enum": ["not_established", "analysis_dependent", "proposed"]
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "runtime": { "const": "browser" } } },
+      "then": {
+        "required": ["graphemicStatus", "phonologyStatus", "ipaStatus", "ukrainianStatus"],
+        "properties": {
+          "graphemicStatus": {
+            "enum": ["ESTABLISHED", "PARTIAL", "UNSUPPORTED", "NOT_APPLICABLE"]
+          },
+          "phonologyStatus": {
+            "enum": ["SEGMENTAL_ONLY", "PARTIAL", "NOT_ESTABLISHED", "NOT_APPLICABLE"]
+          },
+          "ipaStatus": {
+            "enum": [
+              "ESTABLISHED", "WELL_SUPPORTED", "PROPOSED", "PARTIAL",
+              "ANALYSIS_DEPENDENT", "NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN"
+            ]
+          },
+          "ukrainianStatus": {
+            "enum": [
+              "ESTABLISHED", "WELL_SUPPORTED", "PROPOSED", "PROVISIONAL",
+              "ANALYSIS_DEPENDENT", "NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

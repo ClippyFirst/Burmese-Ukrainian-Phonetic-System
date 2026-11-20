@@ -44,6 +44,29 @@ function aggregate(statuses, fallback = "NOT_ESTABLISHED") {
   return statuses.reduce((worst, item) =>
     (STATUS_RANK[item] ?? 5) > (STATUS_RANK[worst] ?? 0) ? item : worst, "ESTABLISHED");
 }
+function graphemicLayerStatus(records) {
+  if (!records.length) return "NOT_APPLICABLE";
+  const statuses = records.map(({ segment }) => {
+    if (segment.structureStatus) return segment.structureStatus;
+    if (segment.status === "UNSUPPORTED") return "unsupported_or_malformed";
+    if (segment.status === "UNCERTAIN") return "partially_unparsed";
+    return "established";
+  });
+  if (statuses.some(status => ["invalid", "unsupported_or_malformed"].includes(status))) return "UNSUPPORTED";
+  if (statuses.some(status => status !== "established")) return "PARTIAL";
+  return "ESTABLISHED";
+}
+function phonologyLayerStatus(records) {
+  if (!records.length) return "NOT_APPLICABLE";
+  const statuses = records.map(({ segment, deterministicIpa }) => {
+    if (segment.phonology?.status === "SEGMENTAL_ONLY") return "SEGMENTAL_ONLY";
+    if (segment.phonology?.segments?.length) return "PARTIAL";
+    return deterministicIpa ? "SEGMENTAL_ONLY" : "NOT_ESTABLISHED";
+  });
+  if (statuses.every(status => status === "SEGMENTAL_ONLY")) return "SEGMENTAL_ONLY";
+  if (statuses.some(status => ["PARTIAL", "SEGMENTAL_ONLY"].includes(status))) return "PARTIAL";
+  return "NOT_ESTABLISHED";
+}
 function typedCandidate(provider, ipa, status, provenance = {}, profile = "UNSPECIFIED") {
   return {
     kind: "IPA_CANDIDATE", notation: "IPA", provider, raw: ipa,
@@ -208,7 +231,8 @@ export function analyzeHybrid(segments, googleModel = null) {
       return adaptation?.text && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN", "PROVISIONAL"].includes(adaptation.status)
         ? adaptation.text : "⟦" + item.segment.raw + "⟧";
     }).join(""),
-    status, ipaStatus, ukrainianStatus, records,
+    status, graphemicStatus: graphemicLayerStatus(phonetic),
+    phonologyStatus: phonologyLayerStatus(phonetic), ipaStatus, ukrainianStatus, records,
     providers: {
       project: "ACTIVE · conservative deterministic browser rules",
       epitran: "ACTIVE · Epitran 1.35.3 Burmese mapping port · diagnostic candidate",

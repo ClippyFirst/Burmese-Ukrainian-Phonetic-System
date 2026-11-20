@@ -10,6 +10,7 @@ from typing import Any
 
 from .ipa import ONSET_IPA, to_ipa
 from .practical import transcribe_ipa
+from .unicode import is_myanmar
 
 
 def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -60,6 +61,41 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
         "syllables": previews,
         "warnings": ["LOW_CONFIDENCE", "TONE_NOT_INFERRED"],
     }
+
+
+def _phonological_units(syllables: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Exclude mixed-script passthrough runs, matching the browser's Myanmar boundary."""
+    return [
+        item for item in syllables
+        if any(is_myanmar(char) and not 0x1040 <= ord(char) <= 0x104B
+               for char in item.get("raw", ""))
+    ]
+
+
+def _graphemic_layer_status(syllables: list[dict[str, Any]]) -> str:
+    """Summarize orthographic analysis without borrowing phonological certainty."""
+    units = _phonological_units(syllables)
+    if not units:
+        return "NOT_APPLICABLE"
+    statuses = {item.get("status", "established") for item in units}
+    if statuses & {"invalid", "unsupported_or_malformed"}:
+        return "UNSUPPORTED"
+    if statuses != {"established"}:
+        return "PARTIAL"
+    return "ESTABLISHED"
+
+
+def _phonology_layer_status(syllables: list[dict[str, Any]]) -> str:
+    """Report source-side phonological coverage separately from IPA/adaptation."""
+    units = _phonological_units(syllables)
+    if not units:
+        return "NOT_APPLICABLE"
+    analyses = [item.get("phonology") or {} for item in units]
+    if all(item.get("status") == "SEGMENTAL_ONLY" and item.get("ipa") for item in analyses):
+        return "SEGMENTAL_ONLY"
+    if any(item.get("segments") for item in analyses):
+        return "PARTIAL"
+    return "NOT_ESTABLISHED"
 
 
 class RuleBasedBurmeseEngine:
@@ -124,6 +160,8 @@ class RuleBasedBurmeseEngine:
             "phonetic_completeness": "SEGMENTAL_ONLY" if segmental_complete else "INCOMPLETE",
             "prosody_status": "not_established",
             "profile_status": "PROFILE_SCOPED_NOT_INDEPENDENTLY_ADJUDICATED",
+            "graphemic_status": _graphemic_layer_status(syllables),
+            "phonology_status": _phonology_layer_status(syllables),
             "ukrainian": practical_text,
             "ukrainian_status": practical_status,
             "canonical_ukrainian": None,

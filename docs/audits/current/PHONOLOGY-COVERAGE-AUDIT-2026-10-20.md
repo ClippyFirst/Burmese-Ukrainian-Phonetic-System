@@ -138,3 +138,49 @@ Exact tested code/data head cda73ccb7fa80a0404fed5a65588ebd690253f94 passed CI 4
 The registries contain 59 sources, 81 claims, 45 medial rows, 30 phonological rules and 7 source-phonemic sandhi cases. Okell (1995) regional and Nishi (1998) historical evidence is source-linked/tested and withheld from runtime. SEAlang interface-level IPA support is confirmed by the 2008 project description, but internal storage vs MLCTS2 remains unresolved. Okell (1969) and Nishi (1976) remain unread primary-source targets.
 
 Text permissions are confirmed; remaining blockers are retrieval/schema and data quality. No audio was used. IPA gold=0; empirical accuracy=null; no runtime rules promoted.
+
+
+### Runtime architecture update — 2026-11-16
+
+The Burmese runtime now follows a clearer staged boundary inspired by the Lao implementation architecture: parser output → registry-backed phonology → typed segmental IPA → completeness/profile gate → Ukrainian adapter. This is an architecture transfer only; no Lao phonological rule or sound value was copied.
+
+Python `phonologize_syllable()` and browser `phonologizeSyllable()` read the same canonical onset/vowel correspondences (Python directly from CSV; browser from generated data) and emit the same typed segmental result. The result preserves source component IDs, IPA values, registry status, source evidence and unresolved features. The browser's previous inline IPA derivation block has been replaced by the dedicated stage. The Python wheel now packages the canonical CSV registries.
+
+The shared contract fixture exercises:
+- established simple CV segmental output;
+- ya-medial withholding;
+- checked-coda withholding;
+- prosodic-marker withholding;
+- analysis-dependent onset and vowel withholding;
+- isolated bare-consonant / inherent-vowel withholding.
+
+Earlier implementation-head CI [43940264184](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43940264184) passed 320 Python tests + 68 subtests, wheel registry verification, 48 Node tests, 72 built-browser tests, production build, generated-data freshness and npm audit (0 vulnerabilities).
+
+**Coverage interpretation:** DONE_VERIFIED for the typed registry boundary and the explicit shared fixtures only. PARTIAL for full Python/browser parser and phonological parity. No vowel combination, medial, coda, checked-syllable, tone, register, phonation or quantity rule was added. Independent adjudicated IPA gold remains 0; empirical accuracy remains null. This is not evidence of improved phonetic accuracy or release readiness.
+
+### Final integration verification — 2026-11-16
+
+The implementation is available in [PR #167](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/167). Runtime-head PR test workflow [43943933652](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933652) passed: 320 Python tests + 68 subtests, 49 Node tests and 73 built-browser tests. The Python wheel includes the canonical onset/vowel registries. Runtime-head Pages PR build [43943933659](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43943933659) also passed its pinned Google WFST/OpenFst build, symbol-table checks, upstream CLI parity and built-browser checks; deployment was skipped for the PR event. A later documentation-checkpoint test workflow [43946446370](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43946446370) passed; Pages workflow [43946446443](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43946446443) was still running at last inspection. Subsequent commits only corrected documentation evidence.
+
+The shared cross-runtime contract now explicitly withholds multi-sign vowel sequences unless a dedicated combination rule is sourced, and preserves adjacent bare-consonant placeholders as incomplete. This does not change the linguistic coverage assessment: vowel combinations, medials, codas/checked syllables, nasalization and prosody remain incomplete; independent adjudicated IPA gold remains 0 and empirical accuracy remains null.
+
+
+### Final architecture and evidence checkpoint — 2026-11-16
+
+- The Lao-inspired architecture transfer is now verified as an engineering boundary: parser output → shared registry-backed onset/vowel phonology → typed segmental IPA → completeness/profile gate → Ukrainian adapter. Python and browser consume the same canonical onset/vowel correspondence data; Python wheel packaging is verified.
+- Exact implementation-head workflow [43949402563](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43949402563) passed on `78308eb897116491b634e723de1918debcf2f929`: 320 Python tests + 68 subtests, 49 Node tests, 73 built-browser Playwright tests, wheel registry verification, IPA corpus structural validation, production build, generated-data freshness and npm audit with 0 vulnerabilities.
+- Exact-head Pages build [43949402698](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43949402698) passed pinned Google Burmese WFST/OpenFst compilation, symbol-table and input-alphabet checks, upstream `thrax_g2p` CLI parity, production site build, 73 browser tests and Pages artifact upload. Deployment was skipped because this was a PR event.
+- The declared shared fixture set proves only the represented cases. It does not establish full parser parity, complete Burmese phonology or empirical accuracy. Multi-sign vowel combinations, medials, codas/checked syllables, nasalization, tone/register/phonation and quantity remain withheld where their realization is not source-adjudicated.
+- No new Burmese phonological rule, IPA label, Ukrainian correspondence, gold-corpus entry, dialect claim or third-party asset was introduced by the architecture transfer. Independent profile-matched adjudicated IPA gold remains **0**; empirical word-level IPA and Ukrainian name-level accuracy remain **not measured**.
+- Current status: typed registry boundary and declared fixtures — DONE_VERIFIED; complete parser/phonology parity — PARTIAL; vowel/coda realization — TODO/evidence-limited; tone/register/phonation/quantity — BLOCKED pending specialist/profile adjudication; independent gold — BLOCKED / DEFERRED under owner direction.
+- Review remains stacked: PR #166 is the documentation base; PR #167 contains the architecture implementation. Both remain open and unmerged. No production deployment occurred.
+- A non-blocking Pages-workflow warning notes that `actions/setup-java@v4` and `bazelbuild/setup-bazelisk@v3` target Node.js 20 while the runner forces Node.js 24. The current pinned WFST build and tests passed; treat action-runtime modernization as maintenance work requiring a verified compatible version and exact-head rerun, not as a linguistic blocker.
+
+
+### CI maintenance migration and exact code-head verification — 2026-11-16
+
+- The Pages workflow migrated from archived `bazelbuild/setup-bazelisk@v3` and deprecated `actions/setup-java@v4` to pinned Node 24 actions: `actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880` (v6) and `bazel-contrib/setup-bazel@104e3eea9447cdaa4b00d0fb46191a3985d26ab3` (0.19.1). Bazelisk 1.30.0 is pinned; Java 17, Bazel 7.4.1 and all upstream Google/OpenFst/Thrax source pins are unchanged.
+- Exact code-head test workflow [43959491958](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43959491958) SUCCESS: 320 Python + 68 subtests, 49 Node, 73 browser tests, wheel/registry verification, IPA corpus structural validation, generated-data freshness and npm audit 0 vulnerabilities.
+- Exact code-head Pages build [43959491968](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43959491968) SUCCESS: new action setup, Google Burmese WFST/OpenFst build, IPA symbol-table and input-alphabet checks, upstream `thrax_g2p` parity, site build, 73 browser tests and Pages artifact upload. Deployment skipped for PR event.
+- The Node.js 20 deprecation warning is resolved. A non-fatal GCC `-Wstringop-overflow` warning remains in the legacy upstream native build; it did not affect the successful build/tests.
+- This is CI maintenance only. No source phonological value, IPA label, Ukrainian mapping, dialect assertion or gold-corpus entry changed. Independent profile-matched adjudicated IPA gold remains 0; empirical accuracy remains unmeasured. The language-coverage statuses above remain unchanged.

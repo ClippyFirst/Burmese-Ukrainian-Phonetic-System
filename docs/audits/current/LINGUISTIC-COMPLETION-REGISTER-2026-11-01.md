@@ -2696,10 +2696,588 @@ The current branch remains 1,139 commits ahead of and 0 behind `main`; PR #147 i
 - **Readiness:** deployed engineering/research prototype, **not linguistically release-ready** and not WCAG-conformance-certified. Hosted GitHub Actions are the verification evidence; no local checkout/test execution is claimed.
 
 
-## Architecture documentation alignment — 2026-11-20
+## Registry data-integrity checkpoint — 2026-11-17
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BURMESE-FINALS-REGISTRY-CSV-001 | DONE_VERIFIED (CSV structure only) | `data/burmese/finals.csv` header corrected from four columns to five; `tests/test_finals_registry.py` verifies field alignment, source references and evidence-status values. Hosted PR test run [44151973458](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44151973458): pytest passed; the workflow then failed at the separate npm audit gate. | This does not establish any new Burmese coda or final realization. Keep asat, anusvara, visarga, kinzi, abstract /N/, glottal /ʔ/ and surface nasalization distinct. Full CI remains blocked by GHSA-fc5q-39xc-vjpf / CVE-2026-112366 until a safe dependency path is available. Independent IPA gold remains 0. |
+
+
+### Exact-head engineering verification — 2026-11-17
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BURMESE-FINALS-REGISTRY-CSV-001 | DONE_VERIFIED (CSV structure and hosted regression tests) | Exact-head pytest in [44152143092](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44152143092): 317 passed, 68 subtests; IPA corpus structure validation also passed. Exact-head Pages build [44152143185](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44152143185) SUCCESS: Google WFST build/parity, production build, Node tests and built-site Playwright all passed; Pages artifact uploaded (ID 14360401415). | Pages PR preview did not deploy to production. Main test workflow still fails at mandatory npm audit high-severity gate for transitive picomatch. This verifies engineering behavior only; no Burmese coda/final phonetic realization or IPA gold claim is established. |
+
+**Security gate remains BLOCKED:** the exact-head main test run failed only after pytest and `npm ci` at the mandatory high-severity npm advisory check; later steps in that workflow were skipped. Separate Pages workflow confirms the build/test/browser path succeeds when it reaches those steps, but does not resolve the vulnerability or make the required test workflow green. Do not bypass audit or perform an unverified breaking downgrade. Independent profile-matched IPA gold remains 0; accuracy remains null.
+
+
+### npm advisory dependency trace — 2026-11-17
+
+- Resolved `picomatch@4.0.7` is a transitive development dependency through `vite@8.3.8` (`^4.0.7`) and `tinyglobby@0.2.17` (`^4.0.4`). No direct application dependency was identified.
+- GHSA [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) has no official fixed release/version listed. Upstream issue [micromatch/picomatch#247](https://github.com/micromatch/picomatch/issues/247) is the relevant remediation discussion. Upstream PR #194 is unrelated to this ReDoS advisory and must not be treated as a fix.
+- No third-party fork, override, downgrade, audit bypass or lockfile fabrication was accepted. **Status: BLOCKED** pending a trustworthy fixed release/replacement and verified compatibility/security regression testing.
+
+
+## Latest PR-head verification refresh — 2026-11-17
+
+- **Exact PR head inspected:** `9efcb955eb24d204e17d77b8cda29e863f66b03a`; PR [#168](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/168) remains open, mergeable, and based on `main` at `f7f7d41a116c265481bdc17c225a763becab6013`. No merge or production deployment was performed.
+- **DONE_VERIFIED — corpus structure and Python suite:** latest-head test workflow [44163332955](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44163332955) passed independent IPA corpus structure validation and pytest (**317 passed, 68 subtests passed**). `npm ci` also succeeded.
+- **BLOCKED — mandatory npm audit:** the same workflow failed at `npm audit --audit-level=high` with four high-severity findings resolving to `picomatch` through `fdir`, `tinyglobby` and Vite. npm proposed `vite@6.2.7` only via a breaking `--force` downgrade. Build, generated-data, Node and Playwright steps were skipped in this workflow. Do not call this workflow green or bypass the audit gate.
+- **DONE_VERIFIED — independent build/browser path on latest head:** Pages workflow [44163333101](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44163333101) passed pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input-alphabet validation, upstream `thrax_g2p` parity, production build, Node tests, Chromium installation, built-site Playwright tests, and Pages artifact upload. PR deploy job was skipped as expected; no production deployment is claimed.
+- **Security evidence refresh:** GitHub advisory [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf), crawled on 2026-11-17, still lists no patched version; upstream [picomatch issue #247](https://github.com/micromatch/picomatch/issues/247) remains open. The advisory is for single-branch repeated-extglob ReDoS. Upstream PR #194 is not a demonstrated fix for this case. No downgrade, fork override, lockfile fabrication, audit suppression, or speculative patch was introduced.
+- **Task ledger:** DONE_VERIFIED — finals CSV five-column contract, source/status integrity tests, 317 Python tests + 68 subtests, and separate latest-head build/Node/browser/Pages-artifact path. BLOCKED — required high-severity npm audit gate pending an official fixed release or independently reviewed replacement with compatibility and adversarial ReDoS tests. PARTIAL/BLOCKED research gates remain unchanged: independent profile-matched IPA gold = 0; accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS evidence and reuse rights unresolved; manual accessibility QA incomplete; independent IPA annotation deferred.
+- **Readiness:** engineering checks are substantially verified, but the required CI security gate remains red and linguistic validation is incomplete. Repository remains a deployed research/engineering prototype, not linguistically release-ready.
+
+
+## Duplicate-marker regression guard — 2026-11-17
+
+- Added an explicit assertion to `tests/test_finals_registry.py` that every `orthographic_marker` is unique before constructing the marker-indexed test dictionary. This prevents a duplicate CSV key from being silently overwritten by Python dictionary construction and masking a registry defect.
+- Code commit: `0bd0a4527bee30cf334490c1a57c6782d0539b2d`.
+- **Verification status: PARTIAL / CI PENDING.** The GitHub Actions workflow file `.github/workflows/test.yml` runs on push and pull request, but no workflow run was returned for this exact commit at the time of this checkpoint. Do not claim this added assertion passed CI until a run on this SHA is observed. Existing evidence for the prior code-bearing head remains 317 pytest passes + 68 subtests, plus the separate Pages build/browser success; the npm audit failure remains unresolved.
+- No CSV data, linguistic interpretation, IPA, Ukrainian mapping, runtime behavior or generated artifact changed.
+
+
+## Exact duplicate-guard CI and upstream remediation-triage refresh — 2026-11-17
+
+- **DONE_VERIFIED — duplicate-marker regression:** exact code commit `0bd0a4527bee30cf334490c1a57c6782d0539b2d` was tested by workflow [44169948734](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44169948734). Corpus structure validation passed; pytest passed (**317 passed, 68 subtests passed**), including the new uniqueness assertion for `orthographic_marker`; `npm ci` passed.
+- **BLOCKED — mandatory audit remains unchanged:** workflow 44169948734 failed at `npm audit --audit-level=high` with four high findings for transitive `picomatch` / GHSA-fc5q-39xc-vjpf. Build, generated-data freshness, Node and Playwright steps in this workflow were skipped. No audit bypass or forced downgrade.
+- **PAGES BUILD PENDING at this checkpoint:** Pages workflow [44169948381](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44169948381) is still in progress on the same code commit; only setup/toolchain preparation had completed at last inspection. Do not claim a result until it finishes.
+- **Upstream remediation candidates found, not adopted:** picomatch PR [#237](https://github.com/micromatch/picomatch/pull/237) proposes collapsing certain single-branch repeated-star extglobs; PR [#238](https://github.com/micromatch/picomatch/pull/238) literalizes leading bare quantifiers and explicitly documents an uncovered structurally similar nested-extglob case (example `+(*(ab)c)`). Both target `master`, remain open/unmerged, and have no published release. PR [#246](https://github.com/micromatch/picomatch/pull/246) targets the separate `v2` branch only. These are candidate upstream work, not a vetted released fix; no patch was vendored or dependency override introduced.
+- **Release evidence:** npm still lists picomatch 4.0.7 as latest; the GitHub advisory identifies versions through 4.0.7 as affected and lists no patched version. Treat contradictory third-party scanner summaries as insufficient to override the official GitHub Actions audit failure.
+- **Acceptance remains:** await an upstream-reviewed, released fix (or independently review a replacement comprehensively), test adversarial ReDoS cases and API compatibility, then pass mandatory npm audit and full exact-head build/generated-data/Node/Playwright CI.
+- No pronunciation, IPA, Ukrainian mapping, generated data or runtime behavior changed. The duplicate-key test is a registry-integrity guard only.
+
+
+### Upstream patch review details
+
+- PR #237's v4/master patch rewrites a single-branch repeated-star extglob by collapsing the outer quantifier. The inspected patch does not add a capture-mode-specific fallback; because collapsing may change the final repeated capture, its public tests do not establish capture-semantic compatibility. It is not safe to transplant without additional API-level tests.
+- PR #238 uses a narrower literal fallback for leading bare `*`/`?` followed by content. It preserves examples such as `+(*)` and `+(a*)`, but its author explicitly lists `+(*(ab)c)` as an uncovered structurally similar case. Its own upstream test count is not a substitute for testing against this repository's pinned dependency tree.
+- PR #246 contains a more explicit capture-mode fallback and subprocess timeout tests, but targets the separate `v2` branch, not the v4/master dependency used here.
+- Therefore the current dependency path remains **BLOCKED**. Acceptance requires upstream integration/release or a separately reviewed replacement that covers the v4 API, capture semantics, documented nested cases, and adversarial timeout regressions. No one of these open PRs is treated as a security fix.
+
+
+## Latest exact-branch workflow reconciliation — 2026-11-17
+
+- Branch tip verified: `801c4ce9bb9d3ecb666699b28cd3b9d90ccc94d6`; compare against `main`: 25 commits ahead / 0 behind, five changed files. This is a documentation-only head after the tested code commit `0bd0a4527bee30cf334490c1a57c6782d0539b2d`.
+- **DONE_VERIFIED — latest test workflow [44170484469](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44170484469):** corpus structure validation, Python dependency installation and pytest all succeeded; `npm ci` succeeded. The mandatory `npm audit --audit-level=high` step failed. Build, generated-data freshness, Node and Playwright steps were skipped. The exact unresolved failure remains four high-severity transitive `picomatch` advisories; do not mark the required test workflow green.
+- **DONE_VERIFIED — latest Pages build [44170484445](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44170484445):** pinned Google Burmese WFST/OpenFst build, IPA symbol-table and browser input-alphabet checks, upstream `thrax_g2p` parity, production build, Node tests, Chromium setup, built-site Playwright tests and Pages artifact upload all succeeded. The deploy job was skipped for this PR event; no production deployment occurred.
+- These latest results supersede the earlier checkpoint that listed Pages run 44169948381 as pending. The Pages build is now complete and successful. The separate mandatory test workflow remains failed solely at the high-severity audit step after its preceding Python/pytest/npm-install steps passed.
+- **Readiness unchanged:** engineering/build/browser verification is strong, but the mandatory security gate remains blocked; independent adjudicated Yangon-profile IPA gold remains 0 and linguistic coverage, primary-source/licensing evidence and manual accessibility checks remain incomplete. The repository remains a research/engineering prototype, not linguistically release-ready.
+
+
+## Final status of latest branch workflows — 2026-11-17 22:59 +0200
+
+- **DONE_VERIFIED — test workflow [44172701789](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44172701789):** completed. Corpus structure validation, Python dependency installation, pytest and `npm ci` passed; mandatory `npm audit --audit-level=high` failed; build, generated-data freshness, Node and Playwright steps were skipped.
+- **DONE_VERIFIED — Pages workflow [44172701859](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44172701859):** completed successfully. The build job passed Google Burmese WFST/OpenFst, IPA symbol-table/input-alphabet checks, upstream `thrax_g2p` parity, production build, Node tests, Chromium installation, built-site Playwright tests and Pages artifact upload. The deploy job was skipped for the PR event.
+- Thus the Pages run previously pending at the 22:xx checkpoint is now confirmed successful; no production deployment occurred. The latest exact branch tip remains `b3ace2fe741550d1697220507f76cfa6b74f6afd`, 28 commits ahead / 0 behind `main`, with the same five-file PR diff.
+- **Upstream security review rechecked at 22:59 +0200:** picomatch PRs [#237](https://github.com/micromatch/picomatch/pull/237) and [#238](https://github.com/micromatch/picomatch/pull/238) are still open/unmerged and target `master`; PR [#246](https://github.com/micromatch/picomatch/pull/246) is still open/unmerged and targets `v2`. #238 was updated 2026-11-17 18:37 UTC but explicitly leaves the nested-extglob shape `+(*(ab)c)` outside its patch. #237 collapses eligible one-branch star extglobs but changes capture behavior unless specially handled; its patch has no capture-mode-specific fallback. #246 includes a capture-mode fallback but is v2-only. None is a published v4 fix.
+- **Correction to prior security notes:** upstream PR [#194](https://github.com/micromatch/picomatch/pull/194) is not a fix for CVE-2026-112366; it addresses leading `?` parsing in extglob bodies and remains open. Do not cite it as a remediation for this ReDoS.
+- Current primary advisory mirror records the affected range through `picomatch@4.0.7`, with no fixed version stated; upstream issue [#247](https://github.com/micromatch/picomatch/issues/247) remains open. No safe dependency fix was identified. No patch, override, downgrade, audit suppression or lockfile edit was made.
+- **Acceptance remains BLOCKED:** a reviewed/released v4 fix or independently verified compatible replacement; tests for default and capture modes, nested extglob boundaries, and adversarial timeouts; mandatory audit passes; then full test workflow including build, generated-data, Node and Playwright passes on the exact final code head.
+- No linguistic labels, IPA, Ukrainian mappings, gold-corpus data, runtime code or dependencies changed in this continuation. Independent adjudicated IPA gold remains 0; accuracy unmeasured; linguistic coverage, source/license evidence and manual accessibility QA remain incomplete.
+
+
+
+## Latest exact-head verification — 2026-11-17
+
+- PR [#168](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/168) remains OPEN and mergeable. Branch head: `733b383034120000f817cc877f0062f825f5dd2c`; 31 ahead / 0 behind `main`; five changed files.
+- **DONE_VERIFIED — structural registry work:** five-column `data/burmese/finals.csv` contract and uniqueness regression guard are present; no phonological realization or Ukrainian output is inferred by this repair.
+- **DONE_VERIFIED — exact-head Pages workflow [44175250086](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44175250086):** pinned WFST/OpenFst, IPA symbol table, browser alphabet, upstream parity, production build, Node tests, Playwright and artifact upload passed. PR deploy job skipped; no deployment claim.
+- **PARTIAL / BLOCKED — exact-head test workflow [44175250073](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44175250073):** corpus structure validation, Python test dependency install, pytest and `npm ci` passed; mandatory high-severity npm audit failed. Build, generated-data, Node and Playwright steps skipped in this workflow. The separate Pages workflow does not satisfy or bypass this security gate.
+- **BLOCKED:** transitive `picomatch@4.0.7` advisory; acceptance requires a trustworthy fixed release or reviewed compatible replacement, default/capture-mode and nested-extglob regressions, adversarial timeout checks, mandatory audit pass, and full test workflow pass on the exact final head.
+- **Research status unchanged:** independent profile-matched adjudicated IPA gold = 0; accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS source evidence and reuse rights unresolved; manual accessibility QA incomplete; independent IPA annotation DEFERRED. No gold values or pronunciation claims were fabricated.
+- **Readiness:** engineering/research prototype, not linguistically release-ready. This exact-head record supersedes prior pending/stale CI checkpoints.
+
+
+
+## ReDoS candidate reassessment — 2026-11-17
+
+- New upstream v4-line candidates: [picomatch #261](https://github.com/micromatch/picomatch/pull/261) and [#262](https://github.com/micromatch/picomatch/pull/262), both open/unmerged. [#263](https://github.com/micromatch/picomatch/pull/263) targets v2 only.
+- #261 proposes mandatory bounded ambiguity analysis over the generated regex, including final-output checks for wrappers and fail-closed handling of unproven patterns, even with `maxExtglobRecursion: false`. It excludes capture-dependent collapse rewrites and reports 2,009 tests plus adversarial/compatibility coverage. This is the more complete security candidate, but it changes behavior by rejecting some formerly accepted unsafe patterns and is not merged/released.
+- #262 preserves more legacy matching behavior and reports 2,001 tests plus large finite differential/adversarial test sets, but its explicit `maxExtglobRecursion: false` bypass remains. It is not a complete mandatory guard.
+- Both remain proposals, not verified release fixes. Candidate CI was not independently established as green in this inspection. No patch or lockfile change was made.
+- Snyk revocation chatter does not clear GitHub's published GHSA or the repository's failing mandatory npm audit. Upstream issue #247 remains open; the exact project gate still fails on locked `picomatch@4.0.7`.
+- **Status:** BLOCKED pending maintainer-reviewed v4 release/replacement, full compatibility/security review and green exact-head audit + CI. Do not report the advisory as resolved.
+
+
+
+## Dependency graph clarification — 2026-11-17
+
+- Lockfile v3 confirms the root declares Vite `8.3.8` only as a devDependency; `picomatch` is not a direct application dependency. Locked `picomatch@4.0.7` is selected by Vite `^4.0.7` and tinyglobby `^4.0.4`; fdir `6.5.0` metadata also permits v4. This limits the current dependency exposure to the build/test toolchain but does not waive the mandatory CI audit.
+- The GitHub-reviewed OSV record updated 2026-11-17 15:56 UTC still identifies versions through 4.0.7 as affected, CVSS 4.0 8.7, with no fixed version. The Snyk-revocation report is specific to that feed and is not a clearing signal for GitHub/npm audit.
+- Dependency manifests and lockfile remain unchanged; security status remains BLOCKED.
+
+
+## Latest exact branch CI evidence — 2026-11-17
+
+- Branch head: `bc9c25dfe5bf30df5e05787144a8af0f9f5e01b0`; 40 commits ahead / 0 behind `main`; five changed files.
+- **DONE_VERIFIED — independent Pages build/browser path:** [workflow 44181463115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463115) passed pinned Google Burmese WFST/OpenFst, IPA symbol-table and browser alphabet checks, upstream `thrax_g2p` parity, production build, Node tests, Chromium, built-site Playwright and Pages artifact upload. Deploy skipped for PR event.
+- **BLOCKED — required test workflow:** [workflow 44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094) passed corpus structure validation, Python dependency install, pytest and `npm ci`, then failed mandatory `npm audit --audit-level=high`. Build, generated-data, Node and Playwright steps skipped.
+- The two workflows provide complementary evidence, not a green full test workflow. Keep security acceptance blocked until a reviewed/released compatible fix or replacement passes mandatory audit and full exact-head CI.
+- No new linguistic evidence was introduced: independently adjudicated IPA gold remains 0; accuracy remains unmeasured. Existing phonology, source/licensing and accessibility blockers remain.
+
+
+## Latest exact-head CI reconciliation — 2026-11-18
+
+- Current PR #168 head is `15a82b5bcf5ca7d11d204181517828dca92cc0a9` (43 commits ahead / 0 behind `main`; five changed files). Earlier head references in this register are historical snapshots, not the current tip.
+- **DONE_VERIFIED — Pages workflow [44181463115](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463115):** pinned WFST/OpenFst, IPA and browser alphabet invariants, upstream parity, production build, Node and built-site Playwright tests, and artifact upload passed; deploy skipped for PR event.
+- **BLOCKED — required test workflow [44181463094](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44181463094):** corpus validation, Python install, pytest and `npm ci` passed; mandatory high-severity npm audit failed; subsequent build/data/Node/Playwright steps skipped.
+- Do not interpret Pages success as a waiver of the mandatory audit. Linguistic evidence status is unchanged: adjudicated IPA gold = 0; accuracy unmeasured.
+
+
+## Finalized CI results — exact current branch head 748dcea9
+
+- Pages workflow [44185873696](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873696) completed successfully through artifact upload; deployment skipped for PR event.
+- Required test workflow [44185873801](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44185873801) completed with failure at mandatory high-severity npm audit. Corpus validation, Python dependency install, pytest and `npm ci` passed; subsequent build, generated-data, Node and Playwright steps skipped.
+- These workflow results apply to docs-updated head `748dcea9c82308ec9cd7299de12cb7cfec6f5874`; the test workflow is still not green. Security and linguistic evidence blockers remain unchanged.
+
+
+## Upstream candidate review evidence — 2026-11-18
+
+- Latest public GitHub review state: upstream picomatch PR #261 is open/unmerged with one approval, but the reviewer states they reviewed the diff and did not run it; they identify a compatibility break because previously accepted patterns now throw. PR #262 is open/unmerged with an approval and independent bounded validation (2,001 tests, 1,329,660 selected finite parity comparisons, 35 adversarial deadline cases). Its reviewer explicitly notes that the test corpus is bounded and `maxExtglobRecursion: false` remains an opt-out.
+- #261 appears broader in its fail-closed design but has a documented compatibility concern and no independent test execution in the approval. #262 has stronger independent test evidence but leaves the recursion safeguard opt-out. Neither is a merged/released fix; #263 remains on v2.
+- The latest GitHub-reviewed OSV advisory still marks picomatch through 4.0.7 affected and does not specify a fixed version. Keep the security gate BLOCKED; do not downgrade, suppress or vendor either candidate without a complete compatibility/security review.
+
+
+## Exact PR-head CI evidence — 2026-11-18 (head 3430b628)
+
+- PR #168 exact head `3430b628a2e35e19ef3fc4306410b68b8fa412f5`; PR remains open/unmerged/mergeable.
+- **DONE_VERIFIED:** Pages workflow [44255972532](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44255972532) passed pinned WFST/OpenFst build, IPA and browser-alphabet invariants, upstream parity, production build, Node tests, Chromium setup, built-site Playwright and artifact upload. Deploy skipped for PR event.
+- **BLOCKED:** tests workflow [44255972550](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44255972550) passed corpus structure validation, Python dependency install, pytest and `npm ci`; mandatory `npm audit --audit-level=high` failed, so subsequent build, generated-data, Node and Playwright steps were skipped.
+- The security finding is not resolved; Pages success is not a substitute for the mandatory audit. No dependency or linguistic evidence changes were made.
+- Linguistic evidence remains limited: independently adjudicated Yangon-profile IPA gold = 0, accuracy unmeasured; phonological coverage incomplete; primary MLC/MLCTS evidence and reuse rights unresolved; manual accessibility QA incomplete. Independent IPA annotation remains DEFERRED.
+- **Readiness:** engineering/research prototype, not linguistically release-ready.
+
+
+## Latest exact-head and dependency-state reconciliation — 2026-11-18
+
+- PR #168 exact head 42f5b1353c3d4ce13070554494c70f6fc6a10b90; five changed files; 55 commits ahead / 0 behind main.
+- **DONE_VERIFIED:** IPA corpus structure validation, Python dependency installation and pytest passed on this head in [workflow 44258910321](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910321).
+- **BLOCKED:** mandatory npm audit --audit-level=high failed with four high-severity findings resolving to picomatch@4.0.7 through fdir, tinyglobby and Vite. The audit's --force suggestion would install Vite 6.2.7, a breaking downgrade; it was not applied. Later build/data/Node/Playwright steps were skipped.
+- **PENDING at capture:** [Pages workflow 44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still running the pinned WFST/OpenFst build. Do not infer success from earlier heads.
+- The exact lockfile confirms the dependency is dev-only, but main already has the same Vite 8.3.8 → picomatch@4.0.7 tree. The CSV repair PR did not introduce the finding. Official release/npm metadata still list 4.0.7 as latest and the GitHub-reviewed advisory has no fixed version. Keep the security gate blocked; no override, downgrade, vendored patch or suppression.
+- Linguistic status unchanged: independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; phonological coverage and MLC/MLCTS evidence/reuse rights incomplete; manual accessibility QA incomplete. Independent annotation remains DEFERRED.
+
+
+## Final exact code-head evidence — 2026-11-18 (a266e67)
+
+- **DONE_VERIFIED:** [tests workflow 44259714864](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44259714864) passed IPA corpus structure validation, Python dependency installation, pytest and npm ci on exact code head a266e67d94e667dc14bf46aadcb36dc7ceffdf24.
+- **BLOCKED:** the same workflow failed the mandatory npm high-severity audit on four findings for transitive picomatch@4.0.7; subsequent build, generated-data, Node and Playwright steps were skipped.
+- [Pages workflow 44258910411](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44258910411) was still in progress on preceding docs head 42f5b135. WFST/OpenFst build, IPA symbol-table validation, browser input alphabet and model export had passed; Node setup was running. Do not attribute this partial result to a266e67.
+- Independent CSV parse confirms four records, five fields each, all source IDs valid against sources.csv, no blank fields, duplicates or out-of-vocabulary evidence statuses. This validates schema integrity only, not phonological interpretation.
+- Final documentation-only commits refreshed the canonical status. No code/data/dependency changes. Security remains BLOCKED; independent IPA gold 0; accuracy unmeasured; other linguistic, source-rights and manual accessibility tasks remain PARTIAL/BLOCKED/TODO as previously recorded.
+
+
+## 2026-11-18 — exact final-head engineering verification
+
+- PR #168 branch exact HEAD: `2efbf870568c7d114f3bad452f8f2a4df95425be`; PR remains open against `main` `f7f7d41a116c265481bdc17c225a763becab6013`.
+- **DONE_VERIFIED:** [Pages workflow 44259856263](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44259856263) succeeded on exact HEAD. Pinned Burmese WFST/OpenFst, IPA symbol-table, browser input alphabet, static model, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload all passed. Deploy was skipped for PR event.
+- **DONE_VERIFIED:** [test workflow 44259856191](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44259856191) passed corpus structure validation, Python install, pytest and npm ci on exact HEAD.
+- **BLOCKED:** the same test workflow failed at mandatory npm audit due four high-severity transitive `picomatch@4.0.7` findings; build/generated-data/Node/Playwright stages in that workflow were skipped. Pages success supplies separate build/browser evidence but does not satisfy the audit gate.
+- Upstream picomatch #262 now has an APPROVED independent review and finite regression evidence (2,001 tests, 1,329,660 parity comparisons, 35 bounded adversarial cases); the reviewer explicitly notes finite tests are not a universal proof and the opt-out remains. #261 also has an APPROVED review. Both are still unmerged; official latest release remains 4.0.7. No safe released remediation exists yet.
+- Linguistic state is unchanged: independently adjudicated Yangon-profile IPA gold = 0; empirical accuracy remains unmeasured; phonological coverage and primary MLC/MLCTS evidence/reuse rights remain incomplete. Manual accessibility QA remains incomplete. Independent IPA annotation remains DEFERRED. No IPA or Ukrainian mappings were added or changed.
+- No runtime/dependency/data change, merge, release or production deployment. This repository remains an engineering/research prototype, not linguistically validated for release.
+
+
+## 2026-11-18 — dependency gate recheck
+
+- On current PR documentation HEAD `47fc51e0ae60b81584d39560d7871570c0baaaa3`, test workflow [44261797858](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44261797858) again passed corpus structure validation, Python install, pytest and npm ci, then failed mandatory npm audit; subsequent build/generated-data/Node/Playwright steps were skipped. Pages build/browser success was on prior code-bearing HEAD `2efbf870...`.
+- Lockfile confirms picomatch 4.0.7 is a dev-only transitive dependency through Vite 8.3.8 and tinyglobby 0.2.17.
+- Upstream #261 has one approval but no reported GitHub check runs/status contexts; #262 has one approval and a separate independent COMMENTED finite validation (2,001 tests, 1,329,660 comparisons, 35 bounded adversarial cases). #262 explicitly retains an opt-out and compatibility fallback boundary. Both remain open/unmerged; no official patched release.
+- Linguistic state unchanged: independent adjudicated Yangon-profile IPA gold = 0; empirical accuracy unmeasured; source rights and coverage incomplete. No linguistic data or mapping changed.
+
+
+## Exact latest PR-head CI and upstream ReDoS candidate reassessment — 2026-11-18 10:12 +0200
+
+- PR #168 exact HEAD `47fc51e0ae60b81584d39560d7871570c0baaaa3`, still open/unmerged/mergeable. The five-file diff and code-bearing CSV repair are unchanged; later commits are documentation/evidence updates.
+- **DONE_VERIFIED:** Pages workflow [44261797839](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44261797839) succeeded on this exact HEAD through pinned Burmese WFST/OpenFst, IPA and browser alphabet invariants, upstream parity, production build, Node tests, Chromium, built-site Playwright and artifact upload. Deploy skipped for PR event.
+- **BLOCKED:** required tests workflow [44261797858](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44261797858) passed corpus validation, Python install, pytest and npm ci, then failed mandatory high-severity npm audit on four transitive `picomatch@4.0.7` findings. Build, generated-data, Node and Playwright were skipped in this workflow.
+- New upstream candidates do not clear the blocker. #270's simple collapse optimization has a finite parity claim, but an independent report reproduced timeouts for `+([a]*)b` and `+(@(*a))`; #269 proposes broader literal fallback but has no maintainer review/approval evidence; #267 has no review evidence. All remain open/unmerged, and the official latest release remains 4.0.7. No candidate is adopted.
+- Linguistic state unchanged: independently adjudicated Yangon-profile IPA gold = 0; empirical accuracy unmeasured; phonological coverage and primary MLC/MLCTS evidence/reuse rights incomplete. Manual accessibility QA remains incomplete. Independent IPA annotation remains DEFERRED. No IPA or Ukrainian mappings changed.
+- No runtime/dependency/data change, merge, release or production deployment. This remains an engineering/research prototype, not linguistically validated for release.
+
+
+## 2026-11-18 — exact latest-head Pages result
+
+- Pages workflow [44265321954](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44265321954) completed SUCCESS on PR #168 HEAD `bf1655fb861451289ce5be12f1c4bf89a2cccb41`. Pinned WFST/OpenFst, IPA/browser invariants, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload all passed. Deployment was skipped for the PR event.
+- Required tests workflow [44265321857](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44265321857) on the same SHA still failed at mandatory `npm audit --audit-level=high` after corpus validation, Python install, pytest and `npm ci` passed; subsequent build/generated-data/Node/Playwright steps were skipped.
+- This supersedes the prior checkpoint's statement that Pages run 44265321954 was pending. The dependency/security gate remains BLOCKED; no linguistic evidence or mappings changed.
+
+
+## 2026-11-18 — final poll of PR documentation tip
+
+- On exact HEAD `4d1bc99c17474fa08cb5d6133a27808c250a8012`, Pages workflow [44276827871](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827871) completed SUCCESS through pinned WFST/OpenFst, IPA/browser invariants, upstream parity, production build, Node, Chromium, built-site Playwright and artifact upload; deploy skipped for PR event.
+- Required tests workflow [44276827920](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44276827920) completed FAILURE: corpus validation, Python install, pytest and npm ci passed; mandatory npm audit failed; remaining build/generated-data/Node/Playwright steps skipped.
+- The prior note that Pages run 44276827871 was pending is superseded by this completion evidence. PR #168 remains open/unmerged/mergeable. Dependency security blocker and linguistic evidence limitations remain unresolved; no code or phonological data changed.
+
+
+## 2026-11-18 security follow-up
+
+- Required Tests log [44281804397](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44281804397) shows 4 high audit instances of one GHSA-fc5q-39xc-vjpf on transitive `picomatch@4.0.7` via `fdir` / `tinyglobby` / Vite 8.3.8. `npm audit fix --force` would downgrade Vite to 6.2.7; rejected as a breaking workaround. Python 317 tests + 68 subtests pass; independent IPA gold validation reports 0 records/annotations/adjudicated. Audit gate skips remaining build/data/Node/Playwright steps.
+- Threat model: upstream discussion says pattern must be attacker-controlled for ReDoS; path-only control is insufficient. Current package is dev/build tooling with no direct npm runtime deps, but application exposure is not declared absent until glob inputs are traced. This nuance does not waive the repository's mandatory audit policy.
+- Candidate gaps: #268 bypass `+(**/a)b`; #270 bypasses `+([a]*)b` and `+(@(*a))`; #238 leaves `+(*)` vulnerable; #273 has finite parity evidence but no independent review; #264 has Windows downstream compatibility evidence only, not security proof. No released fix; latest official version 4.0.7.
+- No unsafe dependency workaround or code changes. Prototype only; no adjudicated gold, accuracy unmeasured.
+
+
+## 2026-11-18 exact-head CI and dependency exposure follow-up — 13:53 +0200
+
+- Current branch `fix/finals-registry-schema-2026-11-17`, PR #168 remains OPEN/unmerged/mergeable at `52f836246e6a5f1b3eb129007a6607d59ecbf985`; `main` remains `f7f7d41a116c265481bdc17c225a763becab6013`. No code-bearing change in this checkpoint.
+- **DONE_VERIFIED — Pages [44294768404](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44294768404):** exact HEAD build job passed pinned WFST/OpenFst, IPA symbol-table and browser-alphabet invariants, upstream CLI parity, production build, Node tests, Chromium, built-site Playwright and artifact upload. Deploy skipped for PR event.
+- **BLOCKED — required Tests [44294768524](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44294768524) and duplicate push run [44294761936](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44294761936):** both exact-head runs passed corpus structure validation, Python installation, pytest and npm ci; both failed only at mandatory `npm audit --audit-level=high` and skipped subsequent build/generated-data/Node/Playwright steps. The independent Pages run supplies build/browser evidence but does not waive the required audit gate.
+- **DONE_VERIFIED — app-level glob-pattern source trace (bounded to tracked app/config scripts):** `package.json` has no direct runtime dependencies and lists only Playwright/Vite as dev dependencies; `vite.config.js` contains fixed local HTML entrypoints and no user-derived glob; `src/web/app.js` accepts Burmese text for parsing/transcription and contains no glob-pattern construction; `scripts/generate-web-data.mjs`, `scripts/validate-web-data.mjs` and `scripts/copy-vendor-assets.mjs` contain no glob/picomatch/tinyglobby use. Lockfile places `picomatch@4.0.7` under the Vite/tinyglobby build-tool dependency tree. This establishes **no observed attacker-controlled glob-pattern path in the inspected application/configuration surface**, not a proof about every transitive internal Vite call or arbitrary future plugin/config changes. The issue remains a mandatory supply-chain/build-tooling audit blocker; no suppression or dependency override is justified.
+- Upstream issue [picomatch #247](https://github.com/micromatch/picomatch/issues/247) remains OPEN (updated 2026-11-18 10:01Z); official latest release remains 4.0.7. No reviewed/released compatible fix identified. No Vite downgrade, vendored patch, audit bypass, merge, release or deployment.
+- **Ledger:** exact Pages/browser path DONE_VERIFIED; Python test stage DONE_VERIFIED on both test runs; required npm audit BLOCKED; app-specific pattern exposure PARTIAL (no pattern source observed in inspected surface; transitive internal surface not exhaustively proven); linguistic accuracy BLOCKED by 0 adjudicated Yangon-profile IPA gold; MLC/MLCTS primary evidence/reuse rights and complete phonological coverage incomplete; manual accessibility QA TODO; independent IPA annotation DEFERRED.
+- Readiness remains **engineering/research prototype, not release-ready**. Acceptance to clear the dependency gate: compatible maintainer-reviewed/released picomatch fix (or independently reviewed compatible replacement), full adversarial and compatibility tests, clean high-severity audit and all required exact-head CI checks passing. Linguistic release acceptance separately requires independently adjudicated profile-matched gold and evidence-backed coverage/licensing.
+
+
+## 2026-11-18 CI completion and PR stack reconciliation — 14:05 +0200
+
+- Exact current PR #168 HEAD `99a06bf910630862b8018adefd5e0d5fb4bb8d6c` is confirmed by both workflows: Pages [44299009169](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44299009169) **SUCCESS** (build complete, deploy skipped for PR); required Tests PR run [44299009163](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44299009163) and push run [44298997247](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44298997247) both **FAILURE** at the named `Fail on high-severity npm advisories` step. The failures are duplicates of the already identified high-severity transitive picomatch advisory; they do not indicate a new test regression. Exact-head Pages success remains separate evidence, not an audit waiver.
+- **PR stack recheck:** #166 remains OPEN against main at `7854d0d84e2fc6622a52cc8379622a9312adfcb5`; its exact-head Tests push/PR and Pages runs [43941025429](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43941025429), [43940980540](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43940980540), [43940980498](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43940980498) were SUCCESS on 2026-11-16, before the current picomatch advisory audit failure. #167 remains OPEN and stacked on #166 at `72421c9ae6e2ff8d4624af3a499c96c14f983aae`; its exact-head Tests and Pages runs [43960465080](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43960465080) and [43960465349](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43960465349) were SUCCESS on 2026-11-16, also before the current advisory gate. These historical successes are not current security clearance.
+- **PR overlap reconciliation:** #166 includes the registry-backed typed IPA architecture note, README/engine documentation, licensing and phonology-audit updates; #167 adds Python/browser shared typed phonology, wheel packaging and CI verification, and is based on #166; #168 repairs the five-column finals registry schema and adds direct schema tests, plus security/execution checkpoint documentation. #166 and #168 both modify the three canonical handoff/matrix/register documents, and #166 also changes several other audit/docs. They are not safe to merge independently in arbitrary order. Preserve #166's licensing/adapter/source findings, #167's implementation and tests, and #168's CSV header repair/tests; consolidate overlapping canonical docs on one integration branch before merge. Do not retarget #167 or merge any of these PRs blindly. PR #129 remains an unrelated draft based on a stale divergent base; leave untouched.
+- **Ledger update:** DONE_VERIFIED — exact-head Pages/build/browser; exact-head schema test/Python test stage; existing #166/#167 typed IPA implementation on their own branches (historical exact-head CI). BLOCKED — current mandatory npm audit; PARTIAL — PR stack integration and canonical-document reconciliation; BLOCKED — adjudicated IPA gold remains 0, MLC/MLCTS primary evidence and reuse rights, full phonological coverage; TODO — manual accessibility QA; DEFERRED — independent IPA annotation until human prerequisites.
+- No merge, retarget, runtime/dependency change, release or production deployment. Current PR #168 remains open. Overall repository readiness remains engineering/research prototype, not release-ready.
+
+
+## Exact-head verification update — 2026-11-18 (9131c12)
+
+- **DONE_VERIFIED:** exact PR #168 HEAD `9131c123c91eeee438f4ff48c7d49912efb00068` Pages workflow [44301535467](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44301535467) completed SUCCESS. WFST/OpenFst build, IPA symbol-table and browser alphabet checks, model export, upstream parity, production build, Node tests, Chromium, built-site Playwright and artifact upload passed; deployment was skipped for the PR event.
+- **DONE_VERIFIED:** required Tests workflow [44301535585](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44301535585) passed corpus validation, Python package build/install and pytest (317 passed + 68 subtests passed); `npm ci` completed.
+- **BLOCKED:** the same Tests workflow failed at mandatory high-severity npm audit on four instances of GHSA-fc5q-39xc-vjpf affecting transitive `picomatch@4.0.7` via `fdir`, `tinyglobby` and Vite 8.3.8. `npm audit fix --force` would downgrade Vite to 6.2.7 and was not applied. The remaining test-workflow build/data/Node/Playwright steps were skipped. Separate Pages success does not clear this required gate.
+- No source/IPA/UA mapping, code, dependency or corpus change. Independent adjudicated Yangon IPA gold remains 0; accuracy unmeasured; primary MLC/MLCTS evidence and reuse rights and complete phonological coverage remain incomplete; manual accessibility QA TODO; independent annotation DEFERRED. Overall state: engineering/research prototype, not release-ready.
+
+ 
+## Integration branch checkpoint — 2026-11-18 (c1257e8)
+
+- Created dedicated branch `integration/burmese-ipa-finals-2026-11-18` from PR #168 exact head `a4f730157c837354fbfb8cbadab8b08279e1fc5e`; no existing PR branch or default branch was changed.
+- Ported 23 non-overlapping files from PR #167 exact head `72421c9ae6e2ff8d4624af3a499c96c14f983aae`: shared Python/browser typed IPA and phonology adapters, IPA-first browser orchestration, shared contract fixtures, Python/browser tests, wheel packaging verification, workflow changes, README and supporting architecture/phonology/licensing/audit documentation. Existing PR #168 CSV schema correction and `tests/test_finals_registry.py` are preserved.
+- Deliberately retained PR #168's three latest canonical execution documents rather than overwriting them with the older #167 versions. PR #167's separate audit/architecture documents are included. No pronunciation labels, IPA gold annotations, Ukrainian mappings or generated model outputs were invented or altered in this integration batch.
+- **PARTIAL:** file-level integration committed at `c1257e8a9e02319154d46ee637d2850978ea1a6b`; exact combined-branch CI is pending. Historical PR #167 exact-head tests and Pages runs [43960465080](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43960465080) and [43960465349](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/43960465349) passed on 2026-11-16, before the new picomatch advisory blocked npm audit; they do not validate this combined tree.
+- PR #166/#167/#168 remain open and unmerged; PR #129 remains untouched. No reviews or review threads were found on #166/#167/#168 at the latest check. This integration branch is isolated; no branch retargeting, merging, release or production deployment was performed.
+- Next acceptance: run exact combined-tree Tests and Pages CI, reconcile any conflicts or failures, then determine whether a stacked integration PR can safely supersede duplicated work. Mandatory high-severity npm audit remains an external blocker; do not bypass it.
+
+ 
+## Combined IPA + finals integration: exact-head CI results — 2026-11-18 (8cd69c2)
+
+- **DONE_VERIFIED — Pages [44309260167](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44309260167):** SUCCESS on exact combined HEAD `8cd69c238043c417769895a09f9191170884b7e9`. Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet, static model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium install, built-site Playwright and Pages artifact upload all passed. Deploy was skipped for this PR event; no production deployment is claimed.
+- **DONE_VERIFIED — Python/package checks:** Tests workflows [44309232745](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44309232745) and [44309260308](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44309260308) both passed independent IPA corpus structure validation, editable package install, wheel registry verification and pytest (**322 passed, 68 subtests passed**). `npm ci` also completed.
+- **BLOCKED — mandatory npm audit:** both Tests runs failed at `npm audit --audit-level=high` on four report instances of GHSA-fc5q-39xc-vjpf against transitive `picomatch@4.0.7`. The subsequent build/generated-data/Node/Playwright steps in the Tests workflow were skipped. The separate successful Pages workflow supplies independent build/Node/browser evidence but does not waive the required security gate.
+- **Integration status:** PR #171 is a draft stacked PR from `integration/burmese-ipa-finals-2026-11-18` to PR #168's branch; it contains 26 changed files (23 ported implementation/support files plus three current canonical docs). GitHub reports it mergeable; it remains draft/unmerged pending review and security-gate resolution. PRs #166/#167/#168 and #129 remain untouched/open; no branch was force-pushed or retargeted.
+- **Linguistic gates unchanged:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS item-level evidence and reuse rights and full phonological coverage incomplete; manual accessibility QA TODO; independent annotation DEFERRED pending human prerequisites. No unsupported IPA, pronunciation or Ukrainian mappings were added.
+- **Readiness:** combined engineering pipeline is build/browser verified, but required npm security CI and linguistic validation remain incomplete; not release-ready.
+
+
+## Exact current-head CI and PR reconciliation — 2026-11-18 (cde7302)
+
+- **DONE_VERIFIED — Pages workflow [44310064259](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44310064259): SUCCESS on exact current HEAD `cde73025a6e3ad6d0407f9051b6313e3ec4f7282`.** The pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet, static model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium install, built-site Playwright and Pages artifact upload all passed. The deploy job was skipped for the PR event; no production deployment is claimed.
+- **DONE_VERIFIED — Python/package stages on exact current HEAD:** Tests workflow [44310064262](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44310064262) and push run [44310052337](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44310052337) completed Python corpus structure validation, editable package install, wheel registry verification and pytest (**322 passed, 68 subtests passed**); `npm ci` completed.
+- **BLOCKED — required security gate:** both Tests runs failed at `npm audit --audit-level=high` due GHSA-fc5q-39xc-vjpf in transitive `picomatch@4.0.7`. Later steps in those Tests jobs were skipped. The independent successful Pages workflow validates the browser/build path but does not waive the required audit gate. No audit suppression, breaking Vite downgrade or unreviewed dependency patch was applied.
+- PR #171 description now records these exact-head outcomes. It remains OPEN, DRAFT and mergeable, based on PR #168's branch; no merge was performed. No reviews or review threads were present at this check. PRs #166/#167/#168 and #129 remain untouched.
+- Linguistic gates remain unchanged: adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; source rights and full phonological coverage incomplete; manual accessibility QA TODO; independent annotation deferred pending human prerequisites. Readiness remains research/engineering prototype, not release-ready.
+
+
+## PR #171 exact-head reconciliation — 2026-11-18 (cde73025)
+
+- **DONE_VERIFIED — Pages workflow [44310064259](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44310064259):** exact HEAD `cde73025a6e3ad6d0407f9051b6313e3ec4f7282`; build job SUCCESS, deploy job SKIPPED for pull-request event. This is not a production deployment.
+- **DONE_VERIFIED — Python/package stage in Tests [44310064262](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44310064262):** independent IPA gold-corpus structure validation, Python editable install, wheel registry verification, pytest (**322 passed, 68 subtests passed**) and `npm ci` all passed.
+- **BLOCKED — mandatory Tests workflow [44310064262]:** failed at `Fail on high-severity npm advisories` for GHSA-fc5q-39xc-vjpf / CVE-2026-112366 affecting transitive `picomatch@4.0.7`. The subsequent production build, generated-data check, Node tests, Playwright install and built-site browser tests were SKIPPED in this Tests job. Pages success is independent evidence and does not waive this required gate.
+- **Upstream security recheck:** public npm metadata still identifies `picomatch@4.0.7` as the latest release; GitHub's advisory affects versions through 4.0.7 and gives no fixed version. No unreviewed override, downgrade, fork or audit suppression was adopted. References: [npm package](https://www.npmjs.com/package/picomatch), [GitHub advisory](https://github.com/advisories/GHSA-fc5q-39xc-vjpf), [OSV record](https://osv.dev/vulnerability/GHSA-fc5q-39xc-vjpf).
+- **Integration reconciliation:** PR #171 is the preferred single review candidate combining the 23-file IPA-first implementation/support port with PR #168's finals CSV schema repair and canonical execution documents (26 changed files). PRs #169/#170 are earlier alternative integration paths; both remain open for comparison and must not be merged independently while #171 is reviewed. PR #171 remains stacked on #168. No branches were deleted, rewritten or retargeted; no merge, release or production deployment occurred.
+- **Task ledger:** DONE_VERIFIED — finals CSV schema/test repair; Python IPA pipeline/wheel registry checks; exact-head Pages build and browser path. BLOCKED — mandatory high-severity npm audit and required Tests workflow. PARTIAL — Burmese phonological coverage and primary-source conformity. BLOCKED — adjudicated Yangon-profile IPA gold remains 0, so empirical accuracy is unmeasured; MLC/MLCTS item-level evidence and reuse rights remain incomplete. TODO — manual accessibility QA. DEFERRED — independent IPA annotation per owner direction.
+- **Readiness:** engineering/research prototype; not release-ready. Security acceptance requires a maintainer-reviewed compatible fix or independently reviewed replacement, adversarial and compatibility tests, a clean high-severity audit, and all exact-head required CI passing. Linguistic release acceptance separately requires independently adjudicated profile-matched IPA gold, evidence-backed coverage and documented source rights.
+
+
+## Exact-head CI result — 2026-11-18 (`b7c8fe4d`)
+
+- **DONE_VERIFIED — Pages workflow [44316607402](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44316607402): SUCCESS** on exact PR HEAD `b7c8fe4d46f50705ff5bcd46f42452fefe66b789`. This is a PR build; no production deployment is claimed.
+- **BLOCKED — Tests workflow [44316607249](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44316607249): FAILURE** on that same exact HEAD. Corpus structure validation, editable Python install, wheel registry verification, pytest, and `npm ci` passed. The required `npm audit --audit-level=high` then failed with four high-severity findings in the dependency tree rooted at transitive `picomatch@4.0.7`, advisory GHSA-fc5q-39xc-vjpf (ReDoS via repeated extglobs). npm recommends a forced Vite downgrade (`vite@6.2.7`), which is a breaking change; it was not applied. Build, generated-data, Node and Playwright steps were skipped in this job.
+- Duplicate push-triggered Tests run [44316601896](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44316601896) failed at the same audit gate; it is not a separate code regression.
+- **Interpretation:** Python package/registry tests passed on the exact tip and Pages build/browser workflow passed on the exact tip. The mandatory Tests workflow remains blocked solely at the security audit step; skipped downstream steps are not represented as passed by this Tests run.
+- No audit suppression, `--force` downgrade, override, fork or unreviewed dependency patch was applied. PR #171 remains OPEN and DRAFT, stacked on #168. Main remains unchanged; no merge, release or production deployment occurred.
+- **Readiness:** research/engineering prototype, not release-ready. Security gate requires a maintainer-reviewed compatible fix or independently reviewed replacement, adversarial/compatibility tests, a clean high-severity audit and a successful exact-head required Tests workflow. Linguistic acceptance remains separately blocked by zero adjudicated Yangon-profile IPA gold, incomplete item-level source/reuse evidence and partial phonological coverage.
+
+
+## Exact-head CI evidence — 2026-11-18 (`374128a7f4f0f1d6ed6a64efe6122ddfee9c328f`)
+
+- **DONE_VERIFIED — Pages run [44320245648](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44320245648):** successful exact-head WFST/OpenFst build, IPA symbol-table/input-alphabet checks, static export, upstream `thrax_g2p` parity, production build, Node tests, Chromium and built-site Playwright, and artifact upload. Deploy skipped because this was a PR event.
+- **BLOCKED — Tests run [44320245620](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44320245620):** exact-head run failed at mandatory `npm audit --audit-level=high`, GHSA-fc5q-39xc-vjpf in transitive `picomatch`. Corpus structure, Python install, wheel registry, pytest (322 passed; 68 subtests passed), and `npm ci` passed; downstream build/generated-data/Node/Playwright steps skipped. Duplicate push run [44320232869](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44320232869) failed at the same gate.
+- Security acceptance remains BLOCKED pending a compatible, reviewed fix and clean audit. Linguistic acceptance remains BLOCKED/PARTIAL: adjudicated Yangon IPA gold is 0; accuracy unmeasured; source evidence/reuse rights and full coverage incomplete. Manual accessibility QA TODO; independent annotation DEFERRED. No unsupported linguistic entries were introduced. Not release-ready.
+
+
+## Exact-head CI evidence — 2026-11-18 (`ddad7f5e08c674966c7f0b2431859878710da719`)
+
+- **DONE_VERIFIED — Pages [44336176912](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44336176912):** exact-head success for pinned Google Burmese WFST/OpenFst build, IPA symbol-table/input-alphabet checks, static model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and Pages artifact upload. No production deployment is implied.
+- **BLOCKED — Tests [44336176587](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44336176587) and duplicate [44336166612](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44336166612):** exact-head failure at mandatory high-severity npm audit (4 high findings; GHSA-fc5q-39xc-vjpf affects transitive `picomatch`). Corpus structure, Python install, wheel registry, pytest, Node setup and `npm ci` passed; subsequent build/generated-data/Node/Playwright steps skipped in the test job.
+- Security acceptance remains BLOCKED pending compatible, reviewed remediation and a clean required audit. Linguistic acceptance remains BLOCKED/PARTIAL: adjudicated Yangon IPA gold is 0; accuracy unmeasured; source evidence/reuse rights and full coverage incomplete. Manual accessibility QA TODO; independent annotation DEFERRED. No unsupported linguistic entries introduced. Not release-ready.
+
+
+
+## Security-gate status recheck — 2026-11-18 (post-withdrawal; PR head `6772712820f74e154fb69d2ea9ce4ae0f98a9b7c`)
+
+- **New primary-source status:** GitHub's advisory page now explicitly labels GHSA-fc5q-39xc-vjpf / CVE-2026-112366 **Withdrawn on 2026-11-18**: https://github.com/advisories/GHSA-fc5q-39xc-vjpf. This supersedes the earlier active-advisory status recorded in the CI logs, but does not itself prove the repository's required audit gate is green.
+- **Timing matters:** Tests run [44354810581](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44354810581) failed at `npm audit --audit-level=high` before the withdrawal was recorded. The same job passed corpus validation, editable Python install, wheel registry verification and pytest (**322 passed, 68 subtests passed**); subsequent build/generated-data/Node/Playwright steps were skipped. A fresh exact-head Tests run after the withdrawal is required before changing the gate to DONE_VERIFIED.
+- **DONE_VERIFIED — Pages artifact build:** [44354810476](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44354810476) succeeded on this exact head: pinned Google Burmese WFST/OpenFst, IPA and browser alphabet invariants, static export, upstream parity, production build, Node tests, Chromium/Playwright and Pages artifact upload. Deploy was skipped for the PR event.
+- **DONE_VERIFIED — optional diagnostics:** [44354810570](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44354810570) completed all three diagnostic jobs successfully. These remain raw-output diagnostics only; independent gold = 0 and accuracy = null.
+- Upstream picomatch PR [#273](https://github.com/micromatch/picomatch/pull/273) is still OPEN and has no submitted review or GitHub check runs at this inspection; its author-reported tests/equivalence are not independently verified. It is not adopted. npm currently still lists picomatch 4.0.7 as latest: https://www.npmjs.com/package/picomatch?activeTab=versions. No vendored patch, override, downgrade or audit suppression was introduced.
+- **Task ledger:** Pages and optional diagnostic workflows DONE_VERIFIED; Python/corpus tests DONE_VERIFIED; mandatory npm audit gate PARTIAL / awaiting fresh post-withdrawal exact-head CI; linguistic validation PARTIAL/BLOCKED as recorded above. Do not claim release readiness until required Tests completes all configured steps and independent linguistic acceptance criteria are met.
+
+
+
+## Post-withdrawal verification closeout — 2026-11-18 (`f2b5766327d8997bd65001acfd199f354cc5ac87`)
+
+- **DONE_VERIFIED — complete push Tests workflow [44366957339](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44366957339) on exact HEAD:** all 18 job steps succeeded. Corpus structure validation, Python install, wheel registry verification, pytest (**322 passed, 68 subtests passed**), `npm ci`, high-severity npm audit (**0 vulnerabilities**), production build, generated-data freshness, Node tests, Chromium install and built-site Playwright (**73 passed**).
+- GitHub Advisory Database now marks GHSA-fc5q-39xc-vjpf / CVE-2026-112366 **Withdrawn on 2026-11-18**: https://github.com/advisories/GHSA-fc5q-39xc-vjpf. This withdrawal preceded the successful audit run; prior failing audit runs occurred before withdrawal. No dependency override, downgrade, vendored patch or audit suppression was applied.
+- **DONE_VERIFIED — Pages artifact build [44354810476](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44354810476) on immediately preceding code-identical tip `6772712820f74e154fb69d2ea9ce4ae0f98a9b7c`:** pinned Google Burmese WFST/OpenFst, IPA and browser alphabet invariants, static export, upstream parity, production build, Node tests, Chromium/Playwright and Pages artifact upload succeeded. Deploy skipped for PR event. Only documentation changed between that tip and `f2b5766`.
+- **PENDING at documentation checkpoint:** PR-event Tests [44366973658](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44366973658) and Pages [44366973477](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44366973477); push Tests on exact `f2b5766` is already fully green. Optional diagnostics [44366973111](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44366973111) were still in progress; previous exact-code diagnostics [44354810570](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44354810570) passed with gold = 0 and accuracy = null.
+- **Task ledger:** security gate DONE_VERIFIED on exact `f2b5766`; Python, Node, build, generated-data and 73 built-browser tests DONE_VERIFIED; Pages DONE_VERIFIED on code-identical prior tip, exact-tip PR event pending. Linguistic acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; MLC/MLCTS primary evidence and reuse rights incomplete; phonological coverage incomplete; manual accessibility QA TODO; independent annotation DEFERRED.
+- **Readiness:** security/engineering gate has passed on the exact code tip; repository remains a deployed research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+
+## Final Pages verification — 2026-11-18 (`45309d2a6aaf9bebdf6fa67eca482a3ebc3c8d28`)
+
+- **DONE_VERIFIED — Pages workflow [44367512869](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44367512869): SUCCESS on exact current HEAD.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser alphabet check, static model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright built-site tests, Pages configuration and artifact upload all completed successfully.
+- Combined exact-head evidence: PR Tests [44367513029](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44367513029) SUCCESS; push Tests [44367500136](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44367500136) SUCCESS; Pages [44367512869](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44367512869) SUCCESS; optional diagnostics [44367512967](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44367512967) SUCCESS.
+- This verifies build/artifact production only. Pages deployment was not run for the pull-request event; do not describe this as a production deployment.
+- Engineering CI gates are now DONE_VERIFIED on this exact HEAD. Linguistic acceptance remains PARTIAL/BLOCKED: independent Yangon IPA gold = 0; accuracy unmeasured; MLC/MLCTS source provenance and reuse-rights evidence incomplete; full phonological coverage incomplete; manual accessibility QA TODO; independent annotation DEFERRED. PR #171 remains OPEN/DRAFT/unmerged; release readiness is not established.
+
+## Exact-head CI and diagnostic closeout — 2026-11-18 (`8f0f7961b41b5c894e046dcc79b603be0e165b28`)
+
+- **DONE_VERIFIED — required Tests workflow [44376444433](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44376444433): SUCCESS on exact PR HEAD.** All 31 job steps completed successfully. Corpus structure validation, editable Python install, wheel registry verification, pytest (**322 passed, 68 subtests passed**), `npm ci`, both high-severity npm audit invocations (**0 vulnerabilities**), production build, generated-web-data freshness, Node tests, Chromium installation and built-site Playwright (**73 passed**) all passed.
+- **DONE_VERIFIED — Pages build [44376444483](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44376444483): SUCCESS on the same exact HEAD.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet parity, static browser model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright, Pages configuration and artifact upload all passed. Deploy job was skipped because this is a PR event; no production deployment is claimed.
+- **DONE_VERIFIED — optional raw-output diagnostics [44376444492](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44376444492): SUCCESS across Epitran/raw-output, CRFsuite baseline and Google WFST raw-output jobs.** This verifies reproducible diagnostic execution only. The diagnostic protocol remains non-gold; no independent Yangon IPA gold has been added, and no accuracy claim is supported by these runs.
+- The prior GHSA-fc5q-39xc-vjpf audit failure is superseded for this HEAD by successful required audit runs reporting zero vulnerabilities. No dependency override, downgrade, vendored patch or audit suppression was applied.
+- **Task ledger:** required CI, package/corpus checks, npm audit, build, generated-data check, Node and browser tests, Pages artifact build, and optional diagnostic execution are DONE_VERIFIED on exact HEAD. Linguistic acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS evidence and reuse rights incomplete; phonological coverage incomplete; manual accessibility QA TODO; independent annotation DEFERRED.
+- PR #171 remains OPEN/DRAFT/unmerged. No production deployment, release, merge, force-push or branch deletion occurred. **Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.**
+
+
+## Exact-tip CI completion — 2026-11-18 (`98e2b301fe1aa12d6f2b930fb9d9908317738040`)
+
+- **DONE_VERIFIED — PR Tests [44378628219](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378628219): SUCCESS** on this exact HEAD. Verified in job logs: **322 Python tests + 68 subtests**, **73 Playwright built-site tests**, production build and generated-data checks passed; `npm audit --audit-level=high` reported **0 vulnerabilities**.
+- **DONE_VERIFIED — push Tests [44378609571](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378609571): SUCCESS** on the same exact HEAD.
+- **DONE_VERIFIED — Pages build [44378628098](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378628098): SUCCESS** on the same exact HEAD. Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet parity, static browser model export, upstream `thrax_g2p` parity, production build, Node/browser tests, Pages configuration and artifact upload succeeded. The `deploy` job was **SKIPPED** for the pull-request event; this is not a production deployment.
+- **DONE_VERIFIED — optional raw-output diagnostics [44378628110](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378628110): SUCCESS** across Google WFST raw-output, raw-output comparator and CRF baseline jobs. This is reproducibility/structural diagnostic evidence only, not an independent linguistic gold evaluation or accuracy score.
+- **Task ledger:** all configured engineering CI gates are DONE_VERIFIED on exact HEAD `98e2b301…`. Linguistic acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS evidence and reuse rights incomplete; phonological coverage incomplete; manual accessibility QA TODO; independent annotation DEFERRED.
+- PR #171 remains OPEN/DRAFT/unmerged. No merge, production deployment, release, force-push or branch deletion occurred. **Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.**
+
+
+## Exact documentation-tip CI closeout — 2026-11-18 (`98e2b301fe1aa12d6f2b930fb9d9908317738040`)
+
+The latest documentation-only integration tip has now completed all four applicable CI runs. Run metadata confirms every run's `head_sha` is exactly `98e2b301fe1aa12d6f2b930fb9d9908317738040`.
+
+- **DONE_VERIFIED — PR Tests [44378628219](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378628219): SUCCESS.** All 31 job steps passed: independent IPA corpus-structure validation, editable Python install, wheel registry verification, pytest (**322 passed, 68 subtests passed**), `npm ci`, high-severity npm audit, production build, generated-web-data freshness, Node tests, Chromium installation and built-site Playwright (**73 passed**).
+- **DONE_VERIFIED — push Tests [44378609571](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378609571): SUCCESS** on the same exact SHA; all configured test/audit/build/browser steps passed.
+- **DONE_VERIFIED — Pages build [44378628098](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378628098): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet parity, static browser model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed. The deploy job was skipped for this PR event; this is not a production deployment.
+- **DONE_VERIFIED — optional diagnostics [44378628110](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44378628110): SUCCESS** across raw-output, CRFsuite and Google WFST jobs. These are reproducibility/raw-output diagnostics only, not independent gold or accuracy evidence.
+- GitHub run metadata confirms all four run IDs above target exact `head_sha` `98e2b301fe1aa12d6f2b930fb9d9908317738040`. The canonical branch head at this verification was the same SHA.
+- **Task ledger:** required Tests, push Tests, package/corpus validation, security audit, build, generated-data check, Node/browser tests, Pages artifact build and optional diagnostic execution are DONE_VERIFIED on this exact tip. Linguistic acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS evidence and reuse rights incomplete; phonological coverage partial; manual accessibility QA TODO; independent annotation DEFERRED.
+- PR #171 remains OPEN/DRAFT/unmerged. No merge, production deployment, release, force-push or branch deletion occurred. **Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.**
+
+
+## Independent API layer-status contract — 2026-11-18
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-012 | DONE_VERIFIED | Python/browser API now expose separate graphemic, source-phonology, IPA and Ukrainian-adaptation statuses. Added `schemas/analysis-layer-status.schema.json`; schema tests validate Python and browser enum variants; runtime tests cover established segmental, partial medial, unsupported, empty and mixed-script cases. Implementation commit `c607cca53d63f3d4fd606e328010b25eef0b601d`; PR Tests [44389661155](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389661155) and push Tests [44389647797](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44389647797) SUCCESS (324 pytest + 68 subtests; 73 Playwright; npm audit 0 vulnerabilities). | API status metadata only; it does not establish phonetic completeness, add gold entries or measure accuracy. Independent adjudicated Yangon IPA gold remains 0. |
+
+
+## Structural, UI and exact-head acceptance closeout — 2026-11-18
+
+| ID | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-010 | DONE_VERIFIED | Canonical-equivalence, Unicode block/inventory, mixed-script, punctuation, controls, malformed virama, reordered-mark and assigned-letter/mark losslessness fixtures in Python and browser; exact-head CI [44392021017](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392021017) SUCCESS (325 pytest + 68 subtests; 74 Playwright). | Bounded Unicode/structural contract only; annotated differential corpus remains partial. |
+| BUR-011 | DONE_VERIFIED | All four medials, five pairs, two triples, kinzi, conjunct/subjoined consonants, coda and malformed mark-order fixtures; shared Python/browser structural tests on exact head `ea37329`. | Structural parser acceptance only; no medial/kinzi/conjunct pronunciation claim. |
+| BUR-012 | DONE_VERIFIED | Separate graphemic, phonology, IPA and Ukrainian adaptation status fields, runtime-specific JSON Schema and regression tests. | API uncertainty contract only; no added phonological coverage. |
+| BUR-016 | DONE_VERIFIED | README and UI research notice document prototype scope; UI exposes independent layer statuses and Playwright asserts the segmental-only provisional case. | Manual assistive-technology, keyboard, zoom/reflow and mobile QA remains TODO. |
+
+### Exact code/UI CI evidence — 2026-11-18
+
+- PR Tests [44392021017](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392021017) and push Tests [44392004315](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392004315): SUCCESS on exact head `ea37329ae4a3ba59442a3a61e56210e7b971e8b2`; 325 pytest, 68 subtests, 74 Playwright, npm audit 0 vulnerabilities.
+- Pages build [44392020805](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392020805): SUCCESS; Pages artifact uploaded; deploy skipped for PR event.
+- Optional diagnostics [44392020840](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392020840): SUCCESS; raw-output reproducibility only.
+- Research boundary unchanged: independent adjudicated Yangon IPA gold = 0; accuracy unmeasured; source rights and full phonological coverage incomplete.
+
+
+## Exact-head implementation and CI closeout — 2026-11-18 (`42c53bb1cab2b2e17baea5ee6abc2365917fe75f`)
+
+- **DONE_VERIFIED — BUR-012 independent analysis-layer status contract:** Python exposes `graphemic_status` and `phonology_status`; browser exposes `graphemicStatus` and `phonologyStatus`. Existing IPA and Ukrainian adaptation statuses remain independent. Runtime-specific JSON Schema, enum alignment, Python/browser tests, and mixed-script Myanmar-unit scoping are implemented. This is status/uncertainty metadata, not new phonological coverage.
+- **DONE_VERIFIED — research UI status presentation:** browser UI displays the independent layer statuses; regression tests cover the provisional/segmental-only case. README and architecture documentation explicitly preserve the distinction between segmental candidates and canonical full-profile pronunciation.
+- **DONE_VERIFIED — PR Tests [44392937073](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392937073): SUCCESS on exact HEAD.** Python: **325 passed, 68 subtests passed**; npm audit: **0 vulnerabilities**; production build, generated-web-data freshness, Node tests, and built-site Playwright: **74 passed**. Corpus/schema validation, editable install and wheel registry verification also passed.
+- **DONE_VERIFIED — push Tests [44392923302](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392923302): SUCCESS** on the same exact HEAD, with the same Python/browser counts and zero npm vulnerabilities.
+- **DONE_VERIFIED — Pages artifact build [44392936981](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392936981): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser alphabet parity, static model export, upstream `thrax_g2p` parity, production build, Node/browser tests, Pages configuration and artifact upload passed. Deploy job was **SKIPPED** for this PR event; no production deployment is claimed.
+- **DONE_VERIFIED — optional raw-output diagnostics [44392937034](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44392937034): SUCCESS** across Google WFST raw-output, CRF baseline and raw-output comparator jobs. These remain reproducibility diagnostics, not independent gold evaluation or accuracy evidence.
+- GitHub confirms the branch is **137 commits ahead, 0 behind** `main`; PR #171 is **OPEN/DRAFT/unmerged**, mergeable, and based on `a4f730157c837354fbfb8cbadab8b08279e1fc5e`. No merge, force-push, branch deletion, release or production deployment occurred.
+- **Remaining acceptance blockers:** independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS source evidence and reuse rights incomplete; full vowels, medials, codas, tone, phonation, quantity and profile coverage remain partial; manual assistive-technology/keyboard/zoom/reflow/mobile accessibility QA remains TODO; independent annotation remains deferred pending qualified annotators and rights-cleared data.
+- **Readiness:** engineering CI is DONE_VERIFIED on exact HEAD; the repository remains a research/engineering prototype, **not linguistically release-ready and not WCAG-conformance-certified**. Diagnostic outputs must not be presented as accuracy scores.
+
+
+## Final exact-head CI verification — 2026-11-18 (`86c5f4f90689882a8ebcb537bfae27d1fe7d206b`)
+
+- **DONE_VERIFIED — PR Tests [44393965534](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44393965534): SUCCESS** on exact HEAD. Logs confirm **325 pytest + 68 subtests**, **74 built-site Playwright tests**, both npm audit invocations reporting **0 vulnerabilities**, production build, generated-web-data freshness, Node tests, corpus/schema validation, editable install and wheel registry verification.
+- **DONE_VERIFIED — push Tests [44393948559](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44393948559): SUCCESS** on the same exact HEAD. Logs independently confirm 325 pytest + 68 subtests, 74 Playwright and zero npm vulnerabilities.
+- **DONE_VERIFIED — GitHub Pages artifact build [44393965346](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44393965346): SUCCESS** on exact HEAD. Pinned Google Burmese WFST/OpenFst build completed; IPA unique-decodability, phoneme symbol-table currentness and TSV currentness checks passed; static browser export, parity checks, production build and artifact upload succeeded. The deploy job was skipped for this PR event; **no production deployment is claimed**.
+- **DONE_VERIFIED — optional diagnostics [44393965297](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44393965297): SUCCESS** on exact HEAD. Epitran raw-output, CRF baseline and Google WFST raw-output jobs completed and uploaded artifacts. Google WFST: 6/6 outputs, 0 runtime errors, independent gold count 0, accuracy null. CRF: 100 rows, 100 predictions, 84 source-concordant rows, gold count 0, accuracy null, scoring status `NOT_SCORED_POSSIBLE_TRAINING_OVERLAP`. These are diagnostic outputs only and must not be represented as accuracy evidence.
+- **Task ledger:** all four configured engineering workflows are DONE_VERIFIED on exact HEAD `86c5f4f...`; the prior exact-head documentation-only commit `86c5f4f...` is the verified tip. This closeout note itself is being added as a documentation-only follow-up and will require its own CI run before its SHA is marked verified.
+- **Remaining blockers unchanged:** independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; primary MLC/MLCTS source evidence and reuse rights incomplete; full phonological coverage partial; manual accessibility QA TODO; independent annotation deferred pending qualified annotators and rights-cleared data.
+- PR #171 remains OPEN/DRAFT/unmerged. No release, merge, force-push, branch deletion or production deployment occurred. Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Convention approval and gold pilot gate — 2026-11-18
+
+- **DONE_VERIFIED (documentation draft only):** `docs/ipa-convention-sheet-draft.md` captures the specialist decisions required before annotation and maps them to existing typed IPA fields.
+- **BLOCKED:** no approved convention version, no confirmed expert panel, no two independent annotators, no separate adjudicator and no curator approval record.
+- **BLOCKED:** source/item-level rights and exact locator review must precede the 30-item sample.
+- **TODO:** private blind-intake dry-run and sample selection after the preceding gates pass.
+- No labels, inferred IPA, model-derived gold, runtime phonology or benchmark accuracy were added. The draft must not be treated as approved guidance.
+
+
+## Exact final-tip CI closeout — 2026-11-18 (`ed7d5905bfcd1b21e2b19724de4468045ce79b3e`)
+
+GitHub Actions job metadata was re-polled after the earlier pending update. All four configured workflows now have completed jobs on this exact commit:
+
+- **DONE_VERIFIED — PR Tests [44396077489](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396077489): SUCCESS.** Corpus structure validation, Python install, wheel registry verification, pytest, npm ci, high-severity npm audit, production build, generated-data freshness, Node tests, Chromium installation and built-site Playwright all passed. The job had no failed or skipped test steps.
+- **DONE_VERIFIED — Push Tests [44396061046](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396061046): SUCCESS** on the same exact SHA; all configured steps passed.
+- **DONE_VERIFIED — Pages artifact build [44396077232](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396077232): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser alphabet parity, static model export, upstream `thrax_g2p` parity, production build, Node/browser tests and Pages artifact upload passed. Deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44396077439](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44396077439): SUCCESS** across raw-output comparator, CRF baseline and Google WFST raw-output jobs. These remain diagnostic outputs only, not independent gold or accuracy evidence.
+
+The exact-head engineering CI gate is therefore green on `ed7d5905bfcd1b21e2b19724de4468045ce79b3e`. PR #171 remains OPEN/DRAFT/mergeable/unmerged; no review submissions or inline review threads were returned by GitHub at this check. No merge, release, force-push, branch deletion or production deployment occurred. Linguistic acceptance is unchanged: independently adjudicated Yangon IPA gold = 0; accuracy unmeasured; expert convention approval, qualified annotators/adjudicator/curator, rights-cleared attested items and private blind intake remain blockers; full phonological coverage and manual accessibility QA remain incomplete. Readiness remains research/engineering prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Exact latest-head CI closeout — 2026-11-18 (`ca138eb60bc95a2accd2d6bfa3e111b0ce905101`)
+
+All four configured engineering workflows completed successfully on the exact integration tip:
+- PR Tests [44404325558](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404325558): SUCCESS.
+- Push Tests [44404308900](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404308900): SUCCESS.
+- Pages artifact build [44404325607](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404325607): SUCCESS, including pinned Google Burmese Thrax/OpenFst, IPA symbol-table invariants, browser alphabet parity, static export, upstream `thrax_g2p` parity, production build, Node/browser tests and artifact upload. Deploy was SKIPPED for the PR event; no production deployment.
+- Optional diagnostics [44404325554](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44404325554): SUCCESS across raw-output comparator, CRF baseline and Google WFST raw-output. These remain diagnostic-only, not independent gold or accuracy evidence.
+
+The integration branch is 148 commits ahead of `main` and 0 behind at this comparison; PR #171 remains OPEN/DRAFT/mergeable/unmerged and is stacked on `fix/finals-registry-schema-2026-11-17`. No rebase, merge, deployment, release, force-push or branch deletion occurred.
+
+Scientific acceptance remains PARTIAL/BLOCKED: independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, two independent annotators, separate adjudicator, curator, 30 attested items with item-level source locators/rights, and private blind-intake dry-run remain unresolved. Full phonological coverage and manual accessibility QA are incomplete. Research/engineering prototype only; not linguistically release-ready or WCAG-conformance-certified. No runtime, corpus, gold-label or linguistic-rule changes were made in this CI closeout.
+
+
+## Exact latest integration-tip CI closeout — 2026-11-18 (`afaa32a748f836f78a28b4fb287dcbe4bd8c0641`)
+
+All four configured workflows have now completed successfully on the exact current integration head:
+
+- **DONE_VERIFIED — PR Tests [44406181613](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44406181613): SUCCESS.** Required Python/package/corpus checks, npm install and high-severity audit, production build, generated-data freshness, Node tests and **74 built-site Playwright tests** passed.
+- **DONE_VERIFIED — Push Tests [44406161737](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44406161737): SUCCESS.** All configured steps passed, including **74 built-site Playwright tests**.
+- **DONE_VERIFIED — Pages artifact build [44406181681](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44406181681): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet parity, static browser model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed. The deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44406181652](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44406181652): SUCCESS** across the pinned CRF baseline, raw-output comparator and Google WFST raw-output jobs. These are reproducibility/raw-output diagnostics only, not independent gold or accuracy evidence.
+
+The exact-head engineering CI gate is green on `afaa32a748f836f78a28b4fb287dcbe4bd8c0641`. PR #171 remains OPEN/DRAFT/mergeable/unmerged; it is stacked on `fix/finals-registry-schema-2026-11-17`, 151 commits ahead of `main` and 0 behind at the recorded comparison. No merge, release, force-push, branch deletion or production deployment occurred.
+
+**Linguistic acceptance remains PARTIAL/BLOCKED:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested items and private blind-intake remain unresolved; full phonological coverage and manual accessibility QA remain incomplete. The optional benchmarks do not change this evidence status. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified. No runtime, corpus, gold-label or linguistic-rule changes were made in this CI closeout.
+
+
+## Exact CI closeout — integration tip `6c5190683bce286cfc46c52497cabdc6d7b2fa07` (2026-11-18)
+
+All four configured workflows completed successfully on this exact SHA; run metadata confirms each `head_sha` matches:
+
+- **DONE_VERIFIED — PR Tests [44407661913](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407661913): SUCCESS.** Corpus structure validation, editable Python install, wheel registry verification, pytest, npm install, high-severity npm audit, production build, generated-data freshness, Node tests, Chromium installation and built-site Playwright suite all passed.
+- **DONE_VERIFIED — Push Tests [44407648376](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407648376): SUCCESS** on the same SHA; all configured steps passed, including built-site browser tests.
+- **DONE_VERIFIED — Pages artifact build [44407661700](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407661700): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser-input alphabet parity, static browser-model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed. The deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44407661678](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44407661678): SUCCESS.** Pinned Google WFST, CRF baseline and raw-output comparator jobs passed and uploaded outputs/provenance. These are reproducibility/raw-output diagnostics only, not independent gold or accuracy evidence.
+
+The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6d7b2fa07`. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changed no runtime, phonology, source data, corpus, gold labels or benchmark methodology.
+
+**Linguistic acceptance remains PARTIAL/BLOCKED:** independently adjudicated Yangon-profile IPA gold = 0; accuracy unmeasured; specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested pilot items and private blind intake remain unresolved; full phonological coverage and manual accessibility QA remain incomplete. No accuracy claim follows from optional raw-output diagnostics. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Repository integration reconciliation — 2026-11-19
+
+**DONE_VERIFIED — PR #129 stack content reconciliation (tree-level only).** The apparent 11 paths unique to #129's diff are already present in #171's base tree (#168 head a4f730157c837354fbfb8cbadab8b08279e1fc5e) and inherited by #171. Confirmed by fetching the base and #171 copies of hybrid.py and benchmark_google_fst.py, and verifying the associated registry/docs/tests are present in the inherited tree. No duplicate port is required. PR #129 remains OPEN/DRAFT, stale/diverged and mergeable=false; its description/comment and PR #171 comment now state the corrected reconciliation. No merge/rebase/close/source branch mutation occurred.
+
+**Evidence boundary unchanged:** independent adjudicated Yangon IPA gold=0; accuracy unmeasured. External provider priorities are diagnostic ordering only; candidate outputs remain unpromoted. myG2P remains CC BY-NC-SA 4.0 constrained and is not bundled. Google WFST smoke remains raw-output/build evidence only, not pronunciation accuracy. This reconciliation adds no lexical gold or linguistic claims.
+
+
+## Engineering CI closeout — 2026-11-19
+
+**DONE_VERIFIED (exact HEAD `65c823c8d6a2a50f30a73bdf7fec99497a8c4fb2`):** PR Tests run 44498785399 SUCCESS; Pages build run 44498785224 SUCCESS; optional diagnostics run 44498785171 SUCCESS. Required Python/package/wheel/pytest, npm install and high-severity audit, production build, generated-data freshness, Node tests, Chromium and built-site Playwright passed. Pages artifact uploaded (57,959 bytes; SHA-256 38af2788bbb4ec9d051d95c29844c8e662f175e939515a393015614eb23ff261); deploy job skipped for PR event. Optional Google WFST/Epitran/CRF outputs are diagnostics only and do not constitute independent gold or accuracy evidence.
+
+**Linguistic acceptance unchanged:** independently adjudicated Yangon-profile IPA gold=0; accuracy unmeasured; expert convention approval, annotators/adjudicator/curator, rights-cleared attested items and blind-intake dry-run remain blocked; full phonological coverage partial; manual accessibility QA TODO. No new gold labels or accuracy claim.
+
+
+## Exact-head CI closeout — 2026-11-19 (`3c1e74c457091b925e1fc15a9d997123e60f6773`)
+
+All three configured PR workflows completed **SUCCESS on this exact HEAD**:
+- **DONE_VERIFIED — PR Tests [44512786531](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44512786531): SUCCESS.** Python/package/wheel and corpus validation, pytest, npm install and high-severity audit, production build, generated-data freshness, Node tests, Chromium and built-site Playwright all passed.
+- **DONE_VERIFIED — Pages artifact build [44512786476](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44512786476): SUCCESS.** Pinned Google Burmese WFST/OpenFst, IPA symbol-table invariants, browser alphabet parity, static model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and artifact upload passed. Artifact `github-pages`: 57,959 bytes, SHA-256 `97eb5066cf78e002020225f4f22f55314872b2e63206cd29cd6576b50f81b526`. Deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44512786448](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44512786448): SUCCESS.** Google WFST raw-output (1,976 bytes; SHA-256 `1dab2ecfd879c0bb39d1e4e8fc01c1eabbbde1322c36d4529ed62d5fc7b35835`), CRF raw-output (12,370 bytes; SHA-256 `45621543ad79aa6feb109ae00029d1714b8bd510465a6e69f2c87f591ea3d4b4`) and Epitran raw-output (1,706 bytes; SHA-256 `e734ebed1963fc96a21b5754fd7e7b648e106d7f1e1b2b729b1bee4a62670678`) artifacts uploaded. These remain diagnostic-only; independently adjudicated Yangon IPA gold=0 and accuracy is unmeasured.
+
+PR #171 remains OPEN/DRAFT/mergeable/unmerged. This exact-head closeout changes no runtime, source data, corpus, gold labels or benchmark methodology. Linguistic acceptance remains PARTIAL/BLOCKED: specialist convention approval, qualified annotators/adjudicator/curator, rights-cleared attested pilot items, private blind intake, full phonological coverage and manual accessibility QA remain unresolved. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Exact documentation-tip CI closeout — 2026-11-19 (`12f3ed423d97e1fe533425045105a12142fc66fd`)
+
+All three configured workflows completed **SUCCESS on this exact HEAD**:
+- **DONE_VERIFIED — required Tests [44518364893](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44518364893): SUCCESS.** Independent IPA gold corpus structure validation, editable Python install, wheel registry verification, pytest, `npm ci`, high-severity npm audit, production build, generated-data freshness, Node tests, Chromium installation and built-site Playwright all passed.
+- **DONE_VERIFIED — Pages artifact build [44518364743](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44518364743): SUCCESS.** Pinned Google Burmese WFST/OpenFst, IPA symbol-table invariants, browser alphabet parity, static browser model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and artifact upload passed. Artifact `github-pages`: 57,958 bytes; SHA-256 `4fc13f68bea2e175f412e3256638992a55c1c3237ec7b9960d94790436ce9b3a`. Deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44518364788](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44518364788): SUCCESS** across all three jobs (raw-output comparator, CRF baseline, Google WFST raw-output). Uploaded artifacts: comparator 1,700 bytes, SHA-256 `8645a3eb5e35204c487bd48f6d3a46540b3bfe11a86ab6aabb366ac23e9dace8`; CRF 12,370 bytes, SHA-256 `8730be5f8d8cc054627fd1c4ea0963481cd28db4011f1b3d103d0aced31c3271`; Google WFST 1,976 bytes, SHA-256 `5f95bfb8b5efc86dd19e75d0babd4ebff5a4be2fd794fd7f0e87fc612e839a82`. These remain diagnostic raw outputs only, not independent gold or accuracy evidence.
+
+The run metadata identifies the exact same `head_sha` for all three workflows. The three documents in this section are now synchronized to this exact verified tip. PR #171 remains OPEN/DRAFT/mergeable/unmerged. No source/runtime, corpus, gold label, schema or generated artifact changed in this closeout. Independent adjudicated Yangon IPA gold=0; accuracy remains unmeasured. Specialist convention approval, qualified annotators/adjudicator/curator, item-level source rights and attested pilot items, blind-intake dry-run, full phonological coverage and manual accessibility QA remain unresolved. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Green (2002) primary-source verification — 2026-11-19
+
+`docs/ipa-gold-collection-playbook.md` now records a direct check of Antony Dubach Green's October 2002 Rutgers Optimality Archive PDF. The review verified the paper's account of placeless coda /N/, preceding-vowel nasalization and approximate coronal/velar realization (the latter attributed by Green to Bennett & Lehman 1994); the /ʔ,N/ place-assimilation discussion and examples in (17); and Table (35)'s 50 major rhymes, whose nasal-rhyme columns list Low/High/Creaky but no Checked tone. The paper explicitly identifies its transcription as broad, nearly standard IPA and notes cross-author convention variation.
+
+**Ledger:** source identification and central-claim verification = DONE_VERIFIED as a literature-audit step; complete manual transcription of all 50 table cells and independent specialist review = PARTIAL/TODO; conversion into runtime rules or gold labels = NOT AUTHORIZED. Table (35) is an inventory adapted from Thein Tun (1982), not a rights-cleared lexical item list. Green's examples are source leads, not automatically approved pilot items. /N/ must remain distinct from its context-dependent surface realization; no blanket [n]/[ŋ] mapping is justified.
+
+No runtime, registry, corpus, schema, gold-label, or benchmark changes were made. Independent adjudicated Yangon IPA gold remains 0; accuracy remains unmeasured; expert recruitment, convention approval, item-level rights review and blind intake remain blocked. The engineering/research prototype is not linguistically release-ready.
+
+
+## Green (2002) unresolved nasal-rhyme + Checked-tone input — 2026-11-19
+
+A closer check of section 2.4 (printed pp. 12–13; PDF page 6) adds an important limit to the table (35) observation. Green says nasal-rhyme syllables do not occur with Checked tone, then explicitly considers a hypothetical input combining nasalization with the Checked tone's [+constricted glottis, −tense] feature bundle. He lists several possible outputs (including loss of the c.g. feature, change in tenseness, or deletion of nasalization) and states that there is no independent evidence to rank the relevant faithfulness constraints; the hypothetical output therefore remains unanswerable (PDF lines 234–243).
+
+**Disposition:** record the absence of Checked in Green's nasal-rhyme inventory as a source-specific descriptive generalization only. Do not infer a repair, neutralization, deletion, or surface IPA for a hypothetical nasal+Checked combination; do not encode a runtime rule or gold label from this discussion. This uncertainty is explicit in the primary source, not merely a gap in the project's research. Specialist review and profile-matched evidence remain required.
+
+
+## Exact-head four-workflow CI closeout — 2026-11-19 (`adef3fedb2e69afb9c66edc1f46c9ec3414329b7`)
+
+All four configured workflows completed **SUCCESS on this exact integration HEAD**; each run's `head_sha` is `adef3fedb2e69afb9c66edc1f46c9ec3414329b7`:
+
+- **DONE_VERIFIED — PR Tests [44590458324](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44590458324): SUCCESS.** Corpus structure validation, editable Python install, wheel registry verification, pytest, npm install/audit, production build, generated-data freshness, Node tests, Chromium installation and built-site Playwright all passed.
+- **DONE_VERIFIED — Push Tests [44590449926](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44590449926): SUCCESS.** All configured Python/package/corpus, npm/build/data freshness, Node and browser test steps passed.
+- **DONE_VERIFIED — Pages artifact build [44590458189](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44590458189): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input alphabet parity, static browser-model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and Pages artifact upload passed. Artifact `github-pages`: 57,955 bytes; SHA-256 `f6b3d65f3b0d933e68715cd58e7088408e7628b829501483dff17e46f4a9098f`. Deploy job was **SKIPPED** for the PR event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44590458182](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44590458182): SUCCESS** across Google WFST raw-output, CRF baseline and raw-output comparator jobs. Artifacts: Epitran 1,702 bytes (SHA-256 `1fcf373a6b54219515272f63086b8e3dc1cf32313ee843c01e2dd76827bb7790`); Google WFST 1,977 bytes (`ba72e256e766ff370a50e479ef50d69bbc7ea7f2c9a020fc2dbe2497b6436400`); CRF 12,370 bytes (`0158ab709c5d310ca8ee9c30a4ddb9bbaebdfca280e95949248e0679c83e59f5`). These remain raw-output diagnostics only, not independent gold or accuracy evidence.
+
+The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changes no runtime, source data, corpus, gold labels, schema or benchmark methodology. Independent adjudicated Yangon IPA gold=0; accuracy remains unmeasured. Specialist convention approval, qualified annotators/adjudicator/curator, item-level source rights and attested pilot items, blind-intake dry-run, complete phonological coverage and manual accessibility QA remain unresolved. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Exact-head four-workflow CI closeout — 2026-11-19 (`a6288a9ed90fc432c054c0da37486d0d5596b6c7`)
+
+All four configured workflows completed **SUCCESS on the exact same integration HEAD** `a6288a9ed90fc432c054c0da37486d0d5596b6c7`; GitHub run metadata confirms that exact `head_sha` for every run:
+
+- **DONE_VERIFIED — PR Tests [44600685509](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44600685509): SUCCESS.** All 31 job steps passed, including independent IPA corpus-structure validation, editable Python install, wheel registry verification, pytest, npm ci, high-severity npm audit, production build, generated-web-data freshness, Node tests, Chromium installation and built-site Playwright.
+- **DONE_VERIFIED — Push Tests [44600675346](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44600675346): SUCCESS.** All 31 job steps passed, including the same Python/package/corpus, npm/security, build/data freshness, Node and built-site browser gates.
+- **DONE_VERIFIED — Pages artifact build [44600685884](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44600685884): SUCCESS.** Pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser input-alphabet parity, static browser-model export, upstream `thrax_g2p` parity, production build, Node tests, Chromium/Playwright and Pages artifact upload all passed. Artifact `github-pages`: 57,952 bytes (artifact ID `14566699934`). The deploy job was **SKIPPED** because this was a pull-request event; no production deployment occurred.
+- **DONE_VERIFIED — optional diagnostics [44600685511](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44600685511): SUCCESS** across CRF baseline, Google WFST raw-output and raw-output comparator jobs. Artifacts: Epitran 1,705 bytes; Google WFST 1,976 bytes; CRF 12,370 bytes. These are reproducibility/raw-output diagnostics only, not independent gold or accuracy evidence.
+
+The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeable/unmerged, based on `fix/finals-registry-schema-2026-11-17`. This closeout changes no runtime, source data, corpus, gold labels, schema or benchmark methodology. Independent adjudicated Yangon IPA gold remains 0; accuracy remains unmeasured. Specialist convention approval, qualified annotators/adjudicator/curator, item-level source rights and attested pilot items, blind-intake dry-run, complete phonological coverage and manual accessibility QA remain unresolved. Readiness remains engineering/research prototype, not linguistically release-ready or WCAG-conformance-certified.
+
+
+## Root architecture document reconciliation — 2026-11-20
 
 | Task | Status | Evidence | Scope boundary |
 |---|---|---|---|
-| BUR-ARCH-DOC-001 | DONE_VERIFIED | PR #172 head `734e1a0795c667b205c09951ad1599a5a618d568`: Tests [44721532152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532152) SUCCESS; Pages build/artifact [44721532008](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44721532008) SUCCESS. | Architecture documentation only; no runtime/phonological coverage change. Evidence synchronization creates a subsequent docs-only head requiring its own CI. |
+| BUR-ARCH-DOC-001 | DONE_VERIFIED | PR #172 root architecture correction and README link are included in this integration branch. Exact PR head `bf24c1227330751a246a5e81c492df65e332c414`: Tests [44723214246](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214246) SUCCESS; Pages [44723214235](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214235) SUCCESS. | Documentation-only; no new phonological coverage or linguistic accuracy evidence. |
 
-The architecture doc now distinguishes current-main browser/Python paths, MLCTS orthographic romanization, IPA adapter boundary, generated-data ownership, and engineering versus linguistic release gates. Independent Yangon IPA gold remains 0; empirical accuracy remains unmeasured.
+
+
+## Registry-backed IPA-first integration — exact-head engineering closeout — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-IPA-FIRST-INTEGRATION-001 | PARTIAL (engineering verified; merge/release and linguistic acceptance pending) | Exact head `9d39110ca5f7e30f6449e1975633f79f7421a429`: PR Tests [44724860279](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860279) SUCCESS; Push Tests [44724850117](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724850117) SUCCESS; Pages artifact [44724860172](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860172) SUCCESS; optional diagnostics [44724860152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860152) SUCCESS. | Engineering contract and tests are green; no independent adjudicated IPA gold, no empirical accuracy score, and no complete prosodic/phonological inventory. PR #171 remains draft/unmerged pending owner review. |
+
+
+
+## Burmese IPA-first architecture documentation reconciliation — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-ARCH-DOC-002 | DONE_VERIFIED (documentation content; exact-head CI pending) | Root `docs/ARCHITECTURE.md` updated in PR #171 to match the registry-backed Python/browser IPA-first runtime, canonical CSV registries, generated browser data, typed IPA boundary and diagnostic-only external models. | Describes implementation topology, not linguistic completeness. Tone, phonation, quantity, profile adjudication and independent gold remain unresolved. |
+

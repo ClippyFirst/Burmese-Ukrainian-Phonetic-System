@@ -138,3 +138,39 @@ test("uncertain structural segments cannot leak a partial internal IPA candidate
   assert.equal(result.records[0].projectCandidate, null);
   assert.equal(result.ipaStatus, "UNCERTAIN");
 });
+
+
+test("API exposes independent graphemic, phonology, IPA and Ukrainian layer statuses", () => {
+  const segmental = analyzeHybrid([{
+    raw:"ကာ",nonMyanmar:false,ipa:"ka",status:"ESTABLISHED",
+    prosodyStatus:"NOT_ESTABLISHED",profileId:"my-yangon-careful-citation-v1",
+    structureStatus:"established",
+    phonology:{status:"SEGMENTAL_ONLY",ipa:"ka",segments:[{kind:"onset"},{kind:"vowel"}]}
+  }]);
+  assert.equal(segmental.graphemicStatus, "ESTABLISHED");
+  assert.equal(segmental.phonologyStatus, "SEGMENTAL_ONLY");
+  assert.equal(segmental.ipaStatus, "ANALYSIS_DEPENDENT");
+  assert.equal(segmental.ukrainianStatus, "PROVISIONAL");
+
+  const partial = analyzeHybrid([{
+    raw:"ကျာ",nonMyanmar:false,ipa:null,status:"ANALYSIS_DEPENDENT",
+    structureStatus:"established",
+    phonology:{status:"NOT_ESTABLISHED",ipa:null,segments:[{kind:"onset"},{kind:"vowel"}]}
+  }]);
+  assert.equal(partial.graphemicStatus, "ESTABLISHED");
+  assert.equal(partial.phonologyStatus, "PARTIAL");
+  assert.equal(partial.ipaStatus, "ANALYSIS_DEPENDENT");
+  assert.equal(partial.ukrainianStatus, "NOT_ESTABLISHED");
+
+  const unsupported = analyzeHybrid([{
+    raw:"က္",nonMyanmar:false,ipa:null,status:"UNSUPPORTED",
+    structureStatus:"unsupported_or_malformed",
+    phonology:{status:"NOT_ESTABLISHED",ipa:null,segments:[]}
+  }]);
+  assert.equal(unsupported.graphemicStatus, "UNSUPPORTED");
+  assert.equal(unsupported.phonologyStatus, "NOT_ESTABLISHED");
+
+  const empty = analyzeHybrid([]);
+  assert.equal(empty.graphemicStatus, "NOT_APPLICABLE");
+  assert.equal(empty.phonologyStatus, "NOT_APPLICABLE");
+});

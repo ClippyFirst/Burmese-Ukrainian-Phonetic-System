@@ -6,7 +6,7 @@ Research-grade Burmese (Myanmar script) → Ukrainian correspondence system with
 
 Burmese Unicode → normalization → graphemic/syllable structure → onset/conjunct/kinzi/medials/vowel/inherent-vowel analysis → prosodic analysis → Burmese phonology → surface phonetics → IPA → feature space → Ukrainian target → Ukrainian practical orthography.
 
-The practical output is never produced by direct Myanmar-character substitution.
+The practical output is never produced by direct Myanmar-character substitution. See the [registry-backed Burmese IPA pipeline](docs/architecture/burmese-ipa-pipeline.md) for the shared typed contract and fail-closed boundaries.
 
 ## Runtime architecture and provenance (important distinction)
 
@@ -14,7 +14,7 @@ See [the runtime architecture and trust-boundary document](docs/ARCHITECTURE.md)
 
 The published site has a **browser-side hybrid diagnostic shell**, not a voting ensemble. It exposes two separate modes:
 
-1. **Phonetic mode (IPA-first hybrid with explicit completeness states):** the browser parser supplies project segmental IPA candidates; the hybrid orchestrator runs these through the same Ukrainian IPA adapter and also collects narrow Epitran 1.35.3 and local Google Burmese Thrax/OpenFst candidates. A segmental string such as ka may be displayed with a Ukrainian candidate, but both are explicitly PARTIAL/PROVISIONAL until tone/phonation/quantity and a named profile are established. Only a fully scoped project IPA may be labeled canonical. The Google grammar is not established as a specific Yangon speaker profile. Provider outputs retain provenance and are never voted or used as fallback; unresolved structures remain withheld. Google is compiled from pinned source during the GitHub Pages build and served as a same-origin static JSON model; no server API receives user input. The Epitran port is not the full Python/PanPhon stack. The Python package has a separate rule engine and IPA adapter; browser and Python are separate code paths, so full phonological parity remains PARTIAL.
+1. **Phonetic mode (IPA-first hybrid with explicit completeness states):** the browser parser supplies project segmental IPA candidates; the hybrid orchestrator runs these through the same Ukrainian IPA adapter and also collects narrow Epitran 1.35.3 and local Google Burmese Thrax/OpenFst candidates. A segmental string such as ka may be displayed with a Ukrainian candidate, but both are explicitly PARTIAL/PROVISIONAL until tone/phonation/quantity and a named profile are established. Only a fully scoped project IPA may be labeled canonical. The Google grammar is not established as a specific Yangon speaker profile. Provider outputs retain provenance and are never voted or used as fallback; unresolved structures remain withheld. Google is compiled from pinned source during the GitHub Pages build and served as a same-origin static JSON model; no server API receives user input. The Epitran port is not the full Python/PanPhon stack. The Python package and browser still have separate parsers, but both now consume the same CSV-backed onset/vowel registries and emit the same typed segmental-IPA contract. Shared fixtures exercise the same supported and withheld cases in Python and the built browser. Full parser and phonological parity remains PARTIAL.
 2. **Romanization mode (third-party engine + project adapter):** the browser calls vendored **Mya2Rom 0.4.4** to obtain MLCTS romanization, then applies the project's own MLCTS-to-Ukrainian correspondence table. This is an orthographic route, not IPA and not the phonetic engine. Mya2Rom is distributed under CC BY-SA 4.0; see `vendor/mya2rom/NOTICE.md` and `vendor/mya2rom/License.md`. Its source rime inventory remains evidence-limited.
 
 The separate Python `HybridBurmeseEngine` is still a research wrapper for explicitly injected providers such as myG2P, CRF and CLI backends. myG2P is not bundled because its dictionary is CC BY-NC-SA 4.0. The public browser's two external comparators are Epitran and Google WFST; both remain diagnostic until independent, profile-matched IPA gold supports promotion. Therefore the accurate description is: **project-owned canonical phonetic rules + browser-local Epitran/Google IPA candidates + a separate Mya2Rom/MLCTS romanization route**. This is a hybrid shell, but not a consensus/voting G2P engine.
@@ -72,9 +72,11 @@ Install the package with test-only dependencies and run the test suite:
 ```bash
 pip install -e ".[test]"
 pytest
+python -m pip wheel --no-deps --wheel-dir dist .
+python scripts/verify_python_wheel.py dist
 ```
 
-The test extra includes `pytest` and `jsonschema`; schema validation is test-only and is not a runtime dependency. CI also checks that regenerating web data leaves `src/web/generated/data.js` unchanged:
+The test extra includes `pytest` and `jsonschema`; schema validation is test-only and is not a runtime dependency. CI also verifies that the built wheel contains the canonical Burmese IPA registries and that regenerating web data leaves `src/web/generated/data.js` unchanged:
 
 ```bash
 npm run generate:web
@@ -84,7 +86,7 @@ git diff --exit-code -- src/web/generated/data.js
 Structural Burmese parsing is available directly through the Python package.
 The generic ipa_to_ukrainian() adapter intentionally requires a local checkout of the canonical ClippyFirst/Ukrainian-Phonetic-Inventory repository; the Burmese repository does not vendor or duplicate that generic inventory. Without it, that generic adapter returns inventory_unavailable.
 
-For the language-specific practical system, use transcribe_ipa(). It uses the repository's provenance-bearing data/burmese/ukrainian_practical.csv and data/burmese/practical_rules.csv tables. RuleBasedBurmeseEngine.analyze() exposes the segmental IPA candidate and post-IPA Ukrainian candidate, plus separate ipa_status, phonetic_completeness, prosody_status, profile_status, canonical_ipa and canonical_ukrainian fields. A segmental-only IPA string is not reported as canonical full pronunciation. Unknown IPA segments withhold the complete practical string.
+For the language-specific practical system, use transcribe_ipa(). It uses the repository's provenance-bearing data/burmese/ukrainian_practical.csv and data/burmese/practical_rules.csv tables. RuleBasedBurmeseEngine.analyze() exposes separate graphemic_status, phonology_status, ipa_status and ukrainian_status fields, alongside the segmental IPA candidate, post-IPA Ukrainian candidate, phonetic_completeness, prosody_status, profile_status, canonical_ipa and canonical_ukrainian fields. The browser exposes the same layer dimensions as graphemicStatus, phonologyStatus, ipaStatus and ukrainianStatus. A segmental-only IPA string is not reported as canonical full pronunciation. Unknown IPA segments withhold the complete practical string.
 
 ## Current implementation
 
@@ -100,7 +102,9 @@ Implemented:
 - Evidence and competing-analysis datasets.
 - Structural syllable generator.
 - Prosody analysis slots that do not invent tone values.
-- Conservative IPA seed layer.
+- Registry-driven source-side phonology stage shared by Python and browser, with typed IPA components, per-segment provenance and explicit unresolved features.
+- Shared Python/browser phonology contract fixtures for simple CV, medials, checked codas, prosody, analysis-dependent onset/vowel rows and isolated bare consonants.
+- Python IPA correspondence views derived from the canonical CSV registries; the installable wheel includes those registries.
 - Canonical Ukrainian target adapter boundary.
 - Burmese→Russian documentary correspondence registry.
 - Burmese→Ukrainian practical correspondence registry.
