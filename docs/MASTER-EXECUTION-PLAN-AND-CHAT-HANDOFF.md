@@ -3776,3 +3776,10 @@ The owner-authorized noncommercial licensing decision is merged. PR #177 added P
 PR-head verification on d4d2498fe8ba9f9f46422e81fff679b5d3bbd5f5: tests run 44826544412 SUCCESS; Pages build run 44826544397 SUCCESS (deploy is skipped for pull_request events). Exact-main tests and Pages/deploy runs on 3d9789152b251dfa503f36726cc7a89c9835fcb7 were queued at the time of this handoff update and must be checked before calling that main SHA fully green.
 
 BURMESE-LICENSE-001 — DONE_VERIFIED for the repository-owned software/docs licensing declarations, scope boundaries, package metadata and PR-head CI. Third-party/source-data rights remain PARTIAL or BLOCKED per item-level evidence; this project license does not authorize redistribution of items with unknown or conflicting rights. No linguistic records, IPA, runtime rules or generated artifacts were changed. The repository remains a linguistically partial research prototype, not release-ready.
+
+
+## Original research-data license — 2026-11-21
+
+Owner-authorized noncommercial research reuse now explicitly covers original project-authored datasets, annotations and curated database contributions under CC BY-NC 4.0 (`LICENSE-DATA`), where the maintainers/contributors hold the rights. README and `THIRD_PARTY_NOTICES.md` now explain the scope and exclusions; `data/benchmark/licenses.json` registers CC-BY-NC-4.0 and distinguishes research reuse from the stricter commercial/product gold-corpus gate. The gold-corpus documentation preserves that gate: NC-only material is not eligible for commercial/product export.
+
+BURMESE-RESEARCH-DATA-LICENSE-001 — implementation complete on this branch; pending PR-head and post-merge CI. This grant does not clear Mya2Rom, Epitran mapping data, Google language resources, myG2P, MOW, Goruut or any other third-party source. Existing per-item rights evidence remains controlling. No new corpus rows, IPA labels, lexical data or runtime behavior were added. The gold corpus remains empty and the expert pilot remains blocked pending approved convention, independent annotators/adjudicator, curator and item-level rights checks.

@@ -4,7 +4,7 @@ This file records a research review, not legal advice.
 
 ## Repository's own license
 
-As of 2026-11-21, original project software code is licensed under PolyForm Noncommercial 1.0.0 (`LICENSE`), and original documentation under CC BY-NC 4.0 (`LICENSE-DOCS`). These grants are deliberately scoped: they do not relicense third-party components or blanket-license research data. Every external engine, dictionary, model, font, corpus and copied data item retains its own rights and attribution conditions. Unknown or conflicting rights remain unresolved and do not authorize redistribution. PolyForm Noncommercial is not an OSI-approved Open Source license.
+As of 2026-11-21, original project software code is licensed under PolyForm Noncommercial 1.0.0 (`LICENSE`), original documentation under CC BY-NC 4.0 (`LICENSE-DOCS`), and original project-authored research datasets/annotations under CC BY-NC 4.0 (`LICENSE-DATA`) for noncommercial research, only where the relevant maintainers/contributors own the rights. These grants do not relicense third-party components or source-derived material whose rights remain with someone else. Every external engine, dictionary, model, font, corpus and copied data item retains its own rights and attribution conditions. Unknown or conflicting rights remain unresolved and do not authorize redistribution. The IPA gold product-corpus gate remains stricter and excludes NC-only sources. PolyForm Noncommercial is not an OSI-approved Open Source license.
 
 ## External candidates reviewed
 
@@ -42,5 +42,5 @@ For every external engine, dictionary, model, or copied data set, record: exact 
 - Original project software code is licensed under **PolyForm Noncommercial 1.0.0**; see [LICENSE](LICENSE). The license permits noncommercial research, modification and redistribution, and has a separate permission for educational institutions and public research organizations regardless of funding source.
 - Original documentation and explanatory prose are licensed under **CC BY-NC 4.0**; see [LICENSE-DOCS](LICENSE-DOCS).
 - These project licenses do **not** apply to third-party software, fonts, models, dictionaries, corpora, recordings, source quotations, or other materials whose rights are held by someone else. Retain each component's own notices and terms.
-- The licenses do not blanket-license the contents of `data/`. Research observations, source-derived records and datasets remain governed by their item-level provenance and rights statements. Where rights are unknown, redistribution and derivative use remain unapproved.
+- Original project-authored research datasets and annotations are covered by `LICENSE-DATA` for noncommercial research, but only to the extent the project contributors hold the rights. Third-party/source-derived material and mixed records remain governed by their item-level provenance and rights statements. Where rights are unknown or conflicting, redistribution and derivative use remain unapproved.
 - PolyForm Noncommercial is not an OSI-approved Open Source license. Commercial use is not granted; contact the rights holder for separate permission.

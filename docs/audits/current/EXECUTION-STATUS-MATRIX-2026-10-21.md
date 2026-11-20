@@ -3752,3 +3752,9 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 - Exact PR-head tests 44826544412 and Pages build 44826544397 both SUCCESS. Exact-main tests and Pages/deploy are queued at this checkpoint; their final results must be recorded separately.
 - Third-party software and item-level research data remain under their own rights. Unknown/conflicting source rights are not cleared by the project license. PolyForm Noncommercial is not OSI-approved Open Source and does not grant commercial-use permission.
 - No linguistic rules, IPA values, lexical labels, generated datasets or runtime behavior changed.
+
+
+## Research data licensing — 2026-11-21
+
+- BURMESE-RESEARCH-DATA-LICENSE-001 — PARTIAL pending PR/CI: added CC BY-NC 4.0 for original project-authored research datasets/annotations via `LICENSE-DATA`; README and third-party notice scope/exclusions updated; benchmark license registry and gold-corpus docs distinguish noncommercial research reuse from commercial/product-corpus eligibility.
+- Third-party data and mixed-source rows are not covered. Unknown/conflicting provenance remains BLOCKED; Mya2Rom, Epitran maps, Google resources, myG2P and Goruut retain their own terms. No new data/IPA labels were introduced.

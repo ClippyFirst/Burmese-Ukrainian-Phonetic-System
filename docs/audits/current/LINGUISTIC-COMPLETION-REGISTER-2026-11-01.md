@@ -3334,3 +3334,8 @@ BURMESE-LICENSE-001 is PARTIAL pending hosted verification and merge. Original c
 ## Licensing closeout — 2026-11-21
 
 BURMESE-LICENSE-001 — DONE_VERIFIED. Original code: PolyForm Noncommercial 1.0.0; original documentation: CC BY-NC 4.0. Python package metadata and CITATION.cff were synchronized. PR #177 merged as 3d9789152b251dfa503f36726cc7a89c9835fcb7. PR-head tests and Pages build both passed (44826544412, 44826544397). Exact-main post-merge CI was queued at this update and remains to be checked. Third-party components and source-specific research data are excluded; existing item-level rights-clearance gates remain open. This is noncommercial licensing, not OSI-approved Open Source or linguistic release approval.
+
+
+## Research-data license scope — 2026-11-21
+
+BURMESE-RESEARCH-DATA-LICENSE-001 — implementation on license branch; PR-head CI pending. Original project-authored research data, annotations and curated database contributions are covered by CC BY-NC 4.0 in `LICENSE-DATA`, only where contributors hold the rights. Third-party source material and mixed-source items remain separately governed; unknown/conflicting rights remain unresolved. Existing product gold export gate still requires commercial redistribution and therefore excludes NC-only sources. No gold rows were added; linguistic acceptance status is unchanged.
