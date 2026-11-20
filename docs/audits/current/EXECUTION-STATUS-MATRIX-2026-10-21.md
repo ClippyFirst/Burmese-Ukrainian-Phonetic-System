@@ -3744,3 +3744,11 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 - Owner intent is confirmed: noncommercial research and scientific knowledge-sharing. Commercial use is not granted by the selected terms; PolyForm Noncommercial is not OSI-approved Open Source.
 - Existing Epitran, Google Language Resources, Mya2Rom and other third-party license terms remain unchanged. Dataset/source rights remain item-specific; unknown/conflicting entries are not cleared by the repository's own licenses.
 - No phonological or runtime behavior changed. Acceptance: exact PR-head CI green, license-scope files and metadata reviewed, then merge.
+
+
+## Licensing decision closeout — 2026-11-21
+
+- BURMESE-LICENSE-001 — DONE_VERIFIED. Original project code is licensed under PolyForm Noncommercial 1.0.0; original documentation under CC BY-NC 4.0. Package metadata and CITATION.cff now declare PolyForm-Noncommercial-1.0.0. PR #177 merged as 3d9789152b251dfa503f36726cc7a89c9835fcb7.
+- Exact PR-head tests 44826544412 and Pages build 44826544397 both SUCCESS. Exact-main tests and Pages/deploy are queued at this checkpoint; their final results must be recorded separately.
+- Third-party software and item-level research data remain under their own rights. Unknown/conflicting source rights are not cleared by the project license. PolyForm Noncommercial is not OSI-approved Open Source and does not grant commercial-use permission.
+- No linguistic rules, IPA values, lexical labels, generated datasets or runtime behavior changed.
