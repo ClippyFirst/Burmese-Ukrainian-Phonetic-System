@@ -3684,7 +3684,7 @@ The exact-head engineering CI gate is green on `6c5190683bce286cfc46c52497cabdc6
 - Integrated the root `docs/ARCHITECTURE.md` correction from merged PR #172 (merge commit `2544d3f8528c8ff8ac526843e3963a9fe337312e`) into this IPA-first integration branch, and linked it from README.
 - PR #172 exact head `bf24c1227330751a246a5e81c492df65e332c414`: Tests [44723214246](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214246) SUCCESS (315 Python tests + 68 subtests, 71 built-site Playwright tests, 0 npm vulnerabilities); Pages build [44723214235](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214235) SUCCESS, including WFST/OpenFst, IPA symbol-table/input-alphabet checks, upstream Thrax parity, build and artifact upload. Deploy was skipped for the PR event.
 - The merge commit is included as the second parent of the reconciliation merge commit; no force-push or branch deletion is used.
-- The architecture snapshot intentionally describes the pre-#171 shipped mainline. The registry-backed IPA-first route in this branch remains an integration candidate until this PR is merged; after merge, the architecture snapshot should be updated to reflect the newly shipped route.
+- Root `docs/ARCHITECTURE.md` was updated on 2026-11-20 to describe the registry-backed IPA-first Python/browser topology, canonical CSV ownership, shared semantic fixtures, external diagnostic-only engines, typed IPA adapter boundary and conservative prosodic/profile withholding. It no longer describes the pre-#171 mainline. This documentation is part of the current #171 candidate; after merge it will describe shipped mainline behavior.
 
 
 ## Exact reconciled integration-head CI closeout — 2026-11-20
