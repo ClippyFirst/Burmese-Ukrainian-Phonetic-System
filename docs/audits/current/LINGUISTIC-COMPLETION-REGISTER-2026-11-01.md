@@ -3329,3 +3329,8 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 ## Licensing status — 2026-11-21
 
 BURMESE-LICENSE-001 is PARTIAL pending hosted verification and merge. Original code is assigned PolyForm Noncommercial 1.0.0; original docs CC BY-NC 4.0. The software Citation File Format and Python package metadata have been synchronized. The license explicitly excludes third-party components and does not grant blanket rights to research data. Existing item-level source rights, redistribution permissions and any conflicts remain separate gates. This is a noncommercial licensing choice, not an OSI Open Source grant or a claim that the linguistic prototype is release-ready.
+
+
+## Licensing closeout — 2026-11-21
+
+BURMESE-LICENSE-001 — DONE_VERIFIED. Original code: PolyForm Noncommercial 1.0.0; original documentation: CC BY-NC 4.0. Python package metadata and CITATION.cff were synchronized. PR #177 merged as 3d9789152b251dfa503f36726cc7a89c9835fcb7. PR-head tests and Pages build both passed (44826544412, 44826544397). Exact-main post-merge CI was queued at this update and remains to be checked. Third-party components and source-specific research data are excluded; existing item-level rights-clearance gates remain open. This is noncommercial licensing, not OSI-approved Open Source or linguistic release approval.
