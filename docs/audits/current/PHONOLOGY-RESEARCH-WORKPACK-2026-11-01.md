@@ -200,3 +200,11 @@ The new rows link to seven source claims and all remain `WITHHELD`. This is a so
 
 
 Printed-page verification correction: Green 2005's Table (9) and §2.2 page images resolve the OCR ambiguity. The open-only mid monophthongs are /e, o, ɔ/; /ɛ/ occurs open or before /ʔ/, but not before /N/. Added a separate source claim, evidence row and regression assertion. The evidence matrix now has 12 rows; no runtime mapping was enabled.
+
+### Additional bounded evidence — Ni (2025), bidirectional onset-voicing effects on F0
+
+Ni (2025), “Bidirectional Consonantal Effects on F0 Realization in Burmese,” *Proceedings of the Third International Conference on Tone and Intonation*, pp. 134–138, DOI 10.21437/tai.2025-28, reports an F0 production study with four native Burmese–English bilingual speakers originally from Yangon (two women, two men; ages 30–40). The design is narrowly restricted to disyllabic forms with a minor /ʔə/ syllable followed by an open /a/ major syllable; four onset-voicing pairs (/p–b/, /t–d/, /k–g/, /s–z/); High/Low tone; three repetitions in a fixed carrier sentence.
+
+The study reports higher F0 before and early in major syllables with voiceless onsets. Late minor-syllable F0 predicted upcoming onset voicing at 61.7% mean accuracy, but did not predict following High vs Low tone above chance (47.2%). The authors interpret the minor-syllable pattern as gradient anticipatory conditioning, not an independent tone contrast.
+
+**Evidence boundary:** this is carrier-sentence F0 evidence from four Yangon-origin bilingual speakers recorded remotely, not an isolated careful-citation task, complete dialect survey, phonation study, IPA convention, or lexical gold. It supports retaining onset-voicing context as a potential prosodic covariate in future annotation; it does not authorize a runtime F0/tone rule, a tone mark on minor syllables, or any IPA/Ukrainian mapping. The study supplies no Burmese orthographic lexical examples suitable for the project's source-located gold matrix. Registered as NI2025 / CLM-NI25-ONSET-F0-001; status ANALYSIS_DEPENDENT.
