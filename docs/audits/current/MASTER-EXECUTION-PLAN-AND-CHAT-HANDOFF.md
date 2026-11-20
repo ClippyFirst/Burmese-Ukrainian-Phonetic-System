@@ -1326,3 +1326,8 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 ## Reconciled IPA-first candidate — 2026-11-20
 
 PR #171 has been retargeted to `main` and reconciled with merged PR #172 using a two-parent merge commit `9d39110ca5f7e30f6449e1975633f79f7421a429` (second parent `2544d3f8528c8ff8ac526843e3963a9fe337312e`). Exact-head PR tests, push tests, Pages artifact build and optional diagnostics all succeeded: 325 Python tests + 68 subtests, 74 Playwright tests, npm audit 0 vulnerabilities, pinned Google WFST/OpenFst and upstream Thrax parity. PR remains OPEN/DRAFT/mergeable, not merged. PRs #168/#169/#170 remain open and overlapping; no release/deployment occurred from the PR event. Independent adjudicated Yangon IPA gold=0, accuracy unmeasured; full phonological coverage, expert convention approval, source rights, independent annotation and manual accessibility remain unresolved.
+
+
+## Architecture documentation reconciliation — 2026-11-20
+
+The root `docs/ARCHITECTURE.md` on integration PR #171 now describes the registry-backed IPA-first pipeline actually implemented in that candidate. It distinguishes the Python and browser runtime modules, canonical CSV registries and generated JS artifacts, shared semantic fixtures, diagnostic-only external G2P candidates, separate MLCTS route, and the rule that only a complete profile/prosody-approved IPA result may become canonical Ukrainian output. The former pre-#171 mainline snapshot wording has been removed. Exact-head CI is pending for this documentation update.
