@@ -3701,3 +3701,12 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | BUR-GOLD-PILOT-001 | BLOCKED (human/source-rights dependency) | Issue [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85). | Approve convention, recruit 2 annotators + independent adjudicator + curator, private blind intake, rights-clear 30 lexeme groups, independent adjudication. |
 | BUR-MANUAL-A11Y-001 | TODO (human QA) | Issue [#173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/173). | Manual keyboard/screen-reader/zoom/reflow/contrast/mobile review and remediation; no WCAG claim before evidence. |
 
+
+## Exact current-main closeout — 2026-11-20
+
+| Work item | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-IPA-FIRST-INTEGRATION-001 | DONE_VERIFIED (engineering and deployment) / PARTIAL (linguistic) | Exact main HEAD `c88b1857a7e321264a4ad31c5efeb8bf471f49e6`: Tests [44735314959](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44735314959) SUCCESS (325 Python + 68 subtests; 74 Playwright; npm audit 0 vulnerabilities); Pages/deploy [44735314873](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44735314873) SUCCESS, including live Pages deployment. | Engineering gate is green. Independent gold=0, accuracy unmeasured; complete Burmese prosody and expert adjudication remain outstanding. |
+| BUR-PR129-RECONCILIATION-001 | DEFERRED (historical divergent PR) | PR #129 remains 53 ahead / 42 behind and mergeable=false. All 21 paths compared; optional Epitran workflow, Google WFST benchmark script and test are identical to main, while other paths are older/different versions of code/docs already represented in main. A current-state comment is recorded on PR #129. | Do not merge/rebase stale branch; owner may close it as historical context. No branch deletion. |
+| BUR-GOLD-PILOT-001 | BLOCKED (human/source-rights dependency) | Issue [#85](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/85). | Approved convention, two independent annotators, adjudicator, curator, blind intake and 30 rights-cleared adjudicated lexeme groups. |
+| BUR-MANUAL-A11Y-001 | TODO (human QA) | Issue [#173](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/issues/173). | Manual keyboard/screen-reader/zoom/reflow/contrast/mobile review and retest. |
