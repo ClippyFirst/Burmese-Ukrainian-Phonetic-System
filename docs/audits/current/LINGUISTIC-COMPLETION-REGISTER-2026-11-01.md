@@ -3292,3 +3292,12 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 | BUR-GOLD-PILOT-001 | BLOCKED | Issue #85 remains open. | Human specialist/annotation/rights/private-intake dependency. |
 | BUR-MANUAL-A11Y-001 | TODO | Issue #173 opened. | Manual human accessibility review remains outstanding. |
 
+
+## Exact current-main closeout — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-MAIN-CI-2026-11-20 | DONE_VERIFIED | Exact main HEAD `c88b1857a7e321264a4ad31c5efeb8bf471f49e6`: Tests [44735314959](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44735314959) SUCCESS (325 Python + 68 subtests, 74 Playwright, 0 npm vulnerabilities); Pages/deploy [44735314873](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44735314873) SUCCESS including deployment. | Verifies shipped code/build/deployment, not phonological correctness. |
+| BUR-PR129-RECONCILIATION-001 | DEFERRED | PR #129 is divergent (53 ahead / 42 behind; mergeable=false). Rechecked 21 changed paths; remaining branch versions are stale relative to main, and its Google WFST/Epitran benchmark components are already present. | Leave open as historical context pending owner close decision; do not merge/rebase or delete branch. |
+| BUR-GOLD-PILOT-001 | BLOCKED | Issue #85. Independent adjudicated Yangon IPA gold=0; accuracy null. | Requires specialist-approved convention, qualified annotation/adjudication/curation, private blind intake and rights-cleared pilot. |
+| BUR-MANUAL-A11Y-001 | TODO | Issue #173. | Manual accessibility QA has not been performed. |
