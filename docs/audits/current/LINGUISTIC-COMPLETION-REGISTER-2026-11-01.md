@@ -3339,3 +3339,8 @@ BURMESE-LICENSE-001 — DONE_VERIFIED. Original code: PolyForm Noncommercial 1.0
 ## Research-data license scope — 2026-11-21
 
 BURMESE-RESEARCH-DATA-LICENSE-001 — implementation on license branch; PR-head CI pending. Original project-authored research data, annotations and curated database contributions are covered by CC BY-NC 4.0 in `LICENSE-DATA`, only where contributors hold the rights. Third-party source material and mixed-source items remain separately governed; unknown/conflicting rights remain unresolved. Existing product gold export gate still requires commercial redistribution and therefore excludes NC-only sources. No gold rows were added; linguistic acceptance status is unchanged.
+
+
+## Research-data license — merged and verified — 2026-11-21
+
+BURMESE-RESEARCH-DATA-LICENSE-001 — DONE_VERIFIED. PR #179 merged as `c604092088d48bd4c4bf8fcf45cf40ab77705a08`. Original project-authored research datasets, annotations and curated database contributions are covered by CC BY-NC 4.0 in `LICENSE-DATA`, only where contributors hold the rights. README, `THIRD_PARTY_NOTICES.md`, benchmark license registry and gold-corpus docs reflect the scope. PR-head tests and Pages build passed (44829563024, 44829563050); exact-main tests 44830387172 and Pages build/deploy 44830387150 all SUCCESS. Third-party source rights and any non-project contributor rights remain separately unresolved. NC-only material remains ineligible for the commercial/product gold-corpus export gate. No gold rows or IPA labels were added.
