@@ -1331,3 +1331,8 @@ PR #171 has been retargeted to `main` and reconciled with merged PR #172 using a
 ## Architecture documentation reconciliation — 2026-11-20
 
 The root `docs/ARCHITECTURE.md` on integration PR #171 now describes the registry-backed IPA-first pipeline actually implemented in that candidate. It distinguishes the Python and browser runtime modules, canonical CSV registries and generated JS artifacts, shared semantic fixtures, diagnostic-only external G2P candidates, separate MLCTS route, and the rule that only a complete profile/prosody-approved IPA result may become canonical Ukrainian output. The former pre-#171 mainline snapshot wording has been removed. Exact-head CI is pending for this documentation update.
+
+
+## Final Burmese integration closeout — 2026-11-20
+
+PR #171 is merged to main as `a7cd77c30ff039b594536f72219ccd2a497e7dfd`. Exact PR-head engineering CI and post-merge main Tests/Pages deployment/diagnostics all passed. The canonical CSV-backed IPA-first pipeline, Python/browser implementations, shared fixtures, separate MLCTS route, wheel verification, and architecture/handoff reconciliation are now on main. PRs #166–#170 were closed as superseded after comparison; branches were preserved. PR #129 remains open for its separate benchmark work. Linguistic release is still blocked by unapproved Burmese IPA convention, no independent annotators/adjudicator/curator, no private blind intake, no rights-cleared 30-item gold pilot, and incomplete tone/phonation/quantity/profile/coda coverage. Manual accessibility QA is tracked in Issue #173.
