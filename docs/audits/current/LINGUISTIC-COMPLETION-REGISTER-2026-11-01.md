@@ -3265,3 +3265,11 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 |---|---|---|---|
 | BUR-ARCH-DOC-001 | DONE_VERIFIED | PR #172 root architecture correction and README link are included in this integration branch. Exact PR head `bf24c1227330751a246a5e81c492df65e332c414`: Tests [44723214246](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214246) SUCCESS; Pages [44723214235](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214235) SUCCESS. | Documentation-only; no new phonological coverage or linguistic accuracy evidence. |
 
+
+
+## Registry-backed IPA-first integration — exact-head engineering closeout — 2026-11-20
+
+| Task | Status | Evidence | Scope boundary |
+|---|---|---|---|
+| BUR-IPA-FIRST-INTEGRATION-001 | PARTIAL (engineering verified; merge/release and linguistic acceptance pending) | Exact head `9d39110ca5f7e30f6449e1975633f79f7421a429`: PR Tests [44724860279](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860279) SUCCESS; Push Tests [44724850117](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724850117) SUCCESS; Pages artifact [44724860172](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860172) SUCCESS; optional diagnostics [44724860152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860152) SUCCESS. | Engineering contract and tests are green; no independent adjudicated IPA gold, no empirical accuracy score, and no complete prosodic/phonological inventory. PR #171 remains draft/unmerged pending owner review. |
+

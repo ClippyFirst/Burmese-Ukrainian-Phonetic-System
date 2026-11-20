@@ -3682,3 +3682,11 @@ The exact-head engineering CI gate is green. PR #171 remains OPEN/DRAFT/mergeabl
 |---|---|---|---|
 | BUR-ARCH-DOC-001 | DONE_VERIFIED | Root `docs/ARCHITECTURE.md` and README link integrated from PR #172. Exact PR head `bf24c1227330751a246a5e81c492df65e332c414`: Tests [44723214246](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214246) SUCCESS (315 Python tests + 68 subtests, 71 Playwright tests, 0 npm vulnerabilities); Pages [44723214235](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44723214235) SUCCESS (WFST/OpenFst, upstream parity, production build and Pages artifact upload; PR deploy skipped). | Documentation only. The architecture snapshot is explicitly scoped to the pre-#171 mainline; update it after the IPA-first integration is merged. |
 
+
+
+## Exact reconciled integration-head CI closeout — 2026-11-20
+
+| Work item | Status | Evidence | Acceptance boundary |
+|---|---|---|---|
+| BUR-IPA-FIRST-INTEGRATION-001 | PARTIAL (engineering gate DONE_VERIFIED; merge and linguistic acceptance pending) | Exact merge head `9d39110ca5f7e30f6449e1975633f79f7421a429`; PR Tests [44724860279](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860279), Push Tests [44724850117](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724850117), Pages artifact [44724860172](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860172), optional diagnostics [44724860152](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44724860152) all SUCCESS. Counts: 325 Python + 68 subtests; 74 Playwright; npm audit 0 vulnerabilities. | PR #171 remains OPEN/DRAFT, based on main, 185 ahead / 0 behind, 37 paths. PRs #168/#169/#170 remain open/overlapping. No merge or release. Linguistic gold remains 0 and accuracy unmeasured. |
+
