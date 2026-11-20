@@ -28,7 +28,7 @@
 <section class="workspace" aria-labelledby="input-heading">
   <div class="bar"><div class="section-title"><span class="section-number">A</span><div><p class="kicker">Вхід</p><h2 id="input-heading">Бірманський текст</h2></div></div><span id="count" class="count">0 символів</span></div>
   <label class="sr-only" for="source">Введіть бірманський текст</label>
-  <div class="input-frame"><textarea id="source" rows="7" spellcheck="false" lang="my" placeholder="ဥပမာ — မြန်မာ"></textarea><div class="input-hint"><span>Unicode Myanmar</span><span>локальна обробка</span></div></div>
+  <div class="input-frame"><textarea id="source" rows="7" spellcheck="false" lang="my" aria-labelledby="input-heading" placeholder="ဥပမာ — မြန်မာ"></textarea><div class="input-hint"><span>Unicode Myanmar</span><span>локальна обробка</span></div></div>
   <div class="controls">
     <button id="example" class="button primary" type="button">Приклад ↗</button>
     <button id="clear" class="button secondary" type="button">Очистити</button>
@@ -52,7 +52,7 @@
   </article>
 
   <article id="romanization-panel" class="result-card" data-method-panel="romanization">
-    <div class="result-meta"><span class="result-index">01</span><div><h3>Романізація · MLCTS</h3><p>Орфографічна система Myanmar Language Commission; окремо від IPA й українського результату.</p></div><button class="copy" data-copy="romanization" type="button">Копіювати</button></div>
+    <div class="result-meta"><span class="result-index">01</span><div><h3>Романізація · MLCTS</h3><p>Орфографічна система Myanmar Language Commission; окремо від IPA й українського результату.</p></div><button class="copy" data-copy="romanization" type="button" aria-label="Копіювати романізацію MLCTS">Копіювати</button></div>
     <p id="romanization" class="result-value" lang="en"></p>
     <div id="romanization-status" class="status-line">Mya2Rom 0.4.4 · MLCTS (орфографічний профіль).</div>
   </article>
@@ -65,13 +65,13 @@
   </article>
 
   <article id="ipa-panel" class="result-card" data-method-panel="phonetic">
-    <div class="result-meta"><span class="result-index">03</span><div><h3>IPA</h3><p>Фонетичний / фонологічний шар, наскільки його встановлено для конкретного сегмента.</p></div><button class="copy" data-copy="ipa" type="button">Копіювати</button></div>
+    <div class="result-meta"><span class="result-index">03</span><div><h3>IPA</h3><p>Фонетичний / фонологічний шар, наскільки його встановлено для конкретного сегмента.</p></div><button class="copy" data-copy="ipa" type="button" aria-label="Копіювати IPA">Копіювати</button></div>
     <p id="ipa" class="result-value ipa" lang="und-fonipa"></p>
     <div id="ipa-status" class="status-line"></div>
   </article>
 
   <article id="ua-panel" class="result-card primary-result" data-method-panel="phonetic">
-    <div class="result-meta"><span class="result-index">04</span><div><h3>Українська практична транскрипція</h3><p>Авторська система, побудована від аналізу вимови, а не від прямої заміни знаків.</p></div><button class="copy" data-copy="uk" type="button">Копіювати</button></div>
+    <div class="result-meta"><span class="result-index">04</span><div><h3>Українська практична транскрипція</h3><p>Авторська система, побудована від аналізу вимови, а не від прямої заміни знаків.</p></div><button class="copy" data-copy="uk" type="button" aria-label="Копіювати українську транскрипцію">Копіювати</button></div>
     <p id="uk" class="result-value" lang="uk"></p>
     <div id="uk-status" class="status-line"></div>
     <section id="hybrid-candidate-previews" class="candidate-previews" aria-label="Попередні варіанти від гібридних провайдерів" hidden>
