@@ -232,3 +232,11 @@ The following findings were surfaced in a targeted literature review. They sharp
 5. The item-level rights of any selected dictionary/audio source.
 
 **Status remains DRAFT_NOT_APPROVED.** A qualified Yangon Burmese specialist and independent IPA/phonetics reviewer must approve the convention and document disagreements before any gold annotation begins.
+
+
+### Full-text checks of key tone studies
+
+- Gruber's perceptual study has **10 native Burmese listeners** and one stimulus speaker, not a population sample. The 18 natural citation-form tokens were identified at 89% (160/180 responses), with most errors involving Creaky–Checked confusions. In a stepwise model, phonation type was the strongest predictor, followed by midpoint F0 and listener; duration and vowel quality contributed less. The resynthesized task used isolated monosyllables and a small controlled stimulus set. These results support a multi-cue annotation question, not a complete Yangon IPA convention. DOI: https://doi.org/10.3765/EXABS.V0I0.557.
+- Mooney & Repetti-Ludlow's full text confirms **one** female native Yangon consultant (late 20s). Their isolated-word experiment and sentence-frame experiment differ materially: duration distinctions largely neutralized in sentence contexts while pitch remained significant; vowel alternations are argued to follow syllable structure/sonority rather than tone. The paper's tentative three-underlying-tone proposal remains a hypothesis, not an approved inventory. DOI: https://doi.org/10.3765/PLSA.V6I1.4900.
+
+These full-text details reinforce the need to record elicitation task and phonetic evidence separately. They do not justify using either study as a 30-item gold source without profile-matched items, rights review and independent expert annotation.
