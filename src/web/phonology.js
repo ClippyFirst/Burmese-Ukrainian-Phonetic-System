@@ -61,7 +61,10 @@ export function phonologizeSyllable(syllable) {
     withhold("onset_realization");
   } else {
     onsetIpa = onsetRow.ipa;
-    segments.push({ kind: "onset", source: syllable.onset, ipa: onsetIpa, status: onsetRow.status, evidence: evidence(onsetRow) });
+    segments.push({
+      kind: "onset", source: syllable.onset, ipa: onsetIpa, status: onsetRow.status, evidence: evidence(onsetRow),
+      ...(onsetRow.source_locator ? { source_locator: onsetRow.source_locator } : {}),
+    });
   }
 
   const vowelSigns = syllable.vowels || [];
