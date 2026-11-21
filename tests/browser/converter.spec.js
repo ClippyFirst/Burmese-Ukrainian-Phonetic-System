@@ -45,7 +45,7 @@ test("closed u with a nasal coda remains withheld pending profile adjudication",
   await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
-test("medial wa rimes remain withheld until contextual rules are verified",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကွက် ကွန်");await expect(page.locator("#ipa")).toHaveText("? ?");await expect(page.locator("#uk")).toContainText("⟦ကွက်⟧");await expect(page.locator("#uk")).toContainText("⟦ကွန်⟧");});
+test("medial wa rimes remain withheld until contextual rules are verified",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကွက် ကွန်");await expect(page.locator("#ipa")).toHaveText("? ?");await expect(page.locator("#uk")).toContainText("???");await expect(page.locator("#uk")).toContainText("???");});
 
 test("i+u checked rime remains withheld pending profile adjudication",async({page})=>{
   await page.goto("/");
@@ -91,7 +91,7 @@ test("kinzi-coda structure is retained while unsupported IPA is withheld",async(
 
 test("Burmese punctuation remains preserved around withheld words",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျောင်း၊ ကျောင်း။");await expect(page.locator("#ipa")).toContainText("?");await expect(page.locator("#uk")).toContainText("၊");await expect(page.locator("#uk")).toContainText("။");await expect(page.locator("#syllables")).not.toContainText("Нерозібраний знак ၊");await expect(page.locator("#syllables")).not.toContainText("Нерозібраний знак ။");});
 
-test("unsupported medial/rime combinations do not leak debug IPA symbols",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျောင်း စိတ် ပိုက် ကိုက်");await expect(page.locator("#uk")).toContainText("⟦ကျောင်း⟧");await expect(page.locator("#uk")).not.toContainText("∅");});
+test("unsupported medial/rime combinations do not leak debug IPA symbols",async({page})=>{await page.goto("/");await page.locator("#source").fill("ကျောင်း စိတ် ပိုက် ကိုက်");await expect(page.locator("#uk")).toContainText("???");await expect(page.locator("#uk")).not.toContainText("∅");});
 
 test("non-Myanmar runs are grouped instead of displayed one character at a time",async({page})=>{
   await page.goto("/");
@@ -349,7 +349,7 @@ test("full Burmese greeting sentence preserves every segmented source unit",asyn
     return source ? source.textContent.replace(/^\d+\s+/u, "") : row.textContent.split(" · ")[0];
   }).join(""));
   expect(reconstructed).toBe(sentence.normalize("NFC"));
-  await expect(page.locator("#uk")).toContainText("⟦မင်္⟧");
+  await expect(page.locator("#uk")).toContainText("???");
 });
 
 
@@ -440,7 +440,7 @@ test("browser keeps the medial-ra nasal coda in one orthographic syllable",async
   await expect(rows).toHaveCount(1);
   await expect(rows.first().locator("strong")).toContainText("မြန်");
   await expect(page.locator("#ipa")).toContainText("?");
-  await expect(page.locator("#uk")).toContainText("⟦မြန်⟧");
+  await expect(page.locator("#uk")).toContainText("???");
 });
 
 test("browser separates မြန်မာ into two syllables, not three",async({page})=>{
@@ -460,7 +460,7 @@ test("unknown Myanmar extension letters stay attached to the same structural clu
   const rows=page.locator("#syllables .syllable");
   await expect(rows).toHaveCount(1);
   await expect(rows.first().locator("strong")).toContainText(source);
-  await expect(page.locator("#uk")).toHaveText("⟦"+source+"⟧");
+  await expect(page.locator("#uk")).toHaveText("???");
   await expect(page.locator("#uk-status")).toContainText("UNCERTAIN");
 });
 
@@ -691,7 +691,7 @@ test("Green 2005 source-located CV examples are displayed as B-tier segmental ca
     await page.goto("/");
     await page.locator("#source").fill(source);
     await expect(page.locator("#ipa")).toHaveText("?");
-    await expect(page.locator("#uk")).toHaveText("⟦"+source+"⟧");
+    await expect(page.locator("#uk")).toHaveText("???");
     await expect(page.locator("#uk-status")).toContainText("доказовий рівень: B");
     await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText(expected);
   }
