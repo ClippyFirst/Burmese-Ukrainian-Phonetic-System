@@ -3850,3 +3850,7 @@ The public landing and methodology pages now identify the service as a public re
 - **PARTIAL:** only explicitly registered single-onset/single-vowel combinations are eligible; medials, conjuncts, kinzi, codas, multi-sign vowel combinations and prosody remain withheld. No corpus-wide coverage or accuracy claim follows.
 - **DEFERRED:** independent Yangon-profile expert adjudication and an independent gold corpus. Gold remains empty; empirical accuracy remains NOT_ASSESSED.
 - PR #193 contains this work. Existing draft PR #129 was inspected and left untouched as a separate historical/divergent research stack; it was not rebased, ported or merged.
+
+## Post-merge verification — 2026-11-21
+
+Tier-B implementation PR #193 was squash-merged as dce44bf5ab93fcc9f70fcf1b84e84d033ef36bc5. The resulting mainline code checkpoint passed exact-main Tests run 44933368532 SUCCESS (328 Python tests + 68 subtests; npm tests 77 passed; generated web data, build and built Chromium smoke passed). Mainline Pages run 44933368467 was still building the pinned Google Burmese WFST/OpenFst model at handoff time; no deployment success is claimed until that run completes. PR #129 remains untouched and unmerged as a separate divergent historical research branch. Independent Yangon-profile gold remains empty; measured accuracy remains NOT_ASSESSED.
