@@ -3797,3 +3797,19 @@ Task ledger: engineering/build/deployment = DONE_VERIFIED; repository-owned code
 | Engineering/docs PR #182 | DONE_VERIFIED | Merged as 86930db20a8a88f5c6d46ec0e9fe851a603e00aa after Tests and Pages success. |
 
 No source-derived IPA or gold labels were added.
+
+
+
+
+## Public beta reproducibility and release preparation — 2026-11-21
+
+Owner decision: proceed with public beta without external linguists; expert gold, independent adjudication and measured linguistic accuracy are DEFERRED for beta and remain prerequisites only for expert-validated/production linguistic claims.
+
+- Current pre-change main: `7c02268690ebc8db9f7f9517c0263ce6913c0fab`; exact-main Python/Node/wheel/build/generated-data/Chromium workflow and Pages build/deploy both passed (runs `44904891035` and `44904891024`).
+- The Pages workflow still used floating `npm install` although `package-lock.json` existed. Dedicated branch `beta/burmese-reproducible-deps-2026-11-21` changes this to `npm ci`, adds local browser-beta instructions and adds a beta release checklist. PR and exact-head verification are pending.
+- The browser is a local-first static client; it distinguishes the IPA-first provisional phonetic path from the separate MLCTS orthographic romanization path. Neither is represented as expert-validated.
+- Existing unresolved phonological scope remains PARTIAL: medial/conjunct/kinzi, coda/checked-syllable, vowel combinations, tone/register/phonation, dialect profiles and Python/browser parser parity. Fail-closed behavior remains mandatory.
+- Rights: Mya2Rom and Google WFST build/runtime notices remain in place; myG2P is not bundled due NC-SA terms; no uncleared data is imported. No new data or IPA labels were added.
+- Manual accessibility review remains TODO; automated Playwright is not WCAG certification. Expert gold remains 0 and accuracy null.
+
+See `docs/BETA-RELEASE-CHECKLIST.md` and `docs/BETA-RELEASE-POLICY.md`. No GitHub Release was published; publication is a separate owner-controlled action.

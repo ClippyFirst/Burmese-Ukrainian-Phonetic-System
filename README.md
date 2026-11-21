@@ -91,6 +91,20 @@ The generic ipa_to_ukrainian() adapter intentionally requires a local checkout o
 
 For the language-specific practical system, use transcribe_ipa(). It uses the repository's provenance-bearing data/burmese/ukrainian_practical.csv and data/burmese/practical_rules.csv tables. RuleBasedBurmeseEngine.analyze() exposes separate graphemic_status, phonology_status, ipa_status and ukrainian_status fields, alongside the segmental IPA candidate, post-IPA Ukrainian candidate, phonetic_completeness, prosody_status, profile_status, canonical_ipa and canonical_ukrainian fields. The browser exposes the same layer dimensions as graphemicStatus, phonologyStatus, ipaStatus and ukrainianStatus. A segmental-only IPA string is not reported as canonical full pronunciation. Unknown IPA segments withhold the complete practical string.
 
+
+### Run the browser beta locally
+
+The static web client is built with the exact Node dependencies in `package-lock.json`. Use Node.js 22.12.0 or newer within the supported CI major, then:
+
+```bash
+npm ci
+npm run dev
+```
+
+The development server binds to `127.0.0.1:4173`. Conversion runs in the browser; ordinary user text is not sent to a server. The browser build includes the separate MLCTS romanization route and provisional IPA diagnostics; neither is an expert-validated pronunciation oracle.
+
+See the [public beta release checklist](docs/BETA-RELEASE-CHECKLIST.md) before relying on a candidate build.
+
 ## Current implementation
 
 Implemented:

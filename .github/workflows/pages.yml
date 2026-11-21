@@ -101,7 +101,7 @@ jobs:
           printf '%s\n' 'ကေ' 'ကော်' 'မြန်' 'ယူ' > artifacts/google-wfst-inputs.txt
           (cd language-resources && bazel-bin/my/g2p < ../artifacts/google-wfst-inputs.txt) > artifacts/google-wfst-reference.tsv
           node scripts/verify_google_wfst_model_parity.mjs artifacts/google-wfst-reference.tsv
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - run: npm run build
       - run: npm test
       - run: npx playwright install --with-deps chromium
