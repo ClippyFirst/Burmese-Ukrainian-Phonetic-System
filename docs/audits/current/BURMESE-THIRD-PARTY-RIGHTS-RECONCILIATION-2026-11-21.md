@@ -60,3 +60,11 @@ Source-level triage is improved, but no new item has been cleared for the 30-ite
 - Burmese Wiktionary-derived dataset card: https://huggingface.co/datasets/its-autumn/burmese
 - Mya2Rom: https://github.com/myanmaropenwordnet/mya2rom
 - Goruut dataset repository: https://github.com/neurlang/dataset
+
+## Green (2005) publication-rights correction — 2026-11-21
+
+The exact PDF copyright page (p. ii) states that copyright in this edition is vested with Pacific Linguistics. The PDF does not state an open license. The previous `sources.csv` scope and evidence-tier documentation incorrectly described the online edition as CC BY-SA 4.0; PR #195 corrects both the human-readable notices and the machine-readable `data/burmese/sources.csv` row. The registry now states that only brief factual IPA examples and exact bibliographic locators are recorded, while broader reuse rights remain unresolved.
+
+Disposition: source may continue to be cited for short factual IPA examples and precise locators in this research prototype; do not reproduce tables, extended text, or build a larger derivative lexicon without separate rights review/permission. This is not legal advice and is not a blanket clearance.
+
+PR #195 was squash-merged to main as `921d891b253fc1984f163f94b383145e168c32d4`. Exact PR-head checks succeeded: Python tests, build, and diagnostic CRF/raw-output/Google-FST jobs. Main post-merge verification is tracked separately; no deployment claim is made by this audit.
