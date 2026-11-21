@@ -159,7 +159,7 @@ def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
         result = engine.analyze(source)
         assert result["confidence_tier"] == "B", source
         assert result["ipa"] == expected_ipa, source
-        assert result["ukrainian_candidate"], source
+        assert result["ukrainian"] == expected_uk, source
         assert result["canonical_ipa"] is None, source
         assert result["canonical_ukrainian"] is None, source
 
