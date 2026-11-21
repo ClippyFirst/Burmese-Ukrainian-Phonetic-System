@@ -67,4 +67,4 @@ The exact PDF copyright page (p. ii) states that copyright in this edition is ve
 
 Disposition: source may continue to be cited for short factual IPA examples and precise locators in this research prototype; do not reproduce tables, extended text, or build a larger derivative lexicon without separate rights review/permission. This is not legal advice and is not a blanket clearance.
 
-PR #195 was squash-merged to main as `921d891b253fc1984f163f94b383145e168c32d4`. Exact PR-head checks succeeded: Python tests, build, and diagnostic CRF/raw-output/Google-FST jobs. Main post-merge verification is tracked separately; no deployment claim is made by this audit.
+PR #195 was squash-merged to main as `921d891b253fc1984f163f94b383145e168c32d4`. Main post-merge Quality run `44938753478` SUCCESS — 329 Python tests + 68 subtests, 54 Node tests and 78 built-browser tests. Build/Pages run `44938450880` SUCCESS, including pinned Google WFST validation, upstream CLI parity, production Chromium, Pages deployment and deployed asset smoke. Public beta: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/. The source-rights correction is verified on deployed main.
