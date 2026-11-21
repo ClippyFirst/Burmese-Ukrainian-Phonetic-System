@@ -63,3 +63,19 @@ test("analysis-dependent onset and vowel rows create a separate provisional segm
   assert.equal(result.provisional_status, "PROVISIONAL_SEGMENTAL_ONLY");
   assert.ok(result.provisional_segments.every(part => part.evidence.length > 0));
 });
+
+
+test("browser phonology carries exact Green 2005 locators for source-attested CV examples", () => {
+  const cases = [
+    { raw: "လေ", onset: "လ", vowels: ["ေ"], expected: "le" },
+    { raw: "ပူ", onset: "ပ", vowels: ["ူ"], expected: "pu" },
+    { raw: "မိ", onset: "မ", vowels: ["ိ"], expected: "mi" },
+    { raw: "နေ", onset: "န", vowels: ["ေ"], expected: "ne" },
+  ];
+  for (const item of cases) {
+    const result = phonologizeSyllable({ ...established, ...item });
+    assert.equal(result.ipa, item.expected, item.raw);
+    assert.ok(result.segments.every(part => part.source_locator), item.raw);
+    assert.ok(result.unresolved_features.includes("tone"), item.raw);
+  }
+});
