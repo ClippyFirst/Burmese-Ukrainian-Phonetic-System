@@ -79,7 +79,7 @@ test("canonical IPA is the actual input to the single Ukrainian adapter", () => 
 test("unknown internal IPA remains withheld even when external providers return candidates", () => {
   const result = analyzeHybrid([{raw:"မြန်",nonMyanmar:false,ipa:null,status:"ANALYSIS_DEPENDENT"}]);
   assert.equal(result.ipa, "?");
-  assert.equal(result.uk, "⟦မြန်⟧");
+  assert.equal(result.uk, "???");
   assert.equal(result.records[0].selectedPhoneticResult, null);
   assert.equal(result.usedExternalFallback, false);
 });
@@ -111,7 +111,7 @@ test("segmental IPA without tone and profile evidence is not canonical", () => {
   assert.equal(record.ukrainianStatus, "PROVISIONAL");
   assert.equal(record.selectionReason, "TONE_OR_PROFILE_NOT_ESTABLISHED");
   assert.equal(result.ipa, "?");
-  assert.equal(result.uk, "⟦ကာ⟧");
+  assert.equal(result.uk, "???");
   assert.equal(record.selectedPhoneticResult, null);
   assert.equal(record.provisionalPhoneticResult.kind, "IPA_CANDIDATE");
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL" && item.ukrainian.text === "ка"));
@@ -133,7 +133,7 @@ test("uncertain structural segments cannot leak a partial internal IPA candidate
     raw:"ကာꩠ",nonMyanmar:false,ipa:"ka",status:"UNCERTAIN"
   }]);
   assert.equal(result.ipa, "?");
-  assert.equal(result.uk, "⟦ကာꩠ⟧");
+  assert.equal(result.uk, "???");
   assert.equal(result.records[0].selectedSource, "UNRESOLVED");
   assert.equal(result.records[0].projectCandidate, null);
   assert.equal(result.ipaStatus, "UNCERTAIN");
