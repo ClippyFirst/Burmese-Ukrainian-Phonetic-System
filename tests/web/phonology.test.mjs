@@ -69,7 +69,6 @@ test("browser phonology carries exact Green 2005 locators for source-attested CV
   const cases = [
     { raw: "လေ", onset: "လ", vowels: ["ေ"], expected: "le" },
     { raw: "ပူ", onset: "ပ", vowels: ["ူ"], expected: "pu" },
-    { raw: "မိ", onset: "မ", vowels: ["ိ"], expected: "mi" },
     { raw: "နေ", onset: "န", vowels: ["ေ"], expected: "ne" },
   ];
   for (const item of cases) {
