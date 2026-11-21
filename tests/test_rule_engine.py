@@ -155,12 +155,20 @@ def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter
 
 def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
     engine = RuleBasedBurmeseEngine()
-    tier_b = engine.analyze("စေ")
-    assert tier_b["confidence_tier"] == "B"
-    assert tier_b["provisional_ipa"] == "se"
-    assert tier_b["provisional_ukrainian"]
-    assert tier_b["canonical_ipa"] is None
-    assert tier_b["canonical_ukrainian"] is None
+    for source, expected_ipa, expected_uk in (("လေ", "le", "ле"), ("ပူ", "pu", "пу"), ("မိ", "mi", "мі"), ("နေ", "ne", "не")):
+        result = engine.analyze(source)
+        assert result["confidence_tier"] == "B", source
+        assert result["ipa"] == expected_ipa, source
+        assert result["ukrainian_candidate"], source
+        assert result["canonical_ipa"] is None, source
+        assert result["canonical_ukrainian"] is None, source
+
+    # Green (2005) and Oo et al. (2020) disagree on the source mapping of စ.
+    # The candidate remains visible, but a source conflict prevents tier B.
+    conflicting = engine.analyze("စေ")
+    assert conflicting["confidence_tier"] == "C"
+    assert conflicting["provisional_ipa"] == "se"
+    assert "SOURCE_ANALYSIS_CONFLICT" in conflicting["fallback_trace"][0]["warnings"]
 
     # Unicode-only evidence supports script structure, not a B-tier phonological claim.
     unicode_only = engine.analyze("ကီ")
