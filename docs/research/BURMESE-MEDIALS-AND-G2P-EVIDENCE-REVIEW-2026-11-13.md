@@ -951,3 +951,9 @@ The source registry, source-claim registry and rime/prosody evidence table now r
 ### Pipeline consequence
 
 Keep orthographic syllabification, lexical identity, phonemic segmental representation, lexical tone, phonation, quantity, grammatical/prosodic context and surface phonetic realization as distinct typed layers. For canonical output, the coarse browser gate `prosodyStatus` must only be set after the applicable tone/phonation/quantity dimensions and context are accounted for (or explicitly marked not applicable) for a named profile. A profile name by itself is not evidence; an IPA-looking string by itself is not evidence.
+
+## Additional lexical-source search — 2026-11-21
+
+An Undermind follow-up search reviewed the available metadata for Watkins (2001), Oo et al. (2020), Thura et al. (2016), and related Burmese phonetics/pronunciation-resource leads. The returned records did not expose additional item-level orthography–IPA pairs with exact page/entry locators, transcription conventions, source-profile information and reuse rights sufficient for a new tier-B fixture. No new B candidates were added from those leads. This is a limitation of the available search records/metadata, not proof that no qualifying source exists; the next acceptance step is direct source-page/full-text inspection plus exact item and rights verification.
+
+The existing four B examples remain the only source-located provisional segmental examples in this release. The research does not create an independent gold corpus or accuracy estimate.
