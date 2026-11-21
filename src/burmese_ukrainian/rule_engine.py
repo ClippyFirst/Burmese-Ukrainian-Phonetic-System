@@ -21,6 +21,13 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
         if candidate_ipa:
             rendered = transcribe_ipa(candidate_ipa)
             is_provisional = not bool(item.get("ipa"))
+            candidate_parts = phonology.get("provisional_segments") or phonology.get("segments", [])
+            has_phonological_sources = bool(candidate_parts) and all(
+                part.get("source_locator")
+                and any(source != "U18" for source in part.get("evidence", []))
+                for part in candidate_parts
+            )
+            has_source_conflicts = any(part.get("conflicting_sources") for part in candidate_parts)
             previews.append({
                 "source": item.get("raw", ""),
                 "ipa": candidate_ipa,
@@ -35,12 +42,10 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
                 )),
                 "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"]
                     + (["SOURCE_REGISTRY_ANALYSIS_DEPENDENT"] if is_provisional else [])
-                    + (["SOURCE_ANALYSIS_CONFLICT"] if any(part.get("conflicting_sources") for part in candidate_parts) else []),
+                    + (["SOURCE_ANALYSIS_CONFLICT"] if has_source_conflicts else []),
                 "confidence_tier": (
-                    "B" if candidate_ipa and rendered.get("text")
-                    and (candidate_parts := (phonology.get("provisional_segments") or phonology.get("segments", [])))
-                    and all(part.get("source_locator") and any(source != "U18" for source in part.get("evidence", [])) for part in candidate_parts)
-                    and not any(part.get("conflicting_sources") for part in candidate_parts)
+                    "B" if candidate_ipa and rendered.get("text") and has_phonological_sources
+                    and not has_source_conflicts
                     and (is_provisional or item.get("phonetic_status") == "conservative_partial")
                     else "C" if candidate_ipa else "D"
                 ),
