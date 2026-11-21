@@ -3868,3 +3868,9 @@ The public landing and methodology pages now identify the service as a public re
 ## Post-merge verification — 2026-11-21
 
 Tier-B implementation PR #193 was squash-merged as dce44bf5ab93fcc9f70fcf1b84e84d033ef36bc5. The resulting mainline code checkpoint passed exact-main Tests run 44933368532 SUCCESS (328 Python tests + 68 subtests; npm tests 77 passed; generated web data, build and built Chromium smoke passed). Mainline Pages run 44933368467 was still building the pinned Google Burmese WFST/OpenFst model at handoff time; no deployment success is claimed until that run completes. PR #129 remains untouched and unmerged as a separate divergent historical research branch. Independent Yangon-profile gold remains empty; measured accuracy remains NOT_ASSESSED.
+
+## Deployment closeout after tier-B merge — 2026-11-21
+
+The mainline Pages run 44933368467 completed SUCCESS on the tier-B code merge SHA dce44bf5ab93fcc9f70fcf1b84e84d033ef36bc5. The pinned Google Burmese WFST/OpenFst build, IPA symbol-table invariants, browser alphabet check, upstream thrax_g2p parity, npm build/tests, built Chromium tests, Pages artifact upload, deployment and deployed HTML/JS/CSS smoke all passed. Public beta remains at https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/ .
+
+The subsequent documentation-only main checkpoint before this closeout was 071a9c33120dcbc980dfa730f8bf8dd4b29253d3; exact-main Tests run 44933539925 also passed (328 Python tests + 68 subtests; npm tests 77 passed; built Chromium smoke passed). Independent Yangon-profile gold remains empty; accuracy remains NOT_ASSESSED. This completes engineering/deployment verification for the bounded B-tier preview path, not full-language phonetic validation.
