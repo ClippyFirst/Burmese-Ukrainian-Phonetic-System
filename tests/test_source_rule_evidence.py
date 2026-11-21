@@ -61,8 +61,10 @@ def test_burmese_wiktionary_sa_has_a_permanent_entry_locator_and_attribution():
     assert "Creative Commons Attribution-ShareAlike" in source["scope"]
     assert claims["CLM-WIKT-SA-001"]["source_id"] == "WIKT_EN_SA"
     assert claims["CLM-WIKT-SA-001"]["status"] == "DOCUMENTARY"
-    assert "WIKT_EN_SA" in vowels["aa"]["evidence"]
-    assert "oldid=92780524" in vowels["aa"]["source_locator"]
+    # The lexical /sʰà/ attestation is word-specific; do not generalize it
+    # to every Burmese word using the AA sign.
+    assert "WIKT_EN_SA" not in vowels["aa"]["evidence"]
+    assert not vowels["aa"]["source_locator"]
 
 
 def test_green2005_online_edition_license_and_open_vowel_locators_are_recorded():
