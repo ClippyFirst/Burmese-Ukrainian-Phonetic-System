@@ -1,3 +1,13 @@
+## Lao-style unresolved final-output marker — 2026-11-22
+
+- **PARTIAL pending exact-head CI:** the public canonical Ukrainian field now renders `???` for each Burmese unit without an established canonical IPA → Ukrainian adaptation. Source text is not echoed inside angle-bracket placeholders.
+- Segmental project hints, Epitran/Google candidates and their Ukrainian adaptations remain available only in separately labelled diagnostic panels; they are not copied into the final result. Romanization remains a separate orthographic method.
+- Regression assertions were updated to expect `???` in the main result while retaining candidate-preview checks. This is a presentation/abstention change; no phonological rules, IPA values, evidence labels or accuracy claims were changed.
+- Branch: `fix/unresolved-final-output-unknown-marker-20261122`; base `2f24a33cfbfbe40dd08fb6036b3b41162a68755c`.
+- Acceptance: exact-head Python/Node/browser/production-build checks, then merge and GitHub Pages deployment. Until those checks pass, this is not DONE_VERIFIED.
+
+---
+
 ## Public output levels — post-merge beta verification — 2026-11-21
 
 - **DONE_VERIFIED — engineering/UI scope:** PR [#200](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/200) merged to `main`; merge commit `37fcb2f2829577b5f6b0b1616a480a029d161aa7`.
