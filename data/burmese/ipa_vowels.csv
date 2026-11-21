@@ -5,7 +5,7 @@ ii,i,analysis_dependent,U18;GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONO
 u,u,established,U18;GREEN2002,
 uu,u,analysis_dependent,U18;GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form ပူ, transcription pù, IPA [u]."
 tall_aa,a,analysis_dependent,U18,
-aa,a,established,U18;GREEN2002;WIKT_EN_SA,"WIKT_EN_SA: Wiktionary Burmese entry ဆာ, Pronunciation, permanent revision oldid=92780524; source IPA /sʰà/ supports the vowel segment /a/ only; tone remains a separate unresolved prosodic feature."
+aa,a,established,U18;GREEN2002,
 ai,ɛ,analysis_dependent,U18;GREEN2002,
 open_epsilon,ɛ,analysis_dependent,GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form ဝယ်, transcription wè, IPA [ɛ], gloss buy. Supports source-reported vowel quality only; does not establish the full orthographic/coda mapping or tone."
 open_open_o,ɔ,analysis_dependent,GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form မော့, transcription mɔ̀, IPA [ɔ], gloss look up. Supports source-reported vowel quality only; tone and orthographic prosody remain unresolved."
