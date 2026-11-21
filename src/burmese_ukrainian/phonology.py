@@ -110,10 +110,17 @@ def phonologize_syllable(
     provisional_segments: list[dict[str, Any]] = []
     if onset_row and onset_row.get("ipa") and onset_row.get("status") in {"established", "analysis_dependent"} and onset_row.get("evidence"):
         provisional_onset_ipa = onset_row["ipa"]
-        provisional_segments.append({
+        onset_segment = {
             "kind": "onset", "source": onset, "ipa": provisional_onset_ipa,
             "status": onset_row["status"], "evidence": list(onset_row["evidence"]),
-        })
+        }
+        if onset_row.get("source_locator"):
+            onset_segment["source_locator"] = onset_row["source_locator"]
+        if onset_row.get("conflicting_sources"):
+            onset_segment["conflicting_sources"] = [
+                item.strip() for item in onset_row["conflicting_sources"].split(";") if item.strip()
+            ]
+        provisional_segments.append(onset_segment)
     if not onset_row or not onset_row.get("ipa") or onset_row.get("status") not in {"established", "analysis_dependent"}:
         withhold("onset_realization")
     elif onset_row.get("status") != "established":
@@ -147,6 +154,8 @@ def phonologize_syllable(
                     "kind": "vowel", "source": identifier, "ipa": value,
                     "status": vowel_row["status"], "evidence": list(vowel_row["evidence"]),
                 }
+                if vowel_row.get("source_locator"):
+                    candidate_segment["source_locator"] = vowel_row["source_locator"]
                 provisional_vowel_ipa.append(value)
                 provisional_segments.append(candidate_segment)
                 if vowel_row.get("status") == "established":
