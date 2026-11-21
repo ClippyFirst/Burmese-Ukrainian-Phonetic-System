@@ -16,18 +16,36 @@ from .unicode import is_myanmar
 def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | None:
     previews = []
     for item in syllables:
-        if item.get("ipa") and item.get("phonetic_status") == "conservative_partial":
-            rendered = transcribe_ipa(item["ipa"])
+        phonology = item.get("phonology") or {}
+        candidate_ipa = item.get("ipa") if item.get("phonetic_status") == "conservative_partial" else phonology.get("provisional_ipa")
+        if candidate_ipa:
+            rendered = transcribe_ipa(candidate_ipa)
+            is_provisional = not bool(item.get("ipa"))
             previews.append({
                 "source": item.get("raw", ""),
-                "ipa": item["ipa"],
+                "ipa": candidate_ipa,
                 "ukrainian": rendered.get("text") or "?",
                 "status": "PROVISIONAL_SEGMENTAL_ONLY",
                 "position": "syllable",
-                "rule_id": None,
+                "rule_id": "BURMESE-ANALYSIS-DEPENDENT-SEGMENTAL-PREVIEW-V1" if is_provisional else None,
                 "unresolved_graphemes": [],
-                "unresolved_features": ["tone", "phonation", "quantity", "profile_adjudication"],
-                "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"],
+                "unresolved_features": list(dict.fromkeys(
+                    ["tone", "phonation", "quantity", "profile_adjudication"]
+                    + (["analysis_dependent_segmental_realization"] if is_provisional else [])
+                )),
+                "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"]
+                    + (["SOURCE_REGISTRY_ANALYSIS_DEPENDENT"] if is_provisional else []),
+                "confidence_tier": (
+                    "B" if candidate_ipa and rendered.get("text")
+                    and (candidate_parts := (phonology.get("provisional_segments") or phonology.get("segments", [])))
+                    and all(any(source != "U18" for source in part.get("evidence", [])) for part in candidate_parts)
+                    and (is_provisional or item.get("phonetic_status") == "conservative_partial")
+                    else "C" if candidate_ipa else "D"
+                ),
+                "evidence": list(dict.fromkeys(
+                    source for part in (phonology.get("provisional_segments") or phonology.get("segments", []))
+                    for source in part.get("evidence", [])
+                )),
             })
             continue
         onset = item.get("onset", {}).get("character")
@@ -50,6 +68,7 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
             "unresolved_features": ["inherent_vowel"] if hint and known else [],
             "warnings": ["ISOLATED_ONSET_ONLY", "INHERENT_VOWEL_NOT_INFERRED"] if hint and known else ["NO_REGISTERED_POSITIONAL_IPA_HINT"],
             "evidence": ["U18", "W16-3702"] if hint and known else [],
+            "confidence_tier": "C" if hint and known else "D",
         })
     if not previews:
         return None
@@ -131,6 +150,8 @@ class RuleBasedBurmeseEngine:
             if practical_complete else None
         )
         preview = _provisional_preview(syllables)
+        preview_tiers = [item.get("confidence_tier", "D") for item in (preview or {}).get("syllables", [])]
+        confidence_tier = max(preview_tiers, key=lambda tier: {"A": 0, "B": 1, "C": 2, "D": 3}[tier]) if preview_tiers else "D"
         phonetic_statuses = {item.get("phonetic_status") for item in syllables}
         ipa_status = (
             "analysis_dependent" if segmental_complete or "analysis_dependent" in phonetic_statuses
@@ -181,6 +202,8 @@ class RuleBasedBurmeseEngine:
             "status": "PROPOSED" if segmental_complete else (
                 "NOT_ESTABLISHED" if not syllables else "PARTIAL"
             ),
+            "confidence_tier": confidence_tier,
+            "confidence_tier_explanation": "A = independently adjudicated profile-matched gold; B = source-traceable provisional segmental IPA with successful Ukrainian IPA adaptation; C = experimental or incomplete candidate; D = unsupported/no candidate. Tiers are categorical evidence labels, not probabilities or accuracy scores.",
             "syllables": syllables,
             "processing_steps": [
                 "MYANMAR_UNICODE_NORMALIZATION",

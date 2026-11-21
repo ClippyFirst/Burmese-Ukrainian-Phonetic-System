@@ -201,6 +201,16 @@ function parseCluster(raw,withholdBareInherent=false){
     sy.phonology.unresolved_features.unshift("isolated_bare_consonant");
   }
   sy.ipa=sy.phonology.ipa;
+  if(!sy.ipa&&sy.phonology.provisional_ipa){
+    sy.provisionalIpa=sy.phonology.provisional_ipa;
+    const adapted=renderUkrainian(sy.provisionalIpa);
+    sy.provisionalUk=adapted.text||"";
+    sy.provisionalStatus="PROVISIONAL_SEGMENTAL_ONLY";
+    sy.provisionalRuleId="BURMESE-ANALYSIS-DEPENDENT-SEGMENTAL-PREVIEW-V1";
+    sy.provisionalPosition="syllable";
+    sy.provisionalUnresolved=[];
+    sy.provisionalUnresolvedFeatures=sy.phonology.unresolved_features||[];
+  }
   if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=sy.structureStatus!=="established"?"UNCERTAIN":"ANALYSIS_DEPENDENT";
   // Separate onset-only preview: never derive Ukrainian directly from Myanmar
   // graphemes and never guess the vowel, coda, medial, kinzi or tone.
@@ -217,6 +227,11 @@ function parseCluster(raw,withholdBareInherent=false){
       sy.provisionalUnresolvedFeatures=["inherent_vowel"];
     }
   }
+  const candidateIpa=sy.ipa||sy.phonology.provisional_ipa;
+  const candidateParts=sy.phonology.provisional_segments||sy.phonology.segments||[];
+  const adaptedCandidate=candidateIpa?renderUkrainian(candidateIpa):null;
+  const hasPhonologicalSources=candidateParts.length>0&&candidateParts.every(part=>(part.evidence||[]).some(source=>source!=="U18"));
+  sy.confidenceTier=(candidateIpa&&adaptedCandidate?.text&&hasPhonologicalSources)?"B":(candidateIpa||sy.provisionalIpa||candidateParts.length)?"C":"D";
   return sy;
 }
 
@@ -257,7 +272,10 @@ function render(){
       : uaRomanized.status==="UNSUPPORTED"
         ? "UNSUPPORTED · для цього вводу не знайдено достатніх MLCTS відповідників; оригінальні послідовності залишено видимими."
         : "PASSTHROUGH · аналізованих бірманських складів немає; сторонній текст збережено.";
-  ukStatus.textContent="Графеміка: "+hybrid.graphemicStatus+" · фонологія: "+hybrid.phonologyStatus+" · IPA: "+hybrid.ipaStatus+" · українська передача: "+hybrid.ukrainianStatus+" · загальний статус: "+hybrid.status+" · IPA-first гібридний оркестратор: активний.";
+  const confidenceOrder={A:0,B:1,C:2,D:3};
+  const confidenceTiers=hybrid.records.filter(item=>!item.passthrough).map(item=>item.confidenceTier||"D");
+  const overallConfidence=confidenceTiers.length?confidenceTiers.sort((a,b)=>confidenceOrder[b]-confidenceOrder[a])[0]:"D";
+  ukStatus.textContent="Графеміка: "+hybrid.graphemicStatus+" · фонологія: "+hybrid.phonologyStatus+" · IPA: "+hybrid.ipaStatus+" · українська передача: "+hybrid.ukrainianStatus+" · доказовий рівень: "+overallConfidence+" · загальний статус: "+hybrid.status+" · IPA-first гібридний оркестратор: активний.";
   const hasExternalCandidates=hybrid.records.some(item=>!item.passthrough&&item.externalCandidates.length>0);
   const hasSegmentalOnly=hybrid.records.some(item=>!item.passthrough&&item.phoneticCompleteness==="SEGMENTAL_ONLY");
   ipaStatus.textContent=hasSegmentalOnly?"Сегментний IPA-кандидат є, але тон/фонація/довгота або діалектний профіль не встановлені; тому він не стає канонічним. Українська форма показується лише як PROVISIONAL-кандидат через IPA-адаптер.":hasExternalCandidates?"Канонічне IPA не встановлено без сегментної, просодичної та профільної основи; зовнішні кандидати показані окремо. Тональні розбіжності відділено від сегментних.":"Канонічний IPA не встановлено для частини сегментів; невизначеність не замінюється зовнішніми здогадками.";

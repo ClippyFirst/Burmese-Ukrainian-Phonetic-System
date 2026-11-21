@@ -137,3 +137,35 @@ def test_api_layer_statuses_ignore_non_myanmar_passthrough_text():
     non_myanmar_only = RuleBasedBurmeseEngine().analyze("hello")
     assert non_myanmar_only["graphemic_status"] == "NOT_APPLICABLE"
     assert non_myanmar_only["phonology_status"] == "NOT_APPLICABLE"
+
+
+
+def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter():
+    result = RuleBasedBurmeseEngine().analyze("ကီ")
+    assert result["ipa"] is None
+    assert result["canonical_ipa"] is None
+    assert result["provisional_ipa"] == "kiː"
+    assert result["fallback_status"] == "PROVISIONAL"
+    trace = result["fallback_trace"][0]
+    assert trace["status"] == "PROVISIONAL_SEGMENTAL_ONLY"
+    assert "analysis_dependent_segmental_realization" in trace["unresolved_features"]
+    assert "SOURCE_REGISTRY_ANALYSIS_DEPENDENT" in trace["warnings"]
+
+
+
+def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
+    engine = RuleBasedBurmeseEngine()
+    tier_b = engine.analyze("စေ")
+    assert tier_b["confidence_tier"] == "B"
+    assert tier_b["provisional_ipa"] == "se"
+    assert tier_b["provisional_ukrainian"]
+    assert tier_b["canonical_ipa"] is None
+    assert tier_b["canonical_ukrainian"] is None
+
+    # Unicode-only evidence supports script structure, not a B-tier phonological claim.
+    unicode_only = engine.analyze("ကီ")
+    assert unicode_only["confidence_tier"] == "C"
+    assert unicode_only["provisional_ipa"] == "kiː"
+
+    onset_only = engine.analyze("ဉ")
+    assert onset_only["confidence_tier"] == "C"

@@ -106,3 +106,14 @@ def test_python_phonology_output_matches_shared_browser_contract():
         result = to_ipa(case["input"])
         assert len(result["syllables"]) == 1, case["id"]
         assert result["syllables"][0]["phonology"] == case["expected"], case["id"]
+
+
+
+def test_analysis_dependent_source_rows_produce_separate_provisional_ipa_only():
+    for source, expected in (("ကီ", "kiː"), ("ကဲ", "kɛ"), ("စေ", "se")):
+        syllable = to_ipa(source)["syllables"][0]
+        assert syllable["ipa"] is None
+        assert syllable["phonology"]["status"] == "NOT_ESTABLISHED"
+        assert syllable["phonology"]["provisional_ipa"] == expected
+        assert syllable["phonology"]["provisional_status"] == "PROVISIONAL_SEGMENTAL_ONLY"
+        assert all(part["evidence"] for part in syllable["phonology"]["provisional_segments"])
