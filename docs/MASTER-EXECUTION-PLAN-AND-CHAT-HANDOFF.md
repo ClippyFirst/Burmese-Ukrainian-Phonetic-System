@@ -1,3 +1,13 @@
+## Public output-level implementation — 2026-11-21
+
+- **PARTIAL — engineering implementation submitted for exact-head verification:** branch `feat/evidence-aware-output-levels-2026-11-21`; base main commit `64b676bbe920637d9f4a5b8540cea8d57ee387e0`; PR #200.
+- Added careful, balanced (default), and exploratory presentation levels. The selector changes display only; it does not modify source analysis, IPA evidence, canonical promotion rules, pronunciation profile, or the separate orthographic romanization path.
+- Balanced/exploratory levels expose available project segmental and external Epitran/Google IPA-derived Ukrainian candidates as PROVISIONAL; strict hides candidate panels and retains only the evidence-gated canonical output. Google remains PENDING_MODEL when its static FST graph is not deployed.
+- README and public UI documentation updated. **Acceptance still pending:** run the repository's exact-head Node/web tests, build, and browser smoke; inspect the live preview and confirm selector behavior for phonetic versus romanization modes. No test result is claimed from the connector's empty workflow-run lookup.
+- Readiness unchanged: beta/research prototype; linguistic accuracy remains NOT_ASSESSED and independent IPA gold remains unavailable.
+
+---
+
 ## Beta release scope decision — 2026-11-21
 
 The project owner has explicitly chosen to proceed with public beta versions because qualified external specialists will not be available. This supersedes the earlier assumption that human expert annotation/adjudication is a prerequisite for *any* release.
