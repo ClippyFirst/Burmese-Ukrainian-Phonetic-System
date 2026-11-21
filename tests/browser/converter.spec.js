@@ -675,13 +675,26 @@ test("service and methodology pages expose named controls and coherent document 
 });
 
 
-test("source-backed analysis-dependent CV pair is shown as a B-tier IPA candidate",async({page})=>{
+test("source conflict keeps Burmese provisional candidate at C",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("စေ");
   await expect(page.locator("#ipa")).toHaveText("?");
   await expect(page.locator("#uk")).toHaveText("⟦စေ⟧");
-  await expect(page.locator("#uk-status")).toContainText("доказовий рівень: B");
+  await expect(page.locator("#uk-status")).toContainText("доказовий рівень: C");
+  await expect(page.locator("#syllables")).toContainText("Конфлікт джерел");
   await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText("се");
+});
+
+test("Green 2005 source-located CV examples are displayed as B-tier segmental candidates",async({page})=>{
+  const cases=[["လေ","ле"],["ပူ","пу"],["မိ","мі"],["နေ","не"]];
+  for(const [source,expected] of cases){
+    await page.goto("/");
+    await page.locator("#source").fill(source);
+    await expect(page.locator("#ipa")).toHaveText("?");
+    await expect(page.locator("#uk")).toHaveText("⟦"+source+"⟧");
+    await expect(page.locator("#uk-status")).toContainText("доказовий рівень: B");
+    await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText(expected);
+  }
 });
 
 test("Unicode-only vowel evidence remains C rather than being promoted to B",async({page})=>{
