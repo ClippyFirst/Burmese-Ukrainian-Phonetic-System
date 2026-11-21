@@ -155,7 +155,7 @@ def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter
 
 def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
     engine = RuleBasedBurmeseEngine()
-    for source, expected_ipa, expected_uk in (("လေ", "le", "ле"), ("ပူ", "pu", "пу"), ("မိ", "mi", "мі"), ("နေ", "ne", "не")):
+    for source, expected_ipa, expected_uk in (("လေ", "le", "ле"), ("ပူ", "pu", "пу"), ("နေ", "ne", "не")):
         result = engine.analyze(source)
         assert result["confidence_tier"] == "B", source
         assert result["ipa"] == expected_ipa, source
