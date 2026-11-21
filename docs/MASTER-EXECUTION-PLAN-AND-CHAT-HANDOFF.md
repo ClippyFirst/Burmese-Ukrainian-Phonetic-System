@@ -3827,3 +3827,12 @@ Owner decision: proceed with public beta without external linguists; expert gold
 - Manual accessibility review remains TODO; automated Playwright is not WCAG certification. Expert gold remains 0 and accuracy null.
 
 See `docs/BETA-RELEASE-CHECKLIST.md` and `docs/BETA-RELEASE-POLICY.md`. No GitHub Release was published; publication is a separate owner-controlled action.
+
+
+## Final beta engineering closeout — 2026-11-21
+
+PR #185 merged as `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. It changes the Pages dependency installation to `npm ci` against the existing npm lockfile, adds reproducible local browser-beta instructions, and adds the operational beta release checklist. Exact PR-head tests on `ac4e25ff01d6c0c1e1d0784aa1c72abfac4caaec` passed [44906901064](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44906901064); exact PR-head Pages build passed [44906901057](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44906901057) (deploy correctly skipped on pull_request). Exact post-merge main tests [44907208175](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44907208175) and Pages build/deploy [44907208189](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44907208189) both SUCCESS.
+
+BURMESE-BETA-ENGINEERING-001 — DONE_VERIFIED. Engineering beta gates (tests, wheel contents, generated-data freshness, npm build/tests, production Chromium and Pages deployment) are green on exact main `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. This does not establish full Burmese pronunciation coverage, expert validation or measured accuracy.
+
+BURMESE-GOLD-PILOT-001 — DEFERRED for beta / BLOCKED for expert-validated claims; gold=0, accuracy=null. BURMESE-MANUAL-A11Y-001 — TODO; no human WCAG review. Phonological coverage remains PARTIAL for medials, conjuncts, kinzi, codas, vowel combinations, tone/register/phonation, profile adjudication and full Python/browser parser parity. Third-party rights remain source-specific; myG2P and unclear data are not bundled. No IPA labels, lexical corpus rows or accuracy metrics were added. No GitHub Release was published.
