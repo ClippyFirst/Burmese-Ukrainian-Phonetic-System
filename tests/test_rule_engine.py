@@ -137,3 +137,16 @@ def test_api_layer_statuses_ignore_non_myanmar_passthrough_text():
     non_myanmar_only = RuleBasedBurmeseEngine().analyze("hello")
     assert non_myanmar_only["graphemic_status"] == "NOT_APPLICABLE"
     assert non_myanmar_only["phonology_status"] == "NOT_APPLICABLE"
+
+
+
+def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter():
+    result = RuleBasedBurmeseEngine().analyze("ကီ")
+    assert result["ipa"] is None
+    assert result["canonical_ipa"] is None
+    assert result["provisional_ipa"] == "kiː"
+    assert result["fallback_status"] == "PROVISIONAL"
+    trace = result["fallback_trace"][0]
+    assert trace["status"] == "PROVISIONAL_SEGMENTAL_ONLY"
+    assert "analysis_dependent_segmental_realization" in trace["unresolved_features"]
+    assert "SOURCE_REGISTRY_ANALYSIS_DEPENDENT" in trace["warnings"]
