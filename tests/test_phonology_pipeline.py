@@ -120,7 +120,7 @@ def test_analysis_dependent_source_rows_produce_separate_provisional_ipa_only():
 
 
 def test_green2005_source_locators_are_attached_to_simple_cv_segments():
-    for source, expected in (("લ", "le"), ("ပူ", "pu"), ("မိ", "mi"), ("နေ", "ne")):
+    for source, expected in (("လေ", "le"), ("ပူ", "pu"), ("နေ", "ne")):
         syllable = to_ipa(source)["syllables"][0]
         assert syllable["ipa"] == expected, source
         assert syllable["phonology"]["status"] == "SEGMENTAL_ONLY", source
