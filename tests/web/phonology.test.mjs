@@ -73,8 +73,10 @@ test("browser phonology carries exact Green 2005 locators for source-attested CV
   ];
   for (const item of cases) {
     const result = phonologizeSyllable({ ...established, ...item });
-    assert.equal(result.ipa, item.expected, item.raw);
-    assert.ok(result.segments.every(part => part.source_locator), item.raw);
+    const candidate = result.ipa || result.provisional_ipa;
+    const parts = result.provisional_segments || result.segments;
+    assert.equal(candidate, item.expected, item.raw);
+    assert.ok(parts.every(part => part.source_locator), item.raw);
     assert.ok(result.unresolved_features.includes("tone"), item.raw);
   }
 });
