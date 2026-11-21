@@ -2,14 +2,14 @@
 
 ## Public beta release gate — 2026-11-21
 
-- [ ] Exact candidate SHA has successful Python/Node tests, generated-data freshness, package-wheel verification, npm build and production Chromium smoke.
-- [ ] Exact candidate SHA has successful Pages build/deploy and deployed HTML/JS/CSS smoke verification.
-- [ ] Both Python and browser contracts preserve partial/unsupported structures; no unsupported medial, conjunct, kinzi, coda, vowel or prosodic material is silently dropped.
-- [ ] Browser and Python package install instructions work from a clean checkout; npm dependency graph is locked and CI uses `npm ci`.
-- [ ] UI and README distinguish IPA-first phonetic diagnostics from MLCTS orthographic romanization and label provisional outputs.
-- [ ] Third-party assets shipped in the browser have source/version/license notices; myG2P, uncleared dictionaries and unresolved source data remain excluded.
-- [ ] No user text is uploaded; no analytics/telemetry is present.
-- [ ] Expert gold and empirical accuracy remain NOT ASSESSED; manual accessibility QA is disclosed as not performed.
+- [x] Exact candidate SHA has successful Python/Node tests, generated-data freshness, package-wheel verification, npm build and production Chromium smoke.
+- [x] Exact candidate SHA has successful Pages build/deploy and deployed HTML/JS/CSS smoke verification.
+- [x] Both Python and browser contracts preserve partial/unsupported structures; no unsupported medial, conjunct, kinzi, coda, vowel or prosodic material is silently dropped.
+- [x] Browser and Python package install instructions work from a clean checkout; npm dependency graph is locked and CI uses `npm ci`.
+- [x] UI and README distinguish IPA-first phonetic diagnostics from MLCTS orthographic romanization and label provisional outputs.
+- [x] Third-party assets shipped in the browser have source/version/license notices; myG2P, uncleared dictionaries and unresolved source data remain excluded.
+- [x] No user text is uploaded; no analytics/telemetry is present.
+- [x] Expert gold and empirical accuracy remain NOT ASSESSED; manual accessibility QA is disclosed as not performed.
 
 ## Current evidence record
 
@@ -38,3 +38,10 @@ PR #185 merged as `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. It changes the Pag
 BURMESE-BETA-ENGINEERING-001 — DONE_VERIFIED. Engineering beta gates (tests, wheel contents, generated-data freshness, npm build/tests, production Chromium and Pages deployment) are green on exact main `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. This does not establish full Burmese pronunciation coverage, expert validation or measured accuracy.
 
 BURMESE-GOLD-PILOT-001 — DEFERRED for beta / BLOCKED for expert-validated claims; gold=0, accuracy=null. BURMESE-MANUAL-A11Y-001 — TODO; no human WCAG review. Phonological coverage remains PARTIAL for medials, conjuncts, kinzi, codas, vowel combinations, tone/register/phonation, profile adjudication and full Python/browser parser parity. Third-party rights remain source-specific; myG2P and unclear data are not bundled. No IPA labels, lexical corpus rows or accuracy metrics were added. No GitHub Release was published.
+
+
+## Final current-main beta verification — 2026-11-21
+
+Latest main SHA: `940a1db63404b0b564b50198369d2e783525219a`. PR #186 merged the final beta status/checklist reconciliation. Exact post-merge tests [44908043970](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44908043970) SUCCESS and Pages build/deploy [44908043967](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44908043967) SUCCESS. This supersedes the previous exact-main checkpoint at `4ab231eeedfb5ad00b72aebd7418d143ffb10242`.
+
+BURMESE-BETA-ENGINEERING-001 — DONE_VERIFIED on exact main. The project is ready as an engineering beta within documented supported cases. Expert gold remains 0 / accuracy null and is DEFERRED for beta; manual accessibility review remains TODO; phonological coverage remains PARTIAL. No official standard or comprehensive accuracy claim is made. No GitHub Release was published.
