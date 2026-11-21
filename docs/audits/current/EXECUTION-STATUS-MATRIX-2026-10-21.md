@@ -1,5 +1,15 @@
 # Burmese phonology execution status matrix
 
+## Web output-level release checkpoint — 2026-11-21
+
+- **DONE_VERIFIED (engineering/UI only):** careful, balanced and exploratory output-detail selector merged in PR #200, main commit `37fcb2f2829577b5f6b0b1616a480a029d161aa7`.
+- Verification: [tests #6096](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44951799361) success; [Pages #670](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44952348802) success, including Google WFST build/export, upstream CLI parity, npm build/tests, Chromium and deployed asset smoke test.
+- Live Pages selector HTTP 200; Google static model HTTP 200, available=true, 2,966 arcs. The model remains a diagnostic provider; candidates remain PROVISIONAL.
+- **No linguistic status promotion:** tone/prosody/profile evidence and independent IPA gold remain incomplete; accuracy remains NOT_ASSESSED. This UI row is not a phonological coverage claim.
+
+---
+
+
 Updated: 2026-11-18
 Base branch at start: main (verified HEAD: f7f7d41a116c265481bdc17c225a763becab6013); active stacked integration candidate tracked by PR #171
 Scope: executable status ledger reconciled with the 2026-10-20 phonology and G2P/licensing audits. This is a continuation register, not a claim of full phonological coverage.
