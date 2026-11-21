@@ -150,3 +150,16 @@ def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter
     assert trace["status"] == "PROVISIONAL_SEGMENTAL_ONLY"
     assert "analysis_dependent_segmental_realization" in trace["unresolved_features"]
     assert "SOURCE_REGISTRY_ANALYSIS_DEPENDENT" in trace["warnings"]
+
+
+
+def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
+    result = RuleBasedBurmeseEngine().analyze("ကီ")
+    assert result["confidence_tier"] == "B"
+    assert result["provisional_ipa"] == "kiː"
+    assert result["provisional_ukrainian"]
+    assert result["canonical_ipa"] is None
+    assert result["canonical_ukrainian"] is None
+
+    onset_only = RuleBasedBurmeseEngine().analyze("ဉ")
+    assert onset_only["confidence_tier"] == "C"
