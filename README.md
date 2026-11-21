@@ -278,3 +278,7 @@ The source-scoped rime × coda × tone × phonation evidence matrix is maintaine
 ## Evidence confidence tiers
 
 The beta distinguishes A (independently adjudicated profile-matched gold), B (source-traceable provisional segmental IPA with successful Ukrainian IPA adaptation), C (experimental or incomplete candidates), and D (unsupported/no candidate). These are categorical evidence labels, not probabilities or accuracy scores. The new analysis-dependent segmental preview is documented in [Evidence confidence tiers](docs/EVIDENCE-CONFIDENCE-TIERS.md). Tone, phonation, quantity and independent profile adjudication remain unresolved; B-tier previews are not canonical full IPA.
+
+## Public output detail levels (2026-11-21)
+
+The browser offers three display levels for the phonetic path: **Careful** shows only the evidence-gated canonical result; **Balanced** (default) shows that result alongside available segmental and external IPA candidates; **Exploratory** exposes all available diagnostic candidates for comparison. These settings change presentation only: they do not promote Epitran/Google/provider output, fill missing tone or dialect evidence, or change the canonical IPA-first result. Candidate Ukrainian forms remain explicitly PROVISIONAL. Romanization remains a separate orthographic path and is not used as a phonetic fallback. A missing canonical result therefore remains marked as unresolved, with the reason and available candidates visible in the selected level.
