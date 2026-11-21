@@ -144,7 +144,7 @@ def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter
     result = RuleBasedBurmeseEngine().analyze("ကီ")
     assert result["ipa"] is None
     assert result["canonical_ipa"] is None
-    assert result["provisional_ipa"] == "kiː"
+    assert result["provisional_ipa"] == "ki"
     assert result["fallback_status"] == "PROVISIONAL"
     trace = result["fallback_trace"][0]
     assert trace["status"] == "PROVISIONAL_SEGMENTAL_ONLY"
@@ -155,7 +155,7 @@ def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter
 
 def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
     engine = RuleBasedBurmeseEngine()
-    for source, expected_ipa, expected_uk in (("လေ", "le", "ле"), ("ပူ", "pu", "пу"), ("နေ", "ne", "не")):
+    for source, expected_ipa, expected_uk in (("နီ", "ni", "ні"), ("လေ", "le", "ле"), ("ပူ", "pu", "пу"), ("နေ", "ne", "не")):
         result = engine.analyze(source)
         assert result["confidence_tier"] == "B", source
         candidate_ipa = result["ipa"] or result["provisional_ipa"]
@@ -172,10 +172,10 @@ def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
     assert conflicting["provisional_ipa"] == "se"
     assert "SOURCE_ANALYSIS_CONFLICT" in conflicting["fallback_trace"][0]["warnings"]
 
-    # Unicode-only evidence supports script structure, not a B-tier phonological claim.
+    # The vowel has a source locator, but the onset does not; the full candidate remains C.
     unicode_only = engine.analyze("ကီ")
     assert unicode_only["confidence_tier"] == "C"
-    assert unicode_only["provisional_ipa"] == "kiː"
+    assert unicode_only["provisional_ipa"] == "ki"
 
     onset_only = engine.analyze("ဉ")
     assert onset_only["confidence_tier"] == "C"
