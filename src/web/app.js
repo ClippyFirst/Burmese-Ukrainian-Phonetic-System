@@ -231,7 +231,7 @@ function parseCluster(raw,withholdBareInherent=false){
   const candidateParts=sy.phonology.provisional_segments||sy.phonology.segments||[];
   const adaptedCandidate=candidateIpa?renderUkrainian(candidateIpa):null;
   const hasPhonologicalSources=candidateParts.length>0&&candidateParts.every(part=>(part.evidence||[]).some(source=>source!=="U18"));
-  sy.confidenceTier=(candidateIpa&&adaptedCandidate?.text&&hasPhonologicalSources)?"B":(candidateIpa||sy.provisionalIpa)?"C":"D";
+  sy.confidenceTier=(candidateIpa&&adaptedCandidate?.text&&hasPhonologicalSources)?"B":(candidateIpa||sy.provisionalIpa||candidateParts.length)?"C":"D";
   return sy;
 }
 
