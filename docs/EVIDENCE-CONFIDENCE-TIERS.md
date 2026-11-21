@@ -36,6 +36,6 @@ Implementation branch: research/tier-b-provisional-coverage-2026-11-21, based on
 ## Exact-locator and conflict gate — 2026-11-21
 
 - B now requires a non-empty per-segment `source_locator`, a phonological source beyond Unicode, successful complete IPA → Ukrainian adaptation, and no registered conflicting source analysis for the candidate.
-- Green (2005), *Word, foot and syllable structure in Burmese*, front-matter Tables (1) and (6), pp. xii–xiii, and the abbreviation list p. xv, supplies exact segmental source locators for the new B examples. Its online edition is CC BY-SA 4.0; only short source metadata and locators are recorded.
+- Green (2005), *Word, foot and syllable structure in Burmese*, front-matter Tables (1) and (6), pp. xii–xiii, and the abbreviation list p. xv, supplies exact segmental source locators for the new B examples. The PDF states that copyright in this edition is vested with Pacific Linguistics (copyright page, p. ii); no open license is stated in the PDF. Only brief factual IPA examples and source locators are recorded; no table or extended text is reproduced.
 - The conflict for စ is explicit: Green (2005) gives စ /s/ and စေ sè, while Oo et al. (2020) §3, p. 6330 gives စ /tʃ/. The system retains a C-tier candidate for inspection but does not call it B or canonical.
 - No independent gold rows were added. B remains a source-traceable research candidate, not a measured-correct result.
