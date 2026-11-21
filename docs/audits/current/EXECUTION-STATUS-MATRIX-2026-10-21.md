@@ -3872,3 +3872,10 @@ The subsequent documentation-only main checkpoint before this closeout was 071a9
 - **DEFERRED:** independent Yangon-profile expert adjudication and independent gold remain unavailable; gold is empty and measured accuracy remains NOT_ASSESSED.
 - PR #194 carries this hardening. The earlier PR #193 merge and public beta deployment remain intact; PR #129 remains an untouched divergent historical branch.
 - **Deployment:** branch Pages workflow 44934968745 was still building at this checkpoint. Do not claim the new code is deployed until a post-merge main Pages run and deployed asset smoke test pass.
+
+## Green (2005) source-rights correction — 2026-11-21
+
+- **DONE_VERIFIED (merged source metadata):** PR #195 merged as `921d891b253fc1984f163f94b383145e168c32d4`. `data/burmese/sources.csv`, `docs/EVIDENCE-CONFIDENCE-TIERS.md`, and `THIRD_PARTY_NOTICES.md` now agree that the Green (2005) PDF's copyright page p. ii vests copyright in Pacific Linguistics and states no open license. The former CC BY-SA 4.0 assertion was removed.
+- **Rights boundary:** only short factual IPA examples and exact source locators are recorded; no tables or extended text are copied. Broader reuse remains unresolved.
+- **Exact PR-head CI:** test and build succeeded; CRF baseline, raw-output and Google WFST diagnostic jobs succeeded. Main post-merge build/browser/deploy checks are still tracked separately.
+- **Linguistic boundary unchanged:** the four B examples remain provisional segmental candidates only; tone, phonation, length and independent Yangon-profile adjudication are unresolved. Gold remains empty and accuracy NOT_ASSESSED.
