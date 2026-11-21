@@ -193,3 +193,15 @@ test("analysis-dependent registry IPA is exposed as a provisional candidate, nev
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL"));
 });
 
+
+
+
+test("browser carries the evidence tier supplied by the source-side phonology stage", () => {
+  const result = analyzeHybrid([{
+    raw:"စေ", nonMyanmar:false, ipa:null, provisionalIpa:"se",
+    provisionalStatus:"PROVISIONAL_SEGMENTAL_ONLY", status:"ANALYSIS_DEPENDENT",
+    confidenceTier:"B", prosodyStatus:"NOT_ESTABLISHED",
+    phonology:{status:"NOT_ESTABLISHED",segments:[],provisional_segments:[{evidence:["U18","GREEN2002"]}]}
+  }]);
+  assert.equal(result.records[0].confidenceTier, "B");
+});
