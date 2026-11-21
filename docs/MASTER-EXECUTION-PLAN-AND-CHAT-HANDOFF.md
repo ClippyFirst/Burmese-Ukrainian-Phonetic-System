@@ -1,10 +1,9 @@
 ## Lao-style unresolved final-output marker — 2026-11-22
 
-- **PARTIAL pending exact-head CI:** the public canonical Ukrainian field now renders `???` for each Burmese unit without an established canonical IPA → Ukrainian adaptation. Source text is not echoed inside angle-bracket placeholders.
-- Segmental project hints, Epitran/Google candidates and their Ukrainian adaptations remain available only in separately labelled diagnostic panels; they are not copied into the final result. Romanization remains a separate orthographic method.
-- Regression assertions were updated to expect `???` in the main result while retaining candidate-preview checks. This is a presentation/abstention change; no phonological rules, IPA values, evidence labels or accuracy claims were changed.
-- Branch: `fix/unresolved-final-output-unknown-marker-20261122`; base `2f24a33cfbfbe40dd08fb6036b3b41162a68755c`.
-- Acceptance: exact-head Python/Node/browser/production-build checks, then merge and GitHub Pages deployment. Until those checks pass, this is not DONE_VERIFIED.
+- **DONE_VERIFIED — engineering/UI scope:** PR [#201](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/201) merged to `main` as `869c5d80c06f13de7f945a8cf22640382dbccb92`.
+- The public canonical Ukrainian field renders `???` for each Burmese unit without an established canonical IPA → Ukrainian adaptation. Segmental project hints, Epitran/Google candidates and their Ukrainian adaptations remain in separately labelled diagnostic panels and are not copied into the final result. Romanization remains a separate orthographic method.
+- Exact-head tests on `ded7302177d5e6168ba672ade10e48770d06829d`: [run #44956249949](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44956249949) and [run #44956255121](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44956255121) passed. Post-merge main tests [#44956477237](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44956477237) and Pages build/deploy [#44956477209](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44956477209) passed.
+- Browser regression tests cover unresolved syllables, multiple unresolved units, unsupported Myanmar extensions, punctuation and mixed-script preservation. No phonological rules, IPA values, evidence labels or accuracy claims were changed.
 
 ---
 
