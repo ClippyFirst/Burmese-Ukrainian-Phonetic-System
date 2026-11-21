@@ -59,7 +59,7 @@ test("analysis-dependent onset and vowel rows create a separate provisional segm
   const result = phonologizeSyllable({ ...established, raw: "ကီ", vowels: ["ီ"] });
   assert.equal(result.status, "NOT_ESTABLISHED");
   assert.equal(result.ipa, null);
-  assert.equal(result.provisional_ipa, "kiː");
+  assert.equal(result.provisional_ipa, "ki");
   assert.equal(result.provisional_status, "PROVISIONAL_SEGMENTAL_ONLY");
   assert.ok(result.provisional_segments.every(part => part.evidence.length > 0));
 });
