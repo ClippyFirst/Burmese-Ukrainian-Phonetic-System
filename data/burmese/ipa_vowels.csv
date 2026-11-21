@@ -7,4 +7,7 @@ uu,u,analysis_dependent,U18;GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONO
 tall_aa,a,analysis_dependent,U18,
 aa,a,established,U18;GREEN2002,
 ai,ɛ,analysis_dependent,U18;GREEN2002,
+open_epsilon,ɛ,analysis_dependent,GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form ဝယ်, transcription wè, IPA [ɛ], gloss buy. Supports source-reported vowel quality only; does not establish the full orthographic/coda mapping or tone."
+open_open_o,ɔ,analysis_dependent,GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form မော့, transcription mɔ̀, IPA [ɔ], gloss look up. Supports source-reported vowel quality only; tone and orthographic prosody remain unresolved."
+open_close_o,o,analysis_dependent,GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form တို, transcription tò, IPA [o], gloss short. Supports source-reported vowel quality only; tone and multi-sign orthographic mapping remain unresolved."
 anusvara,,context_dependent,U18,
