@@ -36,9 +36,10 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
                 "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"]
                     + (["SOURCE_REGISTRY_ANALYSIS_DEPENDENT"] if is_provisional else []),
                 "confidence_tier": (
-                    "B" if candidate_ipa and rendered.get("text") and any(
-                        part.get("evidence") for part in (phonology.get("provisional_segments") or phonology.get("segments", []))
-                    ) and (is_provisional or item.get("phonetic_status") == "conservative_partial")
+                    "B" if candidate_ipa and rendered.get("text")
+                    and (candidate_parts := (phonology.get("provisional_segments") or phonology.get("segments", [])))
+                    and all(any(source != "U18" for source in part.get("evidence", [])) for part in candidate_parts)
+                    and (is_provisional or item.get("phonetic_status") == "conservative_partial")
                     else "C" if candidate_ipa else "D"
                 ),
                 "evidence": list(dict.fromkeys(
