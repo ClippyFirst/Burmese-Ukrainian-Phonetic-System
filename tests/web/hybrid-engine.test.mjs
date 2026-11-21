@@ -192,3 +192,4 @@ test("analysis-dependent registry IPA is exposed as a provisional candidate, nev
   assert.equal(record.ukrainianStatus, "PROVISIONAL");
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL"));
 });
+
