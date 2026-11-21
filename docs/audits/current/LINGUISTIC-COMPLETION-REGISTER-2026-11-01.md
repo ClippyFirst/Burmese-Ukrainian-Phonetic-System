@@ -3371,3 +3371,16 @@ Task ledger: engineering/build/deployment = DONE_VERIFIED; repository-owned code
 - BUR-THIRD-PARTY-RIGHTS-001: PARTIAL/BLOCKED. See the 2026-11-21 source reconciliation. Source-level status is not item-level clearance; unresolved/conflicting rights remain excluded.
 - BUR-MANUAL-A11Y-001: TODO. Issue #173 remains open pending human keyboard, assistive-technology, zoom/reflow and mobile evidence.
 - PR #182 documentation reconciliation: DONE_VERIFIED, merged at 86930db20a8a88f5c6d46ec0e9fe851a603e00aa after exact-head CI success.
+
+
+## Public beta scope reconciliation — 2026-11-21
+
+The owner explicitly selected public beta delivery without qualified external specialists. This changes release-scope classification, not linguistic evidence:
+
+- **BURMESE-BETA-ENGINEERING-001 — PARTIAL pending exact post-merge Pages build/deploy:** main `7c02268690ebc8db9f7f9517c0263ce6913c0fab` had successful tests and Pages/deploy (runs `44904891035`, `44904891024`). PR #185 changes the Pages install to `npm ci`, adds local run instructions and a beta checklist. Exact PR-head tests passed on `66817d46f8a93431de9dc24191f15fca7b5e9b37` (run `44906333400`); the exact PR-head Pages build is still running at run `44906333396`. Do not mark DONE_VERIFIED until that run and post-merge main Pages/deploy pass.
+- **BURMESE-GOLD-PILOT-001 — DEFERRED for beta / BLOCKED for expert-validated claims:** independent gold remains 0 and accuracy remains null. Do not synthesize IPA labels or accuracy.
+- **BURMESE-MANUAL-A11Y-001 — TODO:** human keyboard/screen-reader/zoom/reflow/mobile review remains unperformed; automated Playwright is not WCAG certification.
+- **Phonological completeness — PARTIAL:** medials, conjuncts, kinzi, codas/checked syllables, vowel combinations, tone/register/phonation, profile adjudication and full Python/browser parser parity remain incomplete. Fail-closed abstention remains part of beta behavior.
+- **Third-party rights — PARTIAL/BLOCKED per source:** existing Mya2Rom/Google/Epitran notices remain; myG2P and unclear data sources are not bundled or promoted.
+
+Beta acceptance is an engineering/deployment milestone, not a phonological completion claim. No IPA records, runtime phonological rules, gold rows or accuracy metrics were added by this milestone.
