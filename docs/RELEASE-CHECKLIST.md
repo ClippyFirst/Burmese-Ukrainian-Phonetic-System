@@ -68,3 +68,10 @@ PR #185 merged as `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. It changes the Pag
 BURMESE-BETA-ENGINEERING-001 — DONE_VERIFIED. Engineering beta gates (tests, wheel contents, generated-data freshness, npm build/tests, production Chromium and Pages deployment) are green on exact main `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. This does not establish full Burmese pronunciation coverage, expert validation or measured accuracy.
 
 BURMESE-GOLD-PILOT-001 — DEFERRED for beta / BLOCKED for expert-validated claims; gold=0, accuracy=null. BURMESE-MANUAL-A11Y-001 — TODO; no human WCAG review. Phonological coverage remains PARTIAL for medials, conjuncts, kinzi, codas, vowel combinations, tone/register/phonation, profile adjudication and full Python/browser parser parity. Third-party rights remain source-specific; myG2P and unclear data are not bundled. No IPA labels, lexical corpus rows or accuracy metrics were added. No GitHub Release was published.
+
+
+## Current beta mainline closeout — 2026-11-21
+
+The latest main includes PR #187 and is `b509a08ae257ed74764443f5f42211d73e7e47a4`. PR #187 records successful exact-main Tests [44908043970](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44908043970) and Pages build/deploy [44908043967](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44908043967) on parent `940a1db63404b0b564b50198369d2e783525219a`; the only subsequent main change was documentation-only. Exact-head tests and Pages build for this continuation branch must pass before merging this register closeout.
+
+BURMESE-BETA-ENGINEERING-001 — DONE_VERIFIED on `940a1db63404b0b564b50198369d2e783525219a`; unchanged runtime tree on current main. Gold=0 / accuracy=null; expert pilot DEFERRED for beta and BLOCKED for expert-validated claims. Manual accessibility QA TODO. Linguistic coverage PARTIAL. No new IPA labels, gold rows or accuracy claims.
