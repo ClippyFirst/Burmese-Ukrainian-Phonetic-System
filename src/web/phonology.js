@@ -48,7 +48,12 @@ export function phonologizeSyllable(syllable) {
   const provisionalSegments = [];
   if (onsetRow?.ipa && ["established", "analysis_dependent"].includes(onsetRow.status) && evidence(onsetRow).length) {
     provisionalOnsetIpa = onsetRow.ipa;
-    provisionalSegments.push({ kind: "onset", source: syllable.onset, ipa: provisionalOnsetIpa, status: onsetRow.status, evidence: evidence(onsetRow) });
+    provisionalSegments.push({
+      kind: "onset", source: syllable.onset, ipa: provisionalOnsetIpa,
+      status: onsetRow.status, evidence: evidence(onsetRow),
+      ...(onsetRow.source_locator ? { source_locator: onsetRow.source_locator } : {}),
+      ...(onsetRow.conflicting_sources ? { conflicting_sources: String(onsetRow.conflicting_sources).split(";").filter(Boolean) } : {}),
+    });
   }
   if (!onsetRow?.ipa || !["established", "analysis_dependent"].includes(onsetRow.status)) {
     withhold("onset_realization");
@@ -77,7 +82,10 @@ export function phonologizeSyllable(syllable) {
       } else if (!row?.ipa || !["established", "analysis_dependent"].includes(row.status) || !evidence(row).length) {
         withhold("vowel_realization");
       } else {
-        const candidate = { kind: "vowel", source: id, ipa: row.ipa, status: row.status, evidence: evidence(row) };
+        const candidate = {
+          kind: "vowel", source: id, ipa: row.ipa, status: row.status, evidence: evidence(row),
+          ...(row.source_locator ? { source_locator: row.source_locator } : {}),
+        };
         provisionalVowelIpa.push(row.ipa);
         provisionalSegments.push(candidate);
         if (row.status === "established") {
