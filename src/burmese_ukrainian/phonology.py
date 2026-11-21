@@ -106,26 +106,30 @@ def phonologize_syllable(
     onset = (syllable.get("onset") or {}).get("character")
     onset_row = source["onsets"].get(onset or "")
     onset_ipa = None
-    if not onset_row or not onset_row.get("ipa"):
+    provisional_onset_ipa = None
+    provisional_segments: list[dict[str, Any]] = []
+    if onset_row and onset_row.get("ipa") and onset_row.get("status") in {"established", "analysis_dependent"} and onset_row.get("evidence"):
+        provisional_onset_ipa = onset_row["ipa"]
+        provisional_segments.append({
+            "kind": "onset", "source": onset, "ipa": provisional_onset_ipa,
+            "status": onset_row["status"], "evidence": list(onset_row["evidence"]),
+        })
+    if not onset_row or not onset_row.get("ipa") or onset_row.get("status") not in {"established", "analysis_dependent"}:
         withhold("onset_realization")
     elif onset_row.get("status") != "established":
         withhold("onset_realization")
     else:
         onset_ipa = onset_row["ipa"]
         segments.append({
-            "kind": "onset",
-            "source": onset,
-            "ipa": onset_ipa,
-            "status": onset_row["status"],
-            "evidence": list(onset_row["evidence"]),
+            "kind": "onset", "source": onset, "ipa": onset_ipa,
+            "status": onset_row["status"], "evidence": list(onset_row["evidence"]),
         })
 
     vowel = syllable.get("vowel")
     vowel_signs = (vowel or {}).get("signs", [])
     vowel_ipa: list[str] = []
+    provisional_vowel_ipa: list[str] = []
     if len(vowel_signs) > 1:
-        # A sequence of established signs is not automatically an established
-        # vowel combination. Require a separately sourced combination rule.
         withhold("vowel_combination")
     elif not vowel_signs:
         withhold("inherent_vowel")
@@ -135,18 +139,21 @@ def phonologize_syllable(
             vowel_row = source["vowels"].get(identifier or "")
             if identifier == "anusvara":
                 withhold("nasalization")
-            elif not vowel_row or not vowel_row.get("ipa") or vowel_row.get("status") != "established":
+            elif not vowel_row or not vowel_row.get("ipa") or vowel_row.get("status") not in {"established", "analysis_dependent"} or not vowel_row.get("evidence"):
                 withhold("vowel_realization")
             else:
                 value = vowel_row["ipa"]
-                vowel_ipa.append(value)
-                segments.append({
-                    "kind": "vowel",
-                    "source": identifier,
-                    "ipa": value,
-                    "status": vowel_row["status"],
-                    "evidence": list(vowel_row["evidence"]),
-                })
+                candidate_segment = {
+                    "kind": "vowel", "source": identifier, "ipa": value,
+                    "status": vowel_row["status"], "evidence": list(vowel_row["evidence"]),
+                }
+                provisional_vowel_ipa.append(value)
+                provisional_segments.append(candidate_segment)
+                if vowel_row.get("status") == "established":
+                    vowel_ipa.append(value)
+                    segments.append(candidate_segment)
+                else:
+                    withhold("vowel_realization")
 
     unresolved.extend(feature for feature in _PROSODIC_GAPS if feature not in unresolved)
     segmental_ipa = "".join([onset_ipa] + vowel_ipa) if onset_ipa and vowel_ipa else None
@@ -157,14 +164,24 @@ def phonologize_syllable(
         segmental_ipa = onset_ipa + "?"
 
     complete_segmental = bool(segmental_ipa) and not blocking
+    provisional_ipa = None
+    if (provisional_onset_ipa and len(provisional_vowel_ipa) == 1
+        and set(blocking).issubset({"onset_realization", "vowel_realization"})
+        and any(item["status"] == "analysis_dependent" for item in provisional_segments)):
+        provisional_ipa = provisional_onset_ipa + provisional_vowel_ipa[0]
     # Retain the legacy onset-plus-question-mark diagnostic for adjacent bare
     # Myanmar consonant clusters. It is explicitly incomplete and is withheld
     # at isolated-token boundaries by to_ipa().
     partial_inherent = bool(onset_ipa) and not vowel_signs and blocking == ["inherent_vowel"]
-    return {
+    result = {
         "status": "SEGMENTAL_ONLY" if complete_segmental else "NOT_ESTABLISHED",
         "ipa": segmental_ipa if complete_segmental or partial_inherent else None,
         "segments": segments,
         "unresolved_features": unresolved,
         "rule_ids": [],
     }
+    if provisional_ipa:
+        result["provisional_ipa"] = provisional_ipa
+        result["provisional_segments"] = provisional_segments
+        result["provisional_status"] = "PROVISIONAL_SEGMENTAL_ONLY"
+    return result
