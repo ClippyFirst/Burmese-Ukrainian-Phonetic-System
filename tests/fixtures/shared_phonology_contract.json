@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Shared Python/browser typed phonology contract. Expected IPA values are the currently registered established segmental subset only; unresolved prosody and structures remain withheld.",
+  "purpose": "Shared Python/browser typed phonology contract. Canonical IPA values remain the established segmental subset; source-backed analysis-dependent pairs may appear only in a separate provisional IPA field.",
   "cases": [
     {
       "id": "simple-established-cv",
@@ -206,7 +206,31 @@
           "quantity",
           "profile_adjudication"
         ],
-        "rule_ids": []
+        "rule_ids": [],
+        "provisional_ipa": "sa",
+        "provisional_segments": [
+          {
+            "kind": "onset",
+            "source": "စ",
+            "ipa": "s",
+            "status": "analysis_dependent",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          },
+          {
+            "kind": "vowel",
+            "source": "aa",
+            "ipa": "a",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "provisional_status": "PROVISIONAL_SEGMENTAL_ONLY"
       }
     },
     {
@@ -234,7 +258,31 @@
           "quantity",
           "profile_adjudication"
         ],
-        "rule_ids": []
+        "rule_ids": [],
+        "provisional_ipa": "kiː",
+        "provisional_segments": [
+          {
+            "kind": "onset",
+            "source": "က",
+            "ipa": "k",
+            "status": "established",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          },
+          {
+            "kind": "vowel",
+            "source": "ii",
+            "ipa": "iː",
+            "status": "analysis_dependent",
+            "evidence": [
+              "U18",
+              "GREEN2002"
+            ]
+          }
+        ],
+        "provisional_status": "PROVISIONAL_SEGMENTAL_ONLY"
       }
     },
     {
