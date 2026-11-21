@@ -230,8 +230,10 @@ function parseCluster(raw,withholdBareInherent=false){
   const candidateIpa=sy.ipa||sy.phonology.provisional_ipa;
   const candidateParts=sy.phonology.provisional_segments||sy.phonology.segments||[];
   const adaptedCandidate=candidateIpa?renderUkrainian(candidateIpa):null;
-  const hasPhonologicalSources=candidateParts.length>0&&candidateParts.every(part=>(part.evidence||[]).some(source=>source!=="U18"));
-  sy.confidenceTier=(candidateIpa&&adaptedCandidate?.text&&hasPhonologicalSources)?"B":(candidateIpa||sy.provisionalIpa||candidateParts.length)?"C":"D";
+  const hasPhonologicalSources=candidateParts.length>0&&candidateParts.every(part=>part.source_locator&&(part.evidence||[]).some(source=>source!=="U18"));
+  const hasConflictingSources=candidateParts.some(part=>part.conflicting_sources?.length);
+  sy.confidenceTier=(candidateIpa&&adaptedCandidate?.text&&hasPhonologicalSources&&!hasConflictingSources)?"B":(candidateIpa||sy.provisionalIpa||candidateParts.length)?"C":"D";
+  if(hasConflictingSources)sy.notes=[...(sy.notes||[]),"Конфлікт джерел для сегмента: "+candidateParts.filter(part=>part.conflicting_sources?.length).map(part=>part.conflicting_sources.join(", ")).join("; ")+". Рівень B не присвоюється до узгодження аналізів."];
   return sy;
 }
 
