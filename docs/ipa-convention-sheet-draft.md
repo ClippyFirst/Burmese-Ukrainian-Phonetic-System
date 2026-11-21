@@ -209,3 +209,34 @@ This draft must not be silently converted to an approved convention. After speci
 3. update the annotation packet and schema only where required;
 4. add sourced test cases before runtime rules are changed;
 5. freeze the approved sheet before blind annotation begins.
+
+
+## 9. Literature evidence review update — 2026-11-21 (still not approved)
+
+The following findings were surfaced in a targeted literature review. They sharpen the questions for D1–D4; they do not resolve them or authorize annotation.
+
+- **Watkins (2001), JIPA Burmese description** provides a compact IPA-oriented descriptive reference, but its scope and examples must be checked against the proposed contemporary Yangon careful-citation profile before copying any notation or word form. DOI: https://doi.org/10.1017/S0025100301002122.
+- **Gruber (2011), perceptual cues to lexical tone** reports a 10-listener forced-choice study using resynthesized monosyllables. Duration, pitch and phonation all contribute to listeners' tone identification. This argues against a pitch-only convention, but the exact four-category analysis and stimulus design require specialist reconciliation with the chosen profile. DOI: https://doi.org/10.3765/EXABS.V0I0.557.
+- **Dellwo & Jenny (2020)** compare 10 Standard Burmese and 10 Southern Burmese speakers in carrier-sentence contexts using acoustic and electroglottographic measures. Their abstract reports stronger reliance on voice-quality correlates in Standard Burmese and F0 in Southern Burmese. This makes variety metadata essential and cautions against importing a Southern-Burmese pitch rule into the Yangon target. DOI: https://doi.org/10.1121/1.5147395.
+- **Mooney & Repetti-Ludlow (2021)** investigate tone, vowel quality and sonority using one female native Yangon consultant. Their analysis argues that vowel alternations are better explained by sonority sequencing and syllable structure than by direct tone conditioning. Retain as a competing, tightly scoped analysis rather than a universal rule. DOI: https://doi.org/10.3765/PLSA.V6I1.4900.
+- **Watkins (2003), Tian & Lee (2019), and other prosody studies** indicate that phrase position, quotation/intonation and focus can alter surface realization. Do not merge connected-speech tokens into a citation-form gold set without a separately declared task/profile.
+- **Thu et al. (2016)** compare G2P approaches on a manually tagged Myanmar pronunciation dictionary and report PER on its own phoneme inventory plus manual error inspection. This is an engineering comparator, not independent IPA adjudication; the paper alone does not establish reusable dictionary rights. https://aclanthology.org/W16-3702.
+- **Oo et al. (2020)** describe SLR80 as a 20-speaker Yangon corpus (2,528 utterances; the release currently describes female recordings) under CC BY-SA 4.0. Its transcripts are orthographic word-level text, not IPA gold, and sentence reading is not automatically isolated citation-form elicitation. https://aclanthology.org/2020.lrec-1.777.
+
+### Decisions these findings do not settle
+
+1. Whether the pilot uses one phonemic or broad-phonetic layer, and whether a separate surface phonetic layer is needed.
+2. The controlled representation of lexical tone/register vs F0 contour, duration and phonation; the current schema's free-text tone/phonation fields may be insufficient for time-aligned acoustic detail.
+3. The precise Yangon speaker/task inclusion criteria and how to separate citation-form from carrier/sentence context.
+4. The source-grounded treatment of vowel alternations, medials, codas, checked syllables and minor syllables.
+5. The item-level rights of any selected dictionary/audio source.
+
+**Status remains DRAFT_NOT_APPROVED.** A qualified Yangon Burmese specialist and independent IPA/phonetics reviewer must approve the convention and document disagreements before any gold annotation begins.
+
+
+### Full-text checks of key tone studies
+
+- Gruber's perceptual study has **10 native Burmese listeners** and one stimulus speaker, not a population sample. The 18 natural citation-form tokens were identified at 89% (160/180 responses), with most errors involving Creaky–Checked confusions. In a stepwise model, phonation type was the strongest predictor, followed by midpoint F0 and listener; duration and vowel quality contributed less. The resynthesized task used isolated monosyllables and a small controlled stimulus set. These results support a multi-cue annotation question, not a complete Yangon IPA convention. DOI: https://doi.org/10.3765/EXABS.V0I0.557.
+- Mooney & Repetti-Ludlow's full text confirms **one** female native Yangon consultant (late 20s). Their isolated-word experiment and sentence-frame experiment differ materially: duration distinctions largely neutralized in sentence contexts while pitch remained significant; vowel alternations are argued to follow syllable structure/sonority rather than tone. The paper's tentative three-underlying-tone proposal remains a hypothesis, not an approved inventory. DOI: https://doi.org/10.3765/PLSA.V6I1.4900.
+
+These full-text details reinforce the need to record elicitation task and phonetic evidence separately. They do not justify using either study as a 30-item gold source without profile-matched items, rights review and independent expert annotation.

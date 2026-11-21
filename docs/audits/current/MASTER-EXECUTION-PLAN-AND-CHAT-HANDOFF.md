@@ -1349,3 +1349,13 @@ PR #171 is merged to main as `a7cd77c30ff039b594536f72219ccd2a497e7dfd`. Exact P
 - Local checkout and local test execution were unavailable through this GitHub connector session. The statements above rely on exact-commit GitHub Actions check-run metadata, repository files, issue/PR state and branch metadata; no local test command is claimed.
 
 Task ledger: engineering/build/deployment = DONE_VERIFIED; repository-owned code/docs/research-data license declarations = DONE_VERIFIED; third-party item-level rights = PARTIAL/BLOCKED where registered; gold pilot = BLOCKED (human/source-rights); manual accessibility = TODO (human QA); PR #129 = DEFERRED (stale historical draft). Overall status: deployed engineering/research prototype, not linguistically release-ready and not WCAG-conformance-certified.
+
+
+## Human pilot operations and rights reconciliation — 2026-11-21
+
+- Added [Burmese private blind-intake runbook](../../research/BURMESE-PRIVATE-BLIND-INTAKE-RUNBOOK-2026-11-21.md). It defines separated curator/A/B/C/reviewer duties, A-only and B-only intake, independent locks and SHA-256 manifests, post-lock adjudication, independent discrepancy audit, privacy controls and acceptance gates. This is an operational design only: no private channel was provisioned and no person was recruited.
+- Added [Burmese third-party rights reconciliation](BURMESE-THIRD-PARTY-RIGHTS-RECONCILIATION-2026-11-21.md). It distinguishes OpenSLR SLR80 CC BY-SA 4.0 from a Hugging Face mirror's CC BY 4.0 metadata conflict; retains myG2P CC BY-NC-SA 4.0 restrictions; treats Wiktionary/MLC/Mya2Rom/Goruut as item- or derivative-level review cases. No new source item is cleared for gold.
+- BUR-GOLD-PILOT-001 remains BLOCKED (Issue #85): approved convention, two qualified annotators, independent adjudicator, curator, private workspace, 30 attested and rights-cleared groups, and locked/adjudicated annotations remain outstanding. Gold=0; accuracy unmeasured.
+- BUR-MANUAL-A11Y-001 remains TODO (Issue #173): no human keyboard, screen-reader, zoom/reflow or mobile evidence has been produced. CI is not a substitute.
+- Third-party rights remain PARTIAL/BLOCKED; unknown/conflicting sources stay excluded. Do not describe this source-level reconciliation as legal clearance.
+- Burmese PR #182 was merged after exact-head Tests and Pages build/deploy both succeeded. Merge commit: 86930db20a8a88f5c6d46ec0e9fe851a603e00aa. This does not close the linguistic or manual QA gates.
