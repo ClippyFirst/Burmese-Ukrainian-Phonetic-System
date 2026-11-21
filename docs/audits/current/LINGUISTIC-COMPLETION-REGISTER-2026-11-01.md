@@ -3362,3 +3362,12 @@ Final main SHA `07fcbf92f11cde54ed726a07f0593fd0075e7e09` is fully green: tests 
 - Local checkout and local test execution were unavailable through this GitHub connector session. The statements above rely on exact-commit GitHub Actions check-run metadata, repository files, issue/PR state and branch metadata; no local test command is claimed.
 
 Task ledger: engineering/build/deployment = DONE_VERIFIED; repository-owned code/docs/research-data license declarations = DONE_VERIFIED; third-party item-level rights = PARTIAL/BLOCKED where registered; gold pilot = BLOCKED (human/source-rights); manual accessibility = TODO (human QA); PR #129 = DEFERRED (stale historical draft). Overall status: deployed engineering/research prototype, not linguistically release-ready and not WCAG-conformance-certified.
+
+
+## Human pilot and rights status — 2026-11-21
+
+- BUR-GOLD-PILOT-001: BLOCKED. Private blind-intake runbook and third-party rights reconciliation are documented, but no private workspace, recruited annotators/adjudicator/curator, approved convention, rights-cleared 30-group pilot, or independent adjudication exists. Gold=0; accuracy unmeasured.
+- BUR-PRIVATE-INTAKE-001: PARTIAL. Operational runbook exists; no actual private workspace or cross-account blindness test. Public GitHub is explicitly excluded for blind submissions.
+- BUR-THIRD-PARTY-RIGHTS-001: PARTIAL/BLOCKED. See the 2026-11-21 source reconciliation. Source-level status is not item-level clearance; unresolved/conflicting rights remain excluded.
+- BUR-MANUAL-A11Y-001: TODO. Issue #173 remains open pending human keyboard, assistive-technology, zoom/reflow and mobile evidence.
+- PR #182 documentation reconciliation: DONE_VERIFIED, merged at 86930db20a8a88f5c6d46ec0e9fe851a603e00aa after exact-head CI success.
