@@ -60,7 +60,7 @@ function phonologyLayerStatus(records) {
   if (!records.length) return "NOT_APPLICABLE";
   const statuses = records.map(({ segment, deterministicIpa }) => {
     if (segment.phonology?.status === "SEGMENTAL_ONLY") return "SEGMENTAL_ONLY";
-    if (segment.phonology?.segments?.length) return "PARTIAL";
+    if (segment.phonology?.segments?.length || segment.phonology?.provisional_segments?.length) return "PARTIAL";
     return deterministicIpa ? "SEGMENTAL_ONLY" : "NOT_ESTABLISHED";
   });
   if (statuses.every(status => status === "SEGMENTAL_ONLY")) return "SEGMENTAL_ONLY";
@@ -81,8 +81,11 @@ function adaptationFor(ipa) {
 export function analyzeHybrid(segments, googleModel = null) {
   const records = segments.map((segment) => {
     if (segment.nonMyanmar) return { segment, passthrough: true };
-    const deterministicIpa = segment.ipa && !["UNSUPPORTED", "UNCERTAIN"].includes(segment.status)
-      ? segment.ipa : null;
+    const provisionalSegmentalIpa = segment.provisionalStatus === "PROVISIONAL_SEGMENTAL_ONLY"
+      ? segment.provisionalIpa : null;
+    const deterministicIpa = (segment.ipa || provisionalSegmentalIpa)
+      && !["UNSUPPORTED", "UNCERTAIN"].includes(segment.status)
+      ? (segment.ipa || provisionalSegmentalIpa) : null;
     const prosodyStatus = segment.prosodyStatus || segment.toneStatus || "NOT_ESTABLISHED";
     const profileId = segment.profileId || null;
     // A segmental onset+rime string is not complete Burmese IPA without an
