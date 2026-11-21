@@ -17,8 +17,10 @@ const outputLevel=document.querySelector("#output-level");
 const outputLevelNote=document.querySelector("#output-level-note");
 const hybridEnginePanel=document.querySelector("#hybrid-engine-panel");
 let googleWfstModel=null;
+let activeOutputMethod="phonetic";
 
 function setOutputMode(mode){
+  activeOutputMethod=mode;
   document.querySelectorAll("[data-method-panel]").forEach(panel=>{panel.hidden=panel.dataset.methodPanel!==mode;});
   modePhonetic.classList.toggle("is-active",mode==="phonetic");
   modePhonetic.setAttribute("aria-pressed",String(mode==="phonetic"));
@@ -309,7 +311,7 @@ function render(){
   });
   const level=outputLevel?.value||"balanced";
   hybridCandidatePreviews.hidden=availablePreviewProviders.length===0||level==="strict";
-  hybridEnginePanel.hidden=level==="strict";
+  hybridEnginePanel.hidden=level==="strict"||activeOutputMethod!=="phonetic";
   const levelNotes={strict:"Обережний режим: основний IPA та український результат містять лише канонічні форми, що пройшли проєктний evidence gate. Якщо результат не встановлено, він так і позначається.",balanced:"Збалансований режим: поряд із канонічним результатом показано доступні сегментні й зовнішні IPA-кандидати та їхні українські адаптації. Усі вони залишаються PROVISIONAL, якщо не пройшли окремий evidence gate.",exploratory:"Дослідницький режим: показує всі доступні провайдерні та сегментні кандидати для порівняння. Це не голосування рушіїв і не автоматичний вибір правильної вимови."};
   outputLevelNote.textContent=levelNotes[level];
   hybridCandidatePreviews.querySelector("h4").textContent=level==="exploratory"?"Експериментальні варіанти · PROVISIONAL":"Попередні варіанти провайдерів · PROVISIONAL";
