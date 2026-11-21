@@ -3848,3 +3848,10 @@ BETA status: engineering checks DONE_VERIFIED except the current-main Pages depl
 ## Final exact-main beta check completion — 2026-11-21
 
 The previously running Pages build/deploy [44908043967](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44908043967) has now completed SUCCESS on exact main `940a1db63404b0b564b50198369d2e783525219a`. Tests [44908043970](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44908043970) also SUCCESS on the same SHA. The current-main engineering beta gate is therefore DONE_VERIFIED for this commit. This is build/runtime evidence only; it does not validate pronunciation accuracy, complete phonological coverage, or manual accessibility.
+
+
+## Final Burmese public beta mainline closeout — 2026-11-21
+
+Latest main SHA: `9bdb0dd942e9186f85a60cf52a258d95026da0f0`. PR #191 merged the methodology-page beta disclosure and direct links to the beta checklist/policy. Exact post-merge Tests [44909742163](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44909742163) SUCCESS (325 Python tests + 68 subtests; 75 production Chromium tests); Pages build/deploy [44909742287](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44909742287) SUCCESS, including pinned Google WFST/OpenFst build, production browser smoke and deployed asset smoke.
+
+The public landing and methodology pages now identify the service as a public research beta with the 21 November status snapshot. The README links the beta policy and operational checklist. Engineering beta gate DONE_VERIFIED. Independent expert IPA gold remains 0 and accuracy null (DEFERRED for beta); phonological coverage remains PARTIAL for tone/register/phonation, medials/conjuncts/kinzi, codas/vowel combinations and full Python/browser parity; manual accessibility QA remains TODO; unresolved third-party rights remain excluded where required. No IPA labels, gold rows, unsupported runtime rules or GitHub Release were added.
