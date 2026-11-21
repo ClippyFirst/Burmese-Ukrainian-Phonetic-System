@@ -3384,3 +3384,12 @@ The owner explicitly selected public beta delivery without qualified external sp
 - **Third-party rights — PARTIAL/BLOCKED per source:** existing Mya2Rom/Google/Epitran notices remain; myG2P and unclear data sources are not bundled or promoted.
 
 Beta acceptance is an engineering/deployment milestone, not a phonological completion claim. No IPA records, runtime phonological rules, gold rows or accuracy metrics were added by this milestone.
+
+
+## Final beta engineering closeout — 2026-11-21
+
+PR #185 merged as `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. It changes the Pages dependency installation to `npm ci` against the existing npm lockfile, adds reproducible local browser-beta instructions, and adds the operational beta release checklist. Exact PR-head tests on `ac4e25ff01d6c0c1e1d0784aa1c72abfac4caaec` passed [44906901064](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44906901064); exact PR-head Pages build passed [44906901057](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44906901057) (deploy correctly skipped on pull_request). Exact post-merge main tests [44907208175](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44907208175) and Pages build/deploy [44907208189](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44907208189) both SUCCESS.
+
+BURMESE-BETA-ENGINEERING-001 — DONE_VERIFIED. Engineering beta gates (tests, wheel contents, generated-data freshness, npm build/tests, production Chromium and Pages deployment) are green on exact main `4ab231eeedfb5ad00b72aebd7418d143ffb10242`. This does not establish full Burmese pronunciation coverage, expert validation or measured accuracy.
+
+BURMESE-GOLD-PILOT-001 — DEFERRED for beta / BLOCKED for expert-validated claims; gold=0, accuracy=null. BURMESE-MANUAL-A11Y-001 — TODO; no human WCAG review. Phonological coverage remains PARTIAL for medials, conjuncts, kinzi, codas, vowel combinations, tone/register/phonation, profile adjudication and full Python/browser parser parity. Third-party rights remain source-specific; myG2P and unclear data are not bundled. No IPA labels, lexical corpus rows or accuracy metrics were added. No GitHub Release was published.
