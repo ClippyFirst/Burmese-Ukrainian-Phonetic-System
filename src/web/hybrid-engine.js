@@ -232,8 +232,10 @@ export function analyzeHybrid(segments, googleModel = null) {
     uk: records.map((item) => {
       if (item.passthrough) return item.segment.raw;
       const adaptation = item.selectedAdaptation;
+      // Match the Lao repository policy: the final Ukrainian field abstains visibly
+      // when no canonical adaptation is established. Candidate hints remain in diagnostics.
       return adaptation?.text && !["NOT_ESTABLISHED", "UNSUPPORTED", "UNCERTAIN", "PROVISIONAL"].includes(adaptation.status)
-        ? adaptation.text : "⟦" + item.segment.raw + "⟧";
+        ? adaptation.text : "???";
     }).join(""),
     status, graphemicStatus: graphemicLayerStatus(phonetic),
     phonologyStatus: phonologyLayerStatus(phonetic), ipaStatus, ukrainianStatus, records,
