@@ -25,7 +25,7 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
                 "source": item.get("raw", ""),
                 "ipa": candidate_ipa,
                 "ukrainian": rendered.get("text") or "?",
-                "status": "PROVISIONAL_SEGMENTAL_ONLY" if is_provisional or not rendered.get("text") else "SEGMENTAL_ONLY",
+                "status": "PROVISIONAL_SEGMENTAL_ONLY",
                 "position": "syllable",
                 "rule_id": "BURMESE-ANALYSIS-DEPENDENT-SEGMENTAL-PREVIEW-V1" if is_provisional else None,
                 "unresolved_graphemes": [],
