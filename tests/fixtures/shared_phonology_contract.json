@@ -217,6 +217,10 @@
             "evidence": [
               "U18",
               "GREEN2002"
+            ],
+            "source_locator": "GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (6), p. xiii; Burmese form စ, transcription sà, IPA [s]; Table of abbreviations, p. xv, CAUS form စေ sè. Conflicting source: LREC2020_BURMESE §3, p. 6330, which gives စ /tʃ/.",
+            "conflicting_sources": [
+              "LREC2020_BURMESE"
             ]
           },
           {
