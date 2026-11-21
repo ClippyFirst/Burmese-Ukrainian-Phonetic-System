@@ -124,6 +124,7 @@ export function analyzeHybrid(segments, googleModel = null) {
     return {
       segment, passthrough: false, deterministicIpa, deterministicStatus: segment.status,
       deterministicEstablished, prosodyStatus, profileId, projectCandidate,
+      confidenceTier: segment.confidenceTier || (deterministicIpa ? "C" : "D"),
       phoneticCompleteness: deterministicEstablished ? "PROFILE_COMPLETE" : deterministicIpa ? "SEGMENTAL_ONLY" : "UNKNOWN",
       epitran, epitranCandidate, google: { status: "NOT_RUN", ipa: null },
       googleCandidate: null, externalCandidates, candidateAdaptations,
