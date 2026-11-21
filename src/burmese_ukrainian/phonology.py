@@ -127,10 +127,13 @@ def phonologize_syllable(
         withhold("onset_realization")
     else:
         onset_ipa = onset_row["ipa"]
-        segments.append({
+        established_onset_segment = {
             "kind": "onset", "source": onset, "ipa": onset_ipa,
             "status": onset_row["status"], "evidence": list(onset_row["evidence"]),
-        })
+        }
+        if onset_row.get("source_locator"):
+            established_onset_segment["source_locator"] = onset_row["source_locator"]
+        segments.append(established_onset_segment)
 
     vowel = syllable.get("vowel")
     vowel_signs = (vowel or {}).get("signs", [])
