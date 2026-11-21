@@ -673,3 +673,21 @@ test("service and methodology pages expose named controls and coherent document 
   await expect(page.getByRole("group",{name:"Метод українського запису"})).toBeVisible();
   await expect(page.locator('[aria-label="Копіювати IPA"]')).toBeAttached();
 });
+
+
+test("source-backed analysis-dependent CV pair is shown as a B-tier IPA candidate",async({page})=>{
+  await page.goto("/");
+  await page.locator("#source").fill("စေ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦စေ⟧");
+  await expect(page.locator("#uk-status")).toContainText("доказовий рівень: B");
+  await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText("се");
+});
+
+test("Unicode-only vowel evidence remains C rather than being promoted to B",async({page})=>{
+  await page.goto("/");
+  await page.locator("#source").fill("ကီ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk-status")).toContainText("доказовий рівень: C");
+  await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText("кі");
+});
