@@ -61,10 +61,12 @@ Source-level triage is improved, but no new item has been cleared for the 30-ite
 - Mya2Rom: https://github.com/myanmaropenwordnet/mya2rom
 - Goruut dataset repository: https://github.com/neurlang/dataset
 
-## Green (2005) publication-rights correction — 2026-11-21
+## Green (2005) online-edition license reconciliation — 2026-11-21
 
-The exact PDF copyright page (p. ii) states that copyright in this edition is vested with Pacific Linguistics. The PDF does not state an open license. The previous `sources.csv` scope and evidence-tier documentation incorrectly described the online edition as CC BY-SA 4.0; PR #195 corrects both the human-readable notices and the machine-readable `data/burmese/sources.csv` row. The registry now states that only brief factual IPA examples and exact bibliographic locators are recorded, while broader reuse rights remain unresolved.
+The prior PR #195 correction was incomplete: it relied on the print-edition copyright page (p. ii) and overlooked the PDF's opening notice. The opening notice explicitly states: “Online edition licensed 2015 CC BY-SA 4.0, with permission of PL” (PDF opening notice, lines 4–6). The p. ii statement that copyright in the print edition is vested with Pacific Linguistics is compatible with that separate online-edition license.
 
-Disposition: source may continue to be cited for short factual IPA examples and precise locators in this research prototype; do not reproduce tables, extended text, or build a larger derivative lexicon without separate rights review/permission. This is not legal advice and is not a blanket clearance.
+**Correct disposition:** the inspected online edition of Green (2005) is CC BY-SA 4.0. Retain attribution and ShareAlike for any adapted text derived from that online edition. The license does not automatically cover separately credited third-party illustrations, archival images, or other materials in the volume. It also does not make the project’s entire mixed-source dataset CC BY-SA; keep item-level provenance and license scope.
 
-PR #195 was squash-merged to main as `921d891b253fc1984f163f94b383145e168c32d4`. Main post-merge Quality run `44938753478` SUCCESS — 329 Python tests + 68 subtests, 54 Node tests and 78 built-browser tests. Build/Pages run `44938450880` SUCCESS, including pinned Google WFST validation, upstream CLI parity, production Chromium, Pages deployment and deployed asset smoke. Public beta: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/. The source-rights correction is verified on deployed main.
+The source registry now records the online-edition license and distinguishes it from print-edition copyright. The evidence-tier notes are corrected. Table (1), p. xii, supplies exact source locators for [ɛ] (ဝယ်), [ɔ] (မော့) and [o] (တို); these are added as analysis-dependent vowel-quality evidence only, not complete lexical B candidates. No table contents or extended source text are copied into the repository.
+
+PR #195's earlier no-open-license conclusion is superseded by this reconciliation. The exact PDF is available at https://burmastudiesgroup.com/wp-content/uploads/2022/03/watkins_studies-in-burmese-linguistics.pdf. This is a source-record correction, not legal advice or blanket clearance.
