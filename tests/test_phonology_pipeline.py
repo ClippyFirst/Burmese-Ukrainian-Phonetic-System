@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from burmese_ukrainian.ipa import to_ipa
+from burmese_ukrainian.practical import transcribe_ipa
 from burmese_ukrainian.phonology import load_phonology_registry
 
 
@@ -127,3 +128,16 @@ def test_green2005_source_locators_are_attached_to_simple_cv_segments():
         assert candidate == expected, source
         assert all(part.get("source_locator") for part in parts), source
         assert "tone" in syllable["phonology"]["unresolved_features"], source
+
+
+def test_wiktionary_sa_lexical_ipa_is_adaptable_but_not_generalized_as_b():
+    syllable = to_ipa("ဆာ")["syllables"][0]
+    phonology = syllable["phonology"]
+    assert syllable["ipa"] is None
+    assert "tone" in phonology["unresolved_features"]
+
+    rendered = transcribe_ipa("/sʰà/")
+    assert rendered["text"] == "с'а"
+    assert rendered["unsupported"] is None
+    assert any(item["kind"] == "tone" for item in rendered["prosody"])
+

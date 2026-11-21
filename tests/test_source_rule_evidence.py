@@ -51,6 +51,22 @@ def test_phonological_rules_have_source_scope_claim_and_test_links():
         }, (rid, rule["status"])
 
 
+def test_burmese_wiktionary_sa_has_a_permanent_entry_locator_and_attribution():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+    vowels = {row["id"]: row for row in _rows(DATA / "ipa_vowels.csv")}
+    source = sources["WIKT_EN_SA"]
+    assert "oldid=92780524" in source["url"]
+    assert "/sʰà/" in source["scope"]
+    assert "Creative Commons Attribution-ShareAlike" in source["scope"]
+    assert claims["CLM-WIKT-SA-001"]["source_id"] == "WIKT_EN_SA"
+    assert claims["CLM-WIKT-SA-001"]["status"] == "DOCUMENTARY"
+    # The lexical /sʰà/ attestation is word-specific; do not generalize it
+    # to every Burmese word using the AA sign.
+    assert "WIKT_EN_SA" not in vowels["aa"]["evidence"]
+    assert not vowels["aa"]["source_locator"]
+
+
 def test_green2005_online_edition_license_and_open_vowel_locators_are_recorded():
     sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
     claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}

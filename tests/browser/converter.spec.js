@@ -697,6 +697,15 @@ test("Green 2005 source-located CV examples are displayed as B-tier segmental ca
   }
 });
 
+test("word-specific Wiktionary vowel evidence does not generalize to every AA-sign word",async({page})=>{
+  await page.goto("/");
+  await page.locator("#source").fill("ဆာ");
+  await expect(page.locator("#ipa")).toHaveText("?");
+  await expect(page.locator("#uk")).toHaveText("⟦ဆာ⟧");
+  await expect(page.locator("#uk-status")).toContainText("доказовий рівень: C");
+  await expect(page.locator("#hybrid-candidate-preview-list .candidate-preview-value").first()).toHaveText("с'а");
+});
+
 test("Unicode-only vowel evidence remains C rather than being promoted to B",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ကီ");
