@@ -16,18 +16,28 @@ from .unicode import is_myanmar
 def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | None:
     previews = []
     for item in syllables:
-        if item.get("ipa") and item.get("phonetic_status") == "conservative_partial":
-            rendered = transcribe_ipa(item["ipa"])
+        phonology = item.get("phonology") or {}
+        candidate_ipa = item.get("ipa") if item.get("phonetic_status") == "conservative_partial" else phonology.get("provisional_ipa")
+        if candidate_ipa:
+            rendered = transcribe_ipa(candidate_ipa)
+            is_provisional = not bool(item.get("ipa"))
             previews.append({
                 "source": item.get("raw", ""),
-                "ipa": item["ipa"],
+                "ipa": candidate_ipa,
                 "ukrainian": rendered.get("text") or "?",
-                "status": "PROVISIONAL_SEGMENTAL_ONLY",
+                "status": "PROVISIONAL_SEGMENTAL_ONLY" if is_provisional or not rendered.get("text") else "SEGMENTAL_ONLY",
                 "position": "syllable",
-                "rule_id": None,
+                "rule_id": "BURMESE-ANALYSIS-DEPENDENT-SEGMENTAL-PREVIEW-V1" if is_provisional else None,
                 "unresolved_graphemes": [],
-                "unresolved_features": ["tone", "phonation", "quantity", "profile_adjudication"],
-                "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"],
+                "unresolved_features": list(dict.fromkeys(
+                    ["tone", "phonation", "quantity", "profile_adjudication"]
+                    + (["analysis_dependent_segmental_realization"] if is_provisional else [])
+                )),
+                "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"]
+                    + (["SOURCE_REGISTRY_ANALYSIS_DEPENDENT"] if is_provisional else []),
+                "evidence": list(dict.fromkeys(
+                    source for part in phonology.get("provisional_segments", []) for source in part.get("evidence", [])
+                )),
             })
             continue
         onset = item.get("onset", {}).get("character")
