@@ -201,6 +201,16 @@ function parseCluster(raw,withholdBareInherent=false){
     sy.phonology.unresolved_features.unshift("isolated_bare_consonant");
   }
   sy.ipa=sy.phonology.ipa;
+  if(!sy.ipa&&sy.phonology.provisional_ipa){
+    sy.provisionalIpa=sy.phonology.provisional_ipa;
+    const adapted=renderUkrainian(sy.provisionalIpa);
+    sy.provisionalUk=adapted.text||"";
+    sy.provisionalStatus="PROVISIONAL_SEGMENTAL_ONLY";
+    sy.provisionalRuleId="BURMESE-ANALYSIS-DEPENDENT-SEGMENTAL-PREVIEW-V1";
+    sy.provisionalPosition="syllable";
+    sy.provisionalUnresolved=[];
+    sy.provisionalUnresolvedFeatures=sy.phonology.unresolved_features||[];
+  }
   if(!sy.ipa&&sy.status==="ESTABLISHED")sy.status=sy.structureStatus!=="established"?"UNCERTAIN":"ANALYSIS_DEPENDENT";
   // Separate onset-only preview: never derive Ukrainian directly from Myanmar
   // graphemes and never guess the vowel, coda, medial, kinzi or tone.
