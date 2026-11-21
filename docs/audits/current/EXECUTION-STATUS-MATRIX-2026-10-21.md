@@ -3783,3 +3783,17 @@ Final main SHA `07fcbf92f11cde54ed726a07f0593fd0075e7e09` is fully verified: tes
 - Local checkout and local test execution were unavailable through this GitHub connector session. The statements above rely on exact-commit GitHub Actions check-run metadata, repository files, issue/PR state and branch metadata; no local test command is claimed.
 
 Task ledger: engineering/build/deployment = DONE_VERIFIED; repository-owned code/docs/research-data license declarations = DONE_VERIFIED; third-party item-level rights = PARTIAL/BLOCKED where registered; gold pilot = BLOCKED (human/source-rights); manual accessibility = TODO (human QA); PR #129 = DEFERRED (stale historical draft). Overall status: deployed engineering/research prototype, not linguistically release-ready and not WCAG-conformance-certified.
+
+
+## Human pilot / source-rights continuation — 2026-11-21
+
+| Work item | Status | Evidence / blocker |
+|---|---|---|
+| Private blind-intake protocol | PARTIAL | Runbook added at docs/research/BURMESE-PRIVATE-BLIND-INTAKE-RUNBOOK-2026-11-21.md; a private workspace, access controls, recruitment and synthetic-data blindness test have not been provisioned/performed. |
+| Independent annotation/adjudication | BLOCKED | No two qualified annotators, third adjudicator or curator recruited; no approved convention; gold remains empty. |
+| 30-item Yangon pilot | BLOCKED | Requires attested lexeme groups, exact source locators, rights clearance, two locked annotations and adjudication. |
+| Third-party source rights | PARTIAL | Source-level reconciliation added; SLR80 license-mirror conflict, myG2P NC-SA, MLC chain, Wiktionary item provenance and Goruut asset rights remain open. |
+| Manual accessibility | TODO | Issue #173; no human test evidence. |
+| Engineering/docs PR #182 | DONE_VERIFIED | Merged as 86930db20a8a88f5c6d46ec0e9fe851a603e00aa after Tests and Pages success. |
+
+No source-derived IPA or gold labels were added.
