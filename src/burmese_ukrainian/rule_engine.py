@@ -35,8 +35,15 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
                 )),
                 "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"]
                     + (["SOURCE_REGISTRY_ANALYSIS_DEPENDENT"] if is_provisional else []),
+                "confidence_tier": (
+                    "B" if candidate_ipa and rendered.get("text") and any(
+                        part.get("evidence") for part in (phonology.get("provisional_segments") or phonology.get("segments", []))
+                    ) and (is_provisional or item.get("phonetic_status") == "conservative_partial")
+                    else "C" if candidate_ipa else "D"
+                ),
                 "evidence": list(dict.fromkeys(
-                    source for part in phonology.get("provisional_segments", []) for source in part.get("evidence", [])
+                    source for part in (phonology.get("provisional_segments") or phonology.get("segments", []))
+                    for source in part.get("evidence", [])
                 )),
             })
             continue
@@ -141,6 +148,8 @@ class RuleBasedBurmeseEngine:
             if practical_complete else None
         )
         preview = _provisional_preview(syllables)
+        preview_tiers = [item.get("confidence_tier", "D") for item in (preview or {}).get("syllables", [])]
+        confidence_tier = max(preview_tiers, key=lambda tier: {"A": 0, "B": 1, "C": 2, "D": 3}[tier]) if preview_tiers else "D"
         phonetic_statuses = {item.get("phonetic_status") for item in syllables}
         ipa_status = (
             "analysis_dependent" if segmental_complete or "analysis_dependent" in phonetic_statuses
@@ -191,6 +200,8 @@ class RuleBasedBurmeseEngine:
             "status": "PROPOSED" if segmental_complete else (
                 "NOT_ESTABLISHED" if not syllables else "PARTIAL"
             ),
+            "confidence_tier": confidence_tier,
+            "confidence_tier_explanation": "A = independently adjudicated profile-matched gold; B = source-traceable provisional segmental IPA with successful Ukrainian IPA adaptation; C = experimental or incomplete candidate; D = unsupported/no candidate. Tiers are categorical evidence labels, not probabilities or accuracy scores.",
             "syllables": syllables,
             "processing_steps": [
                 "MYANMAR_UNICODE_NORMALIZATION",
