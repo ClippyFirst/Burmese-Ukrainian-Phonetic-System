@@ -21,9 +21,9 @@ The system is a usable research beta only within explicit support boundaries. Fu
 
 ```bash
 python -m pytest -q
-python scripts/validate_web_data.py
 npm ci
 npm run build
+npm run generate:web && git diff --exit-code -- src/web/generated/data.js
 npm test
 npm run test:browser:built
 ```
