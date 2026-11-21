@@ -282,7 +282,8 @@
             "ipa": "i",
             "status": "analysis_dependent",
             "evidence": [
-              "U18"
+              "U18",
+              "GREEN2005_BURMESE_PHONOLOGY"
             ],
             "source_locator": "GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form နီ, transcription nì, IPA [i]. This locator supports segmental vowel quality only; it does not settle quantity."
           }
