@@ -3431,3 +3431,9 @@ The subsequent documentation-only main checkpoint before this closeout was 071a9
 - **Rights boundary:** only short factual IPA examples and exact source locators are recorded; no tables or extended text are copied. Broader reuse remains unresolved.
 - **Exact PR-head CI:** test and build succeeded; CRF baseline, raw-output and Google WFST diagnostic jobs succeeded. Main post-merge build/browser/deploy checks are still tracked separately.
 - **Linguistic boundary unchanged:** the four B examples remain provisional segmental candidates only; tone, phonation, length and independent Yangon-profile adjudication are unresolved. Gold remains empty and accuracy NOT_ASSESSED.
+
+## Additional lexical-source search — 2026-11-21
+
+- **Research outcome:** Undermind search across Watkins (2001), Oo et al. (2020), Thura et al. (2016) and related leads returned no additional exact orthography–IPA item pairs with page/entry locators, transcription convention, profile and rights evidence sufficient for B. No new candidates were guessed or imported.
+- **Evidence limitation:** this is a negative result from available search metadata/abstracts, not proof that no qualifying source exists. Full-text/source-page inspection and item-level rights verification remain the acceptance criteria.
+- **Current B boundary:** four exact-locator segmental candidates only; no independent Yangon adjudication, no independent gold, and no accuracy score.
