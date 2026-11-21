@@ -3886,3 +3886,11 @@ The subsequent documentation-only main checkpoint before this closeout was 071a9
 - The online PDF explicitly says the online edition is licensed 2015 CC BY-SA 4.0 with permission of Pacific Linguistics (opening notice, lines 4–6). The p. ii copyright statement refers to the print edition and does not negate the online license.
 - Added source-located vowel qualities [ɛ] (ဝယ်), [ɔ] (မော့), and [o] (တို) from Table (1), p. xii, as analysis-dependent segmental evidence only. These complete words are not promoted to B because their orthographic prosody/compound vowel/coda structures exceed the simple-CV acceptance gate.
 - No gold rows or accuracy scores added; independent gold remains 0 and accuracy NOT_ASSESSED.
+
+## Burmese source-evidence and rights follow-up — 2026-11-21
+
+- PR #197 merged as `ebc64f22da20dfb2b38923e15a00c140af7ed492`: corrected Green (2005) source rights using the PDF's explicit online-edition CC BY-SA 4.0 notice; added source-located analysis-dependent vowel qualities [ɛ], [ɔ], [o] from Table (1), p. xii. Full lexical forms remain outside B because their orthographic structures exceed the simple-CV gate.
+- PR #198 merged as `0fe1789c3c84ca7f0ec80c3f09f3d32b9785ed06`: registered Wiktionary `ဆာ` at permanent revision `oldid=92780524`, IPA `/sʰà/`, with its CC BY-SA footer statement. The direct IPA adapter renders `с'а` and preserves tone in the prosody trace, but the word remains C: a lexical `/a/` locator must not be generalized into the global AA-sign vowel row. A word-scoped lexical evidence adapter is the acceptance criterion for any future promotion.
+- Exact PR-head CI for PR #197: 330 Python tests + 68 subtests, 78 npm tests and 78 built Chromium tests; CRF, Google WFST raw-output and build checks SUCCESS. PR #198 exact head: 332 Python tests + 68 subtests, 79 npm tests and 79 built Chromium tests; CRF, raw-output and Google WFST jobs SUCCESS.
+- **Main post-merge CI / Pages deployment for `0fe1789c3c84ca7f0ec80c3f09f3d32b9785ed06`: IN_PROGRESS at handoff.** Do not claim final deployment until the main commit's build, WFST parity and Pages smoke complete.
+- Independent Yangon-profile gold remains 0; accuracy remains NOT_ASSESSED. Burmese B inventory remains four source-traceable segmental examples.
