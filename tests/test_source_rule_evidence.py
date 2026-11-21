@@ -51,6 +51,30 @@ def test_phonological_rules_have_source_scope_claim_and_test_links():
         }, (rid, rule["status"])
 
 
+def test_green2005_online_edition_license_and_open_vowel_locators_are_recorded():
+    sources = {row["source_id"]: row for row in _rows(DATA / "sources.csv")}
+    claims = {row["claim_id"]: row for row in _rows(DATA / "source_claims.csv")}
+    vowels = {row["id"]: row for row in _rows(DATA / "ipa_vowels.csv")}
+    green = sources["GREEN2005"]
+    assert "online edition licensed 2015 CC BY-SA 4.0" in green["scope"]
+    assert "print-edition copyright page p. ii" in green["scope"]
+    claim = claims["CLM-GREEN-OPEN-VOWELS-001"]
+    assert claim["source_id"] == "GREEN2005"
+    assert claim["status"] == "ANALYSIS_DEPENDENT"
+    expected = {
+        "open_epsilon": ("ɛ", "ဝယ်", "[ɛ]"),
+        "open_open_o": ("ɔ", "မော့", "[ɔ]"),
+        "open_close_o": ("o", "တို", "[o]"),
+    }
+    for key, (ipa, word, value) in expected.items():
+        row = vowels[key]
+        assert row["ipa"] == ipa
+        assert row["status"] == "analysis_dependent"
+        assert "Table (1), p. xii" in row["source_locator"]
+        assert word in row["source_locator"]
+        assert value in row["source_locator"]
+
+
 def test_burmese_tone_vowel_claim_preserves_analysis_scope():
     claim = next(
         row for row in _rows(DATA / "source_claims.csv")
