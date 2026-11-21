@@ -3875,7 +3875,14 @@ The subsequent documentation-only main checkpoint before this closeout was 071a9
 
 ## Green (2005) source-rights correction — 2026-11-21
 
-- **DONE_VERIFIED (merged source metadata):** PR #195 merged as `921d891b253fc1984f163f94b383145e168c32d4`. `data/burmese/sources.csv`, `docs/EVIDENCE-CONFIDENCE-TIERS.md`, and `THIRD_PARTY_NOTICES.md` now agree that the Green (2005) PDF's copyright page p. ii vests copyright in Pacific Linguistics and states no open license. The former CC BY-SA 4.0 assertion was removed.
+- **CORRECTED (PR #195's conclusion superseded):** the Green (2005) PDF opening notice explicitly licenses the online edition CC BY-SA 4.0 with permission of Pacific Linguistics (lines 4–6); p. ii separately states print-edition copyright. The source registry, evidence-tier note and third-party notice are corrected to preserve the online edition's CC BY-SA 4.0 terms. See the 2026-11-21 online-edition license reconciliation.
 - **Rights boundary:** only short factual IPA examples and exact source locators are recorded; no tables or extended text are copied. Broader reuse remains unresolved.
 - **DONE_VERIFIED (main post-merge):** main commit `921d891b253fc1984f163f94b383145e168c32d4`. Quality run `44938753478` SUCCESS — 329 Python tests + 68 subtests, 54 Node tests and 78 built-browser tests. Build/Pages run `44938450880` SUCCESS — pinned Google Burmese WFST build, symbol-table and browser-alphabet checks, upstream CLI parity, production build, 78 Playwright tests, Pages deployment and deployed HTML/JS/CSS asset smoke. CRF baseline, raw-output and Google-FST diagnostic run `44938450784` SUCCESS. Public beta: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/.
 - **Linguistic boundary unchanged:** the four B examples remain provisional segmental candidates only; tone, phonation, length and independent Yangon-profile adjudication are unresolved. Gold remains empty and accuracy NOT_ASSESSED.
+
+
+## Green (2005) online-edition license correction — 2026-11-21
+
+- The online PDF explicitly says the online edition is licensed 2015 CC BY-SA 4.0 with permission of Pacific Linguistics (opening notice, lines 4–6). The p. ii copyright statement refers to the print edition and does not negate the online license.
+- Added source-located vowel qualities [ɛ] (ဝယ်), [ɔ] (မော့), and [o] (တို) from Table (1), p. xii, as analysis-dependent segmental evidence only. These complete words are not promoted to B because their orthographic prosody/compound vowel/coda structures exceed the simple-CV acceptance gate.
+- No gold rows or accuracy scores added; independent gold remains 0 and accuracy NOT_ASSESSED.
