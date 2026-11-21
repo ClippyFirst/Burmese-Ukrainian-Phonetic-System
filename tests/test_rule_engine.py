@@ -154,12 +154,18 @@ def test_analysis_dependent_registry_rows_reach_only_the_provisional_ipa_adapter
 
 
 def test_source_traceable_segmental_candidates_are_tier_b_not_gold():
-    result = RuleBasedBurmeseEngine().analyze("ကီ")
-    assert result["confidence_tier"] == "B"
-    assert result["provisional_ipa"] == "kiː"
-    assert result["provisional_ukrainian"]
-    assert result["canonical_ipa"] is None
-    assert result["canonical_ukrainian"] is None
+    engine = RuleBasedBurmeseEngine()
+    tier_b = engine.analyze("စေ")
+    assert tier_b["confidence_tier"] == "B"
+    assert tier_b["provisional_ipa"] == "se"
+    assert tier_b["provisional_ukrainian"]
+    assert tier_b["canonical_ipa"] is None
+    assert tier_b["canonical_ukrainian"] is None
 
-    onset_only = RuleBasedBurmeseEngine().analyze("ဉ")
+    # Unicode-only evidence supports script structure, not a B-tier phonological claim.
+    unicode_only = engine.analyze("ကီ")
+    assert unicode_only["confidence_tier"] == "C"
+    assert unicode_only["provisional_ipa"] == "kiː"
+
+    onset_only = engine.analyze("ဉ")
     assert onset_only["confidence_tier"] == "C"
