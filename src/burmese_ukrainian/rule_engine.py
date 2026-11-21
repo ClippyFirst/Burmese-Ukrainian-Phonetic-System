@@ -34,11 +34,13 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
                     + (["analysis_dependent_segmental_realization"] if is_provisional else [])
                 )),
                 "warnings": ["TONE_NOT_INFERRED", "PROFILE_NOT_INDEPENDENTLY_ADJUDICATED"]
-                    + (["SOURCE_REGISTRY_ANALYSIS_DEPENDENT"] if is_provisional else []),
+                    + (["SOURCE_REGISTRY_ANALYSIS_DEPENDENT"] if is_provisional else [])
+                    + (["SOURCE_ANALYSIS_CONFLICT"] if any(part.get("conflicting_sources") for part in candidate_parts) else []),
                 "confidence_tier": (
                     "B" if candidate_ipa and rendered.get("text")
                     and (candidate_parts := (phonology.get("provisional_segments") or phonology.get("segments", [])))
-                    and all(any(source != "U18" for source in part.get("evidence", [])) for part in candidate_parts)
+                    and all(part.get("source_locator") and any(source != "U18" for source in part.get("evidence", [])) for part in candidate_parts)
+                    and not any(part.get("conflicting_sources") for part in candidate_parts)
                     and (is_provisional or item.get("phonetic_status") == "conservative_partial")
                     else "C" if candidate_ipa else "D"
                 ),
