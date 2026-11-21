@@ -61,6 +61,10 @@ Source-level triage is improved, but no new item has been cleared for the 30-ite
 - Mya2Rom: https://github.com/myanmaropenwordnet/mya2rom
 - Goruut dataset repository: https://github.com/neurlang/dataset
 
+## Burmese Wiktionary lexical item — ဆာ — 2026-11-21
+
+The direct entry at permanent revision https://en.wiktionary.org/w/index.php?title=ဆာ&oldid=92780524 lists Burmese IPA /sʰà/ and multiple romanisation systems. The page footer identifies Creative Commons Attribution-ShareAlike (version not specified there). The source registry records the exact revision and preserves the licence wording without guessing its version. The project uses only the short lexical pronunciation fact; no page text, audio or bulk dataset is copied. This supports a provisional segmental candidate /sʰa/; tone is retained in the IPA prosody trace and is not converted to Ukrainian stress. This remains source-attested, not independently adjudicated gold.
+
 ## Green (2005) online-edition license reconciliation — 2026-11-21
 
 The prior PR #195 correction was incomplete: it relied on the print-edition copyright page (p. ii) and overlooked the PDF's opening notice. The opening notice explicitly states: “Online edition licensed 2015 CC BY-SA 4.0, with permission of PL” (PDF opening notice, lines 4–6). The p. ii statement that copyright in the print edition is vested with Pacific Linguistics is compatible with that separate online-edition license.
