@@ -179,7 +179,7 @@ test("API exposes independent graphemic, phonology, IPA and Ukrainian layer stat
 
 test("analysis-dependent registry IPA is exposed as a provisional candidate, never canonical", () => {
   const result = analyzeHybrid([{
-    raw:"ကီ", nonMyanmar:false, ipa:null, provisionalIpa:"kiː",
+    raw:"ကီ", nonMyanmar:false, ipa:null, provisionalIpa:"ki",
     provisionalStatus:"PROVISIONAL_SEGMENTAL_ONLY", status:"ANALYSIS_DEPENDENT",
     prosodyStatus:"NOT_ESTABLISHED", profileId:"my-yangon-careful-citation-v1",
     phonology:{status:"NOT_ESTABLISHED",ipa:null,segments:[],provisional_segments:[{kind:"onset"},{kind:"vowel"}]}
@@ -187,7 +187,7 @@ test("analysis-dependent registry IPA is exposed as a provisional candidate, nev
   const record = result.records[0];
   assert.equal(result.ipa, "?");
   assert.equal(record.selectedIpa, null);
-  assert.equal(record.deterministicIpa, "kiː");
+  assert.equal(record.deterministicIpa, "ki");
   assert.equal(record.phoneticCompleteness, "SEGMENTAL_ONLY");
   assert.equal(record.ukrainianStatus, "PROVISIONAL");
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL"));

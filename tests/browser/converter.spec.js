@@ -686,7 +686,7 @@ test("source conflict keeps Burmese provisional candidate at C",async({page})=>{
 });
 
 test("Green 2005 source-located CV examples are displayed as B-tier segmental candidates",async({page})=>{
-  const cases=[["လေ","ле"],["ပူ","пу"],["နေ","не"]];
+  const cases=[["နီ","ні"],["လေ","ле"],["ပူ","пу"],["နေ","не"]];
   for(const [source,expected] of cases){
     await page.goto("/");
     await page.locator("#source").fill(source);

@@ -1,8 +1,8 @@
 """Deterministic, rule-based Burmese → IPA → Ukrainian research engine.
 
-The canonical IPA path remains conservative. A separate onset-only preview is
-available for unresolved syllables; it never guesses vowels, codas, medials,
-kinzi, phonation or tone.
+The canonical full-phonetic path remains conservative. Source-located
+segmental candidates are adapted separately while tone, quantity, medials,
+codas and other unresolved structure remain explicit.
 """
 from __future__ import annotations
 
@@ -210,7 +210,7 @@ class RuleBasedBurmeseEngine:
                 "NOT_ESTABLISHED" if not syllables else "PARTIAL"
             ),
             "confidence_tier": confidence_tier,
-            "confidence_tier_explanation": "A = independently adjudicated profile-matched gold; B = source-traceable provisional segmental IPA with successful Ukrainian IPA adaptation; C = experimental or incomplete candidate; D = unsupported/no candidate. Tiers are categorical evidence labels, not probabilities or accuracy scores.",
+            "confidence_tier_explanation": "A = independently adjudicated profile-matched gold; B = every segment has an exact non-Unicode source locator, the Ukrainian IPA adapter succeeds, and no unresolved source conflict applies; C = experimental, conflicting or incomplete candidate; D = unsupported/no candidate. Tiers are categorical evidence labels, not probabilities or accuracy scores.",
             "syllables": syllables,
             "processing_steps": [
                 "MYANMAR_UNICODE_NORMALIZATION",
@@ -218,13 +218,13 @@ class RuleBasedBurmeseEngine:
                 "BURMESE_ONSET_MEDIAL_RIME_RULES",
                 "CONSERVATIVE_IPA_WITHHOLDING",
                 "PROSODY_AND_PROFILE_COMPLETENESS_GATE",
-                "PROVISIONAL_ONSET_IPA_PREVIEW",
+                "PROVISIONAL_SEGMENTAL_IPA_PREVIEW",
                 "IPA_TO_UKRAINIAN_PRACTICAL_ADAPTER",
             ],
             "reason": (
                 "The displayed IPA is a segmental-only candidate. Tone, phonation and quantity are not inferred; canonical full IPA remains withheld until the relevant prosodic dimensions are established for the selected profile."
                 if segmental_complete else
-                "Canonical IPA is withheld for unresolved structure. A separate onset-only low-confidence preview is shown where the registered initial IPA and Ukrainian adapter both support it; no rime, tone, medial or coda is inferred."
+                "Canonical IPA is withheld for unresolved structure. A separate segmental candidate is shown only where each segment has an exact source locator, no registered source conflict applies, and the IPA → Ukrainian adapter maps the complete candidate; tone, phonation, quantity, medial, kinzi and coda are not inferred."
             ),
             "external_backends_used": [],
         }
