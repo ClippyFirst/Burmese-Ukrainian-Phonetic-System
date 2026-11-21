@@ -274,3 +274,7 @@ The source-scoped rime × coda × tone × phonation evidence matrix is maintaine
 - Third-party software, fonts, models, dictionaries, corpora, recordings, source quotations and mixed-source records retain their own rights and notices. Unknown or conflicting rights do not authorize redistribution; consult [third-party notices](THIRD_PARTY_NOTICES.md) and the source registries before reuse.
 - The IPA gold benchmark's existing `redistributable` registry flag remains a stricter product-corpus eligibility gate: NC-only material is not eligible for a commercial/product release. This does not cancel the separate noncommercial research grant under `LICENSE-DATA`.
 - PolyForm Noncommercial is not an OSI-approved Open Source license. Commercial use of project code or original project data is not granted; contact the rights holder for separate permission.
+
+## Evidence confidence tiers
+
+The beta distinguishes A (independently adjudicated profile-matched gold), B (source-traceable provisional segmental IPA with successful Ukrainian IPA adaptation), C (experimental or incomplete candidates), and D (unsupported/no candidate). These are categorical evidence labels, not probabilities or accuracy scores. The new analysis-dependent segmental preview is documented in [Evidence confidence tiers](docs/EVIDENCE-CONFIDENCE-TIERS.md). Tone, phonation, quantity and independent profile adjudication remain unresolved; B-tier previews are not canonical full IPA.
