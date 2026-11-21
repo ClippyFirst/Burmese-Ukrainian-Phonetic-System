@@ -67,6 +67,7 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
             "unresolved_features": ["inherent_vowel"] if hint and known else [],
             "warnings": ["ISOLATED_ONSET_ONLY", "INHERENT_VOWEL_NOT_INFERRED"] if hint and known else ["NO_REGISTERED_POSITIONAL_IPA_HINT"],
             "evidence": ["U18", "W16-3702"] if hint and known else [],
+            "confidence_tier": "C" if hint and known else "D",
         })
     if not previews:
         return None
