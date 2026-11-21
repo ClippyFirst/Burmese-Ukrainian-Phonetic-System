@@ -3,7 +3,7 @@ e,e,established,U18;GREEN2002;GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHO
 i,i,established,U18;GREEN2002,
 ii,iː,analysis_dependent,U18,
 u,u,established,U18;GREEN2002;GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form ပူ, transcription pù, IPA [u]."
-uu,uː,analysis_dependent,U18,
+uu,u,analysis_dependent,U18;GREEN2005_BURMESE_PHONOLOGY,"GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form ပူ, transcription pù, IPA [u]."
 tall_aa,a,analysis_dependent,U18,
 aa,a,established,U18;GREEN2002,
 ai,ɛ,analysis_dependent,U18;GREEN2002,
