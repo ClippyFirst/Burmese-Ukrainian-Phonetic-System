@@ -263,7 +263,7 @@
           "profile_adjudication"
         ],
         "rule_ids": [],
-        "provisional_ipa": "kiː",
+        "provisional_ipa": "ki",
         "provisional_segments": [
           {
             "kind": "onset",
@@ -278,11 +278,12 @@
           {
             "kind": "vowel",
             "source": "ii",
-            "ipa": "iː",
+            "ipa": "i",
             "status": "analysis_dependent",
             "evidence": [
               "U18"
-            ]
+            ],
+            "source_locator": "GREEN2005_BURMESE_PHONOLOGY: Abbreviations and conventions, Table (1), p. xii; Burmese form နီ, transcription nì, IPA [i]. This locator supports segmental vowel quality only; it does not settle quantity."
           }
         ],
         "provisional_status": "PROVISIONAL_SEGMENTAL_ONLY"
