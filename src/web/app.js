@@ -13,6 +13,9 @@ const modePhonetic=document.querySelector("#mode-phonetic"), modeRomanization=do
 const hybridProviderResults=document.querySelector("#hybrid-provider-results");
 const hybridCandidatePreviews=document.querySelector("#hybrid-candidate-previews");
 const hybridCandidatePreviewList=document.querySelector("#hybrid-candidate-preview-list");
+const outputLevel=document.querySelector("#output-level");
+const outputLevelNote=document.querySelector("#output-level-note");
+const hybridEnginePanel=document.querySelector("#hybrid-engine-panel");
 let googleWfstModel=null;
 
 function setOutputMode(mode){
@@ -304,7 +307,12 @@ function render(){
     const note=document.createElement("small");note.textContent="Показано лише там, де цей провайдер повернув адаптований IPA-кандидат; ⟦…⟧ означає відсутність придатного кандидата.";
     row.append(heading,value,note);hybridCandidatePreviewList.append(row);
   });
-  hybridCandidatePreviews.hidden=availablePreviewProviders.length===0;
+  const level=outputLevel?.value||"balanced";
+  hybridCandidatePreviews.hidden=availablePreviewProviders.length===0||level==="strict";
+  hybridEnginePanel.hidden=level==="strict";
+  const levelNotes={strict:"Обережний режим: основний IPA та український результат містять лише канонічні форми, що пройшли проєктний evidence gate. Якщо результат не встановлено, він так і позначається.",balanced:"Збалансований режим: поряд із канонічним результатом показано доступні сегментні й зовнішні IPA-кандидати та їхні українські адаптації. Усі вони залишаються PROVISIONAL, якщо не пройшли окремий evidence gate.",exploratory:"Дослідницький режим: показує всі доступні провайдерні та сегментні кандидати для порівняння. Це не голосування рушіїв і не автоматичний вибір правильної вимови."};
+  outputLevelNote.textContent=levelNotes[level];
+  hybridCandidatePreviews.querySelector("h4").textContent=level==="exploratory"?"Експериментальні варіанти · PROVISIONAL":"Попередні варіанти провайдерів · PROVISIONAL";
   syllables.replaceChildren();
   let syllableNumber=0;
   r.segments.forEach(s=>{const row=document.createElement("div");row.className="syllable";
@@ -340,3 +348,5 @@ document.querySelector("#clear").addEventListener("click",()=>{source.value="";r
 document.querySelectorAll("[data-copy]").forEach(btn=>btn.addEventListener("click",async()=>{const value=document.querySelector("#"+btn.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);btn.textContent="Скопійовано";setTimeout(()=>btn.textContent="Копіювати",1200);}catch{btn.textContent="Не вдалося";}}));
 render();
 fetch("./models/google-burmese-wfst.json").then(response=>response.ok?response.json():null).then(model=>{if(model?.available===true){googleWfstModel=model;render();}}).catch(()=>{});
+
+outputLevel?.addEventListener("change",render);
