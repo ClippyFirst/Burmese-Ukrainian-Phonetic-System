@@ -130,13 +130,10 @@ def test_green2005_source_locators_are_attached_to_simple_cv_segments():
         assert "tone" in syllable["phonology"]["unresolved_features"], source
 
 
-def test_wiktionary_sa_is_a_source_located_segmental_b_candidate_with_tone_retained():
+def test_wiktionary_sa_lexical_ipa_is_adaptable_but_not_generalized_as_b():
     syllable = to_ipa("ဆာ")["syllables"][0]
     phonology = syllable["phonology"]
-    candidate = syllable["ipa"] or phonology.get("provisional_ipa")
-    parts = phonology.get("provisional_segments") or phonology["segments"]
-    assert candidate == "sʰa"
-    assert all(part.get("source_locator") for part in parts)
+    assert syllable["ipa"] is None
     assert "tone" in phonology["unresolved_features"]
 
     rendered = transcribe_ipa("/sʰà/")
