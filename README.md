@@ -2,6 +2,9 @@
 
 Research-grade Burmese (Myanmar script) → Ukrainian correspondence system with an evidence-gated practical transcription layer.
 
+> **PUBLIC BETA — NOT EXPERT-VALIDATED.** This project is usable as an evidence-gated beta, not a finished or official transcription standard. Automated engineering checks do not establish pronunciation accuracy. Unsupported or uncertain forms must remain explicitly partial, provisional or withheld. No independent expert-adjudicated gold corpus or measured linguistic accuracy is claimed. See [the beta release policy](docs/BETA-RELEASE-POLICY.md).
+
+
 ## Scientific pipeline
 
 Burmese Unicode → normalization → graphemic/syllable structure → onset/conjunct/kinzi/medials/vowel/inherent-vowel analysis → prosodic analysis → Burmese phonology → surface phonetics → IPA → feature space → Ukrainian target → Ukrainian practical orthography.
