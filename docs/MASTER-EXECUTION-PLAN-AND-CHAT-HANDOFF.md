@@ -1,4 +1,16 @@
-## Output-level refinement checkpoint — 2026-11-21
+## Public output levels — post-merge beta verification — 2026-11-21
+
+- **DONE_VERIFIED — engineering/UI scope:** PR [#200](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/200) merged to `main`; merge commit `37fcb2f2829577b5f6b0b1616a480a029d161aa7`.
+- Public selector: careful / balanced (default) / exploratory. It changes candidate visibility only; canonical IPA and Ukrainian output remain evidence-gated. MLCTS remains a separate orthographic route.
+- Exact-head PR checks: tests workflow #6096 [44951799361](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44951799361) passed. PR Pages build #669 [44951799313](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44951799313) passed; deployment was correctly skipped for a PR event.
+- **Main deployment:** Pages workflow #670 [44952348802](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/44952348802) passed build and deploy, including pinned Google Thrax/OpenFst build, IPA symbol-table invariants, complete Burmese input-alphabet validation, static model export, CLI parity, `npm run build`, `npm test`, Chromium browser tests and deployed asset smoke test.
+- Live verification: [GitHub Pages](https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/) returned HTTP 200 and exposed all three selector options. [Static Google WFST model](https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System-/models/google-burmese-wfst.json) returned HTTP 200, `available=true`, `arc_count=2966`; upstream provenance: language-resources `a90601024f07ab7e96c911243324e0adeb16da96`, OpenFst `22867ee7b483598a729abe125da2517584a5d010`, Thrax `c65fb3d51f9bd0299503f3289a124f52c3431eeb`.
+- Google/Epitran and segmental-derived Ukrainian candidates remain `PROVISIONAL`; this deployment does not establish tone/prosody/profile completeness or empirical accuracy. Independent IPA gold and linguistic accuracy remain absent / `NOT_ASSESSED`.
+- Remaining non-UI gates are unchanged: linguistic evidence coverage, independent adjudicated IPA gold, manual accessibility review and any release/production claim beyond the explicitly labelled beta.
+
+---
+
+## Earlier PR implementation checkpoint (superseded by the post-merge verification above) — 2026-11-21
 
 - Latest implementation head: `870f497ebcd3805810a8b3eeb2411ef7169da722` (PR #200); branch remains based directly on current `main` with no behind commits.
 - Distinct behavior refined: careful hides candidate/unit diagnostics; balanced shows available non-Google / core diagnostic candidates (Khmer: unit-level statuses and explanations); exploratory adds the widest available diagnostics (Burmese: Google candidate if deployed; Khmer: existing onset-only provisional hints).
