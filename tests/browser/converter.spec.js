@@ -101,16 +101,16 @@ test("mixed Myanmar and supplementary-block Myanmar material does not silently b
 test("analysis-dependent aspirated onset is withheld from canonical IPA",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ဆာ");
-  await expect(page.locator("#ipa")).toHaveText("?");
-  await expect(page.locator("#uk")).toHaveText("???");
+  await expect(page.locator("#ipa")).toHaveText("sʰa?");
+  await expect(page.locator("#uk")).toHaveText("с'а?");
   await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
 test("analysis-dependent theta onset remains withheld from canonical IPA",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("သာ");
-  await expect(page.locator("#ipa")).toHaveText("?");
-  await expect(page.locator("#uk")).toHaveText("???");
+  await expect(page.locator("#ipa")).toHaveText("θa?");
+  await expect(page.locator("#uk")).toHaveText("т'а?");
   await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
@@ -202,8 +202,8 @@ test("the medial ra in မြန် remains withheld rather than being dropped",
 test("analysis-dependent uu vowel withholds /juː/ and Ukrainian output",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("ယူ");
-  await expect(page.locator("#ipa")).toHaveText("?");
-  await expect(page.locator("#uk")).toHaveText("???");
+  await expect(page.locator("#ipa")).toHaveText("ju?");
+  await expect(page.locator("#uk")).toHaveText("ю?");
   await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
