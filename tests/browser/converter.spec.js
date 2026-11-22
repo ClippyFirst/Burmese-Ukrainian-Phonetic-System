@@ -52,7 +52,7 @@ test("nasal coda remains withheld until surface realization is adjudicated",asyn
   await page.goto("/");
   await page.locator("#source").fill("ပင်");
   await expect(page.locator("#ipa")).toHaveText(/\?\?\?$/u);
-  await expect(page.locator("#uk")).toContainText("т'а?");
+  await expect(page.locator("#uk")).toContainText("пинг???");
   await expect(page.locator("#uk-status")).toContainText("IPA: ANALYSIS_DEPENDENT");
 });
 
@@ -142,7 +142,7 @@ test("whitespace separators are preserved but do not shift Burmese syllable numb
   await expect(page.locator("#syllables")).toContainText("пробіл/перенесення рядка збережено без змін");
   await expect(page.locator("#ipa")).toHaveText(/\?\?\?$/u);
   await expect(page.locator("#uk")).toContainText("???");
-  await expect(page.locator("#uk")).not.toHaveText(/\?\?\?$/u);
+  await expect(page.locator("#uk")).toHaveText("ка??? мйангма???");
 });
 
 test("provisional Ukrainian mappings are visible in segment-level evidence status",async({page})=>{
@@ -310,7 +310,7 @@ test("contiguous Myanmar bare clusters retain the existing contextual fallback",
   await page.goto("/");
   await page.locator("#source").fill("ကမ");
   await expect(page.locator("#ipa")).toHaveText(/\?\?\?$/u);
-  await expect(page.locator("#uk")).toContainText("к????м????");
+  await expect(page.locator("#uk")).toHaveText("⟦က⟧⟦မ⟧???");
   await expect(page.locator("#uk")).not.toHaveText("кама");
   await expect(page.locator("#issues")).toBeVisible();
 });
