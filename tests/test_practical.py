@@ -37,6 +37,7 @@ def test_glottal_stop_is_not_aspiration():
 
 def test_unknown_value_is_not_silently_guessed():
     assert rank_ukrainian_candidates("ɤ")[0].status == "not_established"
+    assert rank_ukrainian_candidates("ɤ")[0].text == "???"
 
 
 def test_dental_fricative_candidate_remains_analysis_dependent():
