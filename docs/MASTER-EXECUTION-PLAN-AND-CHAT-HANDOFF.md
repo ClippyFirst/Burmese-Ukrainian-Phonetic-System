@@ -3975,3 +3975,11 @@ The subsequent documentation-only main checkpoint before this closeout was 071a9
 - Exact main Pages deployment [45003648702](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/45003648702) SUCCESS: pinned Google WFST build/export and parity, npm build/tests, Playwright, Pages upload/deploy and live runtime-asset smoke.
 - Published site: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System/.
 - No phonological rules, gold IPA rows or accuracy claims were added by this contract/UI change.
+
+
+## UI/UX quick-transcription-first update — 2026-11-22
+
+- **DONE_VERIFIED — implementation and browser tests:** PR [#204](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System/pull/204) merged as `ccc1e5f7d215d91581dc5cea15d1a2d809122895`.
+- The Ukrainian practical transcription is now the primary result card with direct copy. IPA, Epitran/Google WFST candidates, MLCTS, structural analysis, and candidate previews are grouped under the collapsed native `details#research-details` disclosure (“Докладний аналіз”). The beta/evidence notice is collapsed but retains the full original methodological and provenance statements.
+- Existing engine-facing DOM IDs and `data-method-panel` hooks were preserved. No phonology, IPA, Ukrainian adaptation, romanization, or uncertainty semantics were changed.
+- Playwright browser suite on the merged main commit passed: [run #45062752751](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System/actions/runs/45062752751). GitHub Pages deployment for this commit: [run #45062752768](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System/actions/runs/45062752768) — pending at handoff update; do not call the UI published until it completes.
