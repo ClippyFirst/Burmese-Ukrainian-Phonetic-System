@@ -1,7 +1,11 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }, testInfo) => {
-  if (testInfo.title === "research tools are collapsed by default and can be opened on demand") return;
+  if ([
+    "research tools are collapsed by default and can be opened on demand",
+    "romanization uses orthographic MLCTS, not modified phonetic MLCTS2",
+    "IPA and MLCTS romanization stay visible in the quick-result area"
+  ].includes(testInfo.title)) return;
   await page.addInitScript(() => {
     document.addEventListener("DOMContentLoaded", () => {
       const drawer = document.querySelector("#research-details");
@@ -449,7 +453,7 @@ test("MLCTS mode renders the separate Ukrainian syllable crosswalk",async({page}
   await expect(page.locator("#romanization")).not.toHaveText("");
   await expect(page.locator("#ua-romanization-result")).toHaveText("ка ABC");
   await expect(page.locator("#ua-romanization-status")).toContainText("PROPOSED");
-  await expect(page.locator("#ipa")).toBeHidden();
+  await expect(page.locator("#ipa")).toBeVisible();
 });
 
 
