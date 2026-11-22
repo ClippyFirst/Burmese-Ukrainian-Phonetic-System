@@ -317,8 +317,10 @@ test("romanization uses orthographic MLCTS, not modified phonetic MLCTS2",async(
   await page.locator("#source").fill("မြို့");
   await expect(page.locator("#romanization")).toHaveText("mrui.");
   await expect(page.locator("#romanization-status")).toContainText("Mya2Rom 0.4.4");
-  const headings=await page.locator("#research-details article:not(#hybrid-engine-panel) h3").allTextContents();
-  expect(headings.slice(0,3)).toEqual(["Романізація · MLCTS","Українська за романізацією","IPA"]);
+  await expect(page.locator("#romanization-panel")).toBeVisible();
+  await expect(page.locator("#ipa-panel")).toBeVisible();
+  await expect(page.locator("#structure-panel")).toBeHidden();
+  await expect(page.locator("#research-details")).not.toHaveAttribute("open","");
 });
 
 test("primary navigation exposes the service and methodology pages",async({page})=>{
