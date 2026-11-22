@@ -1,7 +1,11 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }, testInfo) => {
-  if (testInfo.title === "research tools are collapsed by default and can be opened on demand") return;
+  if ([
+    "research tools are collapsed by default and can be opened on demand",
+    "romanization uses orthographic MLCTS, not modified phonetic MLCTS2",
+    "IPA and MLCTS romanization stay visible in the quick-result area"
+  ].includes(testInfo.title)) return;
   await page.addInitScript(() => {
     document.addEventListener("DOMContentLoaded", () => {
       const drawer = document.querySelector("#research-details");
@@ -317,8 +321,10 @@ test("romanization uses orthographic MLCTS, not modified phonetic MLCTS2",async(
   await page.locator("#source").fill("မြို့");
   await expect(page.locator("#romanization")).toHaveText("mrui.");
   await expect(page.locator("#romanization-status")).toContainText("Mya2Rom 0.4.4");
-  const headings=await page.locator("#research-details article:not(#hybrid-engine-panel) h3").allTextContents();
-  expect(headings.slice(0,3)).toEqual(["Романізація · MLCTS","Українська за романізацією","IPA"]);
+  await expect(page.locator("#romanization-panel")).toBeVisible();
+  await expect(page.locator("#ipa-panel")).toBeVisible();
+  await expect(page.locator("#structure-panel")).toBeHidden();
+  await expect(page.locator("#research-details")).not.toHaveAttribute("open","");
 });
 
 test("primary navigation exposes the service and methodology pages",async({page})=>{
@@ -330,24 +336,20 @@ test("primary navigation exposes the service and methodology pages",async({page}
 });
 
 
-test("romanization and phonetic outputs are separate selectable modes",async({page})=>{
+test("IPA and MLCTS romanization stay visible in the quick-result area",async({page})=>{
   await page.goto("/");
   await page.locator("#source").fill("မြို့");
-  await expect(page.locator("#mode-phonetic")).toHaveAttribute("aria-pressed","true");
   await expect(page.locator("#ipa-panel")).toBeVisible();
-  await expect(page.locator("#ua-panel")).toBeVisible();
-  await expect(page.locator("#romanization-panel")).toBeHidden();
+  await expect(page.locator("#romanization-panel")).toBeVisible();
+  await expect(page.locator("#research-details")).not.toHaveAttribute("open","");
+  await page.locator("#research-details summary").click();
   await page.locator("#mode-romanization").click();
-  await expect(page.locator("#mode-romanization")).toHaveAttribute("aria-pressed","true");
+  await expect(page.locator("#ipa-panel")).toBeVisible();
   await expect(page.locator("#romanization-panel")).toBeVisible();
   await expect(page.locator("#ua-romanization-panel")).toBeVisible();
-  await expect(page.locator("#ua-romanization-status")).toContainText("PROPOSED");
-  await expect(page.locator("#ipa-panel")).toBeHidden();
-  await expect(page.locator("#ua-panel")).toBeHidden();
   await page.locator("#mode-phonetic").click();
   await expect(page.locator("#ipa-panel")).toBeVisible();
-  await expect(page.locator("#ua-panel")).toBeVisible();
-  await expect(page.locator("#romanization-panel")).toBeHidden();
+  await expect(page.locator("#romanization-panel")).toBeVisible();
 });
 
 test("unsupported Myanmar units remain visible in mixed Ukrainian output",async({page})=>{
@@ -452,7 +454,7 @@ test("MLCTS mode renders the separate Ukrainian syllable crosswalk",async({page}
   await expect(page.locator("#romanization")).not.toHaveText("");
   await expect(page.locator("#ua-romanization-result")).toHaveText("ка ABC");
   await expect(page.locator("#ua-romanization-status")).toContainText("PROPOSED");
-  await expect(page.locator("#ipa")).toBeHidden();
+  await expect(page.locator("#ipa")).toBeVisible();
 });
 
 
