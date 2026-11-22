@@ -57,7 +57,7 @@ def rank_ukrainian_candidates(ipa: str) -> list[PracticalCandidate]:
         # split an unresolved analysis into unsupported segment claims.
         return [
             PracticalCandidate(
-                text="?",
+                text="???",
                 status="not_established",
                 rule_ids=("UA-BUR-UNMAPPED",),
                 reason="No exact project correspondence is established for this IPA value.",

@@ -224,7 +224,7 @@ function parseCluster(raw,withholdBareInherent=false){
     const adapted=renderUkrainian(hint);
     if(adapted.text){
       sy.provisionalIpa=hint;
-      sy.provisionalUk=adapted.text+"?";
+      sy.provisionalUk=adapted.text+"???";
       sy.provisionalStatus="PROVISIONAL";
       sy.provisionalRuleId="BURMESE-PREVIEW-ONSET-IPA-V1";
       sy.provisionalPosition="onset";

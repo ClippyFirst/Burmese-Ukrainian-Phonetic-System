@@ -267,7 +267,7 @@ test("unresolved inherent vowel is withheld instead of guessed in browser IPA",a
   await expect(page.locator("#ipa")).toHaveText("?");
   await expect(page.locator("#uk")).toHaveText("???");
   await expect(page.locator("#uk-status")).toContainText("NOT_ESTABLISHED");
-  await expect(page.locator("#syllables")).toContainText("Попередня підказка: k → к? [PROVISIONAL]");
+  await expect(page.locator("#syllables")).toContainText("Попередня підказка: k → к??? [PROVISIONAL]");
 });
 
 

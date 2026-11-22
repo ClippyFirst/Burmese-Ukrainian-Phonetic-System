@@ -31,7 +31,7 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
             previews.append({
                 "source": item.get("raw", ""),
                 "ipa": candidate_ipa,
-                "ukrainian": rendered.get("text") or "?",
+                "ukrainian": rendered.get("text") or "???",
                 "status": "PROVISIONAL_SEGMENTAL_ONLY",
                 "position": "syllable",
                 "rule_id": "BURMESE-ANALYSIS-DEPENDENT-SEGMENTAL-PREVIEW-V1" if is_provisional else None,
@@ -67,7 +67,7 @@ def _provisional_preview(syllables: list[dict[str, Any]]) -> dict[str, Any] | No
         previews.append({
             "source": raw,
             "ipa": hint,
-            "ukrainian": known + ("?" if hint and known else "?"),
+            "ukrainian": known + "???",
             "status": "PROVISIONAL" if hint and known else "UNKNOWN",
             "position": "onset" if hint and known else None,
             "rule_id": "BURMESE-PREVIEW-ONSET-IPA-V1" if hint and known else None,
