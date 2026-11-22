@@ -1,4 +1,28 @@
 import { test, expect } from "@playwright/test";
+
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.title === "research tools are collapsed by default and can be opened on demand") return;
+  await page.addInitScript(() => {
+    document.addEventListener("DOMContentLoaded", () => {
+      const drawer = document.querySelector("#research-details");
+      if (drawer) drawer.open = true;
+      const settings = document.querySelector(".input-research-options");
+      if (settings) settings.open = true;
+    });
+  });
+});
+
+test("research tools are collapsed by default and can be opened on demand", async ({ page }) => {
+  await page.goto("/");
+  const drawer = page.locator("#research-details");
+  await expect(drawer).toBeHidden();
+  await expect(drawer).toBeClosed();
+  await page.locator("#source").fill("ကာ");
+  await expect(page.locator("#results")).toBeVisible();
+  await expect(page.locator("#uk")).toBeVisible();
+  await drawer.locator("summary").click();
+  await expect(drawer).toBeOpen();
+});
 import { readFileSync } from "node:fs";
 
 const sharedUnicodeContract = JSON.parse(
