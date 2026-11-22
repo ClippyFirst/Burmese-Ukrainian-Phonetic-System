@@ -115,6 +115,9 @@ test("segmental IPA without tone and profile evidence is not canonical", () => {
   assert.equal(record.selectedPhoneticResult, null);
   assert.equal(record.provisionalPhoneticResult.kind, "IPA_CANDIDATE");
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL" && item.ukrainian.text === "ка"));
+  assert.equal(result.displayIpa, "ka?");
+  assert.equal(result.displayUk, "ка?");
+  assert.match(result.displayStatus, /^PROVISIONAL/u);
 });
 
 test("explicit profile and prosody evidence allow canonical IPA to reach the adapter", () => {
