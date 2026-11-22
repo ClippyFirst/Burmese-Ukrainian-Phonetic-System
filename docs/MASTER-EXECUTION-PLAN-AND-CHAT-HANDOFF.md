@@ -3963,3 +3963,15 @@ The subsequent documentation-only main checkpoint before this closeout was 071a9
 - Burmese candidate evidence tiers A–D remain separate from output strictness; they are categorical provenance labels, not calibrated probabilities.
 - Exact-head CI is required for the new branch before merge. The public Pages deployment is checked separately; the current main Pages deployment remains available through the repository's Pages workflow.
 - Python/browser parser parity remains PARTIAL as described above; this work does not promote the research candidate providers or assert linguistic accuracy.
+
+
+## Shared output vocabulary and unresolved target marker — 2026-11-22
+
+- PR [#202](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/pull/202) merged as `9a6bd1062e0bdd7bcb513d82aef4683fab2cb241`.
+- Existing internal modes `strict`, `balanced`, `exploratory` now display as **Strict**, **Soft**, **Super-soft**. The phonetic/MLCTS romanization route remains a separate control. Confidence tiers A–D remain evidence categories, not strictness levels or probabilities.
+- Unresolved final/provisional Ukrainian target output uses `???`; the typed IPA unknown representation and source diagnostics remain separate.
+- Provider candidates remain distinct from the canonical result. Super-soft is a research-disclosure level, not a pronunciation-accuracy grade.
+- Exact main tests [45003648762](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/45003648762) SUCCESS: Python IPA registry validation, pytest, wheel data, Node tests, generated-data drift, Playwright built-browser tests.
+- Exact main Pages deployment [45003648702](https://github.com/ClippyFirst/Burmese-Ukrainian-Phonetic-System-/actions/runs/45003648702) SUCCESS: pinned Google WFST build/export and parity, npm build/tests, Playwright, Pages upload/deploy and live runtime-asset smoke.
+- Published site: https://clippyfirst.github.io/Burmese-Ukrainian-Phonetic-System/.
+- No phonological rules, gold IPA rows or accuracy claims were added by this contract/UI change.
