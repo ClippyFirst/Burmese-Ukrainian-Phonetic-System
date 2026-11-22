@@ -342,6 +342,7 @@ test("IPA and MLCTS romanization stay visible in the quick-result area",async({p
   await expect(page.locator("#ipa-panel")).toBeVisible();
   await expect(page.locator("#romanization-panel")).toBeVisible();
   await expect(page.locator("#research-details")).not.toHaveAttribute("open","");
+  await page.locator("#research-details summary").click();
   await page.locator("#mode-romanization").click();
   await expect(page.locator("#ipa-panel")).toBeVisible();
   await expect(page.locator("#romanization-panel")).toBeVisible();
