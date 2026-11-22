@@ -55,3 +55,18 @@ The project will not wait indefinitely for external specialists who are unavaila
 3. Inspect generated artifacts and confirm no uncleared data/model assets entered the build.
 4. Publish a beta release only after the repository owner explicitly authorizes publication.
 5. Preserve this policy and record any later linguistic validation as a separate evidence milestone.
+
+
+## Shared output-level vocabulary and unresolved target marker
+
+The browser's existing internal values are retained for compatibility, but the user-facing levels use the shared names:
+
+| Shared name | Existing value | Behavior |
+|---|---|---|
+| **Strict** | `strict` | Canonical evidence-gated result only; no research provider previews. |
+| **Soft** | `balanced` | Canonical result plus separately labelled segmental/provider candidates. |
+| **Super-soft** | `exploratory` | All available provider candidates for research comparison; never promoted by display alone. |
+
+The phonetic/romanization method switch is a different dimension and remains separate. Confidence tiers A–D are evidence categories, not Strictness levels and not probabilities.
+
+For Ukrainian final-output display, an unresolved target segment/run is `???`. The typed IPA diagnostics keep their own internal unknown representation and provenance; the placeholder must not overwrite the IPA or source-analysis trace. A provisional onset-only candidate appends `???` for the unestablished remainder. Research candidate panes may retain source-bracket notation where that is explicitly described as a source-preserving diagnostic, not as Ukrainian output.
