@@ -245,6 +245,20 @@ export function analyzeHybrid(segments, googleModel = null) {
       google: hasGoogle ? "ACTIVE · local Google Burmese WFST model" : "PENDING_MODEL · browser interpreter is ready; static FST graph not deployed",
     },
     promotionPolicy: "Only established project IPA is canonical; external candidates remain diagnostic until independent profile-matched gold is available.",
+    // User-facing preview is deliberately separate from canonical fields:
+    // project-owned segmental candidates may be shown with an explicit uncertainty
+    // marker, while unsupported syllables remain visibly unresolved.
+    displayIpa: records.map((item) => item.passthrough ? item.segment.raw
+      : item.selectedIpa || (item.deterministicIpa ? `${item.deterministicIpa}?` : "?")).join(""),
+    displayUk: records.map((item) => {
+      if (item.passthrough) return item.segment.raw;
+      if (item.selectedAdaptation?.text) return item.selectedAdaptation.text;
+      if (item.provisionalAdaptation?.text) return item.provisionalAdaptation.text + "?";
+      return "???";
+    }).join(""),
+    displayStatus: records.some(item => !item.passthrough && !item.selectedIpa && item.provisionalAdaptation?.text)
+      ? "PROVISIONAL · сегментна підказка; невстановлені фрагменти позначено окремо"
+      : status,
     usedExternalFallback: false,
   };
 }
