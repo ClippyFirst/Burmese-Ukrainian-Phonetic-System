@@ -273,9 +273,6 @@ export function analyzeHybrid(segments, googleModel = null) {
           } else if (item.googleCandidate) {
             ipaCandidate = item.googleCandidate;
             provider = "GOOGLE_WFST";
-          } else if (item.googleRunCandidate) {
-            ipaCandidate = item.googleRunCandidate;
-            provider = "GOOGLE_WFST_RUN";
           }
           if (ipaCandidate) {
             const adaptation = adaptationFor(ipaCandidate);
