@@ -136,7 +136,7 @@ textarea::placeholder{color:var(--muted);opacity:1}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 /* Quick transcription first; research details are progressive disclosures. */
-.research-notice-collapsed{margin-top:14px;padding:10px 14px;border:1px solid var(--line);background:var(--surface)}
+.research-notice-collapsed{display:block;margin-top:14px;padding:10px 14px;border:1px solid var(--line);background:var(--surface)}
 .research-notice-collapsed summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none}
 .research-notice-collapsed summary::-webkit-details-marker{display:none}
 .research-notice-collapsed summary strong{font-size:.84rem}.research-notice-collapsed summary span{color:var(--muted);font-size:.8rem}
