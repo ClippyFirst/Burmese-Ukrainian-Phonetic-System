@@ -266,7 +266,7 @@ function convert(text){
 function render(){
   const text=source.value;count.textContent=[...text].length+" символів";
   if(!text){empty.hidden=false;results.hidden=true;issues.hidden=true;hybridCandidatePreviews.hidden=true;hybridCandidatePreviewList.replaceChildren();return;}
-  const r=convert(text);const hybrid=analyzeHybrid(r.segments,googleWfstModel);empty.hidden=true;results.hidden=false;uk.textContent=hybrid.uk||"—";ipa.textContent=hybrid.ipa||"—";
+  const r=convert(text);const hybrid=analyzeHybrid(r.segments,googleWfstModel);empty.hidden=true;results.hidden=false;uk.textContent=hybrid.displayUk||hybrid.uk||"—";ipa.textContent=hybrid.displayIpa||hybrid.ipa||"—";
   romanization.textContent=typeof window.mya2rom==="function" ? romanizeTextPreservingNonMyanmar(text,window.mya2rom) : "Романізатор не завантажився; результат не сформовано.";
   const uaRomanized=typeof window.mya2rom==="function"
     ? renderMlctsText(text,window.mya2rom,segment,char=>ROMANIZATION_SUPPORTED_CHARS.has(char))
@@ -282,7 +282,7 @@ function render(){
   const confidenceOrder={A:0,B:1,C:2,D:3};
   const confidenceTiers=hybrid.records.filter(item=>!item.passthrough).map(item=>item.confidenceTier||"D");
   const overallConfidence=confidenceTiers.length?confidenceTiers.sort((a,b)=>confidenceOrder[b]-confidenceOrder[a])[0]:"D";
-  ukStatus.textContent="Графеміка: "+hybrid.graphemicStatus+" · фонологія: "+hybrid.phonologyStatus+" · IPA: "+hybrid.ipaStatus+" · українська передача: "+hybrid.ukrainianStatus+" · доказовий рівень: "+overallConfidence+" · загальний статус: "+hybrid.status+" · IPA-first гібридний оркестратор: активний.";
+  ukStatus.textContent=(hybrid.displayStatus||hybrid.status)+" · Графеміка: "+hybrid.graphemicStatus+" · фонологія: "+hybrid.phonologyStatus+" · IPA: "+hybrid.ipaStatus+" · українська передача: "+hybrid.ukrainianStatus+" · доказовий рівень: "+overallConfidence+" · загальний статус: "+hybrid.status+" · IPA-first гібридний оркестратор: активний.";
   const hasExternalCandidates=hybrid.records.some(item=>!item.passthrough&&item.externalCandidates.length>0);
   const hasSegmentalOnly=hybrid.records.some(item=>!item.passthrough&&item.phoneticCompleteness==="SEGMENTAL_ONLY");
   ipaStatus.textContent=hasSegmentalOnly?"Сегментний IPA-кандидат є, але тон/фонація/довгота або діалектний профіль не встановлені; тому він не стає канонічним. Українська форма показується лише як PROVISIONAL-кандидат через IPA-адаптер.":hasExternalCandidates?"Канонічне IPA не встановлено без сегментної, просодичної та профільної основи; зовнішні кандидати показані окремо. Тональні розбіжності відділено від сегментних.":"Канонічний IPA не встановлено для частини сегментів; невизначеність не замінюється зовнішніми здогадками.";

@@ -245,6 +245,63 @@ export function analyzeHybrid(segments, googleModel = null) {
       google: hasGoogle ? "ACTIVE · local Google Burmese WFST model" : "PENDING_MODEL · browser interpreter is ready; static FST graph not deployed",
     },
     promotionPolicy: "Only established project IPA is canonical; external candidates remain diagnostic until independent profile-matched gold is available.",
+    // Practical display uses the actual output of an available engine, without
+    // promoting it to canonical. Prefer project rules, then Epitran, then Google.
+    // Uncertainty is attached once to the end of the whitespace-delimited word,
+    // never inserted between syllables. Whitespace and punctuation are preserved.
+    ...(() => {
+      const rendered = { ipa: "", uk: "", uncertainWords: 0, providers: [] };
+      for (let start = 0; start < records.length;) {
+        if (records[start].passthrough) {
+          rendered.ipa += records[start].segment.raw;
+          rendered.uk += records[start].segment.raw;
+          start++;
+          continue;
+        }
+        let end = start;
+        while (end < records.length && !records[end].passthrough) end++;
+        const word = records.slice(start, end);
+        let uncertain = false;
+        for (const item of word) {
+          let ipaCandidate = null, provider = null;
+          if (item.deterministicIpa) {
+            ipaCandidate = item.deterministicIpa;
+            provider = "PROJECT_RULES";
+          } else if (item.epitranCandidate) {
+            ipaCandidate = item.epitranCandidate;
+            provider = "EPITRAN_PORT";
+          } else if (item.googleCandidate) {
+            ipaCandidate = item.googleCandidate;
+            provider = "GOOGLE_WFST";
+          }
+          if (ipaCandidate) {
+            const adaptation = adaptationFor(ipaCandidate);
+            rendered.ipa += ipaCandidate;
+            rendered.uk += adaptation.text || "⟦" + item.segment.raw + "⟧";
+            if (provider && !rendered.providers.includes(provider)) rendered.providers.push(provider);
+          } else {
+            rendered.ipa += "⟦" + item.segment.raw + "⟧";
+            rendered.uk += "⟦" + item.segment.raw + "⟧";
+            uncertain = true;
+          }
+          if (!item.deterministicEstablished) uncertain = true;
+        }
+        if (uncertain) {
+          rendered.ipa += "???";
+          rendered.uk += "???";
+          rendered.uncertainWords++;
+        }
+        start = end;
+      }
+      return {
+        displayIpa: rendered.ipa,
+        displayUk: rendered.uk,
+        displayStatus: rendered.uncertainWords
+          ? "PROVISIONAL · фактичний результат рушія; ??? наприкінці слова означає невстановлену точність"
+          : status,
+        displayProviders: rendered.providers,
+      };
+    })(),
     usedExternalFallback: false,
   };
 }

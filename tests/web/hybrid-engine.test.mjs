@@ -115,6 +115,27 @@ test("segmental IPA without tone and profile evidence is not canonical", () => {
   assert.equal(record.selectedPhoneticResult, null);
   assert.equal(record.provisionalPhoneticResult.kind, "IPA_CANDIDATE");
   assert.ok(record.candidateAdaptations.some(item => item.provider === "PROJECT_RULES_SEGMENTAL" && item.ukrainian.text === "ка"));
+  assert.equal(result.displayIpa, "ka???");
+  assert.equal(result.displayUk, "ка???");
+  assert.match(result.displayStatus, /^PROVISIONAL/u);
+  assert.equal(result.displayIpa.endsWith("???"), true);
+  assert.equal(result.displayUk.endsWith("???"), true);
+});
+
+test("uncertainty marker is appended after each whitespace-delimited Burmese word", () => {
+  const result = analyzeHybrid([
+    {raw:"ကာ",nonMyanmar:false,ipa:"ka",status:"ESTABLISHED"},
+    {raw:" ",nonMyanmar:true},
+    {raw:"မာ",nonMyanmar:false,ipa:"ma",status:"ESTABLISHED"},
+  ]);
+  assert.equal(result.displayIpa, "ka??? ma???");
+  assert.equal(result.displayUk, "ка??? ма???");
+});
+
+test("when project rules have no segmental result, a real Epitran candidate is rendered with a word-final marker", () => {
+  const result = analyzeHybrid([{raw:"မြန်",nonMyanmar:false,ipa:null,status:"ANALYSIS_DEPENDENT"}]);
+  assert.ok(result.displayIpa.startsWith("məjaɴ"));
+  assert.ok(result.displayUk.endsWith("???"));
 });
 
 test("explicit profile and prosody evidence allow canonical IPA to reach the adapter", () => {
